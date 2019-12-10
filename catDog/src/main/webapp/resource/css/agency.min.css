@@ -150,11 +150,10 @@ img::-moz-selection {
 
 @media ( min-width :992px) {
 	#mainNav {
-		padding-top: 25px;
-		padding-bottom: 25px;
 		transition: padding-top .3s, padding-bottom .3s;
 		border: none;
 		background-color: #FFFFFF;
+		border-bottom: 1px solid #e4e4e4;
 	}
 	#mainNav .navbar-brand {
 		font-size: 1.75em;

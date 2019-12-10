@@ -4,7 +4,32 @@
 <%
    String cp = request.getContextPath();
 %>
-
+			<!-- 슬라이드페이지 -->
+	<div class="swiper-container">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide">
+				<img alt="" src="<%=cp%>/resource/img/logos/rundog.jpg">
+			</div>
+			<div class="swiper-slide">
+				<img alt="" src="<%=cp%>/resource/img/logos/peacedog.jpg">
+			</div>
+			<div class="swiper-slide">
+				<img alt="" src="<%=cp%>/resource/img/logos/sidecat.jpg">
+			</div>
+			<div class="swiper-slide">
+				<img alt="" src="<%=cp%>/resource/img/logos/sidezbra.jpg">
+			</div>
+			<div class="swiper-slide">
+				<img alt="" src="<%=cp%>/resource/img/logos/grassdog.jpg">
+			</div>
+		</div>
+		<!-- Add Pagination -->
+		<div class="swiper-pagination"></div>
+		<!-- Add Arrows -->
+		<div class="swiper-button-next"></div>
+		<div class="swiper-button-prev"></div>
+	</div>
+	
 	<!-- 장소추천 -->
 	<section class="page-section" id="command">
 		<div class="container">
@@ -306,3 +331,6 @@
 			</div>
 		</div>
 	</section>
+	
+
+	
