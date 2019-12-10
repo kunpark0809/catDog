@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="customer">
+	<select id="loginCustomer" parameterType="String" resultType="com.catDog.customer.Customer">
+		SELECT md.num, userId, name, userPwd
+		FROM MEMBERDETAIL md
+        JOIN CUSTOMERDETAIL cm ON md.num = cm.num
+		WHERE userId = #{userId} AND enabled != 0
+	</select>
+	
+		<select id="readCustomer" parameterType="String" resultType="com.catDog.customer.Customer">
+		SELECT md.num, userId, name, userPwd
+		FROM MEMBERDETAIL md
+        JOIN CUSTOMERDETAIL cm ON md.num = cm.num
+		WHERE userId = #{userId} AND enabled != 0
+	</select>
+	
+</mapper>
