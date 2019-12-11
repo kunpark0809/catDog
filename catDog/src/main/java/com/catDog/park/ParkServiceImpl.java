@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.catDog.common.dao.CommonDAO;
 
+@Service("park.parkServiceImpl")
 public class ParkServiceImpl implements ParkService {
 
 	@Autowired
@@ -32,7 +34,6 @@ public class ParkServiceImpl implements ParkService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		
 		return list;
 	}
