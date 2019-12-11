@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin">
+<select id="calculateTotal" parameterType="Map" resultType="Integer">
+	SELECT SUM(purchase)
+	FROM request r
+	JOIN payment p ON r.requestNum =  p.requestNum
+	<![CDATA[
+		WHERE TO_CHAR(requestDate, 'YYYYMMDD') >= #{startDate} AND
+		TO_CHAR(requestDate, 'YYYYMMDD') <=#{endDate}
+	]]>
+</select>
+
+<select id="calculateProduct" parameterType="Map" resultMap="com.catDog.admin.Money">
+	SELECT rd.productNum, name, SUM(productCount) productCount, SUM(productSum) productSum
+	FROM request r
+	JOIN requestDetail rd ON r.requestNum = rd.requestNum
+	LEFT OUTER JOIN product p ON rd.productNum = p.productNum
+	<![CDATA[
+		WHERE TO_CHAR(requestDate, 'YYYYMMDD') >= #{startDate} AND
+		TO_CHAR(requestDate, 'YYYYMMDD') <=#{endDate} AND
+		rd.productNum=#{productNum}
+	]]>
+	GROUP BY rd.productNum, name
+</select>
+</mapper>
