@@ -75,7 +75,7 @@
     <tiles:insertAttribute name="body"/>
 </div>
 
-<div class="footer">
+<div class="footer-board">
     <tiles:insertAttribute name="footer"/>
 </div>
 

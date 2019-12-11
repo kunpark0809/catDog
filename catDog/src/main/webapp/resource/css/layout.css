@@ -55,6 +55,17 @@ ul li {
 	float: right;
 }
 
+.container-board{
+	min-height: 100px;
+    top: 97px;
+    position: relative;
+}
+
+.footer-board{
+	top: 97px;
+    position: relative;
+}
+
 footer ul {
 	
 }

@@ -26,11 +26,11 @@
 					</li>
 					<li class="nav-item"><a class="nav-link js-scroll-trigger">장소추천</a>
 						<ul class="nav-sub-menu">
-							<li><a class="nav-sub-link" href="<%=cp%>/commend/park">공원/산책</a></li>
-							<li><a class="nav-sub-link" href="<%=cp%>/commend/cafe">카페/식당</a></li>
-							<li><a class="nav-sub-link" href="<%=cp%>/commend/hospital">훈련/유치원</a></li>
-							<li><a class="nav-sub-link" href="<%=cp%>/commend/training">동물병원</a></li>
-							<li><a class="nav-sub-link" href="<%=cp%>/commend/funeral">장례식장</a></li>
+							<li><a class="nav-sub-link" href="<%=cp%>/park/list">공원/산책</a></li>
+							<li><a class="nav-sub-link" href="<%=cp%>/cafe/list">카페/식당</a></li>
+							<li><a class="nav-sub-link" href="<%=cp%>/hospital/list">훈련/유치원</a></li>
+							<li><a class="nav-sub-link" href="<%=cp%>/training/list">동물병원</a></li>
+							<li><a class="nav-sub-link" href="<%=cp%>/funeral/list">장례식장</a></li>
 						</ul>		
 					</li>
 					<li class="nav-item"><a class="nav-link js-scroll-trigger">로스트펫</a>
@@ -62,9 +62,9 @@
 					</li>
 					<li class="nav-item"><a class="nav-link js-scroll-trigger">고객센터</a>
 						<ul class="nav-sub-menu">
-							<li><a class="nav-sub-link" href="<%=cp%>/cs/notice">공지사항</a></li>
-							<li><a class="nav-sub-link" href="<%=cp%>/cs/qna">질문과답변</a></li>
-							<li><a class="nav-sub-link" href="<%=cp%>/cs/faq">FAQ</a></li>
+							<li><a class="nav-sub-link" href="<%=cp%>/notice/list">공지사항</a></li>
+							<li><a class="nav-sub-link" href="<%=cp%>/qna/list">질문과답변</a></li>
+							<li><a class="nav-sub-link" href="<%=cp%>/faq/list">FAQ</a></li>
 						</ul>	
 					</li>
 					<li class="nav-item"><a class="nav-link js-scroll-trigger">마이페이지</a>
