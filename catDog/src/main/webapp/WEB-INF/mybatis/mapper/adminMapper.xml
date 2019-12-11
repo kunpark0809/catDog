@@ -2,6 +2,20 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="admin">
+
+	<sql id="member-where-list">
+		<if test="condition=='userId' ">
+			INSTR(userId, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='nickName' ">
+			INSTR(nickName, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='reportCount' ">
+			INSTR(reportCount, #{keyword}) &gt; 0
+		</if>
+	</sql>
+
+
 <select id="calculateTotal" parameterType="Map" resultType="Integer">
 	SELECT SUM(purchase)
 	FROM request r
@@ -24,4 +38,29 @@
 	]]>
 	GROUP BY rd.productNum, name
 </select>
+
+<!-- 회원 리스트 -->
+
+<!-- 회원의 정보를 memberDetail에서 가져오면서 request에서 번호로 GROUP BY하여 SUM한 테이블(주문횟수)과도 JOIN -->
+
+<select id="memberList" parameterType="Map" resultType="com.catDog.admin.Member">
+	SELECT md.num, userId, nickName, point, reportCount.sum FROM memberDetail md
+	LEFT OUTER JOIN  
+	(SELECT num, SUM(*) sum FROM request GROUP BY num
+	) requestCount ON md.num = requestCount.num
+	<where>
+		<if test="keyword != null and keyword != ''">
+			<include refid="where-list"/>
+		</if>
+	</where>
+	ORDER BY num DESC
+	OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+</select>
+
+<!-- 비회원 리스트 -->
+<select id="nonMemberList" parameterType="Map" resultType="com.catDog.admin.Member">
+	
+
+</select>
+
 </mapper>

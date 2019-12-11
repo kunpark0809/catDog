@@ -14,7 +14,7 @@ public class AdminServiceImpl implements AdminService {
 	private CommonDAO dao;
 
 	@Override
-	public int calculateSales(Map<String, Object> map) {
+	public int calculateTotal(Map<String, Object> map) {
 		int result = -1;
 
 		try {
@@ -24,6 +24,18 @@ public class AdminServiceImpl implements AdminService {
 		}
 
 		return result;
+	}
+
+	@Override
+	public Money calculateProduct(Map<String, Object> map) {
+		Money money = null;
+
+		try {
+			money = dao.selectOne("admin.calculateProduct", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return money;
 	}
 
 }

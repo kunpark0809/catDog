@@ -3,6 +3,7 @@ package com.catDog.admin;
 public class Member {
 	private int num, membership, mileage;
 	private int reportCount, reportNum;
+	private int requestCount; // 비회원의 주문횟수
 
 	private String name, nickName, addr, email, tel;
 
@@ -44,6 +45,14 @@ public class Member {
 
 	public void setReportNum(int reportNum) {
 		this.reportNum = reportNum;
+	}
+
+	public int getRequestCount() {
+		return requestCount;
+	}
+
+	public void setRequestCount(int requestCount) {
+		this.requestCount = requestCount;
 	}
 
 	public String getName() {
