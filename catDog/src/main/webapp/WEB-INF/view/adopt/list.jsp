@@ -5,5 +5,5 @@
    String cp = request.getContextPath();
 %>
 <div>
-	입양페이지 입니다.
+	입양페이지 입니다.   
 </div>

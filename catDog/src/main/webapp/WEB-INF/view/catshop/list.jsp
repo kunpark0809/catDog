@@ -5,5 +5,5 @@
    String cp = request.getContextPath();
 %>
 	<div>
-		catShop입니다.
+		catShop입니다.   
 	</div>
