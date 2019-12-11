@@ -10,7 +10,7 @@
 <head>
 <meta charset="UTF-8">
 <title>박서현</title>
-</head>
+</head> 
 <body>
 
 	<div class="bodycontainer" style="width: 700px;">
