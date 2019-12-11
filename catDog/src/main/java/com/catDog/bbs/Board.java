@@ -1,5 +1,5 @@
 package com.catDog.bbs;
 
-public class boardService {
+public class Board {
 
 }

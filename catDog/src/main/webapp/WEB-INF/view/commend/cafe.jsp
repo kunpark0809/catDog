@@ -13,5 +13,15 @@
 </head>
 <body>
 
+	<div class="bodycontainer" style="width: 700px;">
+		<div class="body-title">
+        <h3><span style="font-family: Webdings">2</span> 공원/산책 </h3>
+    	</div>
+    
+    <div>
+        내용
+    </div>
+    </div>
+
 </body>
 </html>
