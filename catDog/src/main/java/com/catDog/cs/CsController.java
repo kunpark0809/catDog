@@ -24,7 +24,7 @@ public class CsController {
 			HttpServletRequest req,
 			Model model) throws Exception {
 		
-		return "notice/list";
+		return ".notice.list";
 	}
 	
 	@RequestMapping(value="/qna/list")
@@ -35,7 +35,7 @@ public class CsController {
 			HttpServletRequest req,
 			Model model) throws Exception {
 		
-		return "qna/list";
+		return ".qna.list";
 	}
 	
 	@RequestMapping(value="/faq/list")
@@ -46,6 +46,6 @@ public class CsController {
 			HttpServletRequest req,
 			Model model) throws Exception {
 		
-		return "faq/list";
+		return ".faq.list";
 	}
 }

@@ -5,13 +5,9 @@
 <%
 	String cp=request.getContextPath();
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-<div>흠냐뤼</div>
-</body>
-</html>
+
+<div class="body-container" style="width: 700px;">
+	<div class="body-title">
+		<h3><span style="font-family: Webdings"></span> 공지사항 </h3>
+	</div>
+</div>
