@@ -12,7 +12,7 @@
 	]]>
 </select>
 
-<select id="calculateProduct" parameterType="Map" resultMap="com.catDog.admin.Money">
+<select id="calculateProduct" parameterType="Map" resultType="com.catDog.admin.Money">
 	SELECT rd.productNum, name, SUM(productCount) productCount, SUM(productSum) productSum
 	FROM request r
 	JOIN requestDetail rd ON r.requestNum = rd.requestNum
