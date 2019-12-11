@@ -1,6 +1,6 @@
-package com.catDog.park;
+package com.catDog.cafe;
 
-public class Park {
+public class Cafe {
 	private int rateNum;
 	private int recommendNum;
 	private int rate;
