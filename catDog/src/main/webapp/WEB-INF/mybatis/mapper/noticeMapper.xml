@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="notice">
+	<select id="seq" resultType="Integer">
+		select notice_seq.nextval from dual
+	</select>
+	
+	<insert id="insertNotice" parameterType="com.catDog.cs.Notice">
+		insert into notice(noticeNum, num, subject, content, notice) values
+		(#{noticeNum}, #{num}, #{subject}, #{content}, #{notice})
+	</insert>
+	
+	<insert id="insertNoticeFile" parameterType="com.catDog.cs.Notice">
+		insert into noticeFile(noticeFileNum, noticeNum, saveFileName, originalFileName, fileSize) values
+		(noticeFile_seq.nextval, #{noticeNum}, #{saveFileName}, #{originalFileName}, #{fileSize, jdbcType=INTEGER})
+	</insert>
+	
+	  
+	<sql id="where-list">
+		<choose>
+			<when test="condition == 'all'">
+				(INSTR(subject, #{keyword}) &gt; 0 
+				or DBMS_LOB.instr(content, #{keyword}) &gt; 0)
+			</when>
+			<when test="condition == 'content'">
+				DBMS_LOB.instr(content, #{keyword}) &gt; 0
+			</when>
+			<when test="condition=='created'">
+				(to_char(created, 'yyyy-mm-dd') = #{keyword}
+				 or to_char(created, 'yyyymmdd') = #{keyword})
+			</when>
+			<otherwise>
+				instr(${condition}, #{keyword}) &gt; 0
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		select nvl(count(*), 0) from notice n join memberDetail m on m.num=n.num
+	<where>
+		<if test="keyword != null and keyword != ''">
+			<include refid="where-list"/>
+		</if>
+	</where>
+	</select>
+	
+	<select id="listNoticeTop" resultType="com.catDog.cs.Notice">
+		select n.noticeNum, n.notice, n.subject, md.nickName, hitCount, to_char(created, 'yyyy-mm-dd') created, nvl(fileCount, 0) fileCount
+		from notice n 
+		join memberDetail md on md.num=n.num
+		left outer join (
+			select noticeNum, count(*) fileCount from noticeFile
+			group by noticeNum
+		) nf on n.noticeNum = nf.noticeNum
+		where n.notice = #{notice}
+		order by n.num desc
+	</select>
+	
+	<select id="listNotice" parameterType="map" resultType="com.catDog.cs.Notice">
+		select n.noticeNum, n.notice, n.subject, md.nickName, hitCount, created, nvl(fileCount, 0) fileCount
+		from notice n 
+		join memberDetail md on md.num=n.num
+		left outer join (
+			select noticeNum, count(*) fileCount from noticeFile
+			group by noticeNum
+		) f on n.noticeNum = f.noticeNum
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		order by n.num desc
+		offset #{offset} rows fetch first #{rows} rows only
+	</select>
+	
+</mapper>

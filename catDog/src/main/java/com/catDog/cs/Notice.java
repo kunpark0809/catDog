@@ -102,14 +102,6 @@ public class Notice {
 		this.hitCount = hitCount;
 	}
 
-	public int getNoticeFileNum() {
-		return noticeFileNum;
-	}
-
-	public void setNoticeFileNum(int noticeFileNum) {
-		this.noticeFileNum = noticeFileNum;
-	}
-
 	public String getSaveFileName() {
 		return saveFileName;
 	}
@@ -156,5 +148,13 @@ public class Notice {
 
 	public void setGap(long gap) {
 		this.gap = gap;
+	}
+
+	public int getNoticeFileNum() {
+		return noticeFileNum;
+	}
+
+	public void setNoticeFileNum(int noticeFileNum) {
+		this.noticeFileNum = noticeFileNum;
 	}
 }
