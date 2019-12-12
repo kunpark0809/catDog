@@ -1,8 +1,9 @@
 package com.catDog.calendar;
 
 public class MyCalendar {
-	private int eventNum;
-	private int num;
+	private int eventNum;  
+	private long num;
+	private String UserId;
 	private String subject;
 	private String content;
 	private String created;
@@ -21,12 +22,6 @@ public class MyCalendar {
 	}
 	public void setEventNum(int eventNum) {
 		this.eventNum = eventNum;
-	}
-	public int getNum() {
-		return num;
-	}
-	public void setNum(int num) {
-		this.num = num;
 	}
 	public String getSubject() {
 		return subject;
@@ -99,6 +94,18 @@ public class MyCalendar {
 	}
 	public void setPeriod(String period) {
 		this.period = period;
+	}
+	public String getUserId() {
+		return UserId;
+	}
+	public void setUserId(String userId) {
+		UserId = userId;
+	}
+	public long getNum() {
+		return num;
+	}
+	public void setNum(long num) {
+		this.num = num;
 	}
 	
 	

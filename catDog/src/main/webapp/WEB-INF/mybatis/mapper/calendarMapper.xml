@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="calendar">
+
+	<insert id="insertCalendar" parameterType="com.catDog.calendar.MyCalendar">
+		INSERT INTO festival(eventNum, num, subject, contennt, )
+	</insert>
+
+	<select id="listMonth">
+	
+	</select>
+	
+	<select id="listDay">
+	
+	</select>
+	
+	<select id="readCalendar">
+	
+	</select>
+	
+	<update id="updateCalendar">
+	
+	</update>
+	
+	<delete id="deleteCalendar">
+	
+	</delete>
+</mapper>
