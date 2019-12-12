@@ -10,22 +10,20 @@ import com.catDog.common.dao.CommonDAO;
 
 @Service("park.parkServiceImpl")
 public class ParkServiceImpl implements ParkService {
-
-	@Autowired
-	private CommonDAO dao;
 	
+	@Autowired
+	private CommonDAO  dao;
+
 	@Override
 	public void insertPark(Park dto, String pathname) throws Exception {
-		// TODO Auto-generated method stub
-		
+		try {
+			dao.insertData("park.insertPark", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
-
-	@Override
-	public int dataCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	
 	@Override
 	public List<Park> listPark(Map<String, Object> map) {
 		List<Park> list = null;
@@ -36,6 +34,12 @@ public class ParkServiceImpl implements ParkService {
 		}
 		
 		return list;
+	}
+
+	@Override
+	public int dataCount(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override

@@ -9,9 +9,9 @@
 <style type="text/css">
 .btn {
 	width:70px;
-    background-color: #ffffff;
+    background-color: #262626;
     border: none;
-    color:#262626;
+    color:#ffffff;
     padding: 10px 0;
     text-align: center;
     display: inline-block;
@@ -41,6 +41,7 @@ location.href=url;
 				</div>
 			</div>
 			
+			
 			<table style="width: 100%; margin: 10px auto; border-spacing: 0px; background-color: #F5F5F5;">
 		   <tr height="40">
 		      <td align="center">
@@ -48,7 +49,7 @@ location.href=url;
 		              	<select name="condition" class="selectField">
 		                  <option value="placeName" ${condition=="placeName"?"selected='selected'":""}>제목</option>
 		                  <option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
-		                  <option value="nickName" ${condition=="nickName"?"selected='selected'":""}>작성자</option>
+		                  <option value="hitCount" ${condition=="hitCount"?"selected='selected'":""}>조회수</option>
 		            	</select>
 		            <input type="text" name="keyword" value="${keyword}" class="boxTF" size="50;">
 		            <button type="button" class="btn" onclick="searchList()">검색</button>
@@ -64,26 +65,9 @@ location.href=url;
 		      </td>	      
 		  	 </tr>
 		</table>
-			<br>
-			<div class="row text-center">
-				<div class="col-md-4">
-					<img alt="" src="<%=cp%>/resource/img/소금후추맘.jpg"
-						style="width: 100%;">
-					<h4 class="service-heading">장소1</h4>
-					<p class="text-muted">멋진장소</p>
-				</div>
-				<div class="col-md-4">
-					<img alt="" src="<%=cp%>/resource/img/소금후추맘.jpg"
-						style="width: 100%;">
-					<h4 class="service-heading">장소2</h4>
-					<p class="text-muted">예쁜장소</p>
-				</div>
-				<div class="col-md-4">
-					<img alt="" src="<%=cp%>/resource/img/소금후추맘.jpg"
-						style="width: 100%;">
-					<h4 class="service-heading">장소3</h4>
-					<p class="text-muted">예쁘고 멋진 장소</p>
-				</div>
-			</div>
-		</div>
-	</section>
+			
+		
+    </div>
+
+
+</section>

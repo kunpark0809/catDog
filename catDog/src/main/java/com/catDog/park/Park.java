@@ -22,6 +22,8 @@ public class Park {
 	private String sortName;
 	
 	private int listNum;
+	
+	private String userId;
 
 	public int getRateNum() {
 		return rateNum;
@@ -157,6 +159,14 @@ public class Park {
 
 	public void setListNum(int listNum) {
 		this.listNum = listNum;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
 }
