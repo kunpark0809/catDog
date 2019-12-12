@@ -67,6 +67,7 @@
 							<li><a class="nav-sub-link" href="<%=cp%>/faq/list">FAQ</a></li>
 						</ul>	
 					</li>
+					<c:if test="${not empty sessionScope.member}">
 					<li class="nav-item"><a class="nav-link js-scroll-trigger">마이페이지</a>
 						<ul class="nav-sub-menu">
 							<li><a class="nav-sub-link" href="<%=cp%>/mypage/update">회원정보수정</a></li>
@@ -76,7 +77,7 @@
 							<li><a class="nav-sub-link" href="<%=cp%>/mypage/list">기부</a></li>
 						</ul>
 					</li>
-					
+					</c:if>
 				</ul>
 				</div>
 				<div class="navbar-nav text-uppercase text-Image" id="icon-image">

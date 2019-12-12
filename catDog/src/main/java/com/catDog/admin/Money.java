@@ -2,8 +2,8 @@ package com.catDog.admin;
 
 public class Money {
 	private int requestNum, requsetDetailNum, productNum, productCount;
-	private int productSum;
-	private int point, purchase;
+	private int productSum; // 한 품목 상품 개수
+	private int point, purchase; // 포인트 사용금액 / 실 결제금액
 	private String payMethod;
 	private String name; // 상품명
 

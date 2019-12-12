@@ -16,6 +16,17 @@
 	</sql>
 
 
+<!-- 주문정보 리스트에서 검색 기능을 넣을거면 사용할 sql -->
+	<sql id="order-where-list">
+		<choose>
+			<when test="condition == 'created' ">
+			   ( TO_CHAR(created, 'YYYYMMDD') = #{keyword}
+		          OR TO_CHAR(created, 'YYYY-MM-DD') = #{keyword} )
+			</when>
+		</choose>
+	</sql>
+
+<!-- 일정 기간 동안의 총 매출 구하기. 시작날짜, 끝날짜 -->
 <select id="calculateTotal" parameterType="Map" resultType="Integer">
 	SELECT SUM(purchase)
 	FROM request r
@@ -26,6 +37,7 @@
 	]]>
 </select>
 
+<!-- 일정 기간 동안의 한 품목의 매출 구하기. 시작날짜, 끝날짜, 상품번호 -->
 <select id="calculateProduct" parameterType="Map" resultType="com.catDog.admin.Money">
 	SELECT rd.productNum, name, SUM(productCount) productCount, SUM(productSum) productSum
 	FROM request r
@@ -40,14 +52,13 @@
 </select>
 
 <!-- 회원 리스트 -->
-
-<!-- 회원의 정보를 memberDetail에서 가져오면서 request에서 번호로 GROUP BY하여 SUM한 테이블(주문횟수)과도 JOIN -->
-
+<!-- 회원의 정보를 memberDetail에서 가져오면서 request에서 번호로 GROUP BY하여 COUNT한 테이블(주문횟수)과도 JOIN -->
 <select id="memberList" parameterType="Map" resultType="com.catDog.admin.Member">
-	SELECT md.num, userId, nickName, point, reportCount.sum FROM memberDetail md
-	LEFT OUTER JOIN  
-	(SELECT num, SUM(*) sum FROM request GROUP BY num
-	) requestCount ON md.num = requestCount.num
+	SELECT md.num, userId, nickName, mileage, NVL(count,0) requestCount
+	FROM memberDetail md
+	LEFT OUTER JOIN (
+		SELECT num, NVL(COUNT(*), 0) count FROM request GROUP BY num
+	) rc ON md.num = rc.num
 	<where>
 		<if test="keyword != null and keyword != ''">
 			<include refid="member-where-list"/>
@@ -57,10 +68,15 @@
 	OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 </select>
 
-<!-- 비회원 리스트 -->
-<select id="nonMemberList" parameterType="Map" resultType="com.catDog.admin.Member">
-	
-
+<!-- 전체 주문내역 리스트(회원 + 비회원) -->
+<!-- 주문번호, 포인트사용 및 실 결제액, 주문날짜, 진행상태, 회원이라면 아이디 아니면 '비회원' 가져오기 -->
+<select id="orderList" parameterType="Map" resultType="com.catDog.admin.Member">
+	SELECT requestNum, point, purchase, TO_CHAR(requestDate, 'YYYY-MM-DD HH24:MI:SS') requestDate,
+	status, NVL(userId, '비회원') FROM request r
+	JOIN payment p ON r.requestNum = p.requestNum
+	LEFT OUTER JOIN memberDetail md ON md.num = r.num
+	ORDER BY num DESC
+	OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 </select>
 
 </mapper>
