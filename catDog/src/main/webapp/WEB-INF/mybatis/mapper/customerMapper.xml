@@ -3,17 +3,45 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="customer">
 	<select id="loginCustomer" parameterType="String" resultType="com.catDog.customer.Customer">
-		SELECT md.num, userId, name, userPwd
+		SELECT md.num, userId, nickName, name, userPwd
 		FROM memberDetail md
         JOIN customerDetail cm ON md.num = cm.num
 		WHERE userId = #{userId} AND enabled != 0
 	</select>
 	
-		<select id="readCustomer" parameterType="String" resultType="com.catDog.customer.Customer">
+	<select id="nickNameCheck" parameterType="String" resultType="com.catDog.customer.Customer">
+		SELECT md.num, userId, nickName, name, userPwd
+		FROM memberDetail md
+        JOIN customerDetail cm ON md.num = cm.num
+		WHERE nickName = #{nickName} AND enabled != 0
+	</select>
+	
+	
+	
+	<select id="readCustomer" parameterType="String" resultType="com.catDog.customer.Customer">
 		SELECT md.num, userId, name, userPwd
 		FROM memberDetail md
         JOIN customerDetail cm ON md.num = cm.num
 		WHERE userId = #{userId} AND enabled != 0
 	</select>
-	
+	 
+	<!-- 회원가입에 사용하기 위해 새로운 customer_seq를 발생시킴 -->
+	<select id="customerSeq" resultType="Long">
+       SELECT customer_seq.NEXTVAL FROM dual 
+    </select>
+    
+    <!-- 회원가입 시 여러 테이블에 데이터를 집어넣기 위해 사용 -->
+    <insert id="memberRegister" parameterType="com.catDog.customer.Customer">
+    	INSERT ALL
+    		INTO customer(num, membership)
+    			VALUES(#{num}, '1')
+    		INTO customerDetail(num, name, email, tel, birth) 
+    			VALUES(#{num}, #{name}, #{email}, #{tel}, #{birth})
+    		INTO memberDetail(num, userId, userPwd, nickName, userPic, addr)
+    			VALUES(#{num}, #{userId}, #{userPwd}, #{nickName}, #{userPic}, #{addr})
+    		INTO memberAuthority(num, authority)
+    			VALUES (#{num}, 'ROLE_USER')
+    	SELECT * FROM DUAL;
+    </insert>
+    
 </mapper>

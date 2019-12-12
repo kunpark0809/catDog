@@ -1,13 +1,25 @@
 package com.catDog.customer;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Customer {
 	private long num;
-	private String userId, name, userPwd, created_date, modify_date, last_login;
+	private String userId, name, nickName, userPwd, created_date, modify_date, last_login;
 	private String email, email1, email2;
 	private String tel, tel1, tel2, tel3;
 	private String birth;
-	private String zip, addr1, addr2;
+	private String addr, addr1, addr2;
 	private int enabled;
+	private String userPic;
+	private MultipartFile upload;
+
+	public long getNum() {
+		return num;
+	}
+
+	public void setNum(long num) {
+		this.num = num;
+	}
 
 	public String getUserId() {
 		return userId;
@@ -15,6 +27,22 @@ public class Customer {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 	public String getUserPwd() {
@@ -113,12 +141,12 @@ public class Customer {
 		this.birth = birth;
 	}
 
-	public String getZip() {
-		return zip;
+	public String getAddr() {
+		return addr;
 	}
 
-	public void setZip(String zip) {
-		this.zip = zip;
+	public void setAddr(String addr) {
+		this.addr = addr;
 	}
 
 	public String getAddr1() {
@@ -145,19 +173,20 @@ public class Customer {
 		this.enabled = enabled;
 	}
 
-	public long getNum() {
-		return num;
+	public String getUserPic() {
+		return userPic;
 	}
 
-	public void setNum(long num) {
-		this.num = num;
+	public void setUserPic(String userPic) {
+		this.userPic = userPic;
 	}
 
-	public String getName() {
-		return name;
+	public MultipartFile getUpload() {
+		return upload;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setUpload(MultipartFile upload) {
+		this.upload = upload;
 	}
+
 }

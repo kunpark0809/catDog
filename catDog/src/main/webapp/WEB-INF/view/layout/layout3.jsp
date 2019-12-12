@@ -42,6 +42,10 @@
 
 <script src="<%=cp%>/resource/vendor/jquery/jquery.min.js"></script>
 
+<script type="text/javascript" src="<%=cp%>/resource/js/util-jquery.js"></script>
+<script type="text/javascript" src="<%=cp%>/resource/js/util.js"></script>
+
+
 <script type="text/javascript">
 
  $(function(){

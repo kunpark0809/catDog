@@ -28,10 +28,10 @@
       <intercept-url pattern="/index.jsp" access="permitAll"/>
       <intercept-url pattern="/main" access="permitAll"/>
       <intercept-url pattern="/customer/login" access="permitAll"/>
-      <intercept-url pattern="/customer/customer" access="permitAll"/>
+      <intercept-url pattern="/customer/register" access="permitAll"/>
       <intercept-url pattern="/customer/userIdCheck" access="permitAll"/>
+      <intercept-url pattern="/customer/nickNameCheck" access="permitAll"/>
       <intercept-url pattern="/customer/complete" access="permitAll"/>
-      
       <intercept-url pattern="/resource/**" access="permitAll"/>
       
       <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
