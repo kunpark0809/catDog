@@ -7,4 +7,9 @@
 		FROM smallSort
 		WHERE bigSortNum = 1
 	</select>
+	
+	<insert id="insertDogProduct" parameterType="com.catDog.dogShop.DogShop">
+		INSERT INTO product(PRODUCTNUM, NAME, PRICE, CONTENT, SMALLSORTNUM) 
+		VALUES(PRODUCT_SEQ.NEXTVAL, #{name}, #{price}, #{content}, 1);
+	</insert>
 </mapper>

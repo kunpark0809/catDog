@@ -35,4 +35,14 @@ public class DogShopController {
 		model.addAttribute("sortList",sortList);
 		return ".dogshop.created";
 	}
+	
+	@RequestMapping(value="/dogshop/created", method=RequestMethod.POST)
+	public String createdSubmit(
+			DogShop dto,
+			Model model
+			) throws Exception{
+		service.insertProduct(dto);
+		
+		return "redirect:/dogshop/list";
+	}
 }

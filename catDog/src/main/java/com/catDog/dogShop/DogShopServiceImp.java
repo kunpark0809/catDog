@@ -23,5 +23,17 @@ public class DogShopServiceImp implements DogShopService{
 		}
 		return list;
 	}
+
+	@Override
+	public void insertProduct(DogShop dto) throws Exception{
+		try {
+			dao.insertData("dogshop.insertDogProduct",dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+	
 	
 }
