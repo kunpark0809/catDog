@@ -1,0 +1,7 @@
+@charset "UTF-8";
+
+.sortName:hover{
+	cursor: pointer;
+	color: #A66E4E;
+	font-weight: bold;
+}

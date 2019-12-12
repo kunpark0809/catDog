@@ -1,5 +1,7 @@
 package com.catDog.dogShop;
 
-public interface DogShopService {
+import java.util.List;
 
+public interface DogShopService {
+	public List<DogShop> smallSortList();
 }
