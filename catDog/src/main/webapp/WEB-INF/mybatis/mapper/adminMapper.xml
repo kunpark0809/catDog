@@ -50,7 +50,7 @@
 	) requestCount ON md.num = requestCount.num
 	<where>
 		<if test="keyword != null and keyword != ''">
-			<include refid="where-list"/>
+			<include refid="member-where-list"/>
 		</if>
 	</where>
 	ORDER BY num DESC
