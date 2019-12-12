@@ -5,7 +5,43 @@
 <%
 	String cp=request.getContextPath();
 %>
-<script type="text/javascript" src="<%=cp%>/resource/se/js/HuskyEZCreator.js" charset="utf-8"></script>
+	<script type="text/javascript" src="<%=cp%>/resource/se/js/HuskyEZCreator.js" charset="utf-8"></script>
+	<script type="text/javascript">
+	   function sendOk() {
+	        var f = document.dogshopForm;
+			
+	        if(f.sortList.value == "0"){
+	        	alert("용품분류를 선택하세요. ");
+	            f.sortList.focus();
+	            return;
+	        }
+	        
+	        if(!f.name.value){
+	        	alert("용품명을 입력하세요. ");
+	            f.name.focus();
+	            return;
+	        }
+	        
+	        if(!f.price.value){
+	        	alert("가격을 입력하세요. ");
+	            f.price.focus();
+	            return;
+	        }
+	        
+	        
+	    	var str = f.content.value;
+	        if(!str || str=="<p>&nbsp;</p>") {
+	            alert("내용을 입력하세요. ");
+	            f.content.focus();
+	            return;
+	        }
+
+	   		f.action="<%=cp%>/dogshop/created";
+	   		f.submit();
+
+	        return true;
+	    }
+	</script>
 	<link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
 	<div class="body-title">
 		<h3><i class="fas fa-chalkboard-teacher"></i> 스터디 질문과 답변 </h3>
@@ -48,6 +84,15 @@
 					<td>용품 사진</td>
 					<td>
 						<input type="file" name="upload">
+					</td>
+				</tr>
+			</table>
+			<table>
+				<tr>
+					<td>
+						<button type="button" onclick="sendOk();">등록하기</button>
+						<button type="reset">다시입력</button>
+						<button type="button" onclick="">등록취소</button>
 					</td>
 				</tr>
 			</table>
