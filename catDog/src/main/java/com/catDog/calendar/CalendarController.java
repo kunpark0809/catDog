@@ -178,7 +178,7 @@ public class CalendarController {
 	}
 	
 	@RequestMapping(value="/calendar/day")
-	public String day(@RequestParam(name="eventNum", defaultValue="0") int eventNum, 
+	public String day(@RequestParam(name="festivalNum", defaultValue="0") int festivalNum, 
 					  @RequestParam(name="date", defaultValue="") String date,
 					  HttpSession session, Model model) {
 		
@@ -210,11 +210,11 @@ public class CalendarController {
 			List<MyCalendar> list=service.listDay(map);
 			
 			MyCalendar dto=null;
-			if(eventNum!=0) {
-				dto=service.readCalendar(eventNum);
+			if(festivalNum!=0) {
+				dto=service.readCalendar(festivalNum);
 			}
 			if(dto==null&&list.size()>0) {
-				dto=service.readCalendar(list.get(0).getEventNum());
+				dto=service.readCalendar(list.get(0).getFestivalNum());
 			}
 			
 			Calendar cal2=(Calendar)cal.clone();
@@ -334,7 +334,6 @@ public class CalendarController {
 			model.addAttribute("today", today);
 			model.addAttribute("days", days);
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 		return ".calendar.year";
 	}
@@ -374,13 +373,13 @@ public class CalendarController {
 	}
 	
 	@RequestMapping(value="/calendar/delete")
-	public String delete(@RequestParam int eventNum, @RequestParam String date, HttpSession session) {
+	public String delete(@RequestParam int festivalNum, @RequestParam String date, HttpSession session) {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
 		try {
 			Map<String, Object> map=new HashMap<>();
 			map.put("userId", info.getUserId());
-			map.put("eventNum", eventNum);
+			map.put("festivalNum", festivalNum);
 			service.deleteCalendar(map);
 		} catch (Exception e) {
 		}
