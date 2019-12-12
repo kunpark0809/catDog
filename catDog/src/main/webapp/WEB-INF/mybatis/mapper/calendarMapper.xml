@@ -6,7 +6,7 @@
 	<insert id="insertCalendar" parameterType="com.catDog.calendar.MyCalendar">
 		INSERT INTO festival(festivalNum, num, subject, content, color, startDate, endDate, startTime, endTime, addr)
 		VALUES(festival_seq.NEXTVAL, #{num}, #{subject}, #{content}, #{color}, #{startDate}, #{endDate}, 
-		#{startTime, jdbcType=VARCHAR}, #{endTime, jdbc=VARCHAR}, #{addr})
+		#{startTime, jdbcType=VARCHAR}, #{endTime, jdbcType=VARCHAR}, #{addr})
 	</insert>
 
 	<select id="listMonth">
