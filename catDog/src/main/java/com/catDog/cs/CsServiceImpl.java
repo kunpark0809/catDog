@@ -39,14 +39,12 @@ public class CsServiceImpl implements CsService {
 					
 					insertFile(dto);
 			}
-		}
-			
+		}			
 		} catch (Exception e) {
 			e.printStackTrace();
 			
 			throw e;
-		}
-		
+		}		
 	}
 
 	@Override
