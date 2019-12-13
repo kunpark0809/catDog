@@ -139,8 +139,8 @@ public class CsController {
 		
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
-		try {
-			dto.setUserId(info.getUserId());
+		try {			
+			dto.setNum(info.getMemberIdx());			
 			service.insertNotice(dto, pathname);
 		} catch (Exception e) {
 		}	

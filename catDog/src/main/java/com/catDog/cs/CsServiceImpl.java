@@ -22,7 +22,7 @@ public class CsServiceImpl implements CsService {
 	public void insertNotice(Notice dto, String pathname) throws Exception {
 		try {
 			int seq = dao.selectOne("notice.seq");
-			dto.setNum(seq);
+			dto.setNoticeNum(seq);
 			
 			dao.insertData("notice.insertNotice", dto);
 			if(! dto.getUpload().isEmpty()) {

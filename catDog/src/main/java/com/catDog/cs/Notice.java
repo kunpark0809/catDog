@@ -5,7 +5,8 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 public class Notice {
-	private int listNum, num;
+	private long num;
+	private int listNum, noticeNum;
 	private int notice;
 	private String userId, name, nickName;
 	private String subject;
@@ -28,14 +29,6 @@ public class Notice {
 
 	public void setListNum(int listNum) {
 		this.listNum = listNum;
-	}
-
-	public int getNum() {
-		return num;
-	}
-
-	public void setNum(int num) {
-		this.num = num;
 	}
 
 	public int getNotice() {
@@ -156,5 +149,21 @@ public class Notice {
 
 	public void setNoticeFileNum(int noticeFileNum) {
 		this.noticeFileNum = noticeFileNum;
+	}
+
+	public int getNoticeNum() {
+		return noticeNum;
+	}
+
+	public void setNoticeNum(int noticeNum) {
+		this.noticeNum = noticeNum;
+	}
+
+	public long getNum() {
+		return num;
+	}
+
+	public void setNum(long num) {
+		this.num = num;
 	}
 }

@@ -73,6 +73,13 @@
 			        <input type="text" name="subject" maxlength="100" class="boxTF" style="width: 95%;" value="${dto.subject}">
 			      </td>
 			  </tr>
+			  
+			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;"> 
+				<td width="100" bgcolor="#eeeeee" style="text-align: center;">공지여부</td>
+				<td style="padding-left:10px;">
+					<input type="checkbox" name="notice" value="1" ${dto.notice==1?"checked='checked'":""}> <label>공지</label>
+				</td>
+			  </tr>
 			
 			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#eeeeee" style="text-align: center;">작성자</td>

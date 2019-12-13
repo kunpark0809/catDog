@@ -13,7 +13,7 @@
 	
 	<insert id="insertNoticeFile" parameterType="com.catDog.cs.Notice">
 		insert into noticeFile(noticeFileNum, noticeNum, saveFileName, originalFileName, fileSize) values
-		(noticeFile_seq.nextval, #{noticeNum}, #{saveFileName}, #{originalFileName}, #{fileSize, jdbcType=INTEGER})
+		(noticeFile_seq.nextval, #{noticeNum}, #{saveFileName}, #{originalFileName}, #{fileSize})
 	</insert>
 	
 	  
