@@ -31,6 +31,7 @@ function article(num) {
 var url="${articleUrl}&num="+num;
 location.href=url;
 }
+
 </script>
 
 	<section class="page-section" id="command" style="text-align: center;">
@@ -49,13 +50,11 @@ location.href=url;
 		              	<select name="condition" class="selectField">
 		                  <option value="placeName" ${condition=="placeName"?"selected='selected'":""}>제목</option>
 		                  <option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
-		                  <option value="hitCount" ${condition=="hitCount"?"selected='selected'":""}>조회수</option>
 		            	</select>
 		            <input type="text" name="keyword" value="${keyword}" class="boxTF" size="50;">
 		            <button type="button" class="btn" onclick="searchList()">검색</button>
 		         </form>
 		      </td>
-		      
 		      <tr>
 		      <td align="left" width="100">
 		          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/park/list';">새로고침</button>
@@ -65,9 +64,6 @@ location.href=url;
 		      </td>	      
 		  	 </tr>
 		</table>
-			
-		
     </div>
-
 
 </section>

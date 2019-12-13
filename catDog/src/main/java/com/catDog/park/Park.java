@@ -24,6 +24,8 @@ public class Park {
 	private int listNum;
 	
 	private String userId;
+	
+	private long gap;
 
 	public int getRateNum() {
 		return rateNum;
@@ -167,6 +169,14 @@ public class Park {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public long getGap() {
+		return gap;
+	}
+
+	public void setGap(long gap) {
+		this.gap = gap;
 	}
 	
 }

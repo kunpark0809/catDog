@@ -23,10 +23,17 @@ public class ParkServiceImpl implements ParkService {
 			throw e;
 		}
 	}
-	
+
+	@Override
+	public int dataCount(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	@Override
 	public List<Park> listPark(Map<String, Object> map) {
-		List<Park> list = null;
+		List<Park> list=null;
+		
 		try {
 			list=dao.selectList("park.listPark", map);
 		} catch (Exception e) {
@@ -34,12 +41,6 @@ public class ParkServiceImpl implements ParkService {
 		}
 		
 		return list;
-	}
-
-	@Override
-	public int dataCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Override
@@ -72,6 +73,9 @@ public class ParkServiceImpl implements ParkService {
 		
 	}
 
+	
+
+	
 	
 
 }

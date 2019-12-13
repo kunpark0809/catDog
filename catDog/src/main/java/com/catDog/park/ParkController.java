@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.catDog.customer.SessionInfo;
 
 
-@Controller("park.ParkController")
+@Controller("park.Park")
 public class ParkController {
 	
 @Autowired
@@ -23,12 +23,21 @@ private ParkService service;
 	@RequestMapping(value="/park/list")
 	public String list() throws Exception {
 
-	
+
 		return ".park.list";
 	}
 
 	@RequestMapping(value="/park/created", method=RequestMethod.GET)
-	public String createdForm(Model model) throws Exception {
+	public String createdForm(
+			HttpSession session,
+			Model model) throws Exception {
+		
+		/*
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		if(! info.getUserId().equals("admin")) {
+			return "redirect:/park/list";
+		}
+		*/
 		
 		model.addAttribute("mode", "created");
 		return ".park.created";
@@ -42,9 +51,9 @@ private ParkService service;
 		String path=root+"uploads"+File.separator+"park";
 		
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
-		dto.setUserId(info.getUserId());
 		
 		try {
+			dto.setUserId(info.getUserId());
 			service.insertPark(dto, path);
 		} catch (Exception e) {
 		}

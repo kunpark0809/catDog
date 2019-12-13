@@ -7,7 +7,7 @@
 %>
 
 <script type="text/javascript">
-function deletePhoto() {
+function deletePark() {
 <c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
 	var q = "num=${dto.num}&${query}";
     var url = "<%=cp%>/park/delete?" + q;
@@ -96,10 +96,10 @@ function updatePark() {
 			<tr height="45">
 			    <td width="300" align="left">
 			       <c:if test="${sessionScope.member.userId==dto.userId}">				    
-			          <button type="button" class="btn" onclick="updatePark();">수정</button>
+			          <button type="button" class="btn" onclick="updatepark();">수정</button>
 			       </c:if>
 			       <c:if test="${sessionScope.member.userId==dto.userId || sessionScope.member.userId=='admin'}">				    
-			          <button type="button" class="btn" onclick="deletePark();">삭제</button>
+			          <button type="button" class="btn" onclick="deletepark();">삭제</button>
 			       </c:if>
 			    </td>
 			

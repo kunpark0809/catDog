@@ -2,9 +2,18 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="park">
+	<select id="seq" resultType="Integer">
+		SELECT recommend_seq.NEXTVAL FROM dual
+	</select>
+
 	<insert id="insertPark" parameterType="com.catDog.park.Park">
-		INSERT INTO recommend(recommendNum, sortNum, num, placeName, content, tel, hitCount, addr, lat, lon, created)
-		VALUES (recommend_seq.NEXTVAL, #{sortNum}, #{num}, #{placeName}, #{content}, #{tel}, #{hitCount}, #{addr}, #{lat}, #{lon}, #{created})
+		INSERT INTO recommend(recommendNum, sortNum, num, placeName, content, tel, addr, lat, lon) 
+		VALUES(#{recommendNum}, 1, #{num}, #{placeName}, #{content}, #{tel}, #{addr}, #{lat}, #{lon})
+	</insert>
+	
+	<insert id="insertParkPic">
+		INSERT INTO recommendPic(recommendPicNum, imageFileName, RecommendNum) 
+		VALUES(recommendPic_seq.NEXTVAL, #{imageFileName}, #{recommendNum})
 	</insert>
 	
 </mapper>
