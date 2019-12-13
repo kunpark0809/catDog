@@ -17,6 +17,7 @@ public class ParkServiceImpl implements ParkService {
 	@Override
 	public void insertPark(Park dto, String pathname) throws Exception {
 		try {
+			dto.setRecommendNum(dao.selectOne("park.seq"));
 			dao.insertData("park.insertPark", dto);
 		} catch (Exception e) {
 			e.printStackTrace();

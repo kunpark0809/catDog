@@ -6,7 +6,7 @@ public class Park {
 	private int rate;
 	private String content;
 	private String created;
-	private int num;
+	private long num;
 	
 	private int recommendPicNum;
 	private String imageFileName;
@@ -67,14 +67,7 @@ public class Park {
 		this.created = created;
 	}
 
-	public int getNum() {
-		return num;
-	}
-
-	public void setNum(int num) {
-		this.num = num;
-	}
-
+	
 	public int getRecommendPicNum() {
 		return recommendPicNum;
 	}
@@ -177,6 +170,14 @@ public class Park {
 
 	public void setGap(long gap) {
 		this.gap = gap;
+	}
+
+	public long getNum() {
+		return num;
+	}
+
+	public void setNum(long num) {
+		this.num = num;
 	}
 	
 }

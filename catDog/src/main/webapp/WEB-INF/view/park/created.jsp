@@ -46,13 +46,6 @@
          return;
      }
      
- 	str = f.content.value;
-     if(!str) {
-         alert("내용을 입력하세요. ");
-         f.content.focus();
-         return;
-     }
-     
      str = f.lat.value;
      if(!str) {
          alert("지도 좌표 위치의 경도를 입력하세요. ");
@@ -66,6 +59,14 @@
          f.lon.focus();
          return;
      }
+     
+ 	str = f.content.value;
+     if(!str) {
+         alert("내용을 입력하세요. ");
+         f.content.focus();
+         return;
+     }
+     
 
      var mode="${mode}";
      if(mode=="created"||mode=="update" && f.upload.value!="") {
@@ -102,7 +103,7 @@
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#262626" style="text-align: center;">장소이름</td>
 			      <td style="padding-left:10px;"> 
-			        <input type="text" name="subject" maxlength="100" class="boxTF" style="width: 100%;" value="${dto.placeName}">
+			        <input type="text" name="placeName" maxlength="100" class="boxTF" style="width: 100%;" value="${dto.placeName}">
 			      </td>
 			  </tr>
 			
@@ -130,8 +131,8 @@
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#262626" style="text-align: center;">위도/경도</td>
 			      <td style="padding-left:10px;"> 
-			        <input type="text" name="tel" maxlength="100" class="boxTF" style="width: 20%;" value="${dto.lat}">
-			        <input type="text" name="tel" maxlength="100" class="boxTF" style="width: 20%;" value="${dto.lon}">
+			        <input type="text" name="lat" maxlength="100" class="boxTF" style="width: 20%;" value="${dto.lat}">
+			        <input type="text" name="lon" maxlength="100" class="boxTF" style="width: 20%;" value="${dto.lon}">
 			      </td>
 			  </tr>
 			

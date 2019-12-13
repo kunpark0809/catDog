@@ -53,7 +53,7 @@ private ParkService service;
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
 		try {
-			dto.setUserId(info.getUserId());
+			dto.setNum(info.getMemberIdx());
 			service.insertPark(dto, path);
 		} catch (Exception e) {
 		}
