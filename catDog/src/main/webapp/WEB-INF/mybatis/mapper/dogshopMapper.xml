@@ -8,8 +8,29 @@
 		WHERE bigSortNum = 1
 	</select>
 	
+	<select id="productSeq" resultType="Integer">
+		SELECT PRODUCT_SEQ.NEXTVAL FROM dual
+	</select>
+	
+	<select id="listDogProduct" parameterType="map" resultType="com.catDog.dogShop.DogShop">
+		SELECT p.productNum, p.name, p.price, pp.imageFileName
+		FROM product p
+		JOIN productPic pp ON p.productNum = pp.productNum
+		<if test="smallSortNum!='' and smallSortNum!=null">
+			WHERE smallSortNum=#{smallSortNum}
+		</if>
+		 ORDER BY p.productNum DESC
+	</select>
+
 	<insert id="insertDogProduct" parameterType="com.catDog.dogShop.DogShop">
 		INSERT INTO product(PRODUCTNUM, NAME, PRICE, CONTENT, SMALLSORTNUM) 
-		VALUES(PRODUCT_SEQ.NEXTVAL, #{name}, #{price}, #{content}, 1);
+		VALUES(#{productNum}, #{name}, #{price}, #{content}, 1)
 	</insert>
+	
+	<insert id="insertImgFile" parameterType="com.catDog.dogShop.DogShop">
+		INSERT INTO productPic(productPicNum, imageFileName, productNum) 
+		VALUES(PRODUCTPIC_SEQ.NEXTVAL, #{imageFileName}, #{productNum})
+	</insert>
+	
+	
 </mapper>

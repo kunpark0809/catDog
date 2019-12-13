@@ -7,40 +7,50 @@
 %>
 	<script type="text/javascript" src="<%=cp%>/resource/se/js/HuskyEZCreator.js" charset="utf-8"></script>
 	<script type="text/javascript">
-	   function sendOk() {
+	   function check() {
 	        var f = document.dogshopForm;
 			
 	        if(f.sortList.value == "0"){
 	        	alert("용품분류를 선택하세요. ");
 	            f.sortList.focus();
-	            return;
+	            return false;
 	        }
 	        
 	        if(!f.name.value){
 	        	alert("용품명을 입력하세요. ");
 	            f.name.focus();
-	            return;
+	            return false;
 	        }
 	        
 	        if(!f.price.value){
 	        	alert("가격을 입력하세요. ");
 	            f.price.focus();
-	            return;
+	            return false;
 	        }
 	        
 	        
-	    	var str = f.content.value;
-	        if(!str || str=="<p>&nbsp;</p>") {
-	            alert("내용을 입력하세요. ");
-	            f.content.focus();
-	            return;
-	        }
+	        var str = f.content.value;
+		    if(!str || str=="<p>&nbsp;</p>") {
+		    	alert("내용 입력하세요 ");
+		        f.content.focus();
+		        return false;
+		    }
 
+	        var mode="${mode}";
+	        if(mode=="created"||mode=="update" && f.upload.value!="") {
+	    		if(! /(\.gif|\.jpg|\.png|\.jpeg)$/i.test(f.upload.value)) {
+	    			alert('이미지 파일만 가능합니다.(bmp 파일은 불가) !!!');
+	    			f.upload.focus();
+	    			return false;
+	    		}
+	    	}
+	        
 	   		f.action="<%=cp%>/dogshop/created";
 	   		f.submit();
 
 	        return true;
 	    }
+
 	</script>
 	<link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
 	<div class="body-title">
@@ -49,48 +59,50 @@
 
 	<div style="width: 100%">
 
-		<form name="dogshopForm" method="post" enctype="multipart/form-data">
+		<form name="dogshopForm" method="post" enctype="multipart/form-data" onsubmit="return submitContents(this);">
 			<table style="width: 100%; border-collapse: collapse; border-spacing: 0">
-				<tr>
-					<td>분&nbsp;&nbsp;류</td>
-					<td>
-						<select name="sortList">
-							<option value="0">::용품 선택::</option>
-							<c:forEach var="sort" items="${sortList}">
-								<option value="${sort.smallSortNum}">${sort.sortName}</option>
-							</c:forEach>
-						</select>
+			<tbody id="dogshopb">
+					<tr>
+						<td>분&nbsp;&nbsp;류</td>
+						<td>
+							<select name="sortList">
+								<option value="0">::용품 선택::</option>
+								<c:forEach var="sort" items="${sortList}">
+									<option value="${sort.smallSortNum}">${sort.sortName}</option>
+								</c:forEach>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>용품명</td>
+						<td>
+							<input type="text" name="name">
+						</td>
+					</tr>
+					<tr>
+						<td>가&nbsp;&nbsp;격</td>
+						<td>
+							<input type="text" name="price">
+						</td>
+					</tr>
+					<tr align="left" style="border-bottom: 1px solid #cccccc;"> 
+				      <td width="100" bgcolor="#eeeeee" style="text-align: center; padding-top:5px;" valign="top">본문내용</td>
+				      <td valign="top" style="padding:5px 0px 5px 10px;"> 
+				        <textarea name="content" id="content" class="boxTA" style="width:98%; height: 270px;">${dto.content}</textarea>
+				      </td>
+			  		</tr>
+					<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
+					<td width="100">용품사진</td>
+					<td style="padding-left:10px;"> 
+						<input type="file" name="upload" class="boxTF" size="53" style="height: 25px;" multiple="multiple">
 					</td>
-				</tr>
-				<tr>
-					<td>용품명</td>
-					<td>
-						<input type="text" name="name">
-					</td>
-				</tr>
-				<tr>
-					<td>가&nbsp;&nbsp;격</td>
-					<td>
-						<input type="text" name="price">
-					</td>
-				</tr>
-				<tr>
-					<td>본문내용</td>
-					<td>
-						<textarea rows="12" name="content" id="content" style="width: 80%; height: 270px;"></textarea>
-					</td>
-				</tr>
-				<tr>
-					<td>용품 사진</td>
-					<td>
-						<input type="file" name="upload">
-					</td>
-				</tr>
+				</tr> 
+				</tbody>
 			</table>
 			<table>
 				<tr>
 					<td>
-						<button type="button" onclick="sendOk();">등록하기</button>
+						<button type="submit">등록하기</button>
 						<button type="reset">다시입력</button>
 						<button type="button" onclick="">등록취소</button>
 					</td>

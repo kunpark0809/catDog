@@ -5,3 +5,7 @@
 	color: #A66E4E;
 	font-weight: bold;
 }
+
+.productList img {
+	width: 100px;
+}

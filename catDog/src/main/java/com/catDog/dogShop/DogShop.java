@@ -1,14 +1,21 @@
 package com.catDog.dogShop;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class DogShop {
 	private String smallSortNum;
 	private String sortName;
 	private String bigSortNum;
 	
+	private int productNum;
 	private String name;
 	private int price;
 	private String content;
 	private String created;
+	
+	private int productPicNum;
+	private String imageFileName;
+	private MultipartFile upload;
 	
 	public String getSmallSortNum() {
 		return smallSortNum;
@@ -51,6 +58,31 @@ public class DogShop {
 	}
 	public void setCreated(String created) {
 		this.created = created;
+	}
+
+	public int getProductPicNum() {
+		return productPicNum;
+	}
+	public void setProductPicNum(int productPicNum) {
+		this.productPicNum = productPicNum;
+	}
+	public String getImageFileName() {
+		return imageFileName;
+	}
+	public void setImageFileName(String imageFileName) {
+		this.imageFileName = imageFileName;
+	}
+	public MultipartFile getUpload() {
+		return upload;
+	}
+	public void setUpload(MultipartFile upload) {
+		this.upload = upload;
+	}
+	public int getProductNum() {
+		return productNum;
+	}
+	public void setProductNum(int productNum) {
+		this.productNum = productNum;
 	}
 	
 }
