@@ -1,6 +1,7 @@
 package com.catDog.cs;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -9,12 +10,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.catDog.common.FileManager;
 import com.catDog.common.MyUtil;
 import com.catDog.customer.SessionInfo;
+import com.catDog.cs.Notice;
 
 @Controller("cs.csController")
 public class CsController {
@@ -36,7 +41,7 @@ public class CsController {
 	
 	@RequestMapping(value="/notice/list")
 	public String noticeList(
-			@RequestParam(value="pageNo", defaultValue="1") int current_page,
+			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
 			HttpServletRequest req,
@@ -146,6 +151,95 @@ public class CsController {
 		}	
 		return "redirect:/notice/list";
 	}
+	
+	@RequestMapping(value="/notice/zipdownload")
+	public void zip(@RequestParam int noticeNum,
+					HttpServletResponse resp,
+					HttpSession session) throws Exception {
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "notice";
+		
+		boolean b = false;
+		List<Notice> list = service.listFile(noticeNum);
+		
+		if(list.size()>0) {
+			String []sources = new String[list.size()];
+			String []originals = new String[list.size()];
+			String zipFileName = noticeNum+".zip";
+			
+			// 압축을 할 때는 경로가 꼭 있어야 한다. \aaaa.txt 같이.
+			for(int idx=0; idx<list.size(); idx++) {
+				sources[idx] = pathname+File.separator+list.get(idx).getSaveFileName();
+				originals[idx] = File.separator+list.get(idx).getOriginalFileName();
+			}
+			b = fileManager.doZipFileDownload(sources, originals, zipFileName, resp);			
+		}
+		
+		if(! b) {
+			resp.setContentType("text/html;charset=utf-8");
+			PrintWriter out = resp.getWriter();
+			out.print("<script>alert('다운불가...');history.back();</script>");
+		}
+	}
+	
+	@RequestMapping(value="/notice/article", method=RequestMethod.GET)
+	public String article(
+			@RequestParam int noticeNum,
+			@RequestParam String page,
+			@RequestParam(defaultValue="all") String condition,
+			@RequestParam(defaultValue="") String keyword,
+			Model model,
+			@CookieValue(defaultValue="0") int cnum,
+			HttpServletResponse resp) throws Exception {
+		
+		keyword = URLDecoder.decode(keyword, "utf-8");
+		
+		String query = "page="+page;
+		if(keyword.length()!=0) {
+			query += "&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "utf-8");
+		}
+		
+		if(noticeNum!=cnum) {
+			service.updateHitCount(noticeNum);
+			
+			Cookie ck = new Cookie("cnum", Integer.toString(noticeNum));
+			resp.addCookie(ck);
+		}
+		
+		Notice dto = service.readNotice(noticeNum);
+		if(dto==null)
+			return "redirect:/notice/list?"+query;
+		
+		// 스타일로 처리하는 경우 : style="white-space:pre;"
+        // dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+        
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("condition", condition);
+        map.put("keyword", keyword);
+        map.put("noticeNum", noticeNum);
+        
+        Notice preReadDto = service.preReadNotice(map);
+        Notice nextReadDto = service.nextReadNotice(map);
+        
+        // 파일
+        List<Notice> listFile = service.listFile(noticeNum);
+        
+        model.addAttribute("dto", dto);
+        model.addAttribute("preReadDto", preReadDto);
+        model.addAttribute("nextReadDto", nextReadDto);
+        model.addAttribute("listFile", listFile);
+        
+        model.addAttribute("page", page);
+        model.addAttribute("query", query);
+		
+		return ".notice.article";
+	}
+	
+	
+	
+	
+	
 	
 	@RequestMapping(value="/qna/list")
 	public String qnaList(

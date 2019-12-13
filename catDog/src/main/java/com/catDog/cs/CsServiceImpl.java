@@ -85,27 +85,44 @@ public class CsServiceImpl implements CsService {
 	}
 
 	@Override
-	public void updateHitCount(int num) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public void updateHitCount(int noticeNum) throws Exception {
+		dao.updateData("notice.updateHitCount", noticeNum);
 	}
 
 	@Override
-	public Notice readNotice(int num) {
-		// TODO Auto-generated method stub
-		return null;
+	public Notice readNotice(int noticeNum) {
+		Notice dto = null;
+		
+		try {
+			dto = dao.selectOne("notice.readNotice", noticeNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
 	}
 
 	@Override
 	public Notice preReadNotice(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Notice dto = null;
+		
+		try {
+			dto = dao.selectOne("notice.preReadNotice", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
 	}
 
 	@Override
 	public Notice nextReadNotice(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Notice dto = null;
+		
+		try {
+			dto = dao.selectOne("notice.nextReadNotice", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
 	}
 
 	@Override
@@ -115,7 +132,7 @@ public class CsServiceImpl implements CsService {
 	}
 
 	@Override
-	public void deleteNotice(int num, String pathname) throws Exception {
+	public void deleteNotice(int noticeNum, String pathname) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
@@ -132,15 +149,27 @@ public class CsServiceImpl implements CsService {
 	}
 
 	@Override
-	public List<Notice> listFile(int num) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Notice> listFile(int noticeNum) {
+		List<Notice> list = null;
+		
+		try {
+			list = dao.selectList("notice.listFile", noticeNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+		return list;
 	}
 
 	@Override
 	public Notice readFile(int fileNum) {
-		// TODO Auto-generated method stub
-		return null;
+		Notice dto = null;
+		
+		try {
+			dto = dao.selectOne("notice.readFile", fileNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
 	}
 
 	@Override
@@ -162,7 +191,7 @@ public class CsServiceImpl implements CsService {
 	}
 
 	@Override
-	public Qna readQna(int num) {
+	public Qna readQna(int qnaNum) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -186,7 +215,7 @@ public class CsServiceImpl implements CsService {
 	}
 
 	@Override
-	public void deleteQna(int num) throws Exception {
+	public void deleteQna(int qnaNum) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
@@ -204,7 +233,7 @@ public class CsServiceImpl implements CsService {
 	}
 
 	@Override
-	public Qna readFaq(int num) {
+	public Qna readFaq(int faqNum) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -228,7 +257,7 @@ public class CsServiceImpl implements CsService {
 	}
 
 	@Override
-	public void deleteFaq(int num) throws Exception {
+	public void deleteFaq(int faqNum) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}

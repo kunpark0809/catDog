@@ -54,7 +54,7 @@
 			group by noticeNum
 		) nf on n.noticeNum = nf.noticeNum
 		where n.notice = #{notice}
-		order by n.num desc
+		order by n.noticeNum desc
 	</select>
 	
 	<select id="listNotice" parameterType="map" resultType="com.catDog.cs.Notice">
@@ -70,8 +70,59 @@
 				<include refid="where-list"/>
 			</if>
 		</where>
-		order by n.num desc
+		order by n.noticeNum desc
 		offset #{offset} rows fetch first #{rows} rows only
+	</select>
+	
+	<select id="readNotice" parameterType="Integer" resultType="com.catDog.cs.Notice">
+		select n.num, md.userId, nickName, subject, created, content, 
+		hitCount, notice
+		from notice n
+		join memberDetail md on md.num=n.num
+		where n.noticeNum = #{noticeNum}
+	</select>
+	
+	<select id="preReadNotice" parameterType="map" resultType="com.catDog.cs.Notice">
+		select noticeNum, subject 
+		from notice n
+		join memberDetail md on n.num=md.num
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			and (noticeNum &gt; #{noticeNum})
+		</where>
+		order by noticeNum asc fetch first 1 rows only
+	</select>
+	
+	<select id="nextReadNotice" parameterType="map" resultType="com.catDog.cs.Notice">
+		select noticeNum, subject 
+		from notice n
+		join memberDetail md on n.num=md.num
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			and (noticeNum &lt; #{noticeNum})
+		</where>
+		order by noticeNum desc fetch first 1 rows only
+	</select>
+	
+	<select id="updateHitCount" parameterType="Integer">
+		update notice set hitCount= hitCount+1
+		where noticeNum = #{noticeNum}
+	</select>
+	
+	<select id="readFile" parameterType="Integer" resultType="com.catDog.cs.Notice">
+		select noticeFileNum, noticeNum, saveFileName, originalFileName, fileSize
+		from noticeFile
+   		where noticeFileNum = #{noticeFileNum}
+	</select>
+	
+	<select id="listFile" parameterType="Integer" resultType="com.catDog.cs.Notice">
+		select noticeFileNum, noticeNum, saveFileName, originalFileName, fileSize
+		from noticeFile
+   		where noticeNum = #{noticeNum}
 	</select>
 	
 </mapper>

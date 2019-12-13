@@ -44,13 +44,15 @@ function searchList() {
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
 				<td><span style="display: inline-block;padding: 1px 3px; background: #ED4C00; color: #FFFFFF">공지</span></td>
 				<td align="left" style="padding-left: 10px;">
-					<a href="${articleUrl}&num=${dto.num}">${dto.subject}</a>
+					<a href="${articleUrl}&noticeNum=${dto.noticeNum}">${dto.subject}</a>
 				</td>
 				<td>${dto.nickName}</td>
 				<td>${dto.created}</td>
 				<td>${dto.hitCount}</td>
 				<td>
-					
+					<c:if test="${dto.fileCount != 0}">
+						<a href="<%=cp%>/notice/zipdownload?noticeNum=${dto.num}"><i class="far fa-file"></i></a>
+					</c:if>
 				</td>
 			</tr>
 			</c:forEach>
@@ -59,7 +61,7 @@ function searchList() {
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
 				<td>${dto.listNum}</td>
 				<td align="left" style="padding-left: 10px;">
-					<a href="${articleUrl}&num=${dto.num}">${dto.subject}</a>
+					<a href="${articleUrl}&noticeNum=${dto.noticeNum}">${dto.subject}</a>
 					<c:if test="${dto.gap < 1}">
 						<img src="<%=cp%>/resource/img/new.gif">
 					</c:if>
@@ -68,7 +70,9 @@ function searchList() {
 				<td>${dto.created}</td>
 				<td>${dto.hitCount}</td>
 				<td>
-					
+					<c:if test="${dto.fileCount != 0}">
+						<a href="<%=cp%>/notice/zipdownload?noticeNum=${dto.noticeNum}"><i class="far fa-file"></i></a>
+					</c:if>
 				</td>
 			</tr>
 			</c:forEach>

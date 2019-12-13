@@ -1,9 +1,10 @@
 package com.catDog.cs;
 
 public class Qna {
-	private int faqNum, qnaNum, num, listNum;
+	private int faqNum, qnaNum, listNum;
 	private String subject, content, created;
 	private int hitCount, status;
+	private long num;
 	
 	public int getFaqNum() {
 		return faqNum;
@@ -16,12 +17,6 @@ public class Qna {
 	}
 	public void setQnaNum(int qnaNum) {
 		this.qnaNum = qnaNum;
-	}
-	public int getNum() {
-		return num;
-	}
-	public void setNum(int num) {
-		this.num = num;
 	}
 	public int getListNum() {
 		return listNum;
@@ -58,5 +53,11 @@ public class Qna {
 	}
 	public void setStatus(int status) {
 		this.status = status;
+	}
+	public long getNum() {
+		return num;
+	}
+	public void setNum(long num) {
+		this.num = num;
 	}
 }
