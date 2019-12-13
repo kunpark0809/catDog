@@ -221,7 +221,7 @@ function nickNameCheck() {
 </script>
 <div class="body-container" style="width: 700px; margin: 0 auto;">
     <div class="body-title">
-        <h3><i class="fas fa-door-open"></i> ${mode=="register"?"회원 가입":"회원 정보 수정"} </h3>
+        <h3><i class="far fa-handshake"></i> ${mode=="register"?"회원 가입":"회원 정보 수정"} </h3>
     </div>
     
         <div>
