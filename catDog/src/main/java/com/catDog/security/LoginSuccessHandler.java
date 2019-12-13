@@ -22,21 +22,25 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 	private CustomerService customerService;
 
 	@Override
-	public void onAuthenticationSuccess(HttpServletRequest req,
-			HttpServletResponse resp, Authentication authentication)
+	public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse resp, Authentication authentication)
 			throws ServletException, IOException {
-		HttpSession session=req.getSession();
-		
+		HttpSession session = req.getSession();
+
 		// System.out.println(authentication.getName()); // 로그인 아이디
-		
+
 		// 로그인 정보 저장
-		Customer member=customerService.readCustomer(authentication.getName());
-		SessionInfo info=new SessionInfo();
-		info.setUserId(member.getUserId());
-		info.setName(member.getName());
-		info.setMemberIdx(member.getNum());
-		
-		session.setAttribute("member", info);	
+		Customer member;
+		try {
+			member = customerService.readCustomer(authentication.getName());
+			SessionInfo info = new SessionInfo();
+			info.setUserId(member.getUserId());
+			info.setName(member.getName());
+			info.setMemberIdx(member.getNum());
+			session.setAttribute("member", info);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		super.onAuthenticationSuccess(req, resp, authentication);
 	}
