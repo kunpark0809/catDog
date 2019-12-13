@@ -2,6 +2,8 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <%
 	String cp = request.getContextPath();
 %>
@@ -61,17 +63,31 @@
 						<li><a class="nav-sub-link" href="<%=cp%>/qna/list">질문과답변</a></li>
 						<li><a class="nav-sub-link" href="<%=cp%>/faq/list">FAQ</a></li>
 					</ul></li>
-				<c:if test="${not empty sessionScope.member}">
+				<c:if test="${not empty sessionScope.member&&fn:indexOf(sessionScope.member.userId,'admin')!=0}">
 					<li class="nav-item"><a class="nav-link js-scroll-trigger">마이페이지</a>
 						<ul class="nav-sub-menu">
 							<li><a class="nav-sub-link" href="<%=cp%>/mypage/update">회원정보수정</a></li>
-							<li><a class="nav-sub-link" href="<%=cp%>/mypage/list">내가
-									쓴 글</a></li>
+							<li><a class="nav-sub-link" href="<%=cp%>/mypage/list">내가 쓴 글</a></li>
 							<li><a class="nav-sub-link" href="<%=cp%>/mypage/list">구매정보</a></li>
 							<li><a class="nav-sub-link" href="<%=cp%>/mypage/list">출석체크</a></li>
 							<li><a class="nav-sub-link" href="<%=cp%>/mypage/list">기부</a></li>
 						</ul></li>
 				</c:if>
+				
+				<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
+					<li class="nav-item"><a class="nav-link js-scroll-trigger">관리자</a>
+						<ul class="nav-sub-menu">
+							<li><a class="nav-sub-link" href="<%=cp%>/admin/cs">고객센터 관리</a></li>
+							<li><a class="nav-sub-link" href="<%=cp%>/admin/product">용품 관리
+									</a></li>
+							<li><a class="nav-sub-link" href="<%=cp%>/admin/bbs">수다방 관리</a></li>
+							<li><a class="nav-sub-link" href="<%=cp%>/admin/play">놀이터 관리</a></li>
+							<li><a class="nav-sub-link" href="<%=cp%>/admin/money">매출 관리</a></li>
+							<li><a class="nav-sub-link" href="<%=cp%>/admin/member">회원 관리</a></li>
+						</ul></li>
+				</c:if>
+				
+				
 			</ul>
 		</div>
 		<div class="navbar-nav text-uppercase text-Image" id="icon-image" style="float: right;">
