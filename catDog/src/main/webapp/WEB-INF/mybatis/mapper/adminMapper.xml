@@ -53,7 +53,7 @@
 
 <!-- 회원 리스트 -->
 <!-- 회원의 정보를 memberDetail에서 가져오면서 request에서 번호로 GROUP BY하여 COUNT한 테이블(주문횟수)과도 JOIN -->
-<select id="memberList" parameterType="Map" resultType="com.catDog.admin.Member">
+<select id="listMember" parameterType="Map" resultType="com.catDog.admin.Member">
 	SELECT md.num, userId, nickName, mileage, NVL(count,0) requestCount
 	FROM memberDetail md
 	LEFT OUTER JOIN (

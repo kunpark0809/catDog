@@ -1,5 +1,6 @@
 package com.catDog.admin;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,19 @@ public class AdminServiceImpl implements AdminService {
 			e.printStackTrace();
 		}
 		return money;
+	}
+
+	@Override
+	public List<Member> listMember(Map<String, Object> map) {
+		List<Member> list = null;
+
+		try {
+			dao.selectList("admin.listMember", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
 	}
 
 }

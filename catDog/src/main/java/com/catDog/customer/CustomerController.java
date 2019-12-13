@@ -34,9 +34,9 @@ public class CustomerController {
 
 		String p = "true";
 		Customer dto = service.loginCustomer(userId);
-		if (dto != null)
+		if (dto != null||userId.startsWith("admin")) 
 			p = "false";
-
+		
 		Map<String, Object> model = new HashMap<>();
 		model.put("passed", p);
 		return model;
