@@ -105,7 +105,7 @@ public class CustomerController {
 	@RequestMapping(value = "/customer/register", method = RequestMethod.POST)
 	public String registerSubmit(Customer dto, final RedirectAttributes reAttr, Model model, HttpSession session) throws Exception {
 
-		String root=session.getServletContext().getRealPath("/");
+		String root=session.getServletContext().getRealPath("	");
 		String pathname=root+"uploads"+File.separator+"photo";
 		
 		try {
@@ -141,7 +141,7 @@ public class CustomerController {
 		if (message == null || message.length() == 0) // F5를 누른 경우
 			return "redirect:/";
 
-		return ".member.complete";
+		return ".customer.complete";
 	}
 	
 }

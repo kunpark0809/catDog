@@ -31,17 +31,17 @@
     </select>
     
     <!-- 회원가입 시 여러 테이블에 데이터를 집어넣기 위해 사용 -->
-    <insert id="memberRegister" parameterType="com.catDog.customer.Customer">
+    <update id="memberRegister" parameterType="com.catDog.customer.Customer">
     	INSERT ALL
     		INTO customer(num, membership)
     			VALUES(#{num}, '1')
-    		INTO customerDetail(num, name, email, tel, birth) 
-    			VALUES(#{num}, #{name}, #{email}, #{tel}, #{birth})
-    		INTO memberDetail(num, userId, userPwd, nickName, userPic, addr)
-    			VALUES(#{num}, #{userId}, #{userPwd}, #{nickName}, #{userPic}, #{addr})
-    		INTO memberAuthority(num, authority)
-    			VALUES (#{num}, 'ROLE_USER')
-    	SELECT * FROM DUAL;
-    </insert>
+    		INTO customerDetail(num, name, email, tel) 
+    			VALUES(#{num}, #{name}, #{email}, #{tel})
+    		INTO memberDetail(num, userId, userPwd, nickName, userPic, addr, birth)
+    			VALUES(#{num}, #{userId}, #{userPwd}, #{nickName}, #{userPic, jdbcType=VARCHAR}, #{addr, jdbcType=VARCHAR}, #{birth})
+    		INTO memberAuthority(userId, authority)
+    			VALUES (#{userId}, 'ROLE_USER')
+    	SELECT * FROM DUAL
+    </update>
     
 </mapper>

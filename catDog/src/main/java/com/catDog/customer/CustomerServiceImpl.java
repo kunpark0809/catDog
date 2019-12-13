@@ -26,15 +26,19 @@ public class CustomerServiceImpl implements CustomerService {
 					&& dto.getTel2().length() != 0 && dto.getTel3() != null && dto.getTel3().length() != 0)
 				dto.setTel(dto.getTel1() + "-" + dto.getTel2() + "-" + dto.getTel3());
 
+			dto.setAddr(dto.getAddr1()+" "+dto.getAddr2());
+			
 			long customerSeq = dao.selectOne("customer.customerSeq");
 			dto.setNum(customerSeq);
-
+			
+			
+			
 			String userPic = fileManager.doFileUpload(dto.getUpload(), pathname);
 			if (userPic != null) {
 				dto.setUserPic(userPic);
 			}
 
-			dao.insertData("customer.memberRegister", dto);
+			dao.updateData("customer.memberRegister", dto);
 
 		} catch (Exception e) {
 			e.printStackTrace();
