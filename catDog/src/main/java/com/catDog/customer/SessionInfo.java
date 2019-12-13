@@ -6,6 +6,7 @@ public class SessionInfo {
 	private String userId;
 	private String name;
 	private int memberLevel;
+	private String nickName;
 	
 	public long getMemberIdx() {
 		return memberIdx;
@@ -30,6 +31,12 @@ public class SessionInfo {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getNickName() {
+		return nickName;
+	}
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 	
 }
