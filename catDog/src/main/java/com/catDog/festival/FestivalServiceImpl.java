@@ -1,4 +1,4 @@
-package com.catDog.calendar;
+package com.catDog.festival;
 
 import java.util.List;
 import java.util.Map;
@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 import com.catDog.common.dao.CommonDAO;
 
 @Service("calendar.calendarService")
-public class CalendarServiceImpl implements CalendarService {
+public class FestivalServiceImpl implements FestivalService {
 	@Autowired
 	private CommonDAO dao;
 
 	@Override
-	public void insertCalendar(MyCalendar dto) throws Exception {
+	public void insertFestival(Festival dto) throws Exception {
 		try {
 			dto.setStartDate(dto.getStartDate().replaceAll("-", ""));
 			dto.setEndDate(dto.getEndDate().replaceAll("-", ""));
@@ -23,7 +23,7 @@ public class CalendarServiceImpl implements CalendarService {
 			
 			if(dto.getStartTime().length()==0&&dto.getEndTime().length()==0&&dto.getStartDate().equals(dto.getEndDate()))
 				dto.setEndDate("");
-			dao.insertData("calendar.insert", dto);
+			dao.insertData("festival.insert", dto);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -31,10 +31,10 @@ public class CalendarServiceImpl implements CalendarService {
 	}
 
 	@Override
-	public List<MyCalendar> listMonth(Map<String, Object> map) throws Exception {
-		List<MyCalendar> list=null;
+	public List<Festival> listMonth(Map<String, Object> map) throws Exception {
+		List<Festival> list=null;
 		try {
-			list=dao.selectList("calendar.listMonth", map);
+			list=dao.selectList("festival.listMonth", map);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -42,10 +42,10 @@ public class CalendarServiceImpl implements CalendarService {
 	}
 
 	@Override
-	public List<MyCalendar> listDay(Map<String, Object> map) throws Exception {
-		List<MyCalendar> list=null;
+	public List<Festival> listDay(Map<String, Object> map) throws Exception {
+		List<Festival> list=null;
 		try {
-			list=dao.selectList("calendar.listDay", map);
+			list=dao.selectList("festival.listDay", map);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -53,10 +53,10 @@ public class CalendarServiceImpl implements CalendarService {
 	}
 
 	@Override
-	public MyCalendar readCalendar(int eventNum) throws Exception {
-		MyCalendar dto=null;
+	public Festival readFestival(int eventNum) throws Exception {
+		Festival dto=null;
 		try {
-			dto=dao.selectOne("calendar.readCalendar", eventNum);
+			dto=dao.selectOne("festival.readFestival", eventNum);
 			if(dto!=null) {
 				String s;
 				s=dto.getStartDate().substring(0, 4)+"-"+dto.getStartDate().substring(4, 6)+"-"+dto.getStartDate().substring(6);
@@ -97,7 +97,7 @@ public class CalendarServiceImpl implements CalendarService {
 	}
 
 	@Override
-	public void updateCalendar(MyCalendar dto) throws Exception {
+	public void updateFestival(Festival dto) throws Exception {
 		try {
 			dto.setStartDate(dto.getStartDate().replaceAll("-", ""));
 			dto.setEndDate(dto.getEndDate().replaceAll("-", ""));
@@ -107,7 +107,7 @@ public class CalendarServiceImpl implements CalendarService {
 			if(dto.getStartTime().length()==0&&dto.getEndTime().length()==0&&dto.getStartDate().equals(dto.getEndDate()))
 				dto.setEndDate("");
 			
-			dao.updateData("calendar.updateCalendar", dto);
+			dao.updateData("festival.updateFestival", dto);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -115,9 +115,9 @@ public class CalendarServiceImpl implements CalendarService {
 	}
 
 	@Override
-	public void deleteCalendar(Map<String, Object> map) throws Exception {
+	public void deleteFestival(Map<String, Object> map) throws Exception {
 		try {
-			dao.deleteData("calendar.deleteCalendar", map);
+			dao.deleteData("festival.deleteFestival", map);
 		} catch (Exception e) {
 			throw e;
 		}

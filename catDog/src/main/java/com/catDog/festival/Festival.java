@@ -1,6 +1,6 @@
-package com.catDog.calendar;
+package com.catDog.festival;
 
-public class MyCalendar {
+public class Festival {
 	private int festivalNum;  
 	private long num;
 	private String userId;

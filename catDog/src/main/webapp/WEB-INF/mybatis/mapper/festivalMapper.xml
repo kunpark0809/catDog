@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="calendar">
+
+	<insert id="insertCalendar" parameterType="com.catDog.calendar.MyCalendar">
+		INSERT INTO festival(festivalNum, num, subject, content, color, startDate, endDate, startTime, endTime, addr)
+		VALUES(festival_seq.NEXTVAL, #{num}, #{subject}, #{content}, #{color}, #{startDate}, #{endDate}, 
+		#{startTime, jdbcType=VARCHAR}, #{endTime, jdbcType=VARCHAR}, #{addr})
+	</insert>
+
+	<select id="listMonth" parameterType="map" resultType="com.catDog.calendar.MyCalendar">
+		SELECT festivalNum, subject, startDate, endDate, startTime, endTime, color
+		FROM festival
+		WHERE userId = #{userId} AND
+			(
+				(
+					TO_DATE(startDate, 'YYYYMMDD') >= TO_DATE(#{startDate}, 'YYYYMMDD')
+						AND TO_DATE(startDate, 'YYYYMMDD') &lt;= TO_DATE(#{endDate}, 'YYYYMMDD')
+						OR TO_DATE(startDate, 'YYYYMMDD') &lt;= TO_DATE(#{endDate}, 'YYYYMMDD')
+				)
+			)
+		ORDER BY startDate ASC, festivalNum DESC
+	</select>
+	
+	<select id="listDay" parameterType="map" resultType="com.catDog.calendar.MyCalendar">
+		SELECT festivalNum, subject, startDate, endDate, color, TO_CHAR(created, 'YYYY-MM-DD') created
+		FROM festival
+		WHERE userId = #{userId} AND
+			(
+				(
+					TO_DATE(startDate, 'YYYYMMDD') = TO_DATE(#{date}, 'YYYYMMDD')
+						OR (endDate IS NOT NULL AND TO_DATE(startDate, 'YYYYMMDD') &lt;= TO_DATE(#{date}, 'YYYYMMDD') AND TO_DATE(endDate, 'YYYYMMDD') &gt; TO_DATE(#{date}, 'YYYYMMDD'))
+				)
+			)
+		ORDER by festivalNum DESC
+	</select>
+	
+	<select id="readCalendar" parameterType="Integer" resultType="com.catDog.calendar.MyCalendar">
+		SELECT festivalNum, num, subject, content, color, startDate, endDate, startTime, endTime, addr, created
+		FROM festival WHERE festivalNum = #{festivalNum}
+	</select>
+	
+	<update id="updateCalendar" parameterType="com.catDag.calendar.MyCalendar">
+		UPDATE festival SET
+			subject=#{subject}, content=#{content}, color=#{color}, startDate=#{startDate}, endDate=#{endDate},
+			startTime=#{startTime, jdbcType=VARCHAR}, endTime=#{endDate, jdbcType=VARCHAR}, addr=#{addr}
+		WHERE festivalNum=#{festivalNum} AND userId=#{userId}
+	</update>
+	
+	<delete id="deleteCalendar">
+		DELETE FROM festival WHERE festivalNum=#{festivalNum} AND userId=#{userId}
+	</delete>
+</mapper>

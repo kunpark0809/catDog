@@ -1,4 +1,4 @@
-package com.catDog.calendar;
+package com.catDog.festival;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.catDog.customer.SessionInfo;
 
-@Controller("calendar.calendarController")
-public class CalendarController {
+@Controller("festival.festivalController")
+public class FestivalController {
 	@Autowired
-	private CalendarService service;
+	private FestivalService service;
 	
-	@RequestMapping(value="/calendar/month")
+	@RequestMapping(value="/festival/month")
 	public String month(@RequestParam(name="year", defaultValue="0") int year,
 						@RequestParam(name="month", defaultValue="0") int month,
 						HttpSession session, Model model) {
@@ -67,7 +67,7 @@ public class CalendarController {
 			map.put("endDay", endDay);
 			map.put("userId", info.getUserId());
 			
-			List<MyCalendar> list=service.listMonth(map);
+			List<Festival> list=service.listMonth(map);
 			
 			String s;
 			String [][]days=new String[cal.getActualMaximum(Calendar.WEEK_OF_MONTH)][7];
@@ -78,7 +78,7 @@ public class CalendarController {
 				days[0][i-1]="<span class='textDate preMonthDate' data-date='"+s+"' > "+sdate+"</span>";
 				
 				cnt=0;
-				for(MyCalendar dto:list) {
+				for(Festival dto:list) {
 					int sd8=Integer.parseInt(dto.getStartDate());
 					int sd4=Integer.parseInt(dto.getStartDate().substring(4));
 					int ed8=-1;
@@ -113,7 +113,7 @@ public class CalendarController {
 						}
 						
 						cnt=0;
-						for(MyCalendar dto:list) {
+						for(Festival dto:list) {
 							int sd8=Integer.parseInt(dto.getStartDate());
 							int sd4=Integer.parseInt(dto.getStartDate().substring(4));
 							int ed8=-1;
@@ -144,7 +144,7 @@ public class CalendarController {
 					days[row][i]="<span class='textDate nextMonthDate' data-date='"+s+"' >"+n+"</span>";
 					
 					cnt=0;
-					for(MyCalendar dto:list) {
+					for(Festival dto:list) {
 						int sd8=Integer.parseInt(dto.getStartDate());
 						int sd4=Integer.parseInt(dto.getStartDate().substring(4));
 						int ed8=-1;
@@ -174,10 +174,10 @@ public class CalendarController {
 			
 		} catch (Exception e) {
 		}
-		return ".calendar.month";
+		return ".festival.month";
 	}
 	
-	@RequestMapping(value="/calendar/day")
+	@RequestMapping(value="/festival/day")
 	public String day(@RequestParam(name="festivalNum", defaultValue="0") int festivalNum, 
 					  @RequestParam(name="date", defaultValue="") String date,
 					  HttpSession session, Model model) {
@@ -207,14 +207,14 @@ public class CalendarController {
 			Map<String, Object> map=new HashMap<>();
 			map.put("userId", info.getUserId());
 			map.put("date", date);
-			List<MyCalendar> list=service.listDay(map);
+			List<Festival> list=service.listDay(map);
 			
-			MyCalendar dto=null;
+			Festival dto=null;
 			if(festivalNum!=0) {
-				dto=service.readCalendar(festivalNum);
+				dto=service.readFestival(festivalNum);
 			}
 			if(dto==null&&list.size()>0) {
-				dto=service.readCalendar(list.get(0).getFestivalNum());
+				dto=service.readFestival(list.get(0).getFestivalNum());
 			}
 			
 			Calendar cal2=(Calendar)cal.clone();
@@ -289,10 +289,10 @@ public class CalendarController {
 			
 		} catch (Exception e) {
 		}
-		return ".calendar.day";
+		return ".festival.day";
 	}
 	
-	@RequestMapping(value="/calendar/year")
+	@RequestMapping(value="/festival/year")
 	public String year(@RequestParam(name="year", defaultValue="0") int year, Model model) {
 		try {
 			Calendar cal=Calendar.getInstance();
@@ -335,18 +335,18 @@ public class CalendarController {
 			model.addAttribute("days", days);
 		} catch (Exception e) {
 		}
-		return ".calendar.year";
+		return ".festival.year";
 	}
 	
-	@RequestMapping(value="/calendar/insert", method=RequestMethod.POST)
+	@RequestMapping(value="/festival/insert", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> insertSubmit(MyCalendar dto, HttpSession session) {
+	public Map<String, Object> insertSubmit(Festival dto, HttpSession session) {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
 		String state="true";
 		try {
 			dto.setNum(info.getMemberIdx());
-			service.insertCalendar(dto);
+			service.insertFestival(dto);
 		} catch (Exception e) {
 			state="false";
 		}
@@ -355,15 +355,15 @@ public class CalendarController {
 		return model;
 	}
 	
-	@RequestMapping(value="/calendar/update", method=RequestMethod.POST)
+	@RequestMapping(value="/festival/update", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> updateSubmit(MyCalendar dto, HttpSession session) {
+	public Map<String, Object> updateSubmit(Festival dto, HttpSession session) {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
 		String state="true";
 		try {
 			dto.setUserId(info.getUserId());
-			service.updateCalendar(dto);
+			service.updateFestival(dto);
 		} catch (Exception e) {
 			state="false";
 		}
@@ -372,7 +372,7 @@ public class CalendarController {
 		return model;
 	}
 	
-	@RequestMapping(value="/calendar/delete")
+	@RequestMapping(value="/festival/delete")
 	public String delete(@RequestParam int festivalNum, @RequestParam String date, HttpSession session) {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
@@ -380,9 +380,9 @@ public class CalendarController {
 			Map<String, Object> map=new HashMap<>();
 			map.put("userId", info.getUserId());
 			map.put("festivalNum", festivalNum);
-			service.deleteCalendar(map);
+			service.deleteFestival(map);
 		} catch (Exception e) {
 		}
-		return "redirect:/calendar/dat?date="+date;
+		return "redirect:/festival/day?date="+date;
 	}
 }
