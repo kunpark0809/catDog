@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.catDog.common.FileManager;
 import com.catDog.common.dao.CommonDAO;
@@ -30,10 +31,20 @@ public class DogShopServiceImp implements DogShopService{
 	}
 
 	@Override
-	public void insertProduct(DogShop dto) throws Exception {
+	public void insertProduct(DogShop dto, String pathname) throws Exception {
 		try {
 			dto.setProductNum(dao.selectOne("dogshop.productSeq"));
 			dao.insertData("dogshop.insertDogProduct",dto);
+			
+			if(! dto.getUpload().isEmpty()) {
+				for(MultipartFile mf : dto.getUpload()) {
+					String saveFilename = fileManager.doFileUpload(mf, pathname);
+					if(saveFilename == null) continue;
+					
+					dto.setImageFileName(saveFilename);
+					insertImgFile(dto);
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -42,12 +53,8 @@ public class DogShopServiceImp implements DogShopService{
 	}
 	
 	@Override
-	public void insertImgFile(DogShop dto, String pathname) throws Exception{
+	public void insertImgFile(DogShop dto) throws Exception{
 		try {
-			String saveFilename = fileManager.doFileUpload(dto.getUpload(), pathname);
-			if(saveFilename!=null) {
-				dto.setImageFileName(saveFilename);
-			}
 			dao.insertData("dogshop.insertImgFile",dto);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -64,6 +71,31 @@ public class DogShopServiceImp implements DogShopService{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return list;
+	}
+
+	@Override
+	public int dataCount(Map<String, Object> map) {
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("dogshop.dataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<DogShop> readProduct(int productNum) {
+		List<DogShop> list = null;
+		try {
+			list = dao.selectList("dogshop.readProduct",productNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return list;
 	}
 

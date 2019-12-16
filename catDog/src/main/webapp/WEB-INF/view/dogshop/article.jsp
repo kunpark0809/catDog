@@ -23,12 +23,6 @@ $(function(){
 });
 </script>
 	<div>
-		<h2 class="text-uppercase">DogShop</h2>
-		<button type="button" onclick="javascript:location.href='<%=cp%>/dogshop/created'">글올리기</button>
-		
-		<div class="bestProduct">
-		<h3 class="text-muted">BEST</h3>
-		</div>
 		<div class="sortList">
 		
 			<a class="sortName" data-num="0" id="sort-0">전체</a>
@@ -36,18 +30,14 @@ $(function(){
 				<a class="sortName" data-num="${sort.smallSortNum}" id="sort-${sort.smallSortNum}">${sort.sortName}</a>	
 			</c:forEach>
 		</div>
-		<div class="productList">	
-			<c:forEach var="dto" items="${list}">
-				<a onclick="javascript:location.href='${articleUrl}&productNum=${dto.productNum}'" class="productLink">
-					<input type="hidden" value="${dto.productNum}">
-					<input type="hidden" value="${dto.price}">
-					<img alt="" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}" width="200">
-					<p>${dto.name}</p>
-				</a>	
-			</c:forEach>
-		</div>
-		
-		<div class="paging">
-			${dataCount==0?"데이터 준비중 입니다.":paging};
+		<p>${list.get(0).name}</p>
+		<p>${list.get(0).price}</p>
+		<p>
+		<c:forEach var="dto" items="${list}">
+			<img alt="" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}">
+		</c:forEach> 
+		</p>
+		<div>
+			${list.get(0).content}
 		</div>
 	</div>

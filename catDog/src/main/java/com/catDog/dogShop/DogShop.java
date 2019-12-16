@@ -1,5 +1,7 @@
 package com.catDog.dogShop;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class DogShop {
@@ -15,7 +17,7 @@ public class DogShop {
 	
 	private int productPicNum;
 	private String imageFileName;
-	private MultipartFile upload;
+	private List<MultipartFile> upload;
 	
 	public String getSmallSortNum() {
 		return smallSortNum;
@@ -72,17 +74,18 @@ public class DogShop {
 	public void setImageFileName(String imageFileName) {
 		this.imageFileName = imageFileName;
 	}
-	public MultipartFile getUpload() {
-		return upload;
-	}
-	public void setUpload(MultipartFile upload) {
-		this.upload = upload;
-	}
+
 	public int getProductNum() {
 		return productNum;
 	}
 	public void setProductNum(int productNum) {
 		this.productNum = productNum;
+	}
+	public List<MultipartFile> getUpload() {
+		return upload;
+	}
+	public void setUpload(List<MultipartFile> upload) {
+		this.upload = upload;
 	}
 	
 }

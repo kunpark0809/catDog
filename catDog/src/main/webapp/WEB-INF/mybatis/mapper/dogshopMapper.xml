@@ -13,18 +13,26 @@
 	</select>
 	
 	<select id="listDogProduct" parameterType="map" resultType="com.catDog.dogShop.DogShop">
-		SELECT p.productNum, p.name, p.price, pp.imageFileName
+		SELECT p.productNum, p.name, p.price, pp.imageFileName, smallSortNum
 		FROM product p
 		JOIN productPic pp ON p.productNum = pp.productNum
-		<if test="smallSortNum!='' and smallSortNum!=null">
+		<if test="smallSortNum!=0">
 			WHERE smallSortNum=#{smallSortNum}
 		</if>
 		 ORDER BY p.productNum DESC
+		 OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*),0) FROM product
+		<if test="smallSortNum!=0">
+			WHERE smallSortNum=#{smallSortNum}
+		</if>
 	</select>
 
 	<insert id="insertDogProduct" parameterType="com.catDog.dogShop.DogShop">
 		INSERT INTO product(PRODUCTNUM, NAME, PRICE, CONTENT, SMALLSORTNUM) 
-		VALUES(#{productNum}, #{name}, #{price}, #{content}, 1)
+		VALUES(#{productNum}, #{name}, #{price}, #{content}, #{smallSortNum})
 	</insert>
 	
 	<insert id="insertImgFile" parameterType="com.catDog.dogShop.DogShop">
@@ -32,5 +40,11 @@
 		VALUES(PRODUCTPIC_SEQ.NEXTVAL, #{imageFileName}, #{productNum})
 	</insert>
 	
+	<select id="readProduct" parameterType="Integer" resultType="com.catDog.dogShop.DogShop">
+		SELECT p.productNum, p.name, price, p.content, pp.imageFileName, smallSortNum, p.created
+		FROM product p
+		JOIN productPic pp ON p.productNum = pp.productNum
+		WHERE p.productNum = #{productNum}
+	</select>
 	
 </mapper>

@@ -10,9 +10,9 @@
 	   function check() {
 	        var f = document.dogshopForm;
 			
-	        if(f.sortList.value == "0"){
+	        if(f.smallSortNum.value == "0"){
 	        	alert("용품분류를 선택하세요. ");
-	            f.sortList.focus();
+	            f.smallSortNum.focus();
 	            return false;
 	        }
 	        
@@ -37,24 +37,54 @@
 		    }
 
 	        var mode="${mode}";
-	        if(mode=="created"||mode=="update" && f.upload.value!="") {
-	    		if(! /(\.gif|\.jpg|\.png|\.jpeg)$/i.test(f.upload.value)) {
-	    			alert('이미지 파일만 가능합니다.(bmp 파일은 불가) !!!');
-	    			f.upload.focus();
-	    			return false;
-	    		}
-	    	}
-	        
+	        $("input[name=upload]").each(function(){
+		        if(mode=="created"||mode=="update" && $(this).value!="") {
+		    		if(! /(\.gif|\.jpg|\.png|\.jpeg)$/i.test($(this).value)) {
+		    			alert('이미지 파일만 가능합니다.(bmp 파일은 불가) !!!');
+		    			$(this).focus();
+		    			return false;
+		    		}
+		    	}
+	        });
 	   		f.action="<%=cp%>/dogshop/created";
 	   		f.submit();
 
 	        return true;
 	    }
 
+	   $(function(){
+		  	  $("body").on("change", "input[name=upload]", function(){
+		  		  if(! $(this).val()) {
+		  			  return;	
+		  		  }
+		  		
+		  		  var b=false;
+		  		  $("input[name=upload]").each(function(){
+		  			  if(! $(this).val()) {
+		  				  b=true;
+		  			  	  return false;
+		  			  }
+		  		  });
+		  		
+		  		  if(b) return;
+
+		  		  var $tr, $td, $input;
+		  		
+		  	      $tr=$("<tr align='left' height='40' style='border-bottom: 1px solid #cccccc;'>");
+		  	      $td=$("<td>", {width:"100", bgcolor:"#eeeeee", style:"text-align: center;", html:"용품사진"});
+		  	      $tr.append($td);
+		  	      $td=$("<td style='padding-left:10px;'>");
+		  	      $input=$("<input>", {type:"file", name:"upload", class:"boxTF", style:"width: 95%; height: 25px;"});
+		  	      $td.append($input);
+		  	      $tr.append($td);
+		  	    
+		  	      $("#dogshopb").append($tr);
+		  	  });
+		  });
 	</script>
 	<link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
 	<div class="body-title">
-		<h3><i class="fas fa-chalkboard-teacher"></i> 스터디 질문과 답변 </h3>
+		<h3><i class="fas fa-chalkboard-teacher"></i> DogShop 용품등록 </h3>
 	</div>
 
 	<div style="width: 100%">
@@ -65,7 +95,7 @@
 					<tr>
 						<td>분&nbsp;&nbsp;류</td>
 						<td>
-							<select name="sortList">
+							<select name="smallSortNum">
 								<option value="0">::용품 선택::</option>
 								<c:forEach var="sort" items="${sortList}">
 									<option value="${sort.smallSortNum}">${sort.sortName}</option>
@@ -91,10 +121,17 @@
 				        <textarea name="content" id="content" class="boxTA" style="width:98%; height: 270px;">${dto.content}</textarea>
 				      </td>
 			  		</tr>
+			  		
+			  		<tr align="left" style="border-bottom: 1px solid #cccccc;"> 
+				      <td colspan="2" width="100" bgcolor="#eeeeee" style="text-align: center; padding-top:5px;" valign="top">
+				      	※ 썸네일로 사용할 사진을 첫번째로 넣어주세요
+				      </td>
+
+			  		</tr>
 					<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
 					<td width="100">용품사진</td>
 					<td style="padding-left:10px;"> 
-						<input type="file" name="upload" class="boxTF" size="53" style="height: 25px;" multiple="multiple">
+						<input type="file" name="upload" class="boxTF" size="53" style="height: 25px; width: 95%;">
 					</td>
 				</tr> 
 				</tbody>
