@@ -1,4 +1,3 @@
-<!-- 
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -179,7 +178,7 @@ $(function(){
 			}
 			,error : function(jqXHR) {
 				if(jqXHR.status==403) {
-					location.href="<%cp%>/member/login";
+				location.href="<%=cp%>/member/login";
 					return;
 				}
 				console.log(jqXHR.responseText);
@@ -402,7 +401,7 @@ function deleteOk(festival) {
 								<th style="color: #787878;">제목</th>
 								<th width="80" style="color: #787878;">등록일</th>
 							</tr>
-							<c:forEach var="vo" items="${list}">
+						  	<c:forEach var="vo" items="${list}">
 								<c:if test="${dto.festivalNum != vo.festivalNum}">
 									<tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;">
 										<td>
@@ -420,6 +419,7 @@ function deleteOk(festival) {
 									</tr>
 								</c:if> 
 							</c:forEach>
+							
 						</table>
 					</c:if>
 					
@@ -521,4 +521,3 @@ function deleteOk(festival) {
 		</form>
 	</div>
 </c:if>
--->
