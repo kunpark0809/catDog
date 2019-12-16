@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.catDog.common.MyUtil;
 import com.catDog.customer.SessionInfo;
 
 
@@ -27,10 +25,7 @@ public class ParkController {
 @Autowired
 private ParkService service;
 
-@Autowired
-private MyUtil myUtil;
-
-	@RequestMapping(value="/park/list")
+@RequestMapping(value="/park/list")
 	public String list(
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
@@ -76,6 +71,46 @@ private MyUtil myUtil;
 		}
 		
 		return "redirect:/park/list";
+	}
+	
+	@RequestMapping(value="/park/article", method=RequestMethod.GET)
+	public String article(
+			@RequestParam int num,
+			@RequestParam String page,
+			@RequestParam(defaultValue="all") String condition,
+			@RequestParam(defaultValue="") String keyword,
+			Model model) throws Exception {
+		
+		keyword = URLDecoder.decode(keyword, "utf-8");
+		
+		String query="page="+page;
+		if(keyword.length()!=0) {
+			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
+		}
+
+		Park dto = service.readPark(num);
+		if (dto == null)
+			return "redirect:/park/list?"+query;
+		
+		dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+		
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		map.put("num", num);
+
+		Park preReadDto = service.preReadPark(map);
+		Park nextReadDto = service.nextReadPark(map);
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("preReadDto", preReadDto);
+		model.addAttribute("nextReadDto", nextReadDto);
+		
+		model.addAttribute("page", page);
+		model.addAttribute("query", query);
+		
+		return ".park.article";
 	}
 	
 

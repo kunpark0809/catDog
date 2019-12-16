@@ -50,20 +50,20 @@ function searchList() {
 			<table style="width: 100%; margin: 10px auto; border-spacing: 0px; background-color: #F5F5F5;">
 		   <tr height="40">
 		      <td align="center">
-		          <form name="searchForm" action="<%=cp%>/park/list" method="post">
+		          <form name="searchForm" action="<%=cp%>/park/list" method="post" style="width: 100%">
 		              	<select name="condition" class="selectField">
 		                  <option value="placeName" ${condition=="placeName"?"selected='selected'":""}>제목</option>
 		                  <option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
 		            	</select>
-		            <input type="text" name="keyword" value="${keyword}" class="boxTF" size="80;">
+		            <input type="text" name="keyword" value="${keyword}" class="boxTF" size="50;">
 		            <button type="button" class="btn" onclick="searchList()">검색</button>
 		         </form>
 		      </td>
 		      <tr>
-		      <td align="left" width="100">
+		      <td align="left">
 		          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/park/list';">새로고침</button>
 		      </td>
-		      <td align="right" width="100">
+		      <td align="right">
 		          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/park/created';">등록하기</button>
 		      </td>	      
 		  	 </tr>
@@ -72,7 +72,7 @@ function searchList() {
 
 		<div class="parklist">	
 			<c:forEach var="dto" items="${list}">
-				<img alt="" src="<%=cp%>/uploads/park/${dto.imageFileName}" width="200">
+				<img alt="" src="<%=cp%>/uploads/park/${dto.imageFileName}" width="400">
 					<p>${dto.placeName}</p>
 					<p>${dto.content}</p>	
 					<p><i class="fas fa-eye"></i>&nbsp;&nbsp;${dto.hitCount}</p>	

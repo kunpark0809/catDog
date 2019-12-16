@@ -21,50 +21,51 @@
 }
 </style>
 
+<script type="text/javascript" src="<%=cp%>/resource/se/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
- function sendOk() {
+ function check() {
      var f = document.parkForm;
 
  	var str = f.placeName.value;
      if(!str) {
          alert("장소 이름을 입력하세요. ");
          f.placeName.focus();
-         return;
+         return false;
      }
 
      str = f.addr.value;
      if(!str) {
          alert("주소를 입력하세요. ");
          f.addr.focus();
-         return;
+         return false;
      }
      
      str = f.tel.value;
      if(!str) {
          alert("전화번호를 입력하세요. ");
          f.tel.focus();
-         return;
+         return false;
      }
      
      str = f.lat.value;
      if(!str) {
          alert("지도 좌표 위치의 경도를 입력하세요. ");
          f.lat.focus();
-         return;
+         return false;
      }
      
      str = f.lon.value;
      if(!str) {
          alert("지도 좌표 위치의 위도를 입력하세요. ");
          f.lon.focus();
-         return;
+         return false;
      }
      
  	str = f.content.value;
      if(!str) {
          alert("내용을 입력하세요. ");
          f.content.focus();
-         return;
+         return false;
      }
      
      var mode="${mode}";
@@ -77,9 +78,40 @@
      }
 
  	f.action="<%=cp%>/park/${mode}";
-	f.submit();
+ 	return true;
  }
 
+ $(function(){
+ 	  $("body").on("change", "input[name=upload]", function(){
+ 		  if(! $(this).val()) {
+ 			  return;	
+ 		  }
+ 		
+ 		  var b=false;
+ 		  $("input[name=upload]").each(function(){
+ 			  if(! $(this).val()) {
+ 				  b=true;
+ 			  	  return false;
+ 			  }
+ 		  });
+ 		
+ 		  if(b) return;
+
+ 		  var $tr, $td, $input;
+ 		
+ 	      $tr=$("<tr align='left' height='40' style='border-bottom: 1px solid #cccccc;'>");
+ 	      $td=$("<td>", {width:"100", bgcolor:"#262626", style:"text-align: center;", html:"본문사진"});
+ 	      $tr.append($td);
+ 	      $td=$("<td style='padding-left:10px;'>");
+ 	      $input=$("<input>", {type:"file", name:"upload", class:"boxTF", style:"width: 95%; height: 25px;"});
+ 	      $td.append($input);
+ 	      $tr.append($td);
+ 	    
+ 	      $("#parkb").append($tr);
+ 	  });
+ });
+ 
+ 
 </script>
 
 
@@ -93,10 +125,12 @@
 			</div>
     	</div>
     <div>
-		<form name="parkForm" method="post" enctype="multipart/form-data">
+		<form name="parkForm" method="post" enctype="multipart/form-data" onsubmit="return submitContents(this);">
 			<div class="container" style="color: white;">
+			
 				
 			  <table style="width: 100%; margin: 20px auto 10px; border-spacing: 0px; border-collapse: collapse;">
+			  <tbody id="parkb">
 			  
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#262626" style="text-align: center;">장소이름</td>
@@ -137,27 +171,82 @@
 			  <tr align="left" style="border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#262626" style="text-align: center; padding-top:5px;" valign="top">상세정보</td>
 			      <td valign="top" style="padding:5px 0px 5px 10px;"> 
-			        <textarea name="content" rows="12" class="boxTA" style="width: 100%;">${dto.content}</textarea>
+			        <textarea name="content" id="content" class="boxTA" style="width: 100%;">${dto.content}</textarea>
 			      </td>
 			  </tr>
 			  
 			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-			      <td width="100" bgcolor="#262626" style="text-align: center;">사&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;진</td>
+			      <td width="100" bgcolor="#262626" style="text-align: center;">썸네일사진</td>
+			      <td style="padding-left:10px; color: #262626;"> 
+			         <input type="file" name="mainUpload" class="boxTF" size="53" style="height: 25px;" multiple="multiple">
+			       </td>
+			  </tr>
+			  
+			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
+			      <td width="100" bgcolor="#262626" style="text-align: center;">본문사진</td>
 			      <td style="padding-left:10px; color: #262626;"> 
 			         <input type="file" name="upload" class="boxTF" size="53" style="height: 25px;" multiple="multiple">
 			       </td>
 			  </tr>
+			  
 			</table>
 			</div>
 			<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
 			     <tr height="45"> 
 			      <td align="center">
-			        <button type="button" class="btn" onclick="sendOk();">${mode=='update'?'수정완료':'등록하기'}</button>
+			        <button type="submit" class="btn">${mode=='update'?'수정완료':'등록하기'}</button>
 			        <button type="reset" class="btn">다시입력</button>
 			        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/park/list';">${mode=='update'?'수정취소':'등록취소'}</button>
 			      </td>
 			    </tr>
+			   </tbody>
 			</table>
 		</form>
     </div>
 </div>
+
+<script type="text/javascript">
+var oEditors = [];
+nhn.husky.EZCreator.createInIFrame({
+	oAppRef: oEditors,
+	elPlaceHolder: "content",
+	sSkinURI: "<%=cp%>/resource/se/SmartEditor2Skin.html",	
+	htParams : {bUseToolbar : true,
+		fOnBeforeUnload : function(){
+			//alert("아싸!");
+		}
+	}, //boolean
+	fOnAppLoad : function(){
+		//예제 코드
+		//oEditors.getById["content"].exec("PASTE_HTML", ["로딩이 완료된 후에 본문에 삽입되는 text입니다."]);
+	},
+	fCreator: "createSEditor2"
+});
+
+function pasteHTML() {
+	var sHTML = "<span style='color:#FF0000;'>이미지도 같은 방식으로 삽입합니다.<\/span>";
+	oEditors.getById["content"].exec("PASTE_HTML", [sHTML]);
+}
+
+function showHTML() {
+	var sHTML = oEditors.getById["content"].getIR();
+	alert(sHTML);
+}
+	
+function submitContents(elClickedObj) {
+	oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
+	
+	// 에디터의 내용에 대한 값 검증은 이곳에서 document.getElementById("content").value를 이용해서 처리하면 됩니다.
+	
+	try {
+		// elClickedObj.form.submit();
+		return check();
+	} catch(e) {}
+}
+
+function setDefaultFont() {
+	var sDefaultFont = '돋움';
+	var nFontSize = 24;
+	oEditors.getById["content"].setDefaultFont(sDefaultFont, nFontSize);
+}
+</script>

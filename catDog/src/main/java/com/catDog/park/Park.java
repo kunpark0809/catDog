@@ -13,6 +13,7 @@ public class Park {
 	private int recommendPicNum;
 	private String imageFileName;
 	private MultipartFile upload;
+	private MultipartFile mainUpload;
 	
 	private int sortNum;
 	private String placeName;
@@ -189,6 +190,14 @@ public class Park {
 
 	public void setUpload(MultipartFile upload) {
 		this.upload = upload;
+	}
+
+	public MultipartFile getMainUpload() {
+		return mainUpload;
+	}
+
+	public void setMainUpload(MultipartFile mainUpload) {
+		this.mainUpload = mainUpload;
 	}
 	
 }
