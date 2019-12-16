@@ -40,11 +40,11 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<Member> listMember(Map<String, Object> map) {
+	public List<Member> memberList(Map<String, Object> map) {
 		List<Member> list = null;
 
 		try {
-			dao.selectList("admin.listMember", map);
+			list = dao.selectList("admin.memberList", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -52,4 +52,15 @@ public class AdminServiceImpl implements AdminService {
 		return list;
 	}
 
+	@Override
+	public int memberCount(Map<String, Object> map) {
+		int result = -1;
+		try {
+			result = dao.selectOne("admin.memberCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 }

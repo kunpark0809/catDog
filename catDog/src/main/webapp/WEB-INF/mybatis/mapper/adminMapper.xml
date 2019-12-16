@@ -3,12 +3,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="admin">
 
+	<!-- 대소문자 구분 없이 검색되도록 하는 조건문(데이터 양 엄청 많아지면 부하 좀 걸릴 수도 있음) -->
 	<sql id="member-where-list">
+		<if test="condition=='all' ">
+			INSTR(LOWER(userId), LOWER(#{keyword})) &gt; 0
+			OR INSTR(LOWER(nickName), LOWER(#{keyword})) &gt; 0
+			OR INSTR(reportCount, #{keyword}) &gt; 0
+		</if>
 		<if test="condition=='userId' ">
-			INSTR(userId, #{keyword}) &gt; 0
+			INSTR(LOWER(userId), LOWER(#{keyword})) &gt; 0
 		</if>
 		<if test="condition=='nickName' ">
-			INSTR(nickName, #{keyword}) &gt; 0
+			INSTR(LOWER(nickName), LOWER(#{keyword})) &gt; 0
 		</if>
 		<if test="condition=='reportCount' ">
 			INSTR(reportCount, #{keyword}) &gt; 0
@@ -53,12 +59,13 @@
 
 <!-- 회원 리스트 -->
 <!-- 회원의 정보를 memberDetail에서 가져오면서 request에서 번호로 GROUP BY하여 COUNT한 테이블(주문횟수)과도 JOIN -->
-<select id="listMember" parameterType="Map" resultType="com.catDog.admin.Member">
-	SELECT md.num, userId, nickName, mileage, NVL(count,0) requestCount
+<select id="memberList" parameterType="Map" resultType="com.catDog.admin.Member">
+	SELECT md.num, userId, name, nickName, mileage, NVL(count,0) requestCount, reportCount
 	FROM memberDetail md
 	LEFT OUTER JOIN (
 		SELECT num, NVL(COUNT(*), 0) count FROM request GROUP BY num
 	) rc ON md.num = rc.num
+	LEFT OUTER JOIN customerDetail cd ON md.num = cd.num
 	<where>
 		<if test="keyword != null and keyword != ''">
 			<include refid="member-where-list"/>
@@ -78,5 +85,20 @@
 	ORDER BY num DESC
 	OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 </select>
+
+<!-- 회원 수 세기 -->
+<select id="memberCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM memberDetail md
+	<where>
+		<if test="keyword!=null and keyword!='' ">
+			<include refid="member-where-list"/>
+		</if>
+	</where>   
+</select>
+
+<!-- 신고된 글들 가져오기 -->
+
+
 
 </mapper>

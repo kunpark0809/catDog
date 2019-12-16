@@ -5,7 +5,7 @@ public class Member {
 	private int reportCount, reportNum;
 	private int requestCount; // 비회원의 주문횟수
 
-	private String name, nickName, addr, email, tel;
+	private String name, userId, nickName, addr, email, tel;
 
 	public int getNum() {
 		return num;
@@ -61,6 +61,14 @@ public class Member {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getNickName() {

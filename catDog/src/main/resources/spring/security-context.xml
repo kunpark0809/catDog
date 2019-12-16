@@ -10,7 +10,7 @@
       http://www.springframework.org/schema/context/spring-context.xsd
       http://www.springframework.org/schema/security
       http://www.springframework.org/schema/security/spring-security.xsd">
-
+ 
    <context:component-scan base-package="com.catDog"/>
    
     <!-- 권한이 없는 페이지를 접근할 경우 접근 불가 메시지 출력  -->
@@ -36,7 +36,7 @@
       
       <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
       <intercept-url pattern="/**" access="hasAnyRole('ROLE_USER')"/>
-      
+            
       <form-login
          login-page="/customer/login"
          login-processing-url="/customer/login"
@@ -46,6 +46,7 @@
          default-target-url="/"
          always-use-default-target="true"
          authentication-success-handler-ref="myAuthenticationSuccessHandler"
+ 		
       />
       
       <logout

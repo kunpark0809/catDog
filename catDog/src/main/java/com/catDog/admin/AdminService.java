@@ -8,6 +8,9 @@ public interface AdminService {
 
 	public Money calculateProduct(Map<String, Object> map);
 
-	List<Member> listMember(Map<String, Object> map);
+	List<Member> memberList(Map<String, Object> map);
 
+	int memberCount(Map<String, Object> map);
+
+	
 }

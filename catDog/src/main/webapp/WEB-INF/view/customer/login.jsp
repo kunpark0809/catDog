@@ -50,6 +50,9 @@ function sendLogin() {
         return;
     }
 
+
+    
+    
     f.action = "<%=cp%>/customer/login";
     f.submit();
 }
