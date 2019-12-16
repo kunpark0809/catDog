@@ -78,8 +78,6 @@
 					<li class="nav-item"><a class="nav-link js-scroll-trigger">관리자</a>
 						<ul class="nav-sub-menu">
 							<li><a class="nav-sub-link" href="<%=cp%>/admin/cs">고객센터 관리</a></li>
-							<li><a class="nav-sub-link" href="<%=cp%>/admin/product">용품 관리
-									</a></li>
 							<li><a class="nav-sub-link" href="<%=cp%>/admin/bbs">수다방 관리</a></li>
 							<li><a class="nav-sub-link" href="<%=cp%>/admin/play">놀이터 관리</a></li>
 							<li><a class="nav-sub-link" href="<%=cp%>/admin/money">매출 관리</a></li>

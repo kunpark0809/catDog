@@ -83,12 +83,6 @@ public class AdminController {
 		return ".admin.cs";
 	}
 
-	@RequestMapping(value = "/admin/product")
-	public String productManage() throws Exception {
-
-		return ".admin.product";
-	}
-
 	@RequestMapping(value = "/admin/bbs")
 	public String bbsManage() throws Exception {
 
