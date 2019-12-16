@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.catDog.common.FileManager;
 import com.catDog.common.dao.CommonDAO;
 
 @Service("park.parkServiceImpl")
@@ -13,6 +14,9 @@ public class ParkServiceImpl implements ParkService {
 	
 	@Autowired
 	private CommonDAO  dao;
+	
+	@Autowired
+	private FileManager fileManager;
 
 	@Override
 	public void insertPark(Park dto, String pathname) throws Exception {
@@ -25,6 +29,21 @@ public class ParkServiceImpl implements ParkService {
 		}
 	}
 
+	@Override
+	public void insertImgFile(Park dto, String pathname) throws Exception {
+		try {
+			String saveFilename = fileManager.doFileUpload(dto.getUpload(), pathname);
+			if(saveFilename!=null) {
+				dto.setImageFileName(saveFilename);
+			}
+			dao.insertData("park.insertImgFile",dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+	
 	@Override
 	public int dataCount(Map<String, Object> map) {
 		// TODO Auto-generated method stub
@@ -74,9 +93,5 @@ public class ParkServiceImpl implements ParkService {
 		
 	}
 
-	
-
-	
-	
 
 }

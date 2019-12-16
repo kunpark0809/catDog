@@ -1,5 +1,7 @@
 package com.catDog.park;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Park {
 	private int rateNum;
 	private int recommendNum;
@@ -10,6 +12,7 @@ public class Park {
 	
 	private int recommendPicNum;
 	private String imageFileName;
+	private MultipartFile upload;
 	
 	private int sortNum;
 	private String placeName;
@@ -178,6 +181,14 @@ public class Park {
 
 	public void setNum(long num) {
 		this.num = num;
+	}
+
+	public MultipartFile getUpload() {
+		return upload;
+	}
+
+	public void setUpload(MultipartFile upload) {
+		this.upload = upload;
 	}
 	
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 public interface ParkService {
 
 	public void insertPark(Park dto, String pathname) throws Exception;
+	public void insertImgFile(Park dto, String pathname) throws Exception;
 	public int dataCount(Map<String, Object> map);
 	public List<Park> listPark(Map<String, Object> map);
 	public Park readPark(int num);

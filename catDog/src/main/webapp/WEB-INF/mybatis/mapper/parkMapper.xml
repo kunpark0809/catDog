@@ -11,9 +11,34 @@
 		VALUES(#{recommendNum}, 1, #{num}, #{placeName}, #{content}, #{tel}, #{addr}, #{lat}, #{lon})
 	</insert>
 	
-	<insert id="insertParkPic">
-		INSERT INTO recommendPic(recommendPicNum, imageFileName, RecommendNum) 
+	<insert id="insertImgFile" parameterType="com.catDog.park.Park">
+		INSERT INTO recommendPic(recommendPicNum, imageFileName, recommendNum) 
 		VALUES(recommendPic_seq.NEXTVAL, #{imageFileName}, #{recommendNum})
 	</insert>
+	
+	<select id="listPark" parameterType="map" resultType="com.catDog.park.Park">
+		SELECT r.recommendNum, r.placeName, r.content, rp.imageFileName
+		FROM recommend r
+		JOIN recommendPic rp ON r.recommendNum = rp.recommendNum
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY r.recommendNum DESC
+	</select>
+	
+	<sql id="where-list">
+		<if test="condition=='all'">
+			( INSTR(placeName, #{keyword}) &gt; 0
+				OR INSTR(content, #{keyword}) &gt; 0 )
+		</if>
+		<if test="condition=='placeName'">
+			INSTR(placeName, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='content'">
+			INSTR(content, #{keyword}) &gt; 0 
+		</if>
+	</sql>
 	
 </mapper>

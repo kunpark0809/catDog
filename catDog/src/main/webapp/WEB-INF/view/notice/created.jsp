@@ -25,6 +25,7 @@
 	    }
 	
 		f.action="<%=cp%>/notice/${mode}";
+		f.submit();
 	
 	    return true;
 	}

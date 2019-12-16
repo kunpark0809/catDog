@@ -19,17 +19,21 @@
     margin: 4px;
     border-radius:10px;
 }
+.imgLayout{
+	width: 190px;
+	height: 205px;
+	padding: 10px 5px 10px;
+	margin: 5px;
+	border: 1px solid #DAD9FF;
+	cursor: pointer;
+}
+
 </style>
 
 <script type="text/javascript">
 function searchList() {
 	var f=document.searchForm;
 	f.submit();
-}
-
-function article(num) {
-var url="${articleUrl}&num="+num;
-location.href=url;
 }
 
 </script>
@@ -51,7 +55,7 @@ location.href=url;
 		                  <option value="placeName" ${condition=="placeName"?"selected='selected'":""}>제목</option>
 		                  <option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
 		            	</select>
-		            <input type="text" name="keyword" value="${keyword}" class="boxTF" size="50;">
+		            <input type="text" name="keyword" value="${keyword}" class="boxTF" size="80;">
 		            <button type="button" class="btn" onclick="searchList()">검색</button>
 		         </form>
 		      </td>
@@ -64,6 +68,17 @@ location.href=url;
 		      </td>	      
 		  	 </tr>
 		</table>
-    </div>
+    
 
+		<div class="parklist">	
+			<c:forEach var="dto" items="${list}">
+				<img alt="" src="<%=cp%>/uploads/park/${dto.imageFileName}" width="200">
+					<p>${dto.placeName}</p>
+					<p>${dto.content}</p>	
+					<p><i class="fas fa-eye"></i>&nbsp;&nbsp;${dto.hitCount}</p>	
+			</c:forEach>
+		</div>
+
+		
+	</div>
 </section>
