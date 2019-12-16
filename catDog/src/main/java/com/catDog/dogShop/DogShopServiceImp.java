@@ -36,6 +36,14 @@ public class DogShopServiceImp implements DogShopService{
 			dto.setProductNum(dao.selectOne("dogshop.productSeq"));
 			dao.insertData("dogshop.insertDogProduct",dto);
 			
+			if(!dto.getMain().isEmpty()) {
+				String saveFilename = fileManager.doMainFileUpload(dto.getMain(), pathname);
+				if(saveFilename != null) {
+					dto.setImageFileName(saveFilename);
+					insertImgFile(dto);
+				}
+			}
+			
 			if(! dto.getUpload().isEmpty()) {
 				for(MultipartFile mf : dto.getUpload()) {
 					String saveFilename = fileManager.doFileUpload(mf, pathname);

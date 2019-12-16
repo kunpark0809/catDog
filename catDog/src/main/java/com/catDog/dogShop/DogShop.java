@@ -15,8 +15,10 @@ public class DogShop {
 	private String content;
 	private String created;
 	
+	
 	private int productPicNum;
 	private String imageFileName;
+	private MultipartFile main;
 	private List<MultipartFile> upload;
 	
 	public String getSmallSortNum() {
@@ -86,6 +88,12 @@ public class DogShop {
 	}
 	public void setUpload(List<MultipartFile> upload) {
 		this.upload = upload;
+	}
+	public MultipartFile getMain() {
+		return main;
+	}
+	public void setMain(MultipartFile main) {
+		this.main = main;
 	}
 	
 }

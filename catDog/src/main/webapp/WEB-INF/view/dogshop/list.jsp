@@ -48,6 +48,6 @@ $(function(){
 		</div>
 		
 		<div class="paging">
-			${dataCount==0?"데이터 준비중 입니다.":paging};
+			${dataCount==0?"데이터 준비중 입니다.":paging}
 		</div>
 	</div>

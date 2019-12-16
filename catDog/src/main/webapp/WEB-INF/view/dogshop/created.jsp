@@ -37,15 +37,16 @@
 		    }
 
 	        var mode="${mode}";
-	        $("input[name=upload]").each(function(){
-		        if(mode=="created"||mode=="update" && $(this).value!="") {
-		    		if(! /(\.gif|\.jpg|\.png|\.jpeg)$/i.test($(this).value)) {
-		    			alert('이미지 파일만 가능합니다.(bmp 파일은 불가) !!!');
-		    			$(this).focus();
-		    			return false;
-		    		}
-		    	}
-	        });
+	        
+
+	        if(mode=="created"||mode=="update" && $f.main.value!="") {
+	    		if(! /(\.gif|\.jpg|\.png|\.jpeg)$/i.test(f.main.value)) {
+	    			alert('이미지 파일만 가능합니다.(bmp 파일은 불가) !!!');
+	    			f.main.focus();
+	    			return false;
+	    		}
+	    	}
+	    
 	   		f.action="<%=cp%>/dogshop/created";
 	   		f.submit();
 
@@ -71,7 +72,7 @@
 		  		  var $tr, $td, $input;
 		  		
 		  	      $tr=$("<tr align='left' height='40' style='border-bottom: 1px solid #cccccc;'>");
-		  	      $td=$("<td>", {width:"100", bgcolor:"#eeeeee", style:"text-align: center;", html:"용품사진"});
+		  	      $td=$("<td>", {width:"100", bgcolor:"#eeeeee", style:"text-align: center;", html:"추가사진"});
 		  	      $tr.append($td);
 		  	      $td=$("<td style='padding-left:10px;'>");
 		  	      $input=$("<input>", {type:"file", name:"upload", class:"boxTF", style:"width: 95%; height: 25px;"});
@@ -122,18 +123,18 @@
 				      </td>
 			  		</tr>
 			  		
-			  		<tr align="left" style="border-bottom: 1px solid #cccccc;"> 
-				      <td colspan="2" width="100" bgcolor="#eeeeee" style="text-align: center; padding-top:5px;" valign="top">
-				      	※ 썸네일로 사용할 사진을 첫번째로 넣어주세요
-				      </td>
-
-			  		</tr>
+			  		<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
+					<td width="100">메인사진</td>
+					<td style="padding-left:10px;"> 
+						<input type="file" name="main" class="boxTF" size="53" style="height: 25px; width: 95%;">
+					</td>
+					</tr> 
 					<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-					<td width="100">용품사진</td>
+					<td width="100">추가사진</td>
 					<td style="padding-left:10px;"> 
 						<input type="file" name="upload" class="boxTF" size="53" style="height: 25px; width: 95%;">
 					</td>
-				</tr> 
+					</tr> 
 				</tbody>
 			</table>
 			<table>

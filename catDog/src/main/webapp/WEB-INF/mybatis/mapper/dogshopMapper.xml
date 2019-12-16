@@ -16,9 +16,13 @@
 		SELECT p.productNum, p.name, p.price, pp.imageFileName, smallSortNum
 		FROM product p
 		JOIN productPic pp ON p.productNum = pp.productNum
+		<where>
 		<if test="smallSortNum!=0">
 			WHERE smallSortNum=#{smallSortNum}
 		</if>
+			AND INSTR(pp.imageFileName,'main') &gt; 0
+		</where>
+		
 		 ORDER BY p.productNum DESC
 		 OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>

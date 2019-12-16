@@ -62,6 +62,45 @@ public class FileManager {
 
 	/**
 	 * 파일을 업로드 하기 위한 메소드
+	 * @param partFile	업로드할 파일정보를 가지고 있는 MultipartFile 객체
+	 * @param pathname	파일을 저장할 경로
+	 * @return			서버에 저장된 새로운 파일의 이름
+	 */
+	public String doMainFileUpload(MultipartFile partFile, String pathname) throws Exception {
+		String saveFilename = "main";
+
+		if(partFile == null || partFile.isEmpty())
+			return null;
+		
+		// 클라이언트가 업로드한 파일의 이름
+		String originalFilename=partFile.getOriginalFilename();
+		if(originalFilename==null||originalFilename.length()==0)
+			return null;
+		
+		// 확장자
+		String fileExt = originalFilename.substring(originalFilename.lastIndexOf("."));
+		if(fileExt == null || fileExt.equals(""))
+			return null;
+		
+		// 서버에 저장할 새로운 파일명을 만든다.
+		saveFilename += String.format("%1$tY%1$tm%1$td%1$tH%1$tM%1$tS", 
+				         Calendar.getInstance());
+		saveFilename += System.nanoTime();
+		saveFilename += fileExt;
+		
+		String fullpathname = pathname + File.separator + saveFilename;
+		// 업로드할 경로가 존재하지 않는 경우 폴더를 생성 한다.
+		File f = new File(fullpathname);
+		if(!f.getParentFile().exists())
+			f.getParentFile().mkdirs();
+
+		partFile.transferTo(f);
+
+		return saveFilename;
+	}
+	
+	/**
+	 * 파일을 업로드 하기 위한 메소드
 	 * @param bytes				업로드할 파일정보를 가지고 있는byte 배열
 	 * @param originalFilename	클라이언트가 업로드한 파일명
 	 * @param pathname			파일을 저장할 경로
