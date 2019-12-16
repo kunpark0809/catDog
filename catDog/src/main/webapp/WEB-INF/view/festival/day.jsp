@@ -1,3 +1,4 @@
+<!-- 
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -401,7 +402,6 @@ function deleteOk(festival) {
 								<th style="color: #787878;">제목</th>
 								<th width="80" style="color: #787878;">등록일</th>
 							</tr>
-							
 							<c:forEach var="vo" items="${list}">
 								<c:if test="${dto.festivalNum != vo.festivalNum}">
 									<tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;">
@@ -413,7 +413,7 @@ function deleteOk(festival) {
 											</c:choose>
 										</td>
 										<td align="left" style="padding-left: 10px;">
-										
+										  
 										<a href="<%=cp%>/festival/day?date=${date}&festivalNum=${vo.festivalNum}"></a>
 										</td>
 										<td>${vo.created}</td>
@@ -521,3 +521,4 @@ function deleteOk(festival) {
 		</form>
 	</div>
 </c:if>
+-->
