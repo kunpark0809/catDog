@@ -413,7 +413,8 @@ function deleteOk(festival) {
 											</c:choose>
 										</td>
 										<td align="left" style="padding-left: 10px;">
-											<a href="<%=cp%>/festival/day?date=${date}&festivalNum=${vo.festivalNum}">${vo.subject}</a>
+										
+										<a href="<%=cp%>/festival/day?date=${date}&festivalNum=${vo.festivalNum}"></a>
 										</td>
 										<td>${vo.created}</td>
 									</tr>

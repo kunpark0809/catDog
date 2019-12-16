@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.catDog.common.dao.CommonDAO;
 
-@Service("calendar.calendarService")
+@Service("festival.festivalService")
 public class FestivalServiceImpl implements FestivalService {
 	@Autowired
 	private CommonDAO dao;
