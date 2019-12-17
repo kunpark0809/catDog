@@ -130,7 +130,7 @@ $(function(){
 		$("#form-startDate").datepicker("option", "defaultDate", date1);
 		$("#form-endDate").datepicker("option", "defaultDate", date2);
 		
-		var stime="${dto.startTime}";
+		var startTime="${dto.startTime}";
 		if(startTime!="") {
 			$("#form-startTime").show();
 			$("#form-endTime").show();
@@ -193,6 +193,22 @@ $(function(){
 	});
 });
 
+$(function() {
+	$("#form-allDay").click(function(){
+		if(this.checked==true) {
+			$("#form-startTime").val("").hide();
+			$("#form-endTime").val("").hide();
+		} else if(this.checked==false) {
+			$("#form-startTime").val("00:00").show();
+			$("#form-endTime").val("00:00").show();
+		}
+	});
+	
+	$("#form-startDate").change(function() {
+		$("#form-endDate").val($("#form-startDate").val());
+	});
+});
+
 function check() {
 	if(! $("form-subject").val()) {
 		$("#form-subject").focus();
@@ -247,7 +263,7 @@ function isValidTime(data) {
 	return true;
 }
 
-function deleteOk(festival) {
+function deleteOk(festivalNum) {
 	if(confirm("일정을 삭제 하시겠습니까 ? ")) {
 		var date="${date}";
 		var url="<%=cp%>/festival/delete?date="+date+"&festivalNum="+festivalNum;

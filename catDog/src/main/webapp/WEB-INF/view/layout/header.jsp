@@ -48,7 +48,7 @@
 					<ul class="nav-sub-menu">
 						<li><a class="nav-sub-link" href="<%=cp%>/game/game">게임</a></li>
 						<li><a class="nav-sub-link" href="<%=cp%>/event/event">이벤트</a></li>
-						<li><a class="nav-sub-link" href="<%=cp%>/calendar/calendar">행사일정</a></li>
+						<li><a class="nav-sub-link" href="<%=cp%>/festival/month">행사일정</a></li>
 					</ul></li>
 				<li class="nav-item"><a class="nav-link js-scroll-trigger">수다방</a>
 					<ul class="nav-sub-menu">
