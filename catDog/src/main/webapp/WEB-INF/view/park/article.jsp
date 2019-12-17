@@ -85,7 +85,7 @@ function updatePark() {
 			
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
 			    <td colspan="2" align="left" style="padding-left: 5px;">
-			       <i class="fas fa-chevron-up"></i>
+			       <i class="fas fa-chevron-up"></i>&nbsp;&nbsp;
 			         <c:if test="${not empty preReadPark}">
 			              <a href="<%=cp%>/park/article?${query}&recommendNum=${preReadPark.recommendNum}">${preReadPark.placeName}</a>
 			        </c:if>
@@ -94,9 +94,9 @@ function updatePark() {
 			
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
 			    <td colspan="2" align="left" style="padding-left: 5px;">
-			       <i class="fas fa-chevron-down"></i>
-			         <c:if test="${not empty nextReadDto}">
-			              <a href="<%=cp%>/park/article?${query}&recommendNum=${nextReadDto.recommendNum}">${nextReadDto.placeName}</a>
+			       <i class="fas fa-chevron-down"></i>&nbsp;&nbsp;
+			         <c:if test="${not empty nextReadPark}">
+			              <a href="<%=cp%>/park/article?${query}&recommendNum=${nextReadPark.recommendNum}">${nextReadPark.placeName}</a>
 			        </c:if>
 			    </td>
 			</tr>

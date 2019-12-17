@@ -107,6 +107,8 @@ private MyUtil myUtil;
 	public String article(
 			@RequestParam int recommendNum,
 			@RequestParam(defaultValue="1") String page,
+			@RequestParam(defaultValue="all") String condition,
+			@RequestParam(defaultValue="") String keyword,
 			Model model
 			) throws Exception{
 		List<Park> list = service.readPark(recommendNum);
@@ -115,6 +117,17 @@ private MyUtil myUtil;
 		if(list.size() == 0) {
 			return "redirect:/park/list?"+query;
 		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		map.put("recommendNum", recommendNum);
+		
+		Park preReadPark = service.preReadPark(map);
+		Park nextReadPark = service.nextReadPark(map);
+		
+		model.addAttribute("preReadPark", preReadPark);
+		model.addAttribute("nextReadPark", nextReadPark);
 		
 		model.addAttribute("page",page);
 		model.addAttribute("query",query);

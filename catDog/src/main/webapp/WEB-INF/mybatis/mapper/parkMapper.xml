@@ -66,11 +66,10 @@
 		UPDATE recommend SET hitCount=hitCount+1 WHERE recommendNum = #{recommendNum}
 	</update>
 	
-	<select id="preReadBoard" parameterType="map" resultType="com.catDog.park.Park">
+	<select id="preReadPark" parameterType="map" resultType="com.catDog.park.Park">
 		SELECT recommendNum, placeName
 		FROM recommend r
-		JOIN recommendPic rp ON r.recommendNum = rp.recommendNum
-		<where>
+	<where>
 			<if test="keyword != null and keyword != '' ">
 				<include refid="where-list"/>
 			</if>
@@ -80,10 +79,9 @@
 		FETCH FIRST 1 ROWS ONLY
 	</select>
 
-	<select id="nextReadBoard" parameterType="map" resultType="com.catDog.park.Park">
+	<select id="nextReadPark" parameterType="map" resultType="com.catDog.park.Park">
 		SELECT recommendNum, placeName
 		FROM recommend r
-		JOIN recommendPic rp ON r.recommendNum = rp.recommendNum
 		<where>
 			<if test="keyword != null and keyword != '' ">
 				<include refid="where-list"/>
