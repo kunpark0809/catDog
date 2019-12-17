@@ -6,9 +6,9 @@
 	<!-- 대소문자 구분 없이 검색되도록 하는 조건문(데이터 양 엄청 많아지면 부하 좀 걸릴 수도 있음) -->
 	<sql id="member-where-list">
 		<if test="condition=='all' ">
-			INSTR(LOWER(userId), LOWER(#{keyword})) &gt; 0
+			(INSTR(LOWER(userId), LOWER(#{keyword})) &gt; 0
 			OR INSTR(LOWER(nickName), LOWER(#{keyword})) &gt; 0
-			OR INSTR(reportCount, #{keyword}) &gt; 0
+			OR INSTR(reportCount, #{keyword}) &gt; 0)
 		</if>
 		<if test="condition=='userId' ">
 			INSTR(LOWER(userId), LOWER(#{keyword})) &gt; 0
@@ -20,6 +20,38 @@
 			INSTR(reportCount, #{keyword}) &gt; 0
 		</if>
 	</sql>
+
+	<sql id="report-where-list">
+		<if test="condition=='all' ">
+			(INSTR(LOWER(userId), LOWER(#{keyword})) &gt; 0
+			OR INSTR(LOWER(nickName), LOWER(#{keyword})) &gt; 0
+			OR INSTR(reasonName, #{keyword}) &gt; 0)
+		</if>
+		<if test="condition=='userId' ">
+			INSTR(LOWER(userId), LOWER(#{keyword})) &gt; 0
+		</if>
+		<if test="condition=='nickName' ">
+			INSTR(LOWER(nickName), LOWER(#{keyword})) &gt; 0
+		</if>
+		<if test="condition=='reasonName' ">
+			INSTR(reasonName, #{keyword}) &gt; 0
+		</if>
+	</sql>
+
+	<sql id="report-group-list">
+			<choose>
+				<when test="group==1">
+					boardSort==1
+				</when>		
+				<when test="group==2">
+					boardSort==2
+				</when>		
+				<when test="group==3">
+					boardSort==3
+				</when>		
+			</choose>
+	</sql>
+
 
 
 <!-- 주문정보 리스트에서 검색 기능을 넣을거면 사용할 sql -->
@@ -87,7 +119,7 @@
 </select>
 
 <!-- 회원 수 세기 -->
-<select id="memberCount" parameterType="map" resultType="Integer">
+<select id="memberCount" parameterType="Map" resultType="Integer">
 		SELECT NVL(COUNT(*), 0)
 		FROM memberDetail md
 	<where>
@@ -97,8 +129,35 @@
 	</where>   
 </select>
 
-<!-- 신고된 글들 가져오기 -->
+<!-- 신고된 글들 가져오기. 조인해서 reasonName, reporterId, reporterNickName, 
+	reportedId, reportedNickName 가져옴  -->
+<select id="reportList" parameterType="Map" resultType="com.catDog.admin.Report">
+	SELECT reportNum, boardSort, reportedPostNum, reportDate,  
+		r.reasonSortNum, reasonName,	 
+		reporterNum, md1.userId reporterId, md1.nickName reporterNickName, 
+		reportedNum, md2.userId reportedId, md2.nickName reportedNickName 
+	FROM report r 
+	JOIN reasonSort rs  
+		ON r.reasonSortNum = rs.reasonSortNum 
+	JOIN memberDetail md1 ON r.reporterNum = md1.num 
+	JOIN memberDetail md2 ON r.reportedNum = md2.num 
+	<where>
+		<if test="keyword!=null and keyword!=''">
+			<include refid="report-where-list"/> 
+		</if>
+		AND <include refid="report-group-list"/> 
+	</where>
+	ORDER BY reportNum DESC 
+	OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+</select>
 
-
-
+<select id="reportCount" parameterType="Map" resultType="Integer">
+	SELECT NVL(COUNT(*), 0) FROM report
+	<where>
+		<if test="keyword!=null and keyword!=''">
+			<include refid="report-where-list"/>		
+		</if>
+		AND <include refid="report-group-list"/>
+	</where>
+</select>
 </mapper>

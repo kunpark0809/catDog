@@ -221,7 +221,7 @@ function nickNameCheck() {
 </script>
 <div class="body-container" style="width: 700px; margin: 0 auto;">
     <div class="body-title">
-        <h3><i class="far fa-handshake"></i> ${mode=="register"?"회원 가입":"회원 정보 수정"} </h3>
+        <h3><i class="far fa-handshake"></i> ${mode=="update"?"회원 정보 수정":"회원 가입"} </h3>
     </div>
     
         <div>
@@ -399,7 +399,7 @@ function nickNameCheck() {
 			      </td>
 			  </tr>
 			
-			  <c:if test="${mode=='register'}">
+			  <c:if test="${mode!='update'}">
 				  <tr>
 				      <td width="100" valign="top" style="text-align: right; padding-top: 5px;">
 				            <label style="font-weight: 900;">약관동의</label>
@@ -419,9 +419,9 @@ function nickNameCheck() {
 			  <table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
 			     <tr height="45"> 
 			      <td align="center" >
-			        <button type="button" name="sendButton" class="btnConfirm" onclick="memberOk();">${mode=="register"?"회원가입":"정보수정"}</button>
+			        <button type="button" name="sendButton" class="btnConfirm" onclick="memberOk();">${mode=="update"?"정보수정":"회원가입"}</button>
 			        <button type="reset" class="btnConfirm">다시입력</button>
-			        <button type="button" class="btnConfirm" onclick="javascript:location.href='<%=cp%>/';">${mode=="register"?"가입취소":"수정취소"}</button>
+			        <button type="button" class="btnConfirm" onclick="javascript:location.href='<%=cp%>/';">${mode=="update"?"수정취소":"가입취소"}</button>
 			      </td>
 			    </tr>
 			    <tr height="30">

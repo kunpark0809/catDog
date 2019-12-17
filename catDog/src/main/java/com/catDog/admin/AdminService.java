@@ -12,5 +12,8 @@ public interface AdminService {
 
 	int memberCount(Map<String, Object> map);
 
-	
+	List<Report> reportList(Map<String, Object> map);
+
+	int reportCount(Map<String, Object> map);
+
 }

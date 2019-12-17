@@ -63,4 +63,31 @@ public class AdminServiceImpl implements AdminService {
 		
 		return result;
 	}
+
+	@Override
+	public List<Report> reportList(Map<String, Object> map) {
+		List<Report> list = null;
+
+		try {
+			list = dao.selectList("admin.reportList", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+	
+	@Override
+	public int reportCount(Map<String, Object> map) {
+		int result = -1;
+	
+		try {
+			result = dao.selectOne("admin.reportCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
 }
