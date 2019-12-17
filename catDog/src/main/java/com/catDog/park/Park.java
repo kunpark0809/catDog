@@ -1,5 +1,7 @@
 package com.catDog.park;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class Park {
@@ -12,7 +14,7 @@ public class Park {
 	
 	private int recommendPicNum;
 	private String imageFileName;
-	private MultipartFile upload;
+	private List<MultipartFile> upload;
 	private MultipartFile mainUpload;
 	
 	private int sortNum;
@@ -184,13 +186,7 @@ public class Park {
 		this.num = num;
 	}
 
-	public MultipartFile getUpload() {
-		return upload;
-	}
-
-	public void setUpload(MultipartFile upload) {
-		this.upload = upload;
-	}
+	
 
 	public MultipartFile getMainUpload() {
 		return mainUpload;
@@ -198,6 +194,14 @@ public class Park {
 
 	public void setMainUpload(MultipartFile mainUpload) {
 		this.mainUpload = mainUpload;
+	}
+
+	public List<MultipartFile> getUpload() {
+		return upload;
+	}
+
+	public void setUpload(List<MultipartFile> upload) {
+		this.upload = upload;
 	}
 	
 }

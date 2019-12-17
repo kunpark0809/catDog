@@ -69,7 +69,7 @@ function searchList() {
 		  	 </tr>
 		</table>
     
-
+<!--  
 		<div class="parklist">	
 			<c:forEach var="dto" items="${list}">
 				<img alt="" src="<%=cp%>/uploads/park/${dto.imageFileName}" width="400">
@@ -78,7 +78,26 @@ function searchList() {
 					<p><i class="fas fa-eye"></i>&nbsp;&nbsp;${dto.hitCount}</p>	
 			</c:forEach>
 		</div>
+-->
+
+
+	<div class="parklist">	
+			<c:forEach var="dto" items="${list}">
+				<a onclick="javascript:location.href='${articleUrl}&recommendNum=${dto.recommendNum}'">
+					<input type="hidden" value="${dto.recommendNum}">
+					<img alt="" src="<%=cp%>/uploads/park/${dto.imageFileName}" width="400"><br>
+					<span class="placeName" onclick="javascript:article('${dto.recommendNum}');" style="font-weight: bold; font-size: 24px;">${dto.placeName}</span><br>
+					<span class="content" onclick="javascript:article('${dto.recommendNum}');" style="font-size: 18px;">${dto.content}</span>
+					<p><i class="fas fa-eye"></i>&nbsp;&nbsp;${dto.hitCount}</p>
+				</a>	
+			</c:forEach>
+		</div>
+		
+		<div class="paging">
+			${dataCount==0?"게시판에 등록된 글이 없습니다.":paging}
+		</div>
+		</div>
 
 		
-	</div>
+	
 </section>

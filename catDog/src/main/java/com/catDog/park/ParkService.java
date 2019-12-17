@@ -9,7 +9,7 @@ public interface ParkService {
 	public void insertImgFile(Park dto, String pathname) throws Exception;
 	public int dataCount(Map<String, Object> map);
 	public List<Park> listPark(Map<String, Object> map);
-	public Park readPark(int num);
+	public List<Park> readPark(int recommendNum);
 	public Park preReadPark(Map<String, Object> map);
 	public Park nextReadPark(Map<String, Object> map);
 	public void updatePark(Park dto, String pathname) throws Exception;

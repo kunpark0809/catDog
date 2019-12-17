@@ -1,12 +1,11 @@
 package com.catDog.park;
 
 import java.io.File;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.catDog.common.MyUtil;
 import com.catDog.customer.SessionInfo;
 
 
@@ -25,22 +25,52 @@ public class ParkController {
 @Autowired
 private ParkService service;
 
+@Autowired
+private MyUtil myUtil;
+
 @RequestMapping(value="/park/list")
 	public String list(
+			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
-			Model model
-			) throws Exception{
-		
+			HttpServletRequest req,
+			Model model) throws Exception {
+
+		String cp = req.getContextPath();
+
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("condition", condition);
+		
 		map.put("keyword", keyword);
+		map.put(condition, condition);
+				
+		int dataCount = service.dataCount(map);
+		
+		int rows = 3;
+		int offset = (current_page-1)*rows;
+		if(offset  < 0) offset = 0;
+		
+		int total_page = myUtil.pageCount(rows, dataCount);
+		
+		map.put("rows", rows);
+		map.put("offset", offset);
 		
 		List<Park> list = service.listPark(map);
 		
+		String listUrl = cp+"/park/list";
+		String articleUrl = cp+"/park/article?page=" + current_page;
 		
-		model.addAttribute("list",list);
-	
+		String paging = myUtil.paging(current_page, total_page, listUrl);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("articleUrl", articleUrl);
+		model.addAttribute("page", current_page);
+		model.addAttribute("paging", paging);
+		
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);		
+		
 		return ".park.list";
 	}
 	
@@ -75,40 +105,20 @@ private ParkService service;
 	
 	@RequestMapping(value="/park/article", method=RequestMethod.GET)
 	public String article(
-			@RequestParam int num,
-			@RequestParam String page,
-			@RequestParam(defaultValue="all") String condition,
-			@RequestParam(defaultValue="") String keyword,
-			Model model) throws Exception {
-		
-		keyword = URLDecoder.decode(keyword, "utf-8");
+			@RequestParam int recommendNum,
+			@RequestParam(defaultValue="1") String page,
+			Model model
+			) throws Exception{
+		List<Park> list = service.readPark(recommendNum);
 		
 		String query="page="+page;
-		if(keyword.length()!=0) {
-			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
-		}
-
-		Park dto = service.readPark(num);
-		if (dto == null)
+		if(list.size() == 0) {
 			return "redirect:/park/list?"+query;
+		}
 		
-		dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
-		
-
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("condition", condition);
-		map.put("keyword", keyword);
-		map.put("num", num);
-
-		Park preReadDto = service.preReadPark(map);
-		Park nextReadDto = service.nextReadPark(map);
-		
-		model.addAttribute("dto", dto);
-		model.addAttribute("preReadDto", preReadDto);
-		model.addAttribute("nextReadDto", nextReadDto);
-		
-		model.addAttribute("page", page);
-		model.addAttribute("query", query);
+		model.addAttribute("page",page);
+		model.addAttribute("query",query);
+		model.addAttribute("list",list);
 		
 		return ".park.article";
 	}

@@ -16,16 +16,19 @@
 		VALUES(recommendPic_seq.NEXTVAL, #{imageFileName}, #{recommendNum})
 	</insert>
 	
+	
 	<select id="listPark" parameterType="map" resultType="com.catDog.park.Park">
-		SELECT r.recommendNum, r.placeName, r.content, rp.imageFileName
+		SELECT r.recommendNum, r.placeName, r.content, r.hitCount, rp.imageFileName
 		FROM recommend r
 		JOIN recommendPic rp ON r.recommendNum = rp.recommendNum
 		<where>
 			<if test="keyword!=null and keyword!=''">
 				<include refid="where-list"/>
 			</if>
+			AND INSTR(rp.imageFileName,'main') &gt; 0
 		</where>
 		ORDER BY r.recommendNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 	
 	<sql id="where-list">
@@ -40,5 +43,56 @@
 			INSTR(content, #{keyword}) &gt; 0 
 		</if>
 	</sql>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(count(*), 0)
+		FROM recommend r
+		JOIN recommendPic rp ON r.recommendNum = rp.recommendNum
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<select id="readPark" parameterType="Integer" resultType="com.catDog.park.Park">
+		SELECT r.recommendNum, r.placeName, r.content, r.hitCount, TO_CHAR(r.created, 'yyyy-mm-dd') created, rp.imageFileName
+		FROM recommend r
+		JOIN recommendPic rp ON r.recommendNum = rp.recommendNum
+		WHERE r.recommendNum=#{recommendNum}
+	</select>
+	
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE recommend SET hitCount=hitCount+1 WHERE recommendNum = #{recommendNum}
+	</update>
+	
+	<select id="preReadBoard" parameterType="map" resultType="com.catDog.park.Park">
+		SELECT recommendNum, placeName
+		FROM recommend r
+		JOIN recommendPic rp ON r.recommendNum = rp.recommendNum
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			AND (recommendNum &gt; #{recommendNum})
+		</where>
+		ORDER BY recommendNum ASC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+
+	<select id="nextReadBoard" parameterType="map" resultType="com.catDog.park.Park">
+		SELECT recommendNum, placeName
+		FROM recommend r
+		JOIN recommendPic rp ON r.recommendNum = rp.recommendNum
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			AND (recommendNum &lt; #{recommendNum})
+		</where>
+		ORDER BY recommendNum DESC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+	
 	
 </mapper>

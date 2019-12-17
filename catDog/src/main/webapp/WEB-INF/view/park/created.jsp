@@ -68,15 +68,7 @@
          return false;
      }
      
-     var mode="${mode}";
-     if(mode=="created"||mode=="update" && f.upload.value!="") {
- 		if(! /(\.gif|\.jpg|\.png|\.jpeg)$/i.test(f.upload.value)) {
- 			alert('이미지 파일만 가능합니다.(bmp 파일은 불가) !!!');
- 			f.upload.focus();
- 			return false;
- 		}
-     }
-
+   
  	f.action="<%=cp%>/park/${mode}";
  	return true;
  }
@@ -102,7 +94,7 @@
  	      $tr=$("<tr align='left' height='40' style='border-bottom: 1px solid #cccccc;'>");
  	      $td=$("<td>", {width:"100", bgcolor:"#262626", style:"text-align: center;", html:"본문사진"});
  	      $tr.append($td);
- 	      $td=$("<td style='padding-left:10px;'>");
+ 	      $td=$("<td style='padding-left:10px; color: #262626;'>");
  	      $input=$("<input>", {type:"file", name:"upload", class:"boxTF", style:"width: 95%; height: 25px;"});
  	      $td.append($input);
  	      $tr.append($td);
