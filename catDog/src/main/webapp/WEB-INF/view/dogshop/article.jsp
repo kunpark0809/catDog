@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
    String cp = request.getContextPath();
 %>
@@ -21,6 +22,17 @@ $(function(){
 		location.href="<%=cp%>/dogshop/list?smallSortNum="+smallSortNum;
 	})
 });
+
+$(function(){
+	$("body").on("click",".sub-img",function(){
+		var imgName = $(this).attr("data-img");
+		$(".main-img img").attr("src","<%=cp%>/uploads/dogshop/"+imgName);
+	});
+});
+
+function cart(productNum){
+	console.log(productNum);
+}
 </script>
 	<div>
 		<div class="sortList">
@@ -30,14 +42,55 @@ $(function(){
 				<a class="sortName" data-num="${sort.smallSortNum}" id="sort-${sort.smallSortNum}">${sort.sortName}</a>	
 			</c:forEach>
 		</div>
-		<p>${list.get(0).name}</p>
-		<p>${list.get(0).price}</p>
-		<p>
-		<c:forEach var="dto" items="${list}">
-			<img alt="" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}">
-		</c:forEach> 
-		</p>
-		<div>
+		<div class="product-info">
+			<div class="product-img">
+				<div class="main-img">
+					<img alt="" src="<%=cp%>/uploads/dogshop/${list.get(0).imageFileName}">
+				</div>
+				<div class="imgList">
+					<c:forEach var="dto" items="${list}">
+						<div class="sub-img" data-img="${dto.imageFileName}">
+							<img alt="" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}">
+						</div>
+					</c:forEach>
+				</div>
+			</div>
+			
+			<div class="product-info-detail"> 
+				<table>
+				<tr>
+					<td colspan="2">${list.get(0).name}</td>
+				</tr>
+				<tr>
+					<td>가격</td>
+					<fmt:formatNumber var="price" value="${list.get(0).price}" type="currency" />
+					<td>${price}원</td>
+				</tr>
+				<tr>
+					<td>배송비</td>
+					<td>2,500원 / 주문시 결제(선결제)</td>
+				</tr>
+				<tr>
+					<td>포인트</td>
+					<fmt:parseNumber var="point" value="${list.get(0).price*0.01}" integerOnly="true"/>
+					<td>${point}원</td>
+				</tr>
+				</table>
+				<div class="product_quantity">
+					<input type="text" value="1">
+					<span>
+						<button type="button"  class="quantity_up"></button>
+						<button type="button" class="quantity_down"></button> 
+					</span>
+					<span>${price}원</span>
+				</div>
+				<div class="product_btn">
+					<button type="button" class="shop_order">구매하기</button>
+					<button type="button" class="shop_cart" onclick="cart('${list.get(0).productNum}');">장바구니</button>
+				</div>
+			</div>
+		</div>
+		<div class="product-main" style="clear: both;">
 			${list.get(0).content}
 		</div>
 	</div>

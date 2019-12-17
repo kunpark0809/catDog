@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-.sortName:hover :active{
+.sortName:hover, .sortName:active{
 	cursor: pointer;
 	color: #A66E4E;
 	font-weight: bold;
@@ -24,6 +24,58 @@ a.productLink{
 	color: #A66E4E;
 	font-weight: bold;
 }
-.productList img {
+
+.main-img{
+	min-height: 600px;
+	min-width: 600px;
+	max-width: 650px;
+	max-height: 650px;
+}
+
+.product-info{
+    width: 1200px;
+    margin: 0px auto;
+    padding: 50px 0px;
+	min-height: 700px;
+}
+
+.product-img{
+	width: 50%;
+	float: left;
+}
+
+.product-info-detail{
+	width: 50%;
+	float: left;
+	padding-left: 50px;
+}
+
+.productList > img {
 	width: 100px;
+}
+
+.imgList{
+	width: 100%;
+	padding: 20px 0px;
+}
+
+.sub-img > img {
+	width: 100px;
+	float: left;
+	padding: 1px;
+	margin: 0px 10px;
+	cursor: pointer;
+}
+
+.sub-img > img:hover, .sub-img > img:active {
+	cursor: pointer;
+	border: 3px solid #262626; 
+}
+
+.quantity_up{
+	background-image: url(../img/upload.png);
+	background: #f2f2f2;
+	border: none;
+	cursor: pointer;
+	height: 10px;
 }
