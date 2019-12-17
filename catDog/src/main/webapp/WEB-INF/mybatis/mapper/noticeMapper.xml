@@ -8,7 +8,7 @@
 	
 	<insert id="insertNotice" parameterType="com.catDog.cs.Notice">
 		insert into notice(noticeNum, num, subject, content, notice) values
-		(#{noticeNum}, #{num}, #{subject}, #{content}, #{notice})
+		(#{noticeNum}, #{num}, #{subject}, #{content}, #{notice, jdbcType=INTEGER})
 	</insert>
 	
 	<insert id="insertNoticeFile" parameterType="com.catDog.cs.Notice">
@@ -75,7 +75,7 @@
 	</select>
 	
 	<select id="readNotice" parameterType="Integer" resultType="com.catDog.cs.Notice">
-		select n.num, md.userId, nickName, subject, created, content, 
+		select n.num, md.userId, nickName, subject, created, content, noticeNum,
 		hitCount, notice
 		from notice n
 		join memberDetail md on md.num=n.num
@@ -124,5 +124,20 @@
 		from noticeFile
    		where noticeNum = #{noticeNum}
 	</select>
+	
+	<update id="updateNotice" parameterType="com.catDog.cs.Notice">
+		update notice set subject=#{subject}, content=#{content}, notice=#{notice}
+		where noticeNum = #{noticeNum}
+	</update>
+	
+	<delete id="deleteNotice" parameterType="Integer">
+		delete from notice where noticeNum=#{noticeNum}
+	</delete>
+	
+	<delete id="deleteFile" parameterType="map">
+		delete from noticeFile where ${field}=#{num}
+	</delete>
+	
+	
 	
 </mapper>

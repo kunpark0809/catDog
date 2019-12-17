@@ -1,5 +1,6 @@
 package com.catDog.cs;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -127,13 +128,49 @@ public class CsServiceImpl implements CsService {
 
 	@Override
 	public void updateNotice(Notice dto, String pathname) throws Exception {
-		// TODO Auto-generated method stub
+		try {
+			dao.updateData("notice.updateNotice", dto);
+			
+			if(! dto.getUpload().isEmpty()) {
+				for(MultipartFile mf : dto.getUpload()) {
+					String saveFileName = fileManager.doFileUpload(mf, pathname);
+					if(saveFileName==null) continue;
+					
+					String originalFileName = mf.getOriginalFilename();
+					long fileSize = mf.getSize();
+					
+					dto.setOriginalFileName(originalFileName);
+					dto.setSaveFileName(saveFileName);
+					dto.setFileSize(fileSize);
+					
+					insertFile(dto);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
 	}
 
 	@Override
 	public void deleteNotice(int noticeNum, String pathname) throws Exception {
-		// TODO Auto-generated method stub
+		try {
+			List<Notice> list = listFile(noticeNum);
+			if(list!=null) {
+				for(Notice dto : list) {
+					fileManager.doFileDelete(dto.getSaveFileName(), pathname);
+				}
+			}
+			Map<String, Object> map = new HashMap<>();
+			map.put("field", "noticeNum");
+			map.put("num", noticeNum);
+			deleteFile(map);
+			
+			dao.deleteData("notice.deleteNotice", noticeNum);			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 
@@ -174,7 +211,11 @@ public class CsServiceImpl implements CsService {
 
 	@Override
 	public void deleteFile(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
+		try {
+			dao.deleteData("notice.deleteFile", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 

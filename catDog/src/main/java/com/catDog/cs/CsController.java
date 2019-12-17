@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.catDog.common.FileManager;
 import com.catDog.common.MyUtil;
@@ -152,6 +153,45 @@ public class CsController {
 		return "redirect:/notice/list";
 	}
 	
+	@RequestMapping(value="/notice/update", method=RequestMethod.GET)
+	public String updateForm(@RequestParam int noticeNum,
+							 @RequestParam String page,
+							 HttpSession session,
+							 Model model) {
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		Notice dto = service.readNotice(noticeNum);
+		if(dto==null || ! dto.getUserId().equals(info.getUserId())) {
+			return "redirect:/notice/list?page="+page;
+		}
+		
+		List<Notice> listFile = service.listFile(noticeNum);
+		
+		model.addAttribute("mode", "update");
+		model.addAttribute("dto", dto);
+		model.addAttribute("listFile", listFile);
+		model.addAttribute("page", page);
+		
+		return ".notice.created";
+	}
+	
+	@RequestMapping(value="/notice/update", method=RequestMethod.POST)
+	public String updateSubmit(Notice dto,
+							   @RequestParam String page,
+							   HttpSession session) {
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "notice";
+		
+		try {
+			service.updateNotice(dto, pathname);
+		} catch (Exception e) {			
+		}
+		return "redirect:/notice/list?page="+page;
+	}
+	
+	
 	@RequestMapping(value="/notice/zipdownload")
 	public void zip(@RequestParam int noticeNum,
 					HttpServletResponse resp,
@@ -185,7 +225,7 @@ public class CsController {
 	
 	@RequestMapping(value="/notice/article", method=RequestMethod.GET)
 	public String article(
-			@RequestParam int noticeNum,
+			@RequestParam int noticeNum,			
 			@RequestParam String page,
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
@@ -236,9 +276,85 @@ public class CsController {
 		return ".notice.article";
 	}
 	
+	@RequestMapping("/notice/download")
+	public void down(@RequestParam int noticeFileNum,
+					HttpServletResponse resp,
+					HttpSession session) throws Exception {
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator +"notice";
+		
+		Notice dto = service.readFile(noticeFileNum);
+		boolean b = false;
+		
+		if(dto != null) {
+			b = fileManager.doFileDownload(dto.getSaveFileName(), dto.getOriginalFileName(),
+							pathname, resp);
+		}
+		
+		if(! b) {
+			resp.setContentType("text/html;charset=utf-8");
+			PrintWriter out = resp.getWriter();
+			out.print("<script>alert('파일 다운로드가 실패 했습니다.';history.back();</script>");
+		}
+	}
 	
+	@RequestMapping(value="/notice/deleteFile", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteFile(
+					@RequestParam int noticeFileNum,
+					HttpSession session) throws Exception {
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator +"notice";
+		
+		String state = "false";
+		Notice dto = service.readFile(noticeFileNum);
+		if(dto!=null) {
+			fileManager.doFileDelete(dto.getSaveFileName(), pathname);
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("field", "noticeFileNum");
+			map.put("num", noticeFileNum);
+			
+			try {
+				service.deleteFile(map);
+				state = "true";
+			} catch (Exception e) {
+				
+			}
+		}
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		return model;
+	}
 	
-	
+	@RequestMapping(value="/notice/delete")
+	public String delete(@RequestParam int noticeNum,
+						 @RequestParam String page,
+						 @RequestParam(defaultValue="all") String condition,
+						 @RequestParam(defaultValue="") String keyword,
+						 HttpSession session) throws Exception {
+		
+		keyword = URLDecoder.decode(keyword, "utf-8");
+		
+		String query = "page="+page;
+		if(keyword.length()!=0) {
+			query += "&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "utf-8");
+		}
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator +"notice";
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		Notice dto = service.readNotice(noticeNum);
+		if(dto!=null && (dto.getUserId().equals(info.getUserId()) || info.getUserId().equals("admin"))) {
+			service.deleteNotice(noticeNum, pathname);
+		}
+		
+		return "redirect:/notice/list?"+query;
+	}
 	
 	
 	@RequestMapping(value="/qna/list")
