@@ -116,4 +116,12 @@ public class DogShopController {
 		model.addAttribute("sortList",sortList);
 		return ".dogshop.article";
 	}
+	
+	@RequestMapping(value="/dogshop/pay")
+	public String pay(
+			@RequestParam String productNum
+			) throws Exception{
+		
+		return ".dogshop.pay";
+	}
 }

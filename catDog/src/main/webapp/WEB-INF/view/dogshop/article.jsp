@@ -33,6 +33,10 @@ $(function(){
 function cart(productNum){
 	console.log(productNum);
 }
+
+function pay(productNum){
+	location.href="<%=cp%>/pay/pay?productNum="+productNum;
+}
 </script>
 	<div>
 		<div class="sortList">
@@ -85,7 +89,7 @@ function cart(productNum){
 					<span>${price}원</span>
 				</div>
 				<div class="product_btn">
-					<button type="button" class="shop_order">구매하기</button>
+					<button type="button" class="shop_order" onclick="pay('${list.get(0).productNum}');">구매하기</button>
 					<button type="button" class="shop_cart" onclick="cart('${list.get(0).productNum}');">장바구니</button>
 				</div>
 			</div>
