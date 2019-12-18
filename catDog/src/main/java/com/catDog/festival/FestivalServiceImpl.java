@@ -23,7 +23,7 @@ public class FestivalServiceImpl implements FestivalService {
 			
 			if(dto.getStartTime().length()==0&&dto.getEndTime().length()==0&&dto.getStartDate().equals(dto.getEndDate()))
 				dto.setEndDate("");
-			dao.insertData("festival.insert", dto);
+			dao.insertData("festival.insertFestival", dto);
 		} catch (Exception e) {
 			throw e;
 		}
