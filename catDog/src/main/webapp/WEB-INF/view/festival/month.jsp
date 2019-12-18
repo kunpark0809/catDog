@@ -5,8 +5,10 @@
 <%
 	String cp = request.getContextPath();
 %>
-<link rel="stylesheet" href="<%=cp%>/resource/css/tabs.css"
-	type="text/css">
+
+<link rel="stylesheet" href="<%=cp%>/resource/css/tabs.css" type="text/css">
+<link rel="stylesheet" href="<%=cp%>/resource/vendor/jquery-ui/css/smoothness/jquery-ui.min.css" type="text/css">
+
 <style type="text/css">
 .ui-widget-header {
 	background: none;
@@ -68,7 +70,7 @@
 	color: #ff0000;
 }
 
-.scheduleSubject {
+.festivalSubject {
 	display: block;
 	/*width:100%;*/
 	width: 110px;
@@ -82,7 +84,7 @@
 	text-overflow: ellipsis;
 }
 
-.scheduleMore {
+.festivalMore {
 	display: block;
 	width: 110px;
 	margin: 0 0 1.5px;
@@ -92,6 +94,11 @@
 	text-align: right;
 }
 </style>
+
+<script type="text/javascript" src="<%=cp%>/resource/vendor/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<%=cp%>/resource/vendor/jquery-ui/jquery.ui.datepicker-ko.js"></script>
+
+
 <script type="text/javascript">
 $(function() {
 	$("#tab-month").addClass("active");
@@ -99,10 +106,10 @@ $(function() {
 
 $(function() {
 	var today="${today}";
-	$("#largeCalendar.textDate").each(function (i) {
+	$("#largeCalendar .textDate").each(function (i) {
 		var s=$(this).attr("data-date");
 		if(s==today) {
-			$(this).parent().css("backgroun", "#ffffd9");
+			$(this).parent().css("background", "#ffffd9");
 		}
 	});
 });
@@ -184,12 +191,13 @@ $(function(){
 
 $(function() {
 	$("#btnFestivalSendOk").click(function() {
+		
 		if(! check()) {
 			return;
 		}
 		
 		var query=$("form[name=festivalForm]").serialize();
-		var url="<%=cp%>/fesival/insert";
+		var url="<%=cp%>/festival/insert";
 		
 		$.ajax({
 			type:"post"
@@ -264,6 +272,8 @@ function check() {
 			return false;
 		}
 	}
+	
+	return true;
 }
 
 function isValidTime(data) {
@@ -297,7 +307,7 @@ $(function() {
 });
 </script>
 
-<div class="body-container" style="width: 900px;">
+<div style="width: 900px; margin: 20px auto 10px;">
 	<div class="body-title">
 		<h3>
 			<i class="far fa-calendar-alt"></i> 일정관리
@@ -308,10 +318,11 @@ $(function() {
 		<div style="clear: both;">
 			<ul class="tabs">
 				<li id="tab-month" data-tab="month">월별일정</li>
-				<li id="tab-day" data-tab="month">상세일정</li>
-				<li id="tab-year" data-tab="month">년도</li>
+				<li id="tab-day" data-tab="day">상세일정</li>
+				<li id="tab-year" data-tab="year">연도일정</li>
 			</ul>
 		</div>
+		
 		<div id="tab-content" style="clear: both; padding: 20px 0px 0px;">
 			<table style="width: 840px; margin: 0px auto; border-spacing: 0;">
 				<tr height="60">
@@ -415,7 +426,7 @@ $(function() {
 					<label style="font-weight: 900;">내용</label></td>
 				<td style="padding: 0 0 15px 15px;">
 					<p style="margin-top: 1px; margin-bottom: 5px;">
-						<textarea name="memo" id="form-memo" class="boxTA" style="width: 93%; height: 70px;"></textarea>
+						<textarea name="content" id="form-content" class="boxTA" style="width: 93%; height: 70px;"></textarea>
 					</p>
 				</td>
 			</tr>

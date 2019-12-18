@@ -114,7 +114,7 @@ $(function(){
 });
 </script>
 
-<div class="body-container" style="width: 900px;">
+<div class="body-container" style="width: 900px; margin: 20px auto 10px;">
 	<div class="body-title">
 		<h3><i class="far fa-calendar-alt"></i> 일정관리 </h3>
 	</div>

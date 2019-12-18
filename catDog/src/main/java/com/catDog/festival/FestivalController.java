@@ -63,8 +63,8 @@ public class FestivalController {
 			String startDay=String.format("%04d%02d%02d", syear, smonth, sdate);
 			String endDay=String.format("%04d%02d%02d", eyear, emonth, edate);
 			Map<String, Object> map=new HashMap<>();
-			map.put("startDay", startDay);
-			map.put("endDay", endDay);
+			map.put("startDate", startDay);
+			map.put("endDate", endDay);
 			map.put("userId", info.getUserId());
 			
 			List<Festival> list=service.listMonth(map);
@@ -80,18 +80,22 @@ public class FestivalController {
 				cnt=0;
 				for(Festival dto:list) {
 					int sd8=Integer.parseInt(dto.getStartDate());
-					int sd4=Integer.parseInt(dto.getStartDate().substring(4));
 					int ed8=-1;
 					if(dto.getEndDate()!=null) {
 						ed8=Integer.parseInt(dto.getEndDate());
 					}
 					int cn8=Integer.parseInt(s);
-					int cn4=Integer.parseInt(s.substring(4));
 					
 					if(cnt==4) {
-						days[0][i-1]+="<span class='calendarMore' data-date='"+s+"' >"+"more..."+"</span>";
+						days[0][i-1]+="<span class='festivalMore' data-date='"+s+"' >"+"more..."+"</span>";
 						break;
 					}
+					
+					if((sd8==cn8 || sd8<=cn8 && ed8>=cn8)) {
+						days[0][i-1]+="<span class='festivalSubject' data-date='"+s+"' data-festivalNum='"+dto.getFestivalNum()+"' >"+dto.getSubject()+"</span>";
+						cnt++;	
+					} else if (sd8>cn8 && ed8<cn8)
+						break;
 				}
 				sdate++;
 			}
@@ -115,16 +119,21 @@ public class FestivalController {
 						cnt=0;
 						for(Festival dto:list) {
 							int sd8=Integer.parseInt(dto.getStartDate());
-							int sd4=Integer.parseInt(dto.getStartDate().substring(4));
 							int ed8=-1;
 							if(dto.getEndDate()!=null) {
 								ed8=Integer.parseInt(dto.getEndDate());
 							}
 							int cn8=Integer.parseInt(s);
-							int cn4=Integer.parseInt(s.substring(4));
 							
 							if(cnt==4) {
-								days[row][i]+="<span class='calendarMore' data-date='"+s+"' >"+"more..."+"</span>";
+								days[row][i]+="<span class='festivalMore' data-date='"+s+"' >"+"more..."+"</span>";
+								break;
+							}
+							
+							if(sd8==cn8 || sd8<=cn8 && ed8>=cn8) {
+								days[row][i]+="<span class='festivalSubject' data-date='"+s+"' data-festivalNum='"+dto.getFestivalNum()+"' >"+dto.getSubject()+"</span>";
+								cnt++;
+							} else if (sd8>cn8 && ed8<cn8) {
 								break;
 							}
 						}
@@ -146,16 +155,21 @@ public class FestivalController {
 					cnt=0;
 					for(Festival dto:list) {
 						int sd8=Integer.parseInt(dto.getStartDate());
-						int sd4=Integer.parseInt(dto.getStartDate().substring(4));
 						int ed8=-1;
 						if(dto.getEndDate()!=null) {
 							ed8=Integer.parseInt(dto.getEndDate());
 						}
 						int cn8=Integer.parseInt(s);
-						int cn4=Integer.parseInt(s.substring(4));
 						
 						if(cnt==4) {
-							days[row][i]+="<span class='calendarMore' data-date='"+s+"' > "+"more..."+"</span>";
+							days[row][i]+="<span class='festivalMore' data-date='"+s+"' > "+"more..."+"</span>";
+							break;
+						}
+						
+						if(sd8==cn8 || sd8<=cn8 && ed8>=cn8) {
+							days[row][i]+="<span class='festivalSubject' data-date='"+s+"' data-festivalNum='"+dto.getFestivalNum()+"' >"+dto.getSubject()+"</span>";
+							cnt++;
+						} else if (sd8>cn8 && ed8<cn8) {
 							break;
 						}
 					}

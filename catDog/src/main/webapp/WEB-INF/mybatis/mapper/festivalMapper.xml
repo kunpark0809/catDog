@@ -10,8 +10,8 @@
 	</insert>
 
 	<select id="listMonth" parameterType="map" resultType="com.catDog.festival.Festival">
-		SELECT festivalNum, subject, startDate, endDate, startTime, endTime, color
-		FROM festival
+		SELECT festivalNum, subject, startDate, endDate, startTime, endTime, color, m.userId
+		FROM festival f JOIN memberDetail m ON f.num= m.num
 		WHERE userId = #{userId} AND
 			(
 				(
@@ -24,13 +24,14 @@
 	</select>
 	
 	<select id="listDay" parameterType="map" resultType="com.catDog.festival.Festival">
-		SELECT festivalNum, subject, startDate, endDate, color, TO_CHAR(created, 'YYYY-MM-DD') created
-		FROM festival
+		SELECT festivalNum, subject, startDate, endDate, color, m.userId, TO_CHAR(created, 'YYYY-MM-DD') created
+		FROM festival f JOIN memberDetail m ON f.num= m.num
 		WHERE userId = #{userId} AND
 			(
 				(
 					TO_DATE(startDate, 'YYYYMMDD') = TO_DATE(#{date}, 'YYYYMMDD')
-						OR (endDate IS NOT NULL AND TO_DATE(startDate, 'YYYYMMDD') &lt;= TO_DATE(#{date}, 'YYYYMMDD') AND TO_DATE(endDate, 'YYYYMMDD') &gt; TO_DATE(#{date}, 'YYYYMMDD'))
+						OR (endDate IS NOT NULL AND TO_DATE(startDate, 'YYYYMMDD') &lt;= TO_DATE(#{date}, 'YYYYMMDD') 
+						AND TO_DATE(endDate, 'YYYYMMDD') &gt;= TO_DATE(#{date}, 'YYYYMMDD'))
 				)
 			)
 		ORDER by festivalNum DESC
@@ -45,10 +46,10 @@
 		UPDATE festival SET
 			subject=#{subject}, content=#{content}, color=#{color}, startDate=#{startDate}, endDate=#{endDate},
 			startTime=#{startTime, jdbcType=VARCHAR}, endTime=#{endDate, jdbcType=VARCHAR}, addr=#{addr}
-		WHERE festivalNum=#{festivalNum} AND userId=#{userId}
+		WHERE festivalNum = #{festivalNum}
 	</update>
 	
 	<delete id="deleteFestival" parameterType="map">
-		DELETE FROM festival WHERE festivalNum=#{festivalNum} AND userId=#{userId}
+		DELETE FROM festival WHERE festivalNum = #{festivalNum}
 	</delete>
 </mapper>
