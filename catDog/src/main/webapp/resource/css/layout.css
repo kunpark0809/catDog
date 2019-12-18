@@ -62,6 +62,7 @@ ul li {
 }
 
 .footer-board{
+	clear:both;
 	top: 97px;
     position: relative;
 }

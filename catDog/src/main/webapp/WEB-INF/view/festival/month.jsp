@@ -21,6 +21,7 @@
 
 .help-block {
 	margin-top: 3px;
+	margin-bottom: 3px;
 }
 
 .titleDate {
@@ -417,7 +418,17 @@ $(function() {
 						<input type="text" name="endDate" id="form-endDate" maxlength="10" class="boxTF" readonly="readonly" style="width: 25%; background: #ffffff;">
 						<input type="text" name="endTime" id="form-endTime" maxlength="5" class="boxTF" style="width: 15%; display: none;" placeholder="종료시간">
 					</p>
-					<p class="help-block">종료일자는 선택사항이며, 시작일자보다 작을 수 없습니다.</p>
+					<p class="help-block">종료일자는 선택사항이며, 시작일 이후로 해주세요.</p>
+				</td>
+			</tr>
+			
+			<tr>
+				<td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+				<label style="font-weight: 900;">장소</label></td>
+				<td style="padding: 0 0 15px 15px;">
+					<p style="margin-top: 1px; margin-bottom: 5px;">
+						<input type="text" name="addr" id="form-address" maxlength="100" class="boxTF" style="width: 93%;">
+					</p>
 				</td>
 			</tr>
 			

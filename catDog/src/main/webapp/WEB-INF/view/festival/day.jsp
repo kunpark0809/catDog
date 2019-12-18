@@ -5,8 +5,8 @@
 <%
 	String cp=request.getContextPath();
 %>
-
 <link rel="stylesheet" href="<%=cp%>/resource/css/tabs.css" type="text/css">
+<link rel="stylesheet" href="<%=cp%>/resource/vendor/jquery-ui/css/smoothness/jquery-ui.min.css" type="text/css">
 
 <style type="text/css">
 .ui-widget-header {
@@ -59,8 +59,8 @@
 }
 </style>
 
-
-
+<script type="text/javascript" src="<%=cp%>/resource/vendor/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<%=cp%>/resource/vendor/jquery-ui/jquery.ui.datepicker-ko.js"></script>
 
 <script type="text/javascript">
 $(function(){
@@ -158,8 +158,9 @@ $(function(){
 });
 
 $(function(){
-	$("btnFestivalSendOk").click(function(){
+	$("#btnFestivalSendOk").click(function(){
 		if(! check()) {
+			alert($(this));
 			return;
 		}
 		
@@ -216,7 +217,7 @@ $(function() {
 });
 
 function check() {
-	if(! $("form-subject").val()) {
+/* 	if(! $("form-subject").val()) {
 		$("#form-subject").focus();
 		return false;
 	}
@@ -234,25 +235,7 @@ function check() {
 			return false;
 		}
 	}
-	
-	if($("#form-startTime").val()!="" && !isValidTime($("#form-startTime").val())) {
-		$("#form-startTime").focus();
-		return false;
-	}
-	
-	if($("#form-endTime").val()!="" && !isValidTime($("#form-endTime").val())) {
-		$("#form-endTime").focus();
-		return false;
-	}
-	
-	if($("#form-endTime").val()) {
-		var s1=$("#form-startTime").val().replace(":", "");
-		var s2=$("#form-endTime").val().replace(":", "");
-		if(s1>s2) {
-			$("#form-startTime").focus();
-			return false;
-		}
-	}
+	 */
 	return true;
 }
 
@@ -278,7 +261,7 @@ function deleteOk(festivalNum) {
 }
 </c:if>
 </script>
-<div class="body-container" style="width: 900px; margin: 20px auto 10px;">
+<div style="width: 900px; margin: 20px auto 10px;">
 	<div class="body-title">
 		<h3><i class="far fa-calendar-alt"></i> 일정관리 </h3>
 	</div>
@@ -387,6 +370,16 @@ function deleteOk(festivalNum) {
 								<td style="text-align: left; padding-left: 7px;">
 									<p style="margin-top: 1px; margin-bottom: 1px;">
 										${dto.created}
+									</p>
+								</td>
+							</tr>
+							<tr height="35" style="border-bottom: 1px solid #cccccc;">
+								<td width="100" style="text-align: right;">
+									<label style="font-weight: 900;">장소</label>
+								</td>
+								<td style="text-align: left; padding-left: 7px;">
+									<p style="margin-top: 1px; margin-bottom: 1px;">
+										${dto.addr}
 									</p>
 								</td>
 							</tr>
@@ -517,17 +510,28 @@ function deleteOk(festivalNum) {
 							<input type="text" name="endDate" id="form-endDate" maxlength="10" class="boxTF" value="${dto.endDate}" readonly="readonly" style="width: 25%; background: #ffffff;">
 							<input type="text" name="endTime" id="form-endTime" maxlength="5" class="boxTF" value="${dto.endTime}" style="width: 15%; display: none;" placeholder="종료시간">
 						</p>
-						<p class="help-block">종료일자는 선택사항이며, 시작일자보다 작을 수 없습니다.</p>
+						<p class="help-block">종료일자는 선택사항이며, 시작일 이후로 해주세요.</p>
 					</td>
 				</tr>
-				
+
+				<tr>
+					<td width="100" valign="top"
+						style="text-align: right; padding-top: 5px;"><label
+						style="font-weight: 900;">장소</label></td>
+					<td style="padding: 0 0 15px 15px;">
+						<p style="margin-top: 1px; margin-bottom: 5px;">
+							<input type="text" name="addr" id="form-address" maxlength="100" class="boxTF" style="width: 93%;">
+						</p>
+					</td>
+				</tr>
+
 				<tr>
 					<td width="100" valign="top" style="text-align: right; padding-top: 5px;">
 						<label style="font-weight: 900;">내용</label>
 					</td>
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
-							<textarea rows="content" id="form-content" class="boxTA" style="width: 93%; height: 70px;">${dto.content}</textarea>
+							<textarea rows="content" name="content" id="form-content" class="boxTA" style="width: 93%; height: 70px;">${dto.content}</textarea>
 						</p>
 					</td>
 				</tr>

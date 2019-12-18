@@ -371,14 +371,15 @@ public class FestivalController {
 	
 	@RequestMapping(value="/festival/update", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> updateSubmit(Festival dto, HttpSession session) {
-		SessionInfo info=(SessionInfo)session.getAttribute("member");
+	public Map<String, Object> updateSubmit(Festival dto) throws Exception{
+
 		
 		String state="true";
 		try {
-			dto.setUserId(info.getUserId());
+			
 			service.updateFestival(dto);
 		} catch (Exception e) {
+			e.printStackTrace();
 			state="false";
 		}
 		Map<String, Object> model=new HashMap<>();

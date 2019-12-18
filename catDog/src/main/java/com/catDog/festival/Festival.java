@@ -16,6 +16,7 @@ public class Festival {
 	private String lon;
 	private String color;
 	private String period;
+	private String allDay;
 	
 	public String getSubject() {
 		return subject;
@@ -107,6 +108,12 @@ public class Festival {
 	}
 	public void setFestivalNum(int festivalNum) {
 		this.festivalNum = festivalNum;
+	}
+	public String getAllDay() {
+		return allDay;
+	}
+	public void setAllDay(String allDay) {
+		this.allDay = allDay;
 	}
 	
 	

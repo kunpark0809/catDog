@@ -5,20 +5,18 @@
 
 	<insert id="insertFestival" parameterType="com.catDog.festival.Festival">
 		INSERT INTO festival(festivalNum, num, subject, content, color, startDate, endDate, startTime, endTime, addr)
-		VALUES(festival_seq.NEXTVAL, #{num}, #{subject}, #{content}, #{color}, #{startDate}, #{endDate}, 
+		VALUES(festival_seq.NEXTVAL, #{num}, #{subject}, #{content}, #{color}, #{startDate}, #{endDate, jdbcType=VARCHAR}, 
 		#{startTime, jdbcType=VARCHAR}, #{endTime, jdbcType=VARCHAR}, #{addr})
 	</insert>
 
 	<select id="listMonth" parameterType="map" resultType="com.catDog.festival.Festival">
 		SELECT festivalNum, subject, startDate, endDate, startTime, endTime, color, m.userId
 		FROM festival f JOIN memberDetail m ON f.num= m.num
-		WHERE userId = #{userId} AND
+		WHERE 
 			(
-				(
 					TO_DATE(startDate, 'YYYYMMDD') >= TO_DATE(#{startDate}, 'YYYYMMDD')
 						AND TO_DATE(startDate, 'YYYYMMDD') &lt;= TO_DATE(#{endDate}, 'YYYYMMDD')
 						OR TO_DATE(startDate, 'YYYYMMDD') &lt;= TO_DATE(#{endDate}, 'YYYYMMDD')
-				)
 			)
 		ORDER BY startDate ASC, festivalNum DESC
 	</select>
@@ -26,26 +24,24 @@
 	<select id="listDay" parameterType="map" resultType="com.catDog.festival.Festival">
 		SELECT festivalNum, subject, startDate, endDate, color, m.userId, TO_CHAR(created, 'YYYY-MM-DD') created
 		FROM festival f JOIN memberDetail m ON f.num= m.num
-		WHERE userId = #{userId} AND
+		WHERE 
 			(
-				(
 					TO_DATE(startDate, 'YYYYMMDD') = TO_DATE(#{date}, 'YYYYMMDD')
 						OR (endDate IS NOT NULL AND TO_DATE(startDate, 'YYYYMMDD') &lt;= TO_DATE(#{date}, 'YYYYMMDD') 
 						AND TO_DATE(endDate, 'YYYYMMDD') &gt;= TO_DATE(#{date}, 'YYYYMMDD'))
-				)
 			)
 		ORDER by festivalNum DESC
 	</select>
 	
 	<select id="readFestival" parameterType="Integer" resultType="com.catDog.festival.Festival">
-		SELECT festivalNum, num, subject, content, color, startDate, endDate, startTime, endTime, addr, created
+		SELECT festivalNum, subject, content, color, startDate, endDate, startTime, endTime, addr, created
 		FROM festival WHERE festivalNum = #{festivalNum}
 	</select>
 	
 	<update id="updateFestival" parameterType="com.catDog.festival.Festival">
 		UPDATE festival SET
-			subject=#{subject}, content=#{content}, color=#{color}, startDate=#{startDate}, endDate=#{endDate},
-			startTime=#{startTime, jdbcType=VARCHAR}, endTime=#{endDate, jdbcType=VARCHAR}, addr=#{addr}
+			subject=#{subject}, content=#{content}, color=#{color}, startDate=#{startDate}, endDate=#{endDate, jdbcType=VARCHAR},
+			startTime=#{startTime, jdbcType=VARCHAR}, endTime=#{endTime, jdbcType=VARCHAR}, addr=#{addr}
 		WHERE festivalNum = #{festivalNum}
 	</update>
 	

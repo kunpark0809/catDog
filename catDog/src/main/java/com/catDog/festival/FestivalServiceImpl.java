@@ -25,6 +25,7 @@ public class FestivalServiceImpl implements FestivalService {
 				dto.setEndDate("");
 			dao.insertData("festival.insertFestival", dto);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw e;
 		}
 		
@@ -91,6 +92,7 @@ public class FestivalServiceImpl implements FestivalService {
 				dto.setPeriod(period);
 			}
 		} catch (Exception e) {
+				e.printStackTrace();
 			throw e;
 		}
 		return dto;
@@ -104,11 +106,17 @@ public class FestivalServiceImpl implements FestivalService {
 			dto.setStartTime(dto.getStartTime().replaceAll(":", ""));
 			dto.setEndTime(dto.getEndTime().replaceAll(":", ""));
 			
+			if(dto.getAllDay()!=null) {
+				dto.setStartTime("");
+				dto.setEndTime("");
+			}
+			
 			if(dto.getStartTime().length()==0&&dto.getEndTime().length()==0&&dto.getStartDate().equals(dto.getEndDate()))
 				dto.setEndDate("");
 			
 			dao.updateData("festival.updateFestival", dto);
 		} catch (Exception e) {
+				e.printStackTrace();
 			throw e;
 		}
 		
