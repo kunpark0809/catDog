@@ -60,7 +60,7 @@ public class AdminServiceImpl implements AdminService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return result;
 	}
 
@@ -76,18 +76,19 @@ public class AdminServiceImpl implements AdminService {
 
 		return list;
 	}
-	
+
 	@Override
 	public int reportCount(Map<String, Object> map) {
 		int result = -1;
-	
+
 		try {
 			result = dao.selectOne("admin.reportCount", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return result;
 	}
 
+	
 }

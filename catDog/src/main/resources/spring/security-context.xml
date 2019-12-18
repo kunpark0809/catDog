@@ -34,6 +34,14 @@
       <intercept-url pattern="/customer/complete" access="permitAll"/>
       <intercept-url pattern="/resource/**" access="permitAll"/>
       
+      <intercept-url pattern="/park/**" access="permitAll"/>
+      <intercept-url pattern="/cafe/**" access="permitAll"/>
+      <intercept-url pattern="/hospital/**" access="permitAll"/>
+      <intercept-url pattern="/training/**" access="permitAll"/>
+      <intercept-url pattern="/funeral/**" access="permitAll"/>
+      
+      
+      
       <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
       <intercept-url pattern="/**" access="hasAnyRole('ROLE_USER')"/>
             
@@ -46,7 +54,7 @@
          default-target-url="/"
          always-use-default-target="true"
          authentication-success-handler-ref="myAuthenticationSuccessHandler"
- 		
+ 		 authentication-failure-handler-ref="myAuthenticationFailureHandler"
       />
       
       <logout
@@ -67,8 +75,15 @@
       
    </http>
     
-    <beans:bean id="myAuthenticationSuccessHandler"
-    class="com.catDog.security.LoginSuccessHandler"/>
+    <beans:bean id="myAuthenticationSuccessHandler" class="com.catDog.security.LoginSuccessHandler"> 
+    	<beans:property name="defaultUrl" value="/"/>
+    </beans:bean>
+    
+    <beans:bean id="myAuthenticationFailureHandler" class="com.catDog.security.LoginFailureHandler">
+    	<beans:property name="defaultFailureUrl" value="/customer/login?login_error"/>
+    </beans:bean>
+    
+    
     
     <jdbc-user-service data-source-ref="dataSource"
           id="userService"

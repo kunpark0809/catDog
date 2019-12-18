@@ -43,5 +43,104 @@
     			VALUES (#{userId}, 'ROLE_USER')
     	SELECT * FROM DUAL
     </update>
+ 
+<!-- memberDetail의 enabled를 수정하는 쿼리(강퇴당했을 때 사용) -->
+<update id="updateEnabled" parameterType="map">
+	UPDATE memberDetail SET enabled=#{enabled} WHERE userId=#{userId}
+</update>
+
+<!-- 로그인 실패 횟수를 SELECT하는 쿼리  -->
+<select id="failureCount" parameterType="String" resultType="Integer">
+	SELECT NVL(failure_cnt, 0) failure_cnt
+	FROM memberDetail
+	WHERE userId = #{userId}
+</select>
+
+<!-- 로그인 실패 횟수를 0으로 초기화하는 쿼리 -->
+<update id="failureReset" parameterType="String">
+	UPDATE memberDetail SET failure_cnt = 0
+	WHERE userId = #{userId}
+</update>
+
+<!-- 로그인에 한 번 실패할 때마다 failure_cnt를 갱신할 때 사용하는 쿼리 -->
+<update id="updateFailure" parameterType="String">
+		UPDATE memberDetail SET failure_cnt = failure_cnt + 1
+		WHERE userId = #{userId}
+</update>
+
+<!-- 로그인 성공하면 초기화용 -->
+<update id="updateFailureReset" parameterType="String">
+		UPDATE
+		memberDetail SET failure_cnt = 0
+		WHERE userId = #{userId}
+</update>
+
+<!-- 최근 로그인 날짜 저장 -->
+<update id="updateLastLogin" parameterType="String">
+		UPDATE memberDetail SET
+		lastLogin = SYSDATE
+		WHERE userId=#{userId}
+</update>
+
+<!-- 비번 변경할때 쓰는 쿼리 -->
+<update id="updatePwd" parameterType="com.catDog.customer.Customer">
+		UPDATE memberDetail SET userPwd=#{userPwd}, lastLogin=SYSDATE
+		WHERE userId=#{userId}
+</update>
+
+
+
+	<!-- memberState 테이블 관련 쿼리/userId를 기반으로 사용 -->
+	<insert id="insertMemberState" parameterType="com.catDog.customer.Customer">
+		INSERT INTO memberState(memberStateNum, userId, stateCode, memo)
+			VALUES (memberState_seq.NEXTVAL, #{userId}, #{stateCode}, #{memo})
+	</insert>
+	
+	<select id="listMemberState" parameterType="String" resultType="com.catDog.customer.Customer">
+		SELECT memberStateNum, userId, stateCode, memo, registration_date
+		FROM memberState
+		WHERE userId = #{userId}
+		ORDER BY memberStateNum DESC
+	</select>
+
+	<select id="readMemberState" parameterType="String" resultType="com.catDog.customer.Customer">
+		SELECT memberStateNum, userId, stateCode, memo, registration_date
+		FROM memberState
+		WHERE userId = #{userId}
+		ORDER BY memberStateNum DESC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+
+	<!-- 회원 정보 삭제하는 쿼리(자진탈퇴 시)  -->
+	<!-- ON DELETE CASCADE 옵션 붙었는지 확인해야 함(지우면 문제없이 지워지는지) -->    
+    <delete id="deleteCustomerDetail" parameterType="Integer">
+    	DELETE FROM customerDetail WHERE num=#{num}
+    </delete>
+
+    <delete id="deleteMemberDetail" parameterType="Integer">
+    	DELETE FROM memberDetail WHERE num=#{num}
+    </delete>
+
+	<!-- 어쏘러티(권한) 테이블 -->
+	<insert id="insertAuthority" parameterType="com.catDog.customer.Customer">
+		INSERT INTO memberAuthority(userId, authority)
+			VALUES (#{userId}, #{authority})
+	</insert>
+
+	<select id="listAuthority" parameterType="String" resultType="com.catDog.customer.Customer">
+		SELECT userId, authority
+		FROM memberAuthority
+		WHERE userId=#{userId}
+	</select>
+
+	<update id="updateAuthority" parameterType="map">
+		UPDATE memberAuthority SET authority=#{authority}
+		WHERE userId=#{userId} AND authority=#{oldAuthority}
+	</update>
+
+
+ 
+
+ 
     
 </mapper>

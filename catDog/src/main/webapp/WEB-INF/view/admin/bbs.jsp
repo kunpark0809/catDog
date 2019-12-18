@@ -77,7 +77,7 @@ $(function(){
 		<c:forEach var="dto" items="${list}">
 		  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
 		      <td>${dto.reportNum }</td>
-		      <td>${dto.boardSort==1?"꿀팁":"dto.boardSort==2?'내새끼자랑':'멍냥수다방' " }</td>
+		      <td>${dto.boardSort==1?'꿀팁':dto.boardSort==2?'내새끼자랑':'멍냥수다방' }</td>
 		      <td>
 		           ${dto.reasonName }
 		      </td>
@@ -92,7 +92,7 @@ $(function(){
 		<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
 		   <tr height="35">
 			<td align="center">
-			       ${dataCount==0?"등록된 게시물이 없습니다.":paging}
+			       ${dataCount==0?"신고글이 없습니다.":paging}
 			 </td>
 		   </tr>
 		</table>

@@ -4,7 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class Customer {
 	private long num;
-	private String userId, name, nickName, userPwd, created_date, modify_date, last_login;
+	private String userId, name, nickName, userPwd, created_date;
 	private String email, email1, email2;
 	private String tel, tel1, tel2, tel3;
 	private String birth;
@@ -12,6 +12,15 @@ public class Customer {
 	private int enabled;
 	private String userPic;
 	private MultipartFile upload;
+	private String lastLogin;
+	private int failure_cnt;
+
+	// memberState 관련 필드
+	private int memberStateNum, stateCode;
+	private String memo, registration_date;
+
+	// memberAuthority 관련 필드
+	private String authority;
 
 	public long getNum() {
 		return num;
@@ -59,22 +68,6 @@ public class Customer {
 
 	public void setCreated_date(String created_date) {
 		this.created_date = created_date;
-	}
-
-	public String getModify_date() {
-		return modify_date;
-	}
-
-	public void setModify_date(String modify_date) {
-		this.modify_date = modify_date;
-	}
-
-	public String getLast_login() {
-		return last_login;
-	}
-
-	public void setLast_login(String last_login) {
-		this.last_login = last_login;
 	}
 
 	public String getEmail() {
@@ -187,6 +180,62 @@ public class Customer {
 
 	public void setUpload(MultipartFile upload) {
 		this.upload = upload;
+	}
+
+	public int getMemberStateNum() {
+		return memberStateNum;
+	}
+
+	public void setMemberStateNum(int memberStateNum) {
+		this.memberStateNum = memberStateNum;
+	}
+
+	public int getStateCode() {
+		return stateCode;
+	}
+
+	public void setStateCode(int stateCode) {
+		this.stateCode = stateCode;
+	}
+
+	public String getMemo() {
+		return memo;
+	}
+
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
+
+	public String getRegistration_date() {
+		return registration_date;
+	}
+
+	public void setRegistration_date(String registration_date) {
+		this.registration_date = registration_date;
+	}
+
+	public String getAuthority() {
+		return authority;
+	}
+
+	public void setAuthority(String authority) {
+		this.authority = authority;
+	}
+
+	public String getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(String lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
+	public int getFailure_cnt() {
+		return failure_cnt;
+	}
+
+	public void setFailure_cnt(int failure_cnt) {
+		this.failure_cnt = failure_cnt;
 	}
 
 }

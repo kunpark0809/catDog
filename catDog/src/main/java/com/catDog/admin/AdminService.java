@@ -16,4 +16,6 @@ public interface AdminService {
 
 	int reportCount(Map<String, Object> map);
 
+	
+
 }

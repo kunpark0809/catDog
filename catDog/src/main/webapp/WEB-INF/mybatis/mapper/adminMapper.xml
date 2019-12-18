@@ -143,9 +143,10 @@
 	JOIN memberDetail md2 ON r.reportedNum = md2.num 
 	<where>
 		<if test="keyword!=null and keyword!=''">
-			<include refid="report-where-list"/> 
+			<include refid="report-where-list"/>
+			AND 
 		</if>
-		AND <include refid="report-group-list"/> 
+		<include refid="report-group-list"/> 
 	</where>
 	ORDER BY reportNum DESC 
 	OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
@@ -156,8 +157,13 @@
 	<where>
 		<if test="keyword!=null and keyword!=''">
 			<include refid="report-where-list"/>		
+			AND
 		</if>
-		AND <include refid="report-group-list"/>
+		<include refid="report-group-list"/>
 	</where>
 </select>
+
+
+
+
 </mapper>
