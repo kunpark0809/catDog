@@ -14,5 +14,5 @@ public interface ParkService {
 	public Park preReadPark(Map<String, Object> map);
 	public Park nextReadPark(Map<String, Object> map);
 	public void updatePark(Park dto, String pathname) throws Exception;
-	public void deletePark(int num, String pathname, String userId) throws Exception;
+	public void deletePark(int recommendNum, String pathname, String userId) throws Exception;
 }

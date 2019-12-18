@@ -12,21 +12,14 @@
     background-color: #262626;
     border: none;
     color:#ffffff;
-    padding: 10px 0;
+    padding: 7px 0;
     text-align: center;
     display: inline-block;
     font-size: 15px;
     margin: 4px;
     border-radius:10px;
 }
-.imgLayout{
-	width: 190px;
-	height: 205px;
-	padding: 10px 5px 10px;
-	margin: 5px;
-	border: 1px solid #DAD9FF;
-	cursor: pointer;
-}
+
 
 </style>
 
@@ -42,45 +35,40 @@ function searchList() {
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 text-center">
-					<p class="section-heading text-uppercase" style="font-size: 40px; border-bottom: 2px solid;">공원/산책</p>
+					<p class="section-heading text-uppercase" style="font-size: 45px; font-weight: bold;">공원/산책</p>
 				</div>
 			</div>
 			
-			
-			<table style="width: 100%; margin: 10px auto; border-spacing: 0px; background-color: #F5F5F5;">
+			<table style="width: 100%; margin: 10px auto; border-spacing: 0px;">
 		   <tr height="40">
-		      <td align="center">
-		          <form name="searchForm" action="<%=cp%>/park/list" method="post" style="width: 100%">
+		      <td align="right">
+		          <form name="searchForm" action="<%=cp%>/park/list" method="post" style="width: 100%;  border-bottom: 3px solid; border-bottom-width: 100%; padding-bottom: 10px;">
 		              	<select name="condition" class="selectField">
 		                  <option value="placeName" ${condition=="placeName"?"selected='selected'":""}>제목</option>
 		                  <option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
 		            	</select>
-		            <input type="text" name="keyword" value="${keyword}" class="boxTF" size="50;">
+		            <input type="text" name="keyword" value="${keyword}" class="boxTF" size="30;">
 		            <button type="button" class="btn" onclick="searchList()">검색</button>
 		         </form>
 		      </td>
+		      </tr>
+		      </table>
+		      
+		      <table>
 		      <tr>
 		      <td align="left">
+		      <c:if test="${sessionScope.member.userId==dto.userId || sessionScope.member.userId=='admin'}">
 		          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/park/list';">새로고침</button>
+		      </c:if>
 		      </td>
-		      <td align="right">
+		      <td align="left">
+		      <c:if test="${sessionScope.member.userId==dto.userId || sessionScope.member.userId=='admin'}">
 		          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/park/created';">등록하기</button>
+		      </c:if>
 		      </td>	      
 		  	 </tr>
-		</table>
-    
-<!--  
-		<div class="parklist">	
-			<c:forEach var="dto" items="${list}">
-				<img alt="" src="<%=cp%>/uploads/park/${dto.imageFileName}" width="400">
-					<p>${dto.placeName}</p>
-					<p>${dto.content}</p>	
-					<p><i class="fas fa-eye"></i>&nbsp;&nbsp;${dto.hitCount}</p>	
-			</c:forEach>
-		</div>
--->
-
-
+			</table>
+  
 	<div class="parklist">	
 			<c:forEach var="dto" items="${list}">
 				<a onclick="javascript:location.href='${articleUrl}&recommendNum=${dto.recommendNum}'">

@@ -68,8 +68,16 @@
          return false;
      }
      
+     if(mode=="created"||mode=="update" && $f.main.value!="") {
+ 		if(! /(\.gif|\.jpg|\.png|\.jpeg)$/i.test(f.main.value)) {
+ 			alert('이미지 파일만 업로드 가능합니다.');
+ 			f.main.focus();
+ 			return false;
+ 		}
+ 	}
+     
    
- 	f.action="<%=cp%>/park/${mode}";
+ 	f.action="<%=cp%>/park/created";
  	return true;
  }
 
@@ -170,14 +178,14 @@
 			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
 			      <td width="100" bgcolor="#262626" style="text-align: center;">썸네일사진</td>
 			      <td style="padding-left:10px; color: #262626;"> 
-			         <input type="file" name="mainUpload" class="boxTF" size="53" style="height: 25px;" multiple="multiple">
+			         <input type="file" name="mainUpload" class="boxTF" size="53" style="height: 25px;">
 			       </td>
 			  </tr>
 			  
 			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
 			      <td width="100" bgcolor="#262626" style="text-align: center;">본문사진</td>
 			      <td style="padding-left:10px; color: #262626;"> 
-			         <input type="file" name="upload" class="boxTF" size="53" style="height: 25px;" multiple="multiple">
+			         <input type="file" name="upload" class="boxTF" size="53" style="height: 25px;">
 			       </td>
 			  </tr>
 			  

@@ -1,6 +1,8 @@
 package com.catDog.park;
 
 import java.io.File;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,50 +31,50 @@ private ParkService service;
 private MyUtil myUtil;
 
 @RequestMapping(value="/park/list")
-	public String list(
-			@RequestParam(value="page", defaultValue="1") int current_page,
-			@RequestParam(defaultValue="all") String condition,
-			@RequestParam(defaultValue="") String keyword,
-			HttpServletRequest req,
-			Model model) throws Exception {
+public String list(
+		@RequestParam(value="page", defaultValue="1") int current_page,
+		@RequestParam(defaultValue="all") String condition,
+		@RequestParam(defaultValue="") String keyword,
+		HttpServletRequest req,
+		Model model) throws Exception {
 
-		String cp = req.getContextPath();
+	String cp = req.getContextPath();
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		map.put("keyword", keyword);
-		map.put(condition, condition);
-				
-		int dataCount = service.dataCount(map);
-		
-		int rows = 3;
-		int offset = (current_page-1)*rows;
-		if(offset  < 0) offset = 0;
-		
-		int total_page = myUtil.pageCount(rows, dataCount);
-		
-		map.put("rows", rows);
-		map.put("offset", offset);
-		
-		List<Park> list = service.listPark(map);
-		
-		String listUrl = cp+"/park/list";
-		String articleUrl = cp+"/park/article?page=" + current_page;
-		
-		String paging = myUtil.paging(current_page, total_page, listUrl);
-		
-		model.addAttribute("list", list);
-		model.addAttribute("dataCount", dataCount);
-		model.addAttribute("total_page", total_page);
-		model.addAttribute("articleUrl", articleUrl);
-		model.addAttribute("page", current_page);
-		model.addAttribute("paging", paging);
-		
-		model.addAttribute("condition", condition);
-		model.addAttribute("keyword", keyword);		
-		
-		return ".park.list";
-	}
+	Map<String, Object> map = new HashMap<String, Object>();
+	
+	map.put("keyword", keyword);
+	map.put("condition", condition);
+			
+	int dataCount = service.dataCount(map);
+	
+	int rows = 6;
+	int offset = (current_page-1)*rows;
+	if(offset  < 0) offset = 0;
+	
+	int total_page = myUtil.pageCount(rows, dataCount);
+	
+	map.put("rows", rows);
+	map.put("offset", offset);
+	
+	List<Park> list = service.listPark(map);
+	
+	String listUrl = cp+"/park/list";
+	String articleUrl = cp+"/park/article?page=" + current_page;
+	
+	String paging = myUtil.paging(current_page, total_page, listUrl);
+	
+	model.addAttribute("list", list);
+	model.addAttribute("dataCount", dataCount);
+	model.addAttribute("total_page", total_page);
+	model.addAttribute("articleUrl", articleUrl);
+	model.addAttribute("page", current_page);
+	model.addAttribute("paging", paging);
+	
+	model.addAttribute("condition", condition);
+	model.addAttribute("keyword", keyword);		
+	
+	return ".park.list";
+}
 	
 	@RequestMapping(value="/park/created", method=RequestMethod.GET)
 	public String createdForm(
@@ -96,7 +98,6 @@ private MyUtil myUtil;
 			dto.setNum(info.getMemberIdx());
 			
 			service.insertPark(dto, pathname);
-			service.insertImgFile(dto, pathname);
 		} catch (Exception e) {
 		}
 		
@@ -138,5 +139,32 @@ private MyUtil myUtil;
 		return ".park.article";
 	}
 	
-
+	@RequestMapping(value="/park/delete", method=RequestMethod.GET)
+	public String delete(
+			@RequestParam int recommendNum,
+			@RequestParam String page,
+			@RequestParam(defaultValue="all") String condition,
+			@RequestParam(defaultValue="") String keyword,
+			HttpSession session
+			) throws Exception {
+		
+		keyword = URLDecoder.decode(keyword, "utf-8");
+		String query="page="+page;
+		if(keyword.length()!=0) {
+			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
+		}
+		
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+"uploads"+File.separator+"park";
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		try {
+			service.deletePark(recommendNum, pathname, info.getUserId());
+		} catch (Exception e) {
+		}
+		
+		return "redirect:/park/list?"+query;
+	}
 }
+	

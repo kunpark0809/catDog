@@ -14,7 +14,7 @@ import com.catDog.common.dao.CommonDAO;
 public class ParkServiceImpl implements ParkService {
 	
 	@Autowired
-	private CommonDAO  dao;
+	private CommonDAO dao;
 	
 	@Autowired
 	private FileManager fileManager;
@@ -129,13 +129,7 @@ public class ParkServiceImpl implements ParkService {
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public void deletePark(int num, String pathname, String userId) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 
 	@Override
 	public void updateHitCount(int recommendNum) throws Exception {
@@ -148,5 +142,22 @@ public class ParkServiceImpl implements ParkService {
 		
 	}
 
-
+	@Override
+	public void deletePark(int recommendNum, String pathname, String userId) throws Exception {
+		try {
+			List<Park> list=readPark(recommendNum);
+			
+			if(list==null || (! userId.equals("admin")))
+				return;		
+			
+			if(list.remove(recommendNum)!=null)
+				fileManager.doFileDelete(userId, pathname);
+			
+			dao.deleteData("park.deletePark", recommendNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
 }

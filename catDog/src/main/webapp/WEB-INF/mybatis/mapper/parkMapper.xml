@@ -47,7 +47,6 @@
 	<select id="dataCount" parameterType="map" resultType="Integer">
 		SELECT NVL(count(*), 0)
 		FROM recommend r
-		JOIN recommendPic rp ON r.recommendNum = rp.recommendNum
 		<where>
 			<if test="keyword!=null and keyword!=''">
 				<include refid="where-list"/>
@@ -91,6 +90,10 @@
 		ORDER BY recommendNum DESC
 		FETCH FIRST 1 ROWS ONLY
 	</select>
+	
+	<delete id="deletePark" parameterType="Integer">
+		DELETE FROM park WHERE recommendNum=#{recommendNum}
+	</delete>
 	
 	
 </mapper>
