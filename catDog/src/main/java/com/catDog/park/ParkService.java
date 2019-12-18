@@ -8,6 +8,7 @@ public interface ParkService {
 	public void insertPark(Park dto, String pathname) throws Exception;
 	public void insertImgFile(Park dto, String pathname) throws Exception;
 	public int dataCount(Map<String, Object> map);
+	public void updateHitCount(int recommendNum) throws Exception;
 	public List<Park> listPark(Map<String, Object> map);
 	public List<Park> readPark(int recommendNum);
 	public Park preReadPark(Map<String, Object> map);

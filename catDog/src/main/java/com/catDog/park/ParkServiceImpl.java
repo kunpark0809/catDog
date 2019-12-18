@@ -137,4 +137,16 @@ public class ParkServiceImpl implements ParkService {
 	}
 
 
+	@Override
+	public void updateHitCount(int recommendNum) throws Exception {
+		try {
+			dao.updateData("park.updateHitCount", recommendNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
+
 }

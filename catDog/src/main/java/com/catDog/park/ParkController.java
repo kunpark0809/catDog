@@ -118,6 +118,8 @@ private MyUtil myUtil;
 			return "redirect:/park/list?"+query;
 		}
 		
+		service.updateHitCount(recommendNum);
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);

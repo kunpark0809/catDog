@@ -63,7 +63,7 @@
 	</select>
 	
 	<update id="updateHitCount" parameterType="Integer">
-		UPDATE recommend SET hitCount=hitCount+1 WHERE recommendNum = #{recommendNum}
+		UPDATE recommend r SET hitCount=hitCount+1 WHERE recommendNum = #{recommendNum}
 	</update>
 	
 	<select id="preReadPark" parameterType="map" resultType="com.catDog.park.Park">
