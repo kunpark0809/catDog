@@ -1,11 +1,27 @@
 package com.catDog.cs;
 
 public class Qna {
-	private int faqNum, qnaNum, listNum;
+	private int faqNum, qnaNum, listNum, qnaCategoryNum;
+	private int questionPrivate;
 	private String subject, content, created;
-	private int hitCount, status;
+	private String userId, nickName, qnaCategory;
+	private int isAnswer;
 	private long num;
+	private Integer parent;
 	
+	
+	public String getNickName() {
+		return nickName;
+	}
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+	public Integer getParent() {
+		return parent;
+	}
+	public void setParent(Integer parent) {
+		this.parent = parent;
+	}
 	public int getFaqNum() {
 		return faqNum;
 	}
@@ -23,6 +39,18 @@ public class Qna {
 	}
 	public void setListNum(int listNum) {
 		this.listNum = listNum;
+	}
+	public int getQnaCategoryNum() {
+		return qnaCategoryNum;
+	}
+	public void setQnaCategoryNum(int qnaCategoryNum) {
+		this.qnaCategoryNum = qnaCategoryNum;
+	}
+	public int getQuestionPrivate() {
+		return questionPrivate;
+	}
+	public void setQuestionPrivate(int questionPrivate) {
+		this.questionPrivate = questionPrivate;
 	}
 	public String getSubject() {
 		return subject;
@@ -42,17 +70,23 @@ public class Qna {
 	public void setCreated(String created) {
 		this.created = created;
 	}
-	public int getHitCount() {
-		return hitCount;
+	public String getUserId() {
+		return userId;
 	}
-	public void setHitCount(int hitCount) {
-		this.hitCount = hitCount;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-	public int getStatus() {
-		return status;
+	public String getQnaCategory() {
+		return qnaCategory;
 	}
-	public void setStatus(int status) {
-		this.status = status;
+	public void setQnaCategory(String qnaCategory) {
+		this.qnaCategory = qnaCategory;
+	}
+	public int getIsAnswer() {
+		return isAnswer;
+	}
+	public void setIsAnswer(int isAnswer) {
+		this.isAnswer = isAnswer;
 	}
 	public long getNum() {
 		return num;
@@ -60,4 +94,6 @@ public class Qna {
 	public void setNum(long num) {
 		this.num = num;
 	}
+	
+	
 }

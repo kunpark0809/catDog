@@ -29,13 +29,21 @@ public interface CsService {
 	public int qnaDataCount(Map<String, Object> map);
 	public List<Qna> listQna(Map<String, Object> map);
 	
-	public Qna readQna(int qnaNum);
-	public Qna preReadQna(Map<String, Object> map);
-	public Qna nextReadQna(Map<String, Object> map);
+	public Qna readQnaQuestion(int qnaNum);
+	public Qna readQnaAnswer(int parent);
+	
+	public Qna preReadQnaQuestion(Map<String, Object> map);
+	public Qna nextReadQnaQuestion(Map<String, Object> map);
 	
 	public void updateQna(Qna dto) throws Exception;
 	
-	public void deleteQna(int qnaNum) throws Exception;
+	public void deleteQnaQuestion(int qnaNum) throws Exception;
+	public void deleteQnaAnswer(int qnaNum) throws Exception;
+	
+	public void insertQnaCategory(Qna dto) throws Exception;
+	public void updateQnaCategory(Qna dto) throws Exception;
+	public void deleteQnaCategory(int qnaCategoryNum) throws Exception;
+	public List<Qna> listQnaCategory();
 	
 	//Faq
 	public void insertFaq(Qna dto) throws Exception;

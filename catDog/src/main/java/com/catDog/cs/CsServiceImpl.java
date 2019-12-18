@@ -221,45 +221,160 @@ public class CsServiceImpl implements CsService {
 
 	@Override
 	public void insertQna(Qna dto) throws Exception {
-		// TODO Auto-generated method stub
+		try {
+			int seq = dao.selectOne("qna.seq");
+			dto.setQnaNum(seq);
+			
+			dao.insertData("qna.insertQna", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
+	}
+	
+	@Override
+	public int qnaDataCount(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.selectOne("qna.dataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
 	public List<Qna> listQna(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Qna> list = null;
+		try {
+			list=dao.selectList("qna.listQna", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	@Override
-	public Qna readQna(int qnaNum) {
-		// TODO Auto-generated method stub
-		return null;
+	public Qna readQnaQuestion(int qnaNum) {
+		Qna dto = null;
+		try{
+			dto=dao.selectOne("qna.readQnaQuestion", qnaNum);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
 	}
 
 	@Override
-	public Qna preReadQna(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+	public Qna preReadQnaQuestion(Map<String, Object> map) {
+		Qna dto = null;
+		try{
+			dto=dao.selectOne("qna.preReadQnaQuestion", map);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
 	}
 
 	@Override
-	public Qna nextReadQna(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+	public Qna nextReadQnaQuestion(Map<String, Object> map) {
+		Qna dto = null;
+		try{
+			dto=dao.selectOne("qna.nextReadQnaQuestion", map);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
 	}
 
 	@Override
 	public void updateQna(Qna dto) throws Exception {
-		// TODO Auto-generated method stub
-		
+		try{
+			dao.updateData("qna.updateQna", dto);
+		} catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	@Override
-	public void deleteQna(int qnaNum) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public void deleteQnaQuestion(int qnaNum) throws Exception {
+		try{
+			dao.deleteData("qna.deleteQnaQuestion", qnaNum);
+		} catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
+	
+	@Override
+	public Qna readQnaAnswer(int parent) {
+		Qna dto = null;
+		
+		try{
+			dto=dao.selectOne("qna.readQnaAnswer", parent);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
+
+	@Override
+	public void deleteQnaAnswer(int qnaNum) throws Exception {
+		try{
+			dao.deleteData("qna.deleteQnaAnswer", qnaNum);
+		} catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public void insertQnaCategory(Qna dto) throws Exception {
+		try {
+			dao.insertData("qna.insertQnaCategory", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public void updateQnaCategory(Qna dto) throws Exception {
+		try {
+			dao.updateData("qna.updateQnaCategory", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public void deleteQnaCategory(int qnaCategoryNum) throws Exception {
+		try {
+			dao.deleteData("qna.deleteQnaCategory", qnaCategoryNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public List<Qna> listQnaCategory() {
+		List<Qna> list = null;
+		try {
+			list=dao.selectList("qna.listQnaCategory");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
 
 	@Override
 	public void insertFaq(Qna dto) throws Exception {
@@ -303,16 +418,14 @@ public class CsServiceImpl implements CsService {
 		
 	}
 
-	@Override
-	public int qnaDataCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
 
 	@Override
 	public int faqDataCount(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
 
 }

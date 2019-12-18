@@ -2,5 +2,145 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="qna">
-
+	<select id="seq" resultType="Integer">
+		select qna_seq.nextval from dual
+	</select>
+	
+	<insert id="insertQna" parameterType="com.catDog.cs.Qna">
+		insert into qna(qnaNum, num, qnaCategoryNum, subject, content, questionPrivate, parent)
+		values (#{qnaNum}, #{num}, #{qnaCategoryNum}, #{subject}, #{content}, #{questionPrivate}, #{parent, jdbcType=INTEGER})
+	</insert>
+	
+	<sql id="where-list">
+		<choose>
+			<when test="condition == 'all'">
+				(INSTR(subject, #{keyword}) &gt; 0 
+				or DBMS_LOB.instr(content, #{keyword}) &gt; 0)
+			</when>
+			<when test="condition == 'content'">
+				DBMS_LOB.instr(content, #{keyword}) &gt; 0
+			</when>
+			<when test="condition=='created'">
+				(to_char(created, 'yyyy-mm-dd') = #{keyword}
+				 or to_char(created, 'yyyymmdd') = #{keyword})
+			</when>
+			<otherwise>
+				instr(${condition}, #{keyword}) &gt; 0
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) 
+		FROM qna q
+		JOIN memberDetail md ON q.num=md.num
+		<where>
+			q.parent IS NULL
+			<if test="keyword!=null and keyword != '' ">
+				AND <include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<select id="listQna" parameterType="map" resultType="com.catDog.cs.Qna">
+		SELECT q.qnaNum, md.userId, nickName, q.num, q.subject, q.questionPrivate, 
+		       q.parent, NVL2(q2.parent, 1, 0) isAnswer,
+		       TO_CHAR(q.created, 'YYYY-MM-DD') created,
+		       q.qnaCategoryNum, qnaCategory
+		FROM qna q
+		LEFT OUTER JOIN qna q2 ON q.num = q2.parent
+		JOIN qnaCategory c ON q.qnaCategoryNum=c.qnaCategoryNum
+		JOIN memberDetail md ON q.num=md.num
+		<where>
+			q.parent IS NULL
+			<if test="keyword != null and keyword != ''">
+				AND <include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY qnaNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="readQnaQuestion" parameterType="Integer" resultType="com.catDog.cs.Qna">
+		SELECT q.qnaNum, md.userId, q.num, nickName, q.subject, q.content, q.parent, q.created,
+				q.questionPrivate, q.qnaCategoryNum, qnaCategory
+		FROM qna q
+		JOIN qnaCategory c ON q.qnaCategoryNum=c.qnaCategoryNum        
+		JOIN memberDetail md ON q.num = md.num
+		WHERE qnaNum=#{qnaNum}                   
+	</select>
+	
+	<select id="readQnaAnswer" parameterType="Integer" resultType="com.catDog.cs.Qna">
+		SELECT q.qnaNum, md.userId, q.num, nickName, q.subject, q.content, q.parent, q.created,
+				q.questionPrivate, q.qnaCategoryNum, qnaCategory
+		FROM qna q
+		JOIN qnaCategory c ON q.qnaCategoryNum=c.qnaCategoryNum        
+		JOIN memberDetail md ON q.num = md.num
+		WHERE parent = #{qnaNum}                   
+	</select>
+	
+	<select id="preReadQnaQuestion" parameterType="map" resultType="com.catDog.cs.Qna">
+		SELECT q.qnaNum, md.userId, q.subject, q.questionPrivate
+		FROM qna q
+		JOIN memberDetail md ON q.num=md.num
+		<where>
+			q.parent IS NULL
+			<if test="keyword != null and keyword != '' ">
+				AND <include refid="where-list"/>
+			</if>
+			AND (q.qnaNum &gt; #{qnaNum})
+		</where>
+		ORDER BY qnaNum ASC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+	
+	<select id="nextReadQnaQuestion" parameterType="map" resultType="com.catDog.cs.Qna">
+		SELECT q.qnaNum, md.userId, q.subject, q.questionPrivate
+		FROM qna q
+		JOIN memberDetail md ON q.num=md.num
+		<where>
+			q.parent IS NULL
+			<if test="keyword != null and keyword != '' ">
+				AND <include refid="where-list"/>
+			</if>
+			AND (q.qnaNum &lt; #{qnaNum})
+		</where>
+		ORDER BY qnaNum desc
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+	
+	<update id="updateQna" parameterType="com.catDog.cs.Qna">
+		UPDATE qna SET subject=#{subject}, content=#{content},
+			qnaCategoryNum=#{qnaCategoryNum}, questionPrivate=#{questionPrivate}
+		WHERE qnaNum = #{qnaNum} AND userId = #{userId}
+	</update>
+	
+	<delete id="deleteQnaQuestion" parameterType="Integer">
+		DELETE FROM qna WHERE qnaNum IN
+			(SELECT qnaNum FROM qna START WITH qnaNum = #{qnaNum}
+				CONNECT BY PRIOR qnaNum = parent)
+	</delete>
+	
+	<delete id="deleteQnaAnswer" parameterType="Integer">
+		DELETE FROM qna WHERE qnaNum = #{qnaNum}
+	</delete>
+	
+	<insert id="insertQnaCategory" parameterType="com.catDog.cs.Qna">
+		INSERT INTO qnaCategory(qnaCategoryNum, qnaCategory)
+			VALUES (qnaCategory_seq.NEXTVAL, #{qnaCategory}) 
+	</insert>
+	
+	<update id="updateQnaCategory" parameterType="com.catDog.cs.Qna">
+		UPDATE qnaCategory SET qnaCategory=#{qnaCategory}
+		WHERE qnaCategoryNum=#{qnaCategoryNum}
+	</update>
+	
+	<select id="listQnaCategory" resultType="com.catDog.cs.Qna">
+		SELECT qnaCategoryNum, qnaCategory FROM qnaCategory
+	</select>
+	
+	<delete id="deleteQnaCategory" parameterType="Integer">
+		DELETE FROM qnaCategory WHERE qnaCategoryNum=#{qnaCategoryNum}
+	</delete>
+	
 </mapper>

@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.catDog.common.FileManager;
 import com.catDog.common.MyUtil;
 import com.catDog.customer.SessionInfo;
-import com.catDog.cs.Notice;
 
 @Controller("cs.csController")
 public class CsController {
@@ -365,7 +364,251 @@ public class CsController {
 			HttpServletRequest req,
 			Model model) throws Exception {
 		
+		String cp = req.getContextPath();
+		
+		int rows = 5;
+		int total_page;
+		int dataCount;
+
+		if (req.getMethod().equalsIgnoreCase("GET")) {
+			keyword = URLDecoder.decode(keyword, "UTF-8");
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+
+		dataCount = service.qnaDataCount(map);
+		total_page = util.pageCount(rows, dataCount);
+		
+		if (total_page < current_page)
+			current_page = total_page;
+
+		int offset = (current_page-1) * rows;
+		if(offset < 0) offset = 0;
+        map.put("offset", offset);
+        map.put("rows", rows);
+        
+        List<Qna> list = service.listQna(map);
+        
+        int listNum, n = 0;
+        for(Qna dto : list) {
+        	listNum = dataCount - (offset + n);
+			dto.setListNum(listNum);
+			n++;
+        }
+        
+        String query = "";
+		String listUrl;
+		String articleUrl;
+		if(keyword.length()!=0) {
+			query = "condition=" +condition + 
+       	         "&keyword=" + URLEncoder.encode(keyword, "utf-8");	
+		}
+		
+		listUrl = cp+"/qna/list";
+		articleUrl = cp + "/qna/article?pageNo="+current_page;
+		if(query.length()!=0) {
+			listUrl = listUrl + "?" + query;
+			articleUrl = articleUrl + "&" + query;
+		}
+        
+        String paging = util.pagingMethod(current_page, total_page, listUrl);
+        
+        model.addAttribute("list", list);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("pageNo", current_page);
+		model.addAttribute("paging", paging);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("articleUrl", articleUrl);
+		
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+		
 		return ".qna.list";
+	}
+	
+	@RequestMapping(value="/qna/created", method=RequestMethod.GET)
+	public String qnaCreatedForm(Model model) throws Exception {
+		List<Qna> listCategory = service.listQnaCategory();
+		
+		model.addAttribute("pageNo", "1");
+		model.addAttribute("listCategory", listCategory);
+		model.addAttribute("mode", "created");
+		return ".qna.created";
+	}
+	
+	@RequestMapping(value="/qna/created", method=RequestMethod.POST)
+	public String qnaCreatedSubmit(
+			Qna dto,
+			HttpSession session) throws Exception {
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		try {
+			dto.setNum(info.getMemberIdx());
+			service.insertQna(dto);
+		} catch (Exception e) {
+		}
+		return "redirect:/qna/list";
+	}
+	
+	@RequestMapping(value="/qna/article")
+	public String qnaArticle(
+			@RequestParam int qnaNum,
+			@RequestParam String pageNo,
+			@RequestParam(defaultValue="all") String condition,
+			@RequestParam(defaultValue="") String keyword,
+			HttpServletRequest req,
+			HttpSession session,
+			Model model) throws Exception {
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		if(req.getMethod().equalsIgnoreCase("GET")) { // GET 방식인 경우
+			keyword = URLDecoder.decode(keyword, "utf-8");
+		}
+		
+		Qna questionDto = service.readQnaQuestion(qnaNum);
+		if(questionDto==null) {
+			return ".qna.list";
+		}
+		if(questionDto.getQuestionPrivate()==1 &&
+				 (! info.getUserId().equals("admin") && ! info.getUserId().equals(questionDto.getUserId()))) {
+			return ".qna.list";
+		}
+		
+		questionDto.setContent(questionDto.getContent().replaceAll("\n", "<br>"));
+		
+		Qna answerDto = service.readQnaAnswer(questionDto.getQnaNum());
+		if(answerDto!=null) {
+			answerDto.setContent(answerDto.getContent().replaceAll("\n", "<br>"));
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("num", questionDto.getQnaNum());
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		
+		Qna preReadDto = service.preReadQnaQuestion(map);
+		Qna nextReadDto = service.nextReadQnaQuestion(map);
+		
+		model.addAttribute("questionDto", questionDto);
+		model.addAttribute("answerDto", answerDto);
+		model.addAttribute("preReadDto", preReadDto);
+		model.addAttribute("nextReadDto", nextReadDto);
+		model.addAttribute("pageNo", pageNo);
+		
+		return ".qna.article";
+	}
+	
+	@RequestMapping(value="/qna/update", method=RequestMethod.GET)
+	public String updateQnaForm(
+			@RequestParam int qnaNum,
+			@RequestParam String pageNo,
+			HttpSession session,
+			Model model) throws Exception {
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		Qna dto = service.readQnaQuestion(qnaNum);
+		if(dto==null) {
+			return ".qna.list";
+		}
+		
+		if(! info.getUserId().equals(dto.getUserId())) {
+			return ".qna.list";
+		}
+		
+		List<Qna> listCategory = service.listQnaCategory();
+		
+		model.addAttribute("mode", "update");
+		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("dto", dto);		
+		model.addAttribute("listCategory", listCategory);
+		
+		return ".qna.created";
+	}
+	
+	@RequestMapping(value="/qna/update", method=RequestMethod.POST)
+	public String updateQnaSubmit(
+			@RequestParam String pageNo,
+			Qna dto,
+			HttpSession session) throws Exception {
+		
+		try {
+			SessionInfo info=(SessionInfo)session.getAttribute("member");
+			dto.setUserId(info.getUserId());
+			service.updateQna(dto);
+		} catch (Exception e) {
+		}
+		return "redirect:/qna/list?pageNo="+pageNo;
+	}
+	
+	@RequestMapping(value="/qna/answer", method=RequestMethod.GET)
+	public String qnaAnswerForm(
+			@RequestParam int qnaNum,
+			@RequestParam String pageNo,
+			HttpSession session,
+			Model model) throws Exception {
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		Qna dto = service.readQnaQuestion(qnaNum);
+		if(dto==null) {
+			return ".qna.list";
+		}
+		
+		if(! info.getUserId().equals("admin")) {
+			return ".qna.list";
+		}
+		
+		dto.setContent("["+dto.getSubject()+"] 에 대한 답변입니다.\n");
+		
+		List<Qna> listCategory = service.listQnaCategory();
+		
+		model.addAttribute("mode", "answer");
+		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("dto", dto);		
+		model.addAttribute("listCategory", listCategory);		
+
+		return ".qna.created";
+	}
+	
+	@RequestMapping(value="/qna/answer", method=RequestMethod.POST)
+	public String qnaAnswerSubmit(
+			Qna dto,
+			HttpSession session) throws Exception {
+		try {
+			SessionInfo info=(SessionInfo)session.getAttribute("member");
+			dto.setUserId(info.getUserId());
+			service.insertQna(dto);
+		} catch (Exception e) {
+		}
+		return "redirect:/qna/list";
+	}
+	
+	@RequestMapping(value="/qna/delete", method=RequestMethod.POST)
+	public String deleteQna(
+			@RequestParam int qnaNum,
+			@RequestParam String mode,
+			HttpSession session) throws Exception {
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		Qna dto = service.readQnaQuestion(qnaNum);
+		if(dto!=null) {
+			if(info.getUserId().equals(dto.getUserId())||info.getUserId().equals("admin")) {
+				try {
+					if(mode.equals("question")) {
+						service.deleteQnaQuestion(qnaNum);
+					} else if(mode.equals("answer")) {
+						service.deleteQnaAnswer(qnaNum);;
+					}
+				} catch (Exception e) {
+				}
+			}
+		}
+		return "redirect:/qna/list";
 	}
 	
 	@RequestMapping(value="/faq/list")
@@ -378,4 +621,5 @@ public class CsController {
 		
 		return ".faq.list";
 	}
+	
 }
