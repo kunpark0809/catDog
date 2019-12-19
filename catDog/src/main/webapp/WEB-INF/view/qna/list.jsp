@@ -85,10 +85,9 @@ function searchList() {
       <td align="center">
           <form name="searchForm" action="<%=cp%>/qna/list" method="post">
               <select id="condition" name="condition" class="selectField">
-                  <option value="all" ${condition=="all"?"selected='selected'":""}>모두</option>
                   <option value="subject" ${condition=="subject"?"selected='selected'":""}>제목</option>
                   <option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
-                  <option value="userName" ${condition=="nickName"?"selected='selected'":""}>작성자</option>
+                  <option value="nickName" ${condition=="nickName"?"selected='selected'":""}>작성자</option>
                   <option value="created" ${condition=="created"?"selected='selected'":""}>작성일</option>
             </select>
             <input type="text" id="keyword" name="keyword" class="boxTF" value="${keyword}">

@@ -13,20 +13,19 @@
 	
 	<sql id="where-list">
 		<choose>
-			<when test="condition == 'all'">
-				(INSTR(subject, #{keyword}) &gt; 0 
-				or DBMS_LOB.instr(content, #{keyword}) &gt; 0)
+			<when test="condition == 'subject'">
+				(INSTR(q.subject, #{keyword}) &gt; 0)
 			</when>
 			<when test="condition == 'content'">
-				DBMS_LOB.instr(content, #{keyword}) &gt; 0
+				DBMS_LOB.instr(q.content, #{keyword}) &gt; 0
 			</when>
 			<when test="condition=='created'">
-				(to_char(created, 'yyyy-mm-dd') = #{keyword}
-				 or to_char(created, 'yyyymmdd') = #{keyword})
+				(to_char(q.created, 'yyyy-mm-dd') = #{keyword}
+				 or to_char(q.created, 'yyyymmdd') = #{keyword})
 			</when>
-			<otherwise>
-				instr(${condition}, #{keyword}) &gt; 0
-			</otherwise>
+			<when test="condition=='nickName'">
+				instr(nickName, #{keyword}) &gt; 0
+			</when>
 		</choose>
 	</sql>
 	
@@ -43,7 +42,7 @@
 	</select>
 	
 	<select id="listQna" parameterType="map" resultType="com.catDog.cs.Qna">
-		SELECT q.qnaNum, md.userId, nickName, q.num, q.subject, q.questionPrivate, 
+		SELECT q.qnaNum, md.userId, nickName, q.num, q.subject, q.questionPrivate, q.content,
 		       q.parent, NVL2(q2.parent, 1, 0) isAnswer,
 		       TO_CHAR(q.created, 'YYYY-MM-DD') created,
 		       q.qnaCategoryNum, qnaCategory
@@ -112,7 +111,7 @@
 	<update id="updateQna" parameterType="com.catDog.cs.Qna">
 		UPDATE qna SET subject=#{subject}, content=#{content},
 			qnaCategoryNum=#{qnaCategoryNum}, questionPrivate=#{questionPrivate}
-		WHERE qnaNum = #{qnaNum} AND userId = #{userId}
+		WHERE qnaNum = #{qnaNum} AND num = #{num}
 	</update>
 	
 	<delete id="deleteQnaQuestion" parameterType="Integer">

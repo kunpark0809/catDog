@@ -485,7 +485,7 @@ public class CsController {
 		}
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("num", questionDto.getQnaNum());
+		map.put("qnaNum", questionDto.getQnaNum());
 		map.put("condition", condition);
 		map.put("keyword", keyword);
 		
@@ -501,7 +501,7 @@ public class CsController {
 		return ".qna.article";
 	}
 	
-	@RequestMapping(value="/qna/update", method=RequestMethod.GET)
+	@RequestMapping(value="/qna/updateQuestion", method=RequestMethod.GET)
 	public String updateQnaForm(
 			@RequestParam int qnaNum,
 			@RequestParam String pageNo,
@@ -521,7 +521,7 @@ public class CsController {
 		
 		List<Qna> listCategory = service.listQnaCategory();
 		
-		model.addAttribute("mode", "update");
+		model.addAttribute("mode", "updateQuestion");
 		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("dto", dto);		
 		model.addAttribute("listCategory", listCategory);
@@ -529,7 +529,7 @@ public class CsController {
 		return ".qna.created";
 	}
 	
-	@RequestMapping(value="/qna/update", method=RequestMethod.POST)
+	@RequestMapping(value="/qna/updateQuestion", method=RequestMethod.POST)
 	public String updateQnaSubmit(
 			@RequestParam String pageNo,
 			Qna dto,
@@ -537,14 +537,14 @@ public class CsController {
 		
 		try {
 			SessionInfo info=(SessionInfo)session.getAttribute("member");
-			dto.setUserId(info.getUserId());
+			dto.setNum(info.getMemberIdx());
 			service.updateQna(dto);
 		} catch (Exception e) {
 		}
 		return "redirect:/qna/list?pageNo="+pageNo;
 	}
 	
-	@RequestMapping(value="/qna/answer", method=RequestMethod.GET)
+	@RequestMapping(value="/qna/insertAnswer", method=RequestMethod.GET)
 	public String qnaAnswerForm(
 			@RequestParam int qnaNum,
 			@RequestParam String pageNo,
@@ -566,7 +566,7 @@ public class CsController {
 		
 		List<Qna> listCategory = service.listQnaCategory();
 		
-		model.addAttribute("mode", "answer");
+		model.addAttribute("mode", "insertAnswer");
 		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("dto", dto);		
 		model.addAttribute("listCategory", listCategory);		
@@ -574,7 +574,7 @@ public class CsController {
 		return ".qna.created";
 	}
 	
-	@RequestMapping(value="/qna/answer", method=RequestMethod.POST)
+	@RequestMapping(value="/qna/insertAnswer", method=RequestMethod.POST)
 	public String qnaAnswerSubmit(
 			Qna dto,
 			HttpSession session) throws Exception {
@@ -587,10 +587,9 @@ public class CsController {
 		return "redirect:/qna/list";
 	}
 	
-	@RequestMapping(value="/qna/delete", method=RequestMethod.POST)
-	public String deleteQna(
+	@RequestMapping(value="/qna/deleteQuestion")
+	public String deleteQnaQuestion(
 			@RequestParam int qnaNum,
-			@RequestParam String mode,
 			HttpSession session) throws Exception {
 		
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
@@ -599,11 +598,26 @@ public class CsController {
 		if(dto!=null) {
 			if(info.getUserId().equals(dto.getUserId())||info.getUserId().equals("admin")) {
 				try {
-					if(mode.equals("question")) {
 						service.deleteQnaQuestion(qnaNum);
-					} else if(mode.equals("answer")) {
-						service.deleteQnaAnswer(qnaNum);;
-					}
+				} catch (Exception e) {
+				}
+			}
+		}
+		return "redirect:/qna/list";
+	}
+	
+	@RequestMapping(value="/qna/deleteAnswer")
+	public String deleteQnaAnswer(
+			@RequestParam int qnaNum,
+			HttpSession session) throws Exception {
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		Qna dto = service.readQnaQuestion(qnaNum);
+		if(dto!=null) {
+			if(info.getUserId().equals(dto.getUserId())||info.getUserId().equals("admin")) {
+				try {
+						service.deleteQnaAnswer(qnaNum);
 				} catch (Exception e) {
 				}
 			}
