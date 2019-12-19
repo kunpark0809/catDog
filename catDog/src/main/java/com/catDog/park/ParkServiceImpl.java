@@ -126,8 +126,31 @@ public class ParkServiceImpl implements ParkService {
 
 	@Override
 	public void updatePark(Park dto, String pathname) throws Exception {
-		// TODO Auto-generated method stub
-		
+		try {
+			String saveFilename = fileManager.doFileUpload(dto.getMainUpload(), pathname);
+			
+			if(! dto.getMainUpload().isEmpty()) {
+				String ImageFileName = fileManager.doMainFileUpload(dto.getMainUpload(), pathname);
+				if(ImageFileName != null) {
+					dto.setImageFileName(saveFilename);
+					insertImgFile(dto, pathname);
+				}
+			}
+			if(! dto.getUpload().isEmpty()) {
+				for(MultipartFile mf : dto.getUpload()) {
+					String ImageFileName = fileManager.doFileUpload(mf, pathname);
+					if(ImageFileName == null) continue;
+					
+					dto.setImageFileName(ImageFileName);
+					insertImgFile(dto, pathname);
+				}
+			}
+			
+			dao.updateData("park.updatePark", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 	
 
@@ -147,11 +170,12 @@ public class ParkServiceImpl implements ParkService {
 		try {
 			List<Park> list=readPark(recommendNum);
 			
-			if(list==null || (! userId.equals("admin")))
+			if(list==null || (! (userId.indexOf("admin") > 0)))
 				return;		
 			
-			if(list.remove(recommendNum)!=null)
-				fileManager.doFileDelete(userId, pathname);
+			for(Park dto : list) {
+				fileManager.doFileDelete(dto.getImageFileName(), pathname);
+			}
 			
 			dao.deleteData("park.deletePark", recommendNum);
 		} catch (Exception e) {

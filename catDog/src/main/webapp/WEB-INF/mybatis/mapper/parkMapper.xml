@@ -7,8 +7,8 @@
 	</select>
 
 	<insert id="insertPark" parameterType="com.catDog.park.Park">
-		INSERT INTO recommend(recommendNum, sortNum, num, placeName, content, tel, addr, lat, lon) 
-		VALUES(#{recommendNum}, 1, #{num}, #{placeName}, #{content}, #{tel}, #{addr}, #{lat}, #{lon})
+		INSERT INTO recommend(recommendNum, sortNum, num, placeName, content, tel, addr) 
+		VALUES(#{recommendNum}, 1, #{num}, #{placeName}, #{content}, #{tel}, #{addr})
 	</insert>
 	
 	<insert id="insertImgFile" parameterType="com.catDog.park.Park">
@@ -55,7 +55,7 @@
 	</select>
 	
 	<select id="readPark" parameterType="Integer" resultType="com.catDog.park.Park">
-		SELECT r.recommendNum, r.placeName, r.content, r.hitCount, TO_CHAR(r.created, 'yyyy-mm-dd') created, rp.imageFileName
+		SELECT r.recommendNum, r.placeName, r.content, r.hitCount, TO_CHAR(r.created, 'yyyy.mm.dd') created, r.tel, r.addr, rp.imageFileName
 		FROM recommend r
 		JOIN recommendPic rp ON r.recommendNum = rp.recommendNum
 		WHERE r.recommendNum=#{recommendNum}
@@ -90,6 +90,12 @@
 		ORDER BY recommendNum DESC
 		FETCH FIRST 1 ROWS ONLY
 	</select>
+	
+	<update id="updatePark" parameterType="com.catDog.park.Park">
+		UPDATE park SET placeName=#{placeName}, addr=#{addr}, tel=#{tel}, content=#{content}, imageFileName=#{imageFileName}
+		WHERE recommendNum=#{recommendNum}
+	
+	</update>
 	
 	<delete id="deletePark" parameterType="Integer">
 		DELETE FROM park WHERE recommendNum=#{recommendNum}

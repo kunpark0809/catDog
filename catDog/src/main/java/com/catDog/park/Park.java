@@ -22,8 +22,6 @@ public class Park {
 	private String tel;
 	private int hitCount;
 	private String addr;
-	private String lat;
-	private String lon;
 	
 	private String sortName;
 	
@@ -128,22 +126,6 @@ public class Park {
 
 	public void setAddr(String addr) {
 		this.addr = addr;
-	}
-
-	public String getLat() {
-		return lat;
-	}
-
-	public void setLat(String lat) {
-		this.lat = lat;
-	}
-
-	public String getLon() {
-		return lon;
-	}
-
-	public void setLon(String lon) {
-		this.lon = lon;
 	}
 
 	public String getSortName() {

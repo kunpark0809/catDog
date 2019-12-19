@@ -12,14 +12,13 @@
     background-color: #262626;
     border: none;
     color:#ffffff;
-    padding: 7px 0;
+    padding: 6px 0;
     text-align: center;
     display: inline-block;
     font-size: 15px;
     margin: 4px;
     border-radius:10px;
 }
-
 
 </style>
 
@@ -28,6 +27,8 @@ function searchList() {
 	var f=document.searchForm;
 	f.submit();
 }
+
+
 
 </script>
 
@@ -43,11 +44,11 @@ function searchList() {
 		   <tr height="40">
 		      <td align="right">
 		          <form name="searchForm" action="<%=cp%>/park/list" method="post" style="width: 100%;  border-bottom: 3px solid; border-bottom-width: 100%; padding-bottom: 10px;">
-		              	<select name="condition" class="selectField">
+		              	<select name="condition" class="selectField" style="border-radius:5px;">
 		                  <option value="placeName" ${condition=="placeName"?"selected='selected'":""}>제목</option>
 		                  <option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
 		            	</select>
-		            <input type="text" name="keyword" value="${keyword}" class="boxTF" size="30;">
+		            <input type="text" name="keyword" value="${keyword}" class="boxTF" size="30;" style="border-radius:5px;">
 		            <button type="button" class="btn" onclick="searchList()">검색</button>
 		         </form>
 		      </td>
@@ -57,12 +58,12 @@ function searchList() {
 		      <table>
 		      <tr>
 		      <td align="left">
-		      <c:if test="${sessionScope.member.userId==dto.userId || sessionScope.member.userId=='admin'}">
+		      <c:if test="${sessionScope.member.userId=='admin'}">
 		          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/park/list';">새로고침</button>
 		      </c:if>
 		      </td>
 		      <td align="left">
-		      <c:if test="${sessionScope.member.userId==dto.userId || sessionScope.member.userId=='admin'}">
+		      <c:if test="${sessionScope.member.userId=='admin'}">
 		          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/park/created';">등록하기</button>
 		      </c:if>
 		      </td>	      
@@ -71,13 +72,14 @@ function searchList() {
   
 	<div class="parklist">	
 			<c:forEach var="dto" items="${list}">
-				<a onclick="javascript:location.href='${articleUrl}&recommendNum=${dto.recommendNum}'">
+				<a onclick="javascript:location.href='${articleUrl}&recommendNum=${dto.recommendNum}'" style="color: #262626;">
 					<input type="hidden" value="${dto.recommendNum}">
-					<img alt="" src="<%=cp%>/uploads/park/${dto.imageFileName}" width="400"><br>
+					<img alt="" src="<%=cp%>/uploads/park/${dto.imageFileName}" width="400" style="padding-top: 15px;"><br>
 					<span class="placeName" onclick="javascript:article('${dto.recommendNum}');" style="font-weight: bold; font-size: 24px;">${dto.placeName}</span><br>
-					<span class="content" onclick="javascript:article('${dto.recommendNum}');" style="font-size: 18px;">${dto.content}</span>
+				</a>
+					<span class="content" onclick="javascript:article('${dto.recommendNum}');" style="font-size: 18px;">${dto.content}</span>	
 					<p><i class="fas fa-eye"></i>&nbsp;&nbsp;${dto.hitCount}</p>
-				</a>	
+				
 			</c:forEach>
 		</div>
 		

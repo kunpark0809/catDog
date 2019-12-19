@@ -150,6 +150,7 @@ public String list(
 		
 		keyword = URLDecoder.decode(keyword, "utf-8");
 		String query="page="+page;
+		
 		if(keyword.length()!=0) {
 			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
 		}
@@ -166,5 +167,49 @@ public String list(
 		
 		return "redirect:/park/list?"+query;
 	}
-}
 	
+	@RequestMapping(value="/park/update", method=RequestMethod.GET)
+	public String updateForm(
+			Park dto,
+			@RequestParam int recommendNum,
+			@RequestParam String page,
+			HttpSession session,
+			Model model) throws Exception {
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		service.readPark(recommendNum);
+		
+		if (dto == null)
+			return "redirect:/park/list?page="+page;
+
+		
+		if(! dto.getUserId().equals(info.getUserId())) {
+			return "redirect:/park/list?page="+page;
+		}
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("page", page);
+		model.addAttribute("mode", "update");
+		
+		return ".park.created";
+	}
+	
+	@RequestMapping(value="/park/update", method=RequestMethod.POST)
+	public String updateSubmit(
+			Park dto,
+			@RequestParam String page,
+			HttpSession session) throws Exception {
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+"uploads"+File.separator+"park";
+		
+		try {
+			service.updatePark(dto, pathname);
+		} catch (Exception e) {
+		}
+		
+		return "redirect:/park/article?RecommendNum="+dto.getRecommendNum()+"&page="+page;
+	}
+	
+	
+}
