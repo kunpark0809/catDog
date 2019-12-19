@@ -15,7 +15,12 @@
 	
 	<insert id="insertRequest" parameterType="com.catDog.pay.Pay">
 		INSERT INTO request(requsetNum, num, total, addr1, addr2, zip, tel, name, memo)
-		VALUES()
+		VALUES(#{requsetNum}, #{num}, #{total},#{deliverAddr1}, #{deliverAddr2}, #{deliverZip}, #{deliverTel}, #{deliverName}, #{memo})
+	</insert>
+	
+	<insert id="insertRequestDetail" parameterType="com.catDog.pay.Pay">
+		INSERT INTO request(requsetNum, num, total, addr1, addr2, zip, tel, name, memo)
+		VALUES(#{requsetNum}, #{num}, #{total},#{deliverAddr1}, #{deliverAddr2}, #{deliverZip}, #{deliverTel}, #{deliverName}, #{memo})
 	</insert>
 	
 </mapper>
