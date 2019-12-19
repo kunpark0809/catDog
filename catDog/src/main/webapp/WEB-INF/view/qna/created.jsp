@@ -10,14 +10,8 @@
     function sendOk() {
         var f = document.boardForm;
         
-        var str = f.qnaCategoryNum.value;
-        if(!str) {
-            alert("분류를 선택하세요. ");
-            f.qnaCategoryNum.focus();
-            return;
-        }
 
-    	str = f.subject.value;
+    	var str = f.subject.value;
         if(!str) {
             alert("제목을 입력하세요. ");
             f.subject.focus();
@@ -49,13 +43,13 @@
   <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
       <td width="100" bgcolor="#eeeeee" style="text-align: center;">분&nbsp;&nbsp;&nbsp;&nbsp;류</td>
       <td style="padding-left:10px;"> 
-        <select name="qnaCategoryNum" class="selectField" ${(mode!='created' && mode!='updateQuestion' || (mode=="updateAnswer" && not empty dto.parent)) ? "disabled='disabled'":"" }>
+        <select name="qnaCategoryNum" class="selectField" ${(mode!='created' && (mode!='updateQuestion' || mode=="updateAnswer" || mode=="insertAnswer")) ? "disabled='disabled'":""}>
         	<c:forEach var="vo" items="${listCategory}">
         		<option value="${vo.qnaCategoryNum}" ${vo.qnaCategoryNum==dto.qnaCategoryNum?"selected='selected'":""}>${vo.qnaCategory}</option>
         	</c:forEach>
         </select>
         
-        <c:if test="${mode!='created' && mode!='updateQuestion' || (mode=='updateAnswer' && not empty dto.parent)}">
+        <c:if test="${mode!='created' && mode!='updateQuestion' || mode=='updateAnswer'}">
         	<input type="hidden" name="qnaCategoryNum" value="${dto.qnaCategoryNum}">
         </c:if>
       </td>
@@ -65,7 +59,7 @@
       <td width="100" bgcolor="#eeeeee" style="text-align: center;">제&nbsp;&nbsp;&nbsp;&nbsp;목</td>
       <td style="padding-left:10px;"> 
         <input type="text" name="subject" maxlength="100" class="boxTF" style="width: 95%;" value="${dto.subject}"
-               ${((mode=="insertAnswer" || mode=="updateAnswer") && not empty dto.parent) ? "readonly='readonly'":"" }>
+               ${(mode=="insertAnswer" || mode=="updateAnswer") ? "readonly='readonly'":"" }>
       </td>
   </tr>
 
@@ -104,7 +98,7 @@
 	        	 <input type="hidden" name="pageNo" value="${pageNo}">
 	        </c:if>
 	        <c:if test="${mode=='insertAnswer' || mode=='updateAnswer' || mode=='deleteAnswer'}">
-	        	<input type="hidden" name="parent" value="${questionDto.qnaNum}">
+	        	<input type="hidden" name="parent" value="${dto.qnaNum}">
 	        	<input type="hidden" name="pageNo" value="${pageNo}">
 	        </c:if>
       </td>

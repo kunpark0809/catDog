@@ -38,7 +38,7 @@ function updateQuestion(qnaNum) {
 function insertAnswer(qnaNum) {
 	<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
 		var q = "qnaNum=${questionDto.qnaNum}&pageNo=${pageNo}";
-		var url = "<%=cp%>/qna/created?"+q;
+		var url = "<%=cp%>/qna/insertAnswer?"+q;
 		
 		location.href=url;
 	</c:if>

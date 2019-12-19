@@ -558,9 +558,7 @@ public class CsController {
 			return ".qna.list";
 		}
 		
-		if(! info.getUserId().equals("admin")) {
-			return ".qna.list";
-		}
+
 		
 		dto.setContent("["+dto.getSubject()+"] 에 대한 답변입니다.\n");
 		
