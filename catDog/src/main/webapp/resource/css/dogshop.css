@@ -14,10 +14,14 @@ a.sortName{
 	line-height : 50px;
 	border: 1px solid #d8d8d8;
 	border-radius: 5px;
+	text-decoration: none;
+	color:#262626;
 }
 
 a.productLink{
 	cursor: pointer;
+	text-decoration: none;
+	color:#262626;
 }
 
 .sortActive {
@@ -45,7 +49,7 @@ a.productLink{
 }
 
 .product-info-detail{
-	width: 50%;
+	width: 45%;
 	float: left;
 	padding-left: 50px;
 }

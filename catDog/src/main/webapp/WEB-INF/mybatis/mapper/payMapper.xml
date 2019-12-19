@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pay">
+	<select id="requestSeq">
+		SELECT REQUEST_SEQ.NEXTVAL FROM dual
+	</select>
+
+	<select id="readProduct" parameterType="Integer" resultType="com.catDog.pay.Pay">
+		SELECT p.productNum, p.name productName, price, pp.imageFileName 
+		FROM product p 
+		JOIN productPic pp ON p.productNum = pp.productNum
+		WHERE p.productNum=#{productNum} AND INSTR(pp.imageFileName,'main') &gt; 0
+	</select>
+	
+	<insert id="insertRequest" parameterType="com.catDog.pay.Pay">
+		INSERT INTO request(requsetNum, num, total, addr1, addr2, zip, tel, name, memo)
+		VALUES()
+	</insert>
+	
+</mapper>

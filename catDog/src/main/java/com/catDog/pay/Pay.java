@@ -7,10 +7,14 @@ public class Pay {
 	private String tel, tel1, tel2, tel3;
 	private String addr, addr1, addr2;
 	
+	private String deliverAddr;
 	private String deliverAddr1;
 	private String deliverAddr2;
 	private String deliverZip;
 	private String deliverTel;
+	private String deliverTel1;
+	private String deliverTel2;
+	private String deliverTel3;
 	private String deliverName;
 	
 	private String memo; // 배송메모
@@ -31,6 +35,8 @@ public class Pay {
 	private String productNum; // 용품번호
 	private String refundAccount; // 환불계좌
 	private String bank; // 환불은행
+	private int price; // 용품 단품 가격
+	private String imageFileName;
 	
 	public long getNum() {
 		return num;
@@ -230,4 +236,42 @@ public class Pay {
 	public void setBank(String bank) {
 		this.bank = bank;
 	}
+	public String getDeliverAddr() {
+		return deliverAddr;
+	}
+	public void setDeliverAddr(String deliverAddr) {
+		this.deliverAddr = deliverAddr;
+	}
+	public String getDeliverTel1() {
+		return deliverTel1;
+	}
+	public void setDeliverTel1(String deliverTel1) {
+		this.deliverTel1 = deliverTel1;
+	}
+	public String getDeliverTel2() {
+		return deliverTel2;
+	}
+	public void setDeliverTel2(String deliverTel2) {
+		this.deliverTel2 = deliverTel2;
+	}
+	public String getDeliverTel3() {
+		return deliverTel3;
+	}
+	public void setDeliverTel3(String deliverTel3) {
+		this.deliverTel3 = deliverTel3;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	public String getImageFileName() {
+		return imageFileName;
+	}
+	public void setImageFileName(String imageFileName) {
+		this.imageFileName = imageFileName;
+	}
+
+	
 }

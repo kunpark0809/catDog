@@ -35,7 +35,8 @@ function cart(productNum){
 }
 
 function pay(productNum){
-	location.href="<%=cp%>/pay/pay?productNum="+productNum;
+	var quantity = $("input[name=quantity]").val();
+	location.href="<%=cp%>/pay/pay?productNum="+productNum+"&quantity="+quantity;
 }
 </script>
 	<div>
@@ -81,7 +82,7 @@ function pay(productNum){
 				</tr>
 				</table>
 				<div class="product_quantity">
-					<input type="text" value="1">
+					<input type="text" value="1" name="quantity">
 					<span>
 						<button type="button"  class="quantity_up"></button>
 						<button type="button" class="quantity_down"></button> 
