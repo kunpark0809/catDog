@@ -33,13 +33,13 @@
       <intercept-url pattern="/customer/nickNameCheck" access="permitAll"/>
       <intercept-url pattern="/customer/complete" access="permitAll"/>
       <intercept-url pattern="/resource/**" access="permitAll"/>
+      <intercept-url pattern="/uploads/**" access="permitAll"/>
       
       <intercept-url pattern="/park/**" access="permitAll"/>
       <intercept-url pattern="/cafe/**" access="permitAll"/>
       <intercept-url pattern="/hospital/**" access="permitAll"/>
       <intercept-url pattern="/training/**" access="permitAll"/>
       <intercept-url pattern="/funeral/**" access="permitAll"/>
-      
       
       
       <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
