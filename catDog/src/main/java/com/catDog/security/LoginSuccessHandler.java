@@ -64,15 +64,18 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 			Date endDate = new Date();
 			long gap;
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			Date modifyDate = formatter.parse(member.getLastLogin());
+			Date modifyDate = formatter.parse(member.getModify_date());
 			gap = (endDate.getTime() - modifyDate.getTime()) / (24 * 60 * 60 * 1000);
+			
+			
 			if (gap >= 90) {
 				// 패스워드 변경이 90일 이상인 경우
-				String targetUrl = "/member/updatePwd";
+				String targetUrl = "/customer/updatePwd";
 				redirectStrategy.sendRedirect(request, response, targetUrl);
 				return;
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		// redirect 설정

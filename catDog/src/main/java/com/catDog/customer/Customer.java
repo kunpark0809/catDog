@@ -22,6 +22,8 @@ public class Customer {
 	// memberAuthority 관련 필드
 	private String authority;
 
+	private String modify_date;
+
 	public long getNum() {
 		return num;
 	}
@@ -236,6 +238,14 @@ public class Customer {
 
 	public void setFailure_cnt(int failure_cnt) {
 		this.failure_cnt = failure_cnt;
+	}
+
+	public String getModify_date() {
+		return modify_date;
+	}
+
+	public void setModify_date(String modify_date) {
+		this.modify_date = modify_date;
 	}
 
 }

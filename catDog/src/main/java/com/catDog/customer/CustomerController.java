@@ -135,8 +135,7 @@ public class CustomerController {
 	public String updatePwdSubmit(@RequestParam String userPwd, HttpSession session) throws Exception {
 
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
-		Customer dto = new Customer();
-		dto.setUserId(info.getUserId());
+		Customer dto = service.readCustomer(info.getUserId());
 		String encPassword = bcryptEncoder.encode(userPwd);
 		dto.setUserPwd(encPassword);
 

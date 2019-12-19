@@ -19,7 +19,7 @@
 	
 	
 	<select id="readCustomer" parameterType="String" resultType="com.catDog.customer.Customer">
-		SELECT md.num, userId, name, userPwd, nickName
+		SELECT md.num, userId, name, userPwd, nickName, modify_date
 		FROM memberDetail md
         JOIN customerDetail cm ON md.num = cm.num
 		WHERE userId = #{userId} AND enabled != 0
@@ -37,8 +37,8 @@
     			VALUES(#{num}, '1')
     		INTO customerDetail(num, name, email, tel) 
     			VALUES(#{num}, #{name}, #{email}, #{tel})
-    		INTO memberDetail(num, userId, userPwd, nickName, userPic, addr, birth)
-    			VALUES(#{num}, #{userId}, #{userPwd}, #{nickName}, #{userPic, jdbcType=VARCHAR}, #{addr, jdbcType=VARCHAR}, #{birth})
+    		INTO memberDetail(num, userId, userPwd, nickName, userPic, addr, birth, modify_date)
+    			VALUES(#{num}, #{userId}, #{userPwd}, #{nickName}, #{userPic, jdbcType=VARCHAR}, #{addr, jdbcType=VARCHAR}, #{birth}, SYSDATE)
     		INTO memberAuthority(userId, authority)
     			VALUES (#{userId}, 'ROLE_USER')
     	SELECT * FROM DUAL
@@ -84,7 +84,7 @@
 
 <!-- 비번 변경할때 쓰는 쿼리 -->
 <update id="updatePwd" parameterType="com.catDog.customer.Customer">
-		UPDATE memberDetail SET userPwd=#{userPwd}, lastLogin=SYSDATE
+		UPDATE memberDetail SET userPwd=#{userPwd}, modify_date=SYSDATE
 		WHERE userId=#{userId}
 </update>
 
