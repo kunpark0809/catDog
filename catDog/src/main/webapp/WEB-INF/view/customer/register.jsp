@@ -155,7 +155,7 @@ function changeEmail() {
 function userIdCheck() {
 	var str = $("#userId").val();
 	str = str.trim();
-	if(!/^[a-z][a-z0-9_]{4,9}$/i.test(str)) { 
+	if(!/^[a-z][a-z0-9_]{4,11}$/i.test(str)) { 
 		$("#userId").focus();
 		return;
 	}

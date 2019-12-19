@@ -92,18 +92,27 @@
 <!-- 회원 리스트 -->
 <!-- 회원의 정보를 memberDetail에서 가져오면서 request에서 번호로 GROUP BY하여 COUNT한 테이블(주문횟수)과도 JOIN -->
 <select id="memberList" parameterType="Map" resultType="com.catDog.admin.Member">
-	SELECT md.num, userId, name, nickName, mileage, NVL(count,0) requestCount, reportCount
+	SELECT md.num, md.userId, name, nickName, mileage, NVL(count, 0) requestCount,
+		reportCount, failure_cnt, lastLogin, NVL(stateCode, 0) stateCode
 	FROM memberDetail md
 	LEFT OUTER JOIN (
 		SELECT num, NVL(COUNT(*), 0) count FROM request GROUP BY num
 	) rc ON md.num = rc.num
 	LEFT OUTER JOIN customerDetail cd ON md.num = cd.num
+	LEFT OUTER JOIN (
+		SELECT * FROM
+    		(SELECT RANK() OVER (PARTITION BY userId ORDER BY memberStateNum DESC) rn,
+    		memberStateNum, userId, stateCode
+			FROM memberState)
+        WHERE rn = 1) ms
+	ON md.userId = ms.userId
 	<where>
+		INSTR(md.userId, 'admin') = 0
 		<if test="keyword != null and keyword != ''">
-			<include refid="member-where-list"/>
+			 AND <include refid="member-where-list"/>
 		</if>
 	</where>
-	ORDER BY num DESC
+	ORDER BY md.num DESC
 	OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 </select>
 
@@ -123,8 +132,9 @@
 		SELECT NVL(COUNT(*), 0)
 		FROM memberDetail md
 	<where>
+		INSTR(userId, 'admin') = 0
 		<if test="keyword!=null and keyword!='' ">
-			<include refid="member-where-list"/>
+			 AND <include refid="member-where-list"/>
 		</if>
 	</where>   
 </select>

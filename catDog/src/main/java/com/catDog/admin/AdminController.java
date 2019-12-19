@@ -15,6 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.catDog.common.MyUtil;
+import com.catDog.customer.Customer;
+import com.catDog.customer.CustomerService;
+import com.catDog.customer.CustomerServiceImpl;
+
+import oracle.net.aso.h;
 
 @Controller("admin.adminController")
 public class AdminController {
@@ -24,16 +29,21 @@ public class AdminController {
 
 	@Autowired
 	private MyUtil myUtil;
+	
+	@Autowired
+	private CustomerService service2;
 
 	@RequestMapping(value = "/admin/member")
 	public String memberManage(@RequestParam(value = "page", defaultValue = "1") int current_page,
 			@RequestParam(defaultValue = "all") String condition, @RequestParam(defaultValue = "") String keyword,
-			@RequestParam(defaultValue = "50") int rows, HttpServletRequest req, Model model) throws Exception {
+			 HttpServletRequest req, Model model) throws Exception {
 
 		if (req.getMethod().equalsIgnoreCase("GET")) {
 			keyword = URLDecoder.decode(keyword, "UTF-8");
 		}
 
+		int rows = 50;
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);
@@ -76,16 +86,73 @@ public class AdminController {
 		return ".admin.member";
 	}
 
+	@RequestMapping(value = "/admin/memberRevive")
+	public String memberRevive(@RequestParam(value = "page", defaultValue = "1") int current_page,
+			@RequestParam(defaultValue = "all") String condition, @RequestParam(defaultValue = "") String keyword,
+			@RequestParam String userId, Model model) throws Exception {
+
+		try {
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("userId", userId);
+			map.put("enabled", 1);
+
+			service2.updateEnabled(map);
+			service2.failureReset(userId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		model.addAttribute("page", current_page);
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+		
+		
+		return "redirect:/admin/member";
+	}
+	
+	@RequestMapping(value = "/admin/memberBan")
+	public String memberBan(@RequestParam(value = "page", defaultValue = "1") int current_page,
+			@RequestParam(defaultValue = "all") String condition, @RequestParam(defaultValue = "") String keyword,
+			@RequestParam String userId, Model model) throws Exception {
+
+		try {
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("userId", userId);
+			map.put("enabled", 0);
+
+			service2.updateEnabled(map);
+			
+			Customer customer = new Customer();
+			customer.setUserId(userId);
+			customer.setStateCode(2);
+			customer.setMemo("사이트 규정을 위배하여 추방");
+			service2.insertMemberState(customer);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		model.addAttribute("page", current_page);
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+		
+		return "redirect:/admin/member";
+	}
+
 	@RequestMapping(value = "/admin/bbs")
 	public String bbsManage(@RequestParam(value = "page", defaultValue = "1") int current_page,
 			@RequestParam(defaultValue = "all") String condition, @RequestParam(defaultValue = "") String keyword,
-			@RequestParam(defaultValue = "0") int group, @RequestParam(defaultValue = "50") int rows,
+			@RequestParam(defaultValue = "0") int group, 
 			HttpServletRequest req, Model model) throws Exception {
 
 		if (req.getMethod().equalsIgnoreCase("GET")) {
 			keyword = URLDecoder.decode(keyword, "UTF-8");
 		}
 
+		int rows = 50;
+		
 		Map<String, Object> map = new HashMap<>();
 
 		if (keyword != null && keyword != "") {
@@ -101,13 +168,13 @@ public class AdminController {
 		int offset = (current_page - 1) * rows;
 		if (offset < 0)
 			offset = 0;
-		
+
 		map = new HashMap<>();
 		map.put("offset", offset);
 		map.put("rows", rows);
-		
+
 		List<Report> list = service.reportList(map);
-		
+
 		String cp = req.getContextPath();
 		String query = "rows=" + rows;
 		String listUrl = cp + "/admin/bbs";
@@ -129,9 +196,7 @@ public class AdminController {
 		model.addAttribute("rows", rows);
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
-		
-		
-		
+
 		return ".admin.bbs";
 	}
 
@@ -152,4 +217,5 @@ public class AdminController {
 
 		return ".admin.money";
 	}
+
 }

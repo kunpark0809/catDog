@@ -7,6 +7,12 @@ public class Member {
 
 	private String name, userId, nickName, addr, email, tel;
 
+	private int failure_cnt;
+
+	private String lastLogin;
+
+	private int stateCode;
+
 	public int getNum() {
 		return num;
 	}
@@ -103,6 +109,28 @@ public class Member {
 		this.tel = tel;
 	}
 
+	public int getFailure_cnt() {
+		return failure_cnt;
+	}
 
+	public void setFailure_cnt(int failure_cnt) {
+		this.failure_cnt = failure_cnt;
+	}
+
+	public String getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(String lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
+	public int getStateCode() {
+		return stateCode;
+	}
+
+	public void setStateCode(int stateCode) {
+		this.stateCode = stateCode;
+	}
 
 }
