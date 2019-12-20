@@ -2,5 +2,96 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="event">
-
+	<select id="seq" resultType="Integer">
+		SELECT event_seq.NEXTVAL FROM dual
+	</select>
+	
+	<insert id="insertEvent" parameterType="com.catDog.event.Event">
+		INSERT INTO EVENT(eventNum, num, subject, content, startDate, endDate)
+		VALUES (#{eventNum}, #{num}, #{subject}, #{content}, #{startDate}, #{endDate})
+	</insert>
+	
+	<insert id="insertImgFile" parameterType="com.catDog.event.Event">
+		INSERT INTO EVENTPIC(eventPicNum, imageFileName, eventNum)
+		VALUES (eventPic_seq.NEXTVAL, #{imageFileName}, #{eventNum})
+	</insert>
+	
+	<select id="listEvent" parameterType="map" resultType="com.catDog.event.Event">
+		SELECT e.eventNum, e.subject, e.content, e.hitCount, ep.imageFileName
+		FROM event e JOIN eventPic ep ON e.eventNum = ep.eventNum
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="where-list"/>
+			</if>
+			AND INSTR(ep.imageFileName, 'main') &gt; 0
+		</where>
+		ORDER BY e.eventNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<sql id="where-list">
+		<if test="condition=='all'">
+			( INSTR(subject, #{keyword}) &gt; 0 OR INSTR(content, #{keyword}) &gt; 0)
+		</if>
+		<if test="condition=='subject'">
+			INSTR(subject, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='content'">
+			INSTR(content, #{keyword}) &gt; 0
+		</if>
+	</sql>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM event e
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<select id="readEvent" parameterType="Integer" resultType="com.catDog.event.Event">
+		SELECT e.eventNum, e.subject, e.content, e.hitCount, TO_CHAR(e.created, 'yyyy.mm.dd') created, e.startDate, e.endDate, ep.imageFileName
+		FROM event e
+		JOIN eventPic ep ON e.eventNum = ep.eventNum
+		WHERE e.eventNum=#{eventNum}
+	</select>
+	
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE event e SET hitCount=hitCount+1 WHERE eventNum = #{eventNum}
+	</update>
+	
+	<select id="preReadEvent" parameterType="map" resultType="com.catDog.event.Event">
+		SELECT eventNum, subject
+		FROM event e
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			AND (eventNum &gt; #{eventNum})
+		</where>
+		ORDER BY eventNum ASC FETCH FIRST 1 ROWS ONLY
+	</select>
+	
+	<select id="nextReadEvent" parameterType="map" resultType="com.catDog.event.Event">
+		SELECT eventNum, subject
+		FROM event e
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			AND (eventNum &lt; #{eventNum})
+		</where>
+		ORDER BY eventNum DESC FETCH FIRST 1 ROWS ONLY
+	</select>
+	
+	<update id="updateEvent" parameterType="com.catDog.event.Event">
+		UPDATE event SET subject=#{subject}, content=#{content}, imageFileName=#{imageFileName}, startDate=#{startDate}, endDate=#{endDate}
+		WHERE eventNum=#{eventNum}
+	</update>
+	
+	<delete id="deleteEvent" parameterType="Integer">
+		DELETE FROM event WHERE eventNum=#{eventNum}
+	</delete>
 </mapper>
