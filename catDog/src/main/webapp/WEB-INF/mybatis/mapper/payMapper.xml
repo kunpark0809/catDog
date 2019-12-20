@@ -2,10 +2,14 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="pay">
-	<select id="requestSeq">
+	<select id="requestSeq" resultType="Integer">
 		SELECT REQUEST_SEQ.NEXTVAL FROM dual
 	</select>
-
+	
+	<select id="customerSeq" resultType="Long">
+		SELECT CUSTOMER_SEQ.NEXTVAL FROM dual
+	</select>
+	
 	<select id="readProduct" parameterType="Integer" resultType="com.catDog.pay.Pay">
 		SELECT p.productNum, p.name productName, price, pp.imageFileName 
 		FROM product p 
@@ -13,14 +17,38 @@
 		WHERE p.productNum=#{productNum} AND INSTR(pp.imageFileName,'main') &gt; 0
 	</select>
 	
+	<select id="readCumstomer" parameterType="Long" resultType="com.catDog.pay.Pay">
+		SELECT md.num, cd.name, md.userId, md.mileage point, cd.email, cd.tel, md.addr
+		FROM customerDetail cd
+		JOIN memberDetail md ON cd.num = md.num
+		WHERE md.num = #{num}
+	</select>
+	
+	<insert id="insertCumstomer" parameterType="com.catDog.pay.Pay">
+		INSERT ALL
+			INTO customer(num, membership) VALUES(#{num},0)
+			INTO customerDetail(num, name, email, tel) VALUES(#{num}, #{name}, #{email}, #{tel})
+		SELECT * FROM dual
+	</insert>
+	
 	<insert id="insertRequest" parameterType="com.catDog.pay.Pay">
-		INSERT INTO request(requsetNum, num, total, addr1, addr2, zip, tel, name, memo)
-		VALUES(#{requsetNum}, #{num}, #{total},#{deliverAddr1}, #{deliverAddr2}, #{deliverZip}, #{deliverTel}, #{deliverName}, #{memo})
+		INSERT INTO request(requestNum, num, total, addr1, addr2, zip, tel, name, memo)
+		VALUES(#{requestNum}, #{num}, #{total},#{deliverAddr1}, #{deliverAddr2}, #{deliverZip}, #{deliverTel}, #{deliverName}, #{memo})
 	</insert>
 	
 	<insert id="insertRequestDetail" parameterType="com.catDog.pay.Pay">
-		INSERT INTO request(requsetNum, num, total, addr1, addr2, zip, tel, name, memo)
-		VALUES(#{requsetNum}, #{num}, #{total},#{deliverAddr1}, #{deliverAddr2}, #{deliverZip}, #{deliverTel}, #{deliverName}, #{memo})
+		INSERT INTO requestDetail(requestDetailNum,requestNum, productNum, productCount, productSum)
+		VALUES(requestDetail_SEQ.NEXTVAL, #{requestNum}, #{productNum},#{productCount}, #{productSum})
 	</insert>
 	
+	<insert id="insertpayment" parameterType="com.catDog.pay.Pay">
+		INSERT INTO payment(requestNum, payMethod, point, purchase)
+		VALUES(#{requestNum}, #{payMethod}, #{point},#{purchase})
+				
+	</insert>
+	
+	<insert id="insertrefund" parameterType="com.catDog.pay.Pay">
+		INSERT INTO refund(requestNum, refundAccount, bank)
+		VALUES(#{requestNum}, #{refundAccount}, #{bank})
+	</insert>
 </mapper>
