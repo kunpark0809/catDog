@@ -200,10 +200,10 @@ public class AdminController {
 		return ".admin.bbs";
 	}
 
-	@RequestMapping(value = "/admin/cs")
-	public String csManage() throws Exception {
+	@RequestMapping(value = "/admin/cs/list")
+	public String csList() throws Exception {
 
-		return ".admin.cs";
+		return ".admin.cs.list";
 	}
 
 	@RequestMapping(value = "/admin/play")
