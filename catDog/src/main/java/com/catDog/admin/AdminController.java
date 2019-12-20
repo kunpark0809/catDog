@@ -206,6 +206,10 @@ public class AdminController {
 		return ".admin.cs.list";
 	}
 
+	
+	
+	
+	
 	@RequestMapping(value = "/admin/play")
 	public String playManage() throws Exception {
 

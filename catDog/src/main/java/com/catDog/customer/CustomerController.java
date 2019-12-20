@@ -147,4 +147,45 @@ public class CustomerController {
 		return "redirect:/";
 	}
 
+	@RequestMapping(value="/customer/pwdFind", method=RequestMethod.GET)
+	public String pwdFindForm(HttpSession session) throws Exception {
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		if(info!=null) {
+			return "redirect:/";
+		}
+		
+		return ".customer.pwdFind";
+	}
+	
+//	@RequestMapping(value="/customer/pwdFind", method=RequestMethod.POST)
+//	public String pwdFindSubmit(@RequestParam String userId,
+//			final RedirectAttributes reAttr,
+//			Model model
+//			) throws Exception {
+//		
+//		Customer dto = service.readCustomer(userId);
+//		if(dto==null || dto.getEmail()==null || dto.getEnabled()==0) {
+//			model.addAttribute("message", "등록된 아이디가 아닙니다.");
+//			return ".member.pwdFind";
+//		}
+//		
+//		try {
+//			service.generatePwd(dto);
+//		} catch (Exception e) {
+//			model.addAttribute("message", "이메일 전송이 실패했습니다.");
+//			return ".member.pwdFind";
+//		}
+//		
+//		StringBuilder sb=new StringBuilder();
+//		sb.append("회원님의 이메일로 임시패스워드를 전송했습니다.<br>");
+//		sb.append("로그인 후 패스워드를 변경하시기 바랍니다.<br>");
+//		
+//		reAttr.addFlashAttribute("title", "패스워드 찾기");
+//		reAttr.addFlashAttribute("message", sb.toString());
+//		
+//		return "redirect:/member/complete";
+//	}
+	
+	
+	
 }

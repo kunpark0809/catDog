@@ -19,7 +19,7 @@
 	
 	
 	<select id="readCustomer" parameterType="String" resultType="com.catDog.customer.Customer">
-		SELECT md.num, userId, name, userPwd, nickName, modify_date
+		SELECT md.num, userId, name, userPwd, nickName, modify_date, email
 		FROM memberDetail md
         JOIN customerDetail cm ON md.num = cm.num
 		WHERE userId = #{userId} AND enabled != 0
