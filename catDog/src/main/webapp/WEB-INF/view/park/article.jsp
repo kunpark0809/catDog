@@ -20,6 +20,7 @@
     border-radius:10px;
 }
 
+
 </style>
 
 
@@ -50,9 +51,172 @@ function updatePark() {
    alert("게시물을 수정할 수  없습니다.");
 </c:if>
 }
-
-
 </script>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=60c1097ba8f6f767297a53630f9853eb&libraries=services"></script>
+<script>
+$(function(){
+	
+	var placeName="${list.get(0).placeName}";
+	var addr="${list.get(0).addr}";
+	
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 4 // 지도의 확대 레벨
+    };  
+
+// 지도를 생성합니다    
+var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+// 주소-좌표 변환 객체를 생성합니다
+var geocoder = new kakao.maps.services.Geocoder();
+
+// 주소로 좌표를 검색합니다
+geocoder.addressSearch(addr, function(result, status) {
+
+    // 정상적으로 검색이 완료됐으면 
+     if (status === kakao.maps.services.Status.OK) {
+
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new kakao.maps.Marker({
+            map: map,
+            position: coords
+        });
+
+        // 인포윈도우로 장소에 대한 설명을 표시합니다
+        var infowindow = new kakao.maps.InfoWindow({
+            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+placeName+'</div>'
+        });
+        infowindow.open(map, marker);
+
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(coords);
+    } 
+});    
+	
+});
+</script>
+
+<script type="text/javascript">
+function login() {
+	location.href="<%=cp%>/member/login";
+}
+
+//페이징 처리
+$(function(){
+	listPage(1);
+});
+
+function listPage(page) {
+	var url="<%=cp%>/bbs/listReply";
+	var query="num=${dto.num}&pageNo="+page;
+	
+	$.ajax({
+		type:"get"
+		,url:url
+		,data:query
+		,success:function(data) {
+			$("#listReply").html(data);
+		}
+	    ,beforeSend :function(jqXHR) {
+	    	jqXHR.setRequestHeader("AJAX", true);
+	    }
+	    ,error:function(jqXHR) {
+	    	if(jqXHR.status==403) {
+	    		location.href="<%=cp%>/member/login";
+	    		return false;
+	    	}
+	    	console.log(jqXHR.responseText);
+	    }
+	});
+}
+
+// 리플 등록
+$(function(){
+	$(".btnSendReply").click(function(){
+		
+		var num="${dto.num}";
+		var $tb = $(this).closest("table");
+		var content=$tb.find("textarea").val().trim();
+		if(! content) {
+			$tb.find("textarea").focus();
+			return false;
+		}
+		content = encodeURIComponent(content);
+		
+		var query="num="+num+"&content="+content+"&answer=0";
+		var url="<%=cp%>/bbs/insertReply";
+		$.ajax({
+			type:"post"
+			,url:url
+			,data:query
+			,dataType:"json"
+			,success:function(data) {
+				$tb.find("textarea").val("");
+				
+				var state=data.state;
+				if(state=="true") {
+					listPage(1);
+				} else if(state=="false") {
+					alert("댓글을 추가 하지 못했습니다.");
+				}
+			}
+			,beforeSend : function(jqXHR) {
+		        jqXHR.setRequestHeader("AJAX", true);
+		    }
+		    ,error:function(jqXHR) {
+		    	if(jqXHR.status==403) {
+		    		login();
+		    		return false;
+		    	}
+		    	console.log(jqXHR.responseText);
+		    }
+		});
+		
+	});
+});
+
+// 댓글 삭제
+$(function(){
+	$("body").on("click", ".deleteReply", function(){
+		if(! confirm("게시물을 삭제하시겠습니까 ? ")) {
+		    return false;
+		}
+		
+		var replyNum=$(this).attr("data-replyNum");
+		var page=$(this).attr("data-pageNo");
+		
+		var url="<%=cp%>/bbs/deleteReply";
+		var query="replyNum="+replyNum+"&mode=reply";
+		
+		$.ajax({
+			type:"post"
+			,url:url
+			,data:query
+			,dataType:"json"
+			,success:function(data) {
+				// var state=data.state;
+				listPage(page);
+			}
+			,beforeSend : function(jqXHR) {
+		        jqXHR.setRequestHeader("AJAX", true);
+		    }
+		    ,error:function(jqXHR) {
+		    	if(jqXHR.status==403) {
+		    		login();
+		    		return false;
+		    	}
+		    	console.log(jqXHR.responseText);
+		    }
+		});
+		
+	});
+});
+</script>
+
 
 <div class="page-section" id="command" style="text-align: center;">
 		<div class="container">
@@ -107,7 +271,7 @@ function updatePark() {
 			    <br><br>
 			       <i class="fas fa-chevron-up"></i>&nbsp;&nbsp;
 			         <c:if test="${not empty preReadPark}">
-			              <a href="<%=cp%>/park/article?${query}&recommendNum=${preReadPark.recommendNum}">${preReadPark.placeName}</a>
+			              <a style="color: #A66E4E" href="<%=cp%>/park/article?${query}&recommendNum=${preReadPark.recommendNum}">${preReadPark.placeName}</a>
 			        </c:if>
 			    </td>
 			</tr>
@@ -116,12 +280,13 @@ function updatePark() {
 			    <td colspan="2" align="left" style="padding-left: 5px;">
 			       <i class="fas fa-chevron-down"></i>&nbsp;&nbsp;
 			         <c:if test="${not empty nextReadPark}">
-			              <a href="<%=cp%>/park/article?${query}&recommendNum=${nextReadPark.recommendNum}">${nextReadPark.placeName}</a>
+			              <a style="color: #A66E4E" href="<%=cp%>/park/article?${query}&recommendNum=${nextReadPark.recommendNum}">${nextReadPark.placeName}</a>
 			        </c:if>
 			    </td>
 			</tr>
 			</table>
-			
+		
+	
 			<table style="width: 100%; margin: 0px auto 20px; border-spacing: 0px;">
 			<tr height="45">
 			    <td align="center">
@@ -129,6 +294,8 @@ function updatePark() {
 			        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/park/list?${query}';">목록</button>
 			    </td>
 			 </table>  
+			 
+			 
 			 <table style="width: 100%; margin: 0px auto 20px; border-spacing: 0px;"> 
 			 <tr>
 			    <td align="right">
@@ -141,54 +308,32 @@ function updatePark() {
 			    </td>
 			</tr>
 			</table>
+			
+					 
+		<table style='width: 100%; margin: 15px auto 0px; border-spacing: 0px;'>
+			<tr height='30'> 
+				 <td align='left' >
+				 <p>★★★★★</p>
+				 	<span style='font-weight: bold;' >한줄평쓰기</span><span> !!!!!한줄평기능구현중!!!!!</span>
+				 </td>
+			</tr>
+			<tr>
+			   	<td align="left" style='padding:5px 5px 0px;'>
+					<textarea class='boxTA' style='width:100%; height: 70px;'></textarea>
+			    </td>
+			</tr>
+			<tr>
+			   <td align='right'>
+			        <button type='button' class='btn' data-num='10' style='padding:10px 10px; font-size: 5px;'>등록하기</button>
+			    </td>
+			 </tr>
+		</table>
+		     
+		<div id="listRate"></div>
+ 
+   	 </div>
+	  
+			
     	</div>
     </div>
-</div>
 
-
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=60c1097ba8f6f767297a53630f9853eb&libraries=services"></script>
-<script>
-$(function(){
-	
-	var placeName="${list.get(0).placeName}";
-	var addr="${list.get(0).addr}";
-	
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-    mapOption = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
-    };  
-
-// 지도를 생성합니다    
-var map = new kakao.maps.Map(mapContainer, mapOption); 
-
-// 주소-좌표 변환 객체를 생성합니다
-var geocoder = new kakao.maps.services.Geocoder();
-
-// 주소로 좌표를 검색합니다
-geocoder.addressSearch(addr, function(result, status) {
-
-    // 정상적으로 검색이 완료됐으면 
-     if (status === kakao.maps.services.Status.OK) {
-
-        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-        // 결과값으로 받은 위치를 마커로 표시합니다
-        var marker = new kakao.maps.Marker({
-            map: map,
-            position: coords
-        });
-
-        // 인포윈도우로 장소에 대한 설명을 표시합니다
-        var infowindow = new kakao.maps.InfoWindow({
-            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+placeName+'</div>'
-        });
-        infowindow.open(map, marker);
-
-        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-        map.setCenter(coords);
-    } 
-});    
-	
-});
-</script>

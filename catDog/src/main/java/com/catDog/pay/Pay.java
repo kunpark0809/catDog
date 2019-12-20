@@ -1,13 +1,12 @@
 package com.catDog.pay;
 
 public class Pay {
-	private long num;
+	private long num; // 고객번호
 	private String userId, name;
 	private String email, email1, email2;
 	private String tel, tel1, tel2, tel3;
 	private String addr, addr1, addr2;
 	
-	private String deliverAddr;
 	private String deliverAddr1;
 	private String deliverAddr2;
 	private String deliverZip;
@@ -18,7 +17,7 @@ public class Pay {
 	private String deliverName;
 	
 	private String memo; // 배송메모
-	private String requestNum; // 주문번호
+	private int requestNum; // 주문번호
 	private String requestDate; // 주문날짜
 	private int total; // 총결제금액 (배송비포함)
 	private int status; // 진행상태
@@ -152,12 +151,7 @@ public class Pay {
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
-	public String getRequestNum() {
-		return requestNum;
-	}
-	public void setRequestNum(String requestNum) {
-		this.requestNum = requestNum;
-	}
+
 	public String getRequestDate() {
 		return requestDate;
 	}
@@ -218,12 +212,7 @@ public class Pay {
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
-	public String getProductNum() {
-		return productNum;
-	}
-	public void setProductNum(String productNum) {
-		this.productNum = productNum;
-	}
+
 	public String getRefundAccount() {
 		return refundAccount;
 	}
@@ -236,12 +225,7 @@ public class Pay {
 	public void setBank(String bank) {
 		this.bank = bank;
 	}
-	public String getDeliverAddr() {
-		return deliverAddr;
-	}
-	public void setDeliverAddr(String deliverAddr) {
-		this.deliverAddr = deliverAddr;
-	}
+
 	public String getDeliverTel1() {
 		return deliverTel1;
 	}
@@ -272,6 +256,19 @@ public class Pay {
 	public void setImageFileName(String imageFileName) {
 		this.imageFileName = imageFileName;
 	}
+	public int getRequestNum() {
+		return requestNum;
+	}
+	public void setRequestNum(int requestNum) {
+		this.requestNum = requestNum;
+	}
+	public String getProductNum() {
+		return productNum;
+	}
+	public void setProductNum(String productNum) {
+		this.productNum = productNum;
+	}
+
 
 	
 }

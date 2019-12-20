@@ -101,5 +101,16 @@
 		DELETE FROM park WHERE recommendNum=#{recommendNum}
 	</delete>
 	
+	<insert id="insertRate" parameterType="com.catDog.park.Park">
+		INSERT INTO recommendRate(rateNum, recommendNum, rate, content, created, num, sortNum)
+			VALUES (recommendRate_seq.NEXTVAL, #{recommendNum}, #{rate}, #{content}, #{created}, #{num}, 1)
+	</insert>
+
+	<select id="rateCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM recommendRate rr
+	</select>
+	
+	
 	
 </mapper>
