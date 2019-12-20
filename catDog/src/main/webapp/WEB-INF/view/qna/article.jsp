@@ -24,7 +24,7 @@ function deleteQuestion(qnaNum) {
 
 function updateQuestion(qnaNum) {
 	<c:if test="${sessionScope.member.userId==questionDto.userId}">
-		var q = "qnaNum=${questionDto.qnaNum}&pageNo=${dto.pageNo}";
+		var q = "qnaNum=${questionDto.qnaNum}&pageNo=${pageNo}";
 		var url = "<%=cp%>/qna/updateQuestion?"+q;
 		
 		location.href=url;
@@ -64,7 +64,7 @@ function deleteAnswer(qnaNum) {
 
 function updateAnswer(qnaNum) {
 	<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
-		var q = "qnaNum=${dto.qnaNum}&pageNo=${pageNo}";
+		var q = "qnaNum=${answerDto.qnaNum}&pageNo=${pageNo}";
 		var url = "<%=cp%>/qna/updateAnswer?"+q;
 		
 		location.href=url;
@@ -191,7 +191,7 @@ function updateAnswer(qnaNum) {
         <c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0 && empty answerDto}">
             <button type="button" class="btn" onclick="insertAnswer();">답변</button>
         </c:if>
-        <c:if test="${not empty answerDto and fn:indexOf(sessionScope.member.userId,'admin') == 0}">
+        <c:if test="${not empty answerDto && fn:indexOf(sessionScope.member.userId,'admin') == 0}">
             <button type="button" class="btn" onclick="updateAnswer();">답변수정</button>
         </c:if>
         <c:if test="${not empty answerDto && fn:indexOf(sessionScope.member.userId,'admin') == 0}">

@@ -312,11 +312,11 @@ public class CsServiceImpl implements CsService {
 	}
 	
 	@Override
-	public Qna readQnaAnswer(int parent) {
+	public Qna readQnaAnswer(int qnaNum) {
 		Qna dto = null;
 		
 		try{
-			dto=dao.selectOne("qna.readQnaAnswer", parent);
+			dto=dao.selectOne("qna.readQnaAnswer", qnaNum);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

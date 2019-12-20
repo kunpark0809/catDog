@@ -31,7 +31,7 @@ public interface CsService {
 	public List<Qna> listQna(Map<String, Object> map);
 	
 	public Qna readQnaQuestion(int qnaNum);
-	public Qna readQnaAnswer(int parent);
+	public Qna readQnaAnswer(int qnaNum);
 	
 	public Qna preReadQnaQuestion(Map<String, Object> map);
 	public Qna nextReadQnaQuestion(Map<String, Object> map);
