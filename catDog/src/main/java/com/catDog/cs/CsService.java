@@ -26,6 +26,7 @@ public interface CsService {
 	
 	// Qna
 	public void insertQna(Qna dto) throws Exception;
+	
 	public int qnaDataCount(Map<String, Object> map);
 	public List<Qna> listQna(Map<String, Object> map);
 	

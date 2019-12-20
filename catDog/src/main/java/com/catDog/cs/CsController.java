@@ -551,14 +551,10 @@ public class CsController {
 			HttpSession session,
 			Model model) throws Exception {
 		
-		SessionInfo info=(SessionInfo)session.getAttribute("member");
-		
 		Qna dto = service.readQnaQuestion(qnaNum);
 		if(dto==null) {
 			return ".qna.list";
 		}
-		
-
 		
 		dto.setContent("["+dto.getSubject()+"] 에 대한 답변입니다.\n");
 		
@@ -575,10 +571,56 @@ public class CsController {
 	@RequestMapping(value="/qna/insertAnswer", method=RequestMethod.POST)
 	public String qnaAnswerSubmit(
 			Qna dto,
+			@RequestParam int qnaNum,
 			HttpSession session) throws Exception {
 		try {
 			SessionInfo info=(SessionInfo)session.getAttribute("member");
-			dto.setUserId(info.getUserId());
+			
+			dto.setParent(qnaNum);
+			dto.setNum(info.getMemberIdx());
+			service.insertQna(dto);
+		} catch (Exception e) {
+		}
+		return "redirect:/qna/list";
+	}
+	
+	@RequestMapping(value="/qna/updateAnswer", method=RequestMethod.GET)
+	public String qnaAnswerUpdateForm(
+			@RequestParam int qnaNum,
+			@RequestParam String pageNo,
+			HttpSession session,
+			Model model) throws Exception {
+		
+		Qna dto = service.readQnaAnswer(qnaNum);
+		
+	
+		if(dto==null) {
+			return ".qna.list";
+		}
+		
+		
+		dto.setContent("["+dto.getSubject()+"] 에 대한 답변입니다.\n");
+		
+		List<Qna> listCategory = service.listQnaCategory();
+		
+		model.addAttribute("mode", "updateAnswer");
+		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("dto", dto);		
+		model.addAttribute("listCategory", listCategory);		
+
+		return ".qna.created";
+	}
+	
+	@RequestMapping(value="/qna/updateAnswer", method=RequestMethod.POST)
+	public String qnaAnswerUpdateSubmit(
+			Qna dto,
+			@RequestParam int qnaNum,
+			HttpSession session) throws Exception {
+		try {
+			SessionInfo info=(SessionInfo)session.getAttribute("member");
+			
+			dto.setParent(qnaNum);
+			dto.setNum(info.getMemberIdx());
 			service.insertQna(dto);
 		} catch (Exception e) {
 		}

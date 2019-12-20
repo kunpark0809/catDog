@@ -17,7 +17,7 @@ function deleteQuestion(qnaNum) {
 		location.href=url;
 	}
 	</c:if>
-	<c:if test="${sessionScope.member.userId!=questionDto.userId || fn:indexOf(sessionScope.member.userId,'admin') != 0}">
+	<c:if test="${sessionScope.member.userId!=questionDto.userId && fn:indexOf(sessionScope.member.userId,'admin') != 0}">
 		alert("게시물을 삭제할 수 없습니다.");
 	</c:if>
 }
@@ -44,14 +44,14 @@ function insertAnswer(qnaNum) {
 	</c:if>
 	
 	<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') != 0}">
-		alert("답변을 수정할 수 없습니다.");
+		alert("답변을 게시할 수 없습니다.");
 	</c:if>
 }
 
 function deleteAnswer(qnaNum) {
 	<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
 		var q = "qnaNum=${answerDto.qnaNum}&${query}";
-		var url = "<%=cp%>/qna/delete?"+q;
+		var url = "<%=cp%>/qna/deleteAnswer?"+q;
 		
 	if(confirm("답변을 삭제 하시겠습니까 ?")) {
 		location.href=url;
@@ -64,8 +64,8 @@ function deleteAnswer(qnaNum) {
 
 function updateAnswer(qnaNum) {
 	<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
-		var q = "qnaNum=${answerDto.qnaNum}&pageNo=${pageNo}";
-		var url = "<%=cp%>/qna/update?"+q;
+		var q = "qnaNum=${dto.qnaNum}&pageNo=${pageNo}";
+		var url = "<%=cp%>/qna/updateAnswer?"+q;
 		
 		location.href=url;
 	</c:if>
@@ -87,7 +87,7 @@ function updateAnswer(qnaNum) {
 <table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
 <tr height="35">
     <td colspan="2" align="left">
-    	<span class="questionQ">질문이다냥!</span><span class="questionSubject">[${questionDto.qnaCategory}] ${questionDto.subject}</span>
+    	<span class="questionQ">질문이다냥!</span><span class="questionSubject">&nbsp;♣ ${questionDto.qnaCategory} ♣ ${questionDto.subject}</span>
     </td>
 </tr>
 
@@ -111,7 +111,7 @@ function updateAnswer(qnaNum) {
 	<table style="width: 100%; margin: 10px auto 0px; border-spacing: 0px; border-collapse: collapse;">
 	<tr height="35">
 	    <td colspan="2" align="left">
-    	<span class="answerA">A</span><span class="answerSubject">[RE] ${answerDto.subject}</span>
+    	<span class="answerA"></span><span class="answerSubject">${answerDto.subject} 에 대한 답변이다냥!</span>
 	    </td>
 	</tr>
 	

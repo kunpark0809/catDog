@@ -47,7 +47,7 @@
 		       TO_CHAR(q.created, 'YYYY-MM-DD') created,
 		       q.qnaCategoryNum, qnaCategory
 		FROM qna q
-		LEFT OUTER JOIN qna q2 ON q.num = q2.parent
+		LEFT OUTER JOIN qna q2 ON q.qnaNum = q2.parent
 		JOIN qnaCategory c ON q.qnaCategoryNum=c.qnaCategoryNum
 		JOIN memberDetail md ON q.num=md.num
 		<where>

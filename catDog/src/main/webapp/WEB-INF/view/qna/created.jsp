@@ -19,16 +19,17 @@
         }
 
     	str = f.content.value;
+    	console.log(str);
         if(!str) {
             alert("내용을 입력하세요. ");
             f.content.focus();
             return;
         }
-
+		
    		f.action="<%=cp%>/qna/${mode}";
 
         f.submit();
-    }
+   }
 </script>
 
 <div class="body-container" style="width: 830px; margin: 20px auto 0px; border-spacing: 0px;">
@@ -81,7 +82,12 @@
   <tr align="left" style="border-bottom: 1px solid #cccccc;"> 
       <td width="100" bgcolor="#eeeeee" style="text-align: center; padding-top:5px;" valign="top">내&nbsp;&nbsp;&nbsp;&nbsp;용</td>
       <td valign="top" style="padding:5px 0px 5px 10px;"> 
+      	<c:if test="${mode!='insertAnswer' && mode!='updateAnswer'}">
         <textarea name="content" rows="12" class="boxTA" style="width: 95%;">${dto.content}</textarea>
+        </c:if>
+        <c:if test="${mode=='insertAnswer' || mode=='updateAnswer'}">
+        <textarea name="content" rows="12" class="boxTA" style="width: 95%;">${dto.content}</textarea>
+        </c:if>
       </td>
   </tr>
   
@@ -98,6 +104,7 @@
 	        	 <input type="hidden" name="pageNo" value="${pageNo}">
 	        </c:if>
 	        <c:if test="${mode=='insertAnswer' || mode=='updateAnswer' || mode=='deleteAnswer'}">
+	        	<input type="hidden" name="qnaNum" value="${dto.qnaNum}">
 	        	<input type="hidden" name="parent" value="${dto.qnaNum}">
 	        	<input type="hidden" name="pageNo" value="${pageNo}">
 	        </c:if>
