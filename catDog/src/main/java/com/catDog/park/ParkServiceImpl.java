@@ -184,4 +184,46 @@ public class ParkServiceImpl implements ParkService {
 		}
 		
 	}
+
+
+	@Override
+	public void insertRate(Park dto) throws Exception {
+		try {
+			dao.insertData("Park.insertRate", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
+
+	@Override
+	public List<Park> listRate(Map<String, Object> map) {
+		List<Park> list=null;
+		try {
+			list=dao.selectList("park.listRate", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+
+	@Override
+	public int rateCount(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public void deleteRate(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
 }
