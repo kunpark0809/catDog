@@ -43,7 +43,7 @@
 	
 	<insert id="insertpayment" parameterType="com.catDog.pay.Pay">
 		INSERT INTO payment(requestNum, payMethod, point, purchase)
-		VALUES(#{requestNum}, #{payMethod}, #{point},#{purchase})
+		VALUES(#{requestNum}, #{payMethod}, #{usePoint},#{purchase})
 				
 	</insert>
 	
@@ -53,6 +53,6 @@
 	</insert>
 	
 	<update id="updatePoint">
-		UPDATE memberdetail SET mileage=#{mileage}+#{point} WHERE userid=#{userId};	
+		UPDATE memberdetail SET mileage=#{mileage}+#{point} WHERE userid=#{userId}
 	</update>
 </mapper>

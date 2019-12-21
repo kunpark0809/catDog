@@ -46,7 +46,7 @@
 		var email = f.email1.value+"@"+f.email2.value;
 		var tel = f.tel1.value+"-"+f.tel2.value+"-"+f.tel3.value;
 		
-		
+	<%-- 	
 		IMP.request_pay({
 			pg : 'inicis', // version 1.1.0부터 지원.
 			pay_method : 'card',
@@ -75,7 +75,7 @@
 			}
 			//alert(msg);
 		});
-
+ --%>
 	}
 	
 	// xml 파싱하는법 공부
@@ -114,21 +114,25 @@
 	    }
 	}
 	
-	function usePoint(){
-		alert("함수");
-/* 		var point = $("#usePoint");
+	function changePoint(){
+ 		var point = $("#usePoint");
 		
 		if(point.val() < 0){
 			point.val("0");
 			return;
 		}
 		
-		if(point.val() > ${customer.point}){
+		if(point.val() > ${customer.mileage}){
 			alert("보유금액 이상은 사용불가합니다.");
-			point.val(${customer.point});
+			point.val(${customer.mileage});
 		}
-		alert($("#total").val()-point.val());
-		$("#purchase").val($("#total").val()-point.val()); */
+		
+		if(point.val() > ${product.total}){
+			alert("결제금액을 초과하는 포인트 입니다.");
+			point.val(${product.total});
+		}
+		
+		$("#purchase").val($("#total").val()-point.val()); 
 	}
 </script>
 
@@ -331,7 +335,7 @@
 									<th>포인트 사용</th>
 									<td>
 								
-										<span id=""><input id="usePoint" type="text" value="0" name="usePoint" onchange="usePoint();"> </span>원 
+										<span id=""><input id="usePoint" type="text" value="0" name="usePoint" onchange="changePoint();"> </span>원 
 										<span id="">(보유 포인트 : ${customer.mileage}원)</span>
 								
 									</td>
@@ -387,8 +391,8 @@
 							
 							</p>
 							<div class="btn">
-								<input type="hidden" name="productNum" value="${product.productNum}">
-								<input type="hidden" name="num" value="${sessionScope.member.memberIdx}">  
+								<input type="hidden" name="mileage" value="${customer.mileage}">
+								<input type="hidden" name="productNum" value="${product.productNum}"> 
 								<input type="hidden" name="productCount" value="${product.productCount}">
 								<input type="hidden" name="productSum" value="${product.productSum}">
 								<button type="button" onclick="pay();">결제하기</button>

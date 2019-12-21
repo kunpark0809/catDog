@@ -42,10 +42,18 @@ public class PayController {
 	@RequestMapping(value="/pay/pay", method=RequestMethod.POST)
 	public String paySubmit(
 			@RequestParam String productNum, 
-			Pay pay
+			Pay pay,
+			HttpSession session
 			) throws Exception{
 
 		pay.setPoint(pay.getPoint()-pay.getUsePoint());	
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+	
+		if(info != null) {
+			pay.setNum(info.getMemberIdx());
+			pay.setUserId(info.getUserId());
+		}
+		
 		service.insertRequest(pay);
 		return ".pay.complete";
 	}
