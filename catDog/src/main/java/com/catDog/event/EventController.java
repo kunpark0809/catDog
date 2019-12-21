@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.catDog.common.MyUtil;
 import com.catDog.customer.SessionInfo;
@@ -150,14 +151,44 @@ public class EventController {
 		return ".event.article";
 	}
 	
-	public String updateForm() throws Exception {
+	
+	@RequestMapping(value="/event/update", method=RequestMethod.GET)
+	public String updateForm(Event dto, @RequestParam int eventNum,
+							 @RequestParam String page, HttpSession session,
+							 Model model) throws Exception {
 		
-		return null;
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		service.readEvent(eventNum);
+		
+		if(dto == null)
+			return "redirect:/event/list?page="+page;
+		
+		if(! dto.getUserId().equals(info.getUserId())) {
+			return "redirect:/event/list?page="+page;
+		}
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("page", page);
+		model.addAttribute("mode", "update");
+		
+		return ".event.created";
 	}
 	
-	public String updateSubmit() throws Exception {
+	@RequestMapping(value="/event/update", method=RequestMethod.POST)
+	public String updateSubmit(Event dto, @RequestParam String page,
+							   HttpSession session) throws Exception {
 		
-		return null;
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+"uploads"+File.separator+"event";
+		
+		try {
+			service.updateEvent(dto, pathname);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/event/article?EventNum="+dto.getEventNum()+"&page="+page;
 	}
 	
 	@RequestMapping(value="/event/delete", method=RequestMethod.GET)
@@ -184,4 +215,96 @@ public class EventController {
 		
 		return "redirect:/event/list?"+query;
 	}
+	
+	@RequestMapping(value="/event/listReply")
+	public String listReply(@RequestParam int eventNum, Model model,
+							@RequestParam(value="pageNo", defaultValue="1") int current_page) throws Exception {
+		
+		int rows=5;
+		int total_page=0;
+		int dataCount=0;
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("eventNum", eventNum);
+		
+		dataCount=service.replyCount(map);
+		total_page = myUtil.pageCount(rows, dataCount);
+		if(current_page>total_page)
+			current_page=total_page;
+		
+		int offset = (current_page-1) * rows;
+		if(offset < 0) offset = 0;
+		map.put("offset", offset);
+		map.put("rows", rows);
+		List<Reply> listReply=service.listReply(map);
+		
+		for(Reply dto : listReply) {
+			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+		}
+		
+		String paging=myUtil.pagingMethod(current_page, total_page, "listPage");
+		
+		model.addAttribute("listReply", listReply);
+		model.addAttribute("pageNo", current_page);
+		model.addAttribute("replyCount", dataCount);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);
+		
+		return "event/listReply";
+	}
+	
+	@RequestMapping(value="/event/insertReply", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> insertReply(Reply dto, HttpSession session) {
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+				String state="true";
+		
+		try {
+			dto.setUserId(info.getUserId());
+			service.insertReply(dto);
+		} catch (Exception e) {
+			state="false";
+		}
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		return model;
+	}
+	
+	@RequestMapping(value="/event/deleteReply", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteReply(@RequestParam Map<String, Object> paramMap) {
+		String state="true";
+		try {
+			service.deleteReply(paramMap);
+		} catch (Exception e) {
+			state="false";
+		}
+		Map<String, Object> map = new HashMap<>();
+				map.put("state", state);
+		return map;
+	}
+	
+	@RequestMapping(value="/event/listReplyAnswer")
+	public String listReplyAnswer(@RequestParam int answer, Model model) throws Exception {
+		List<Reply> listReplyAnswer=service.listReplyAnswer(answer);
+		for(Reply dto : listReplyAnswer) {
+			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+		}
+		
+		model.addAttribute("listReplyAnswer", listReplyAnswer);
+		
+		return "event/listReplyAnswer";
+	}
+	
+	@RequestMapping(value="/event/countReplyAnswer")
+	@ResponseBody
+	public Map<String, Object> countReplyAnswer(@RequestParam(value="answer") int answer) {
+		int count=service.replyAnswerCount(answer);
+		Map<String, Object> model=new HashMap<>();
+		
+		model.put("count", count);
+		
+		return model;
+	}
+	
 }

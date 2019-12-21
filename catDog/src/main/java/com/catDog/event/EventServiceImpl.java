@@ -210,4 +210,26 @@ public class EventServiceImpl implements EventService {
 		return list;
 	}
 
+	@Override
+	public int replyCount(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.selectOne("event.rePlyCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public int replyAnswerCount(int answer) {
+		int result=0;
+		try {
+			result=dao.selectOne("event.replyAnswerCount", answer);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 }
