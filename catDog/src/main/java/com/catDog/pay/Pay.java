@@ -6,6 +6,7 @@ public class Pay {
 	private String email, email1, email2;
 	private String tel, tel1, tel2, tel3;
 	private String addr, addr1, addr2;
+	private int mileage; // 보유 포인트
 	
 	private String deliverAddr1;
 	private String deliverAddr2;
@@ -27,7 +28,8 @@ public class Pay {
 	private int productSum; // 단일품목총액 (가격*주문수량)
 	
 	private String payMethod; // 결제수단
-	private int point; // 포인트
+	private int usePoint; // 사용 포인트
+	private int point; // 적립 포인트
 	private int purchase; // 결제금액
 	
 	private String productName; // 용품 이름 (db - name)
@@ -267,6 +269,18 @@ public class Pay {
 	}
 	public void setProductNum(String productNum) {
 		this.productNum = productNum;
+	}
+	public int getUsePoint() {
+		return usePoint;
+	}
+	public void setUsePoint(int usePoint) {
+		this.usePoint = usePoint;
+	}
+	public int getMileage() {
+		return mileage;
+	}
+	public void setMileage(int mileage) {
+		this.mileage = mileage;
 	}
 
 

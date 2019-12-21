@@ -27,6 +27,7 @@ public class PayController {
 		product.setProductCount(quantity);
 		product.setProductSum(product.getPrice()*quantity);
 		product.setPoint((int)(product.getProductSum() * 0.01));
+		product.setTotal(product.getProductSum()+2500);
 		
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		Pay customer = null;
@@ -44,7 +45,7 @@ public class PayController {
 			Pay pay
 			) throws Exception{
 
-			
+		pay.setPoint(pay.getPoint()-pay.getUsePoint());	
 		service.insertRequest(pay);
 		return ".pay.complete";
 	}
