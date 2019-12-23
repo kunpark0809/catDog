@@ -5,6 +5,16 @@
 <%
 	String cp=request.getContextPath();
 %>
+
+<style type="text/css">
+.textDate {
+	font-weight: 500;
+	cursor: pointer;
+	display: block;
+	color: #333333;
+}
+</style>
+
 <script type="text/javascript">
 
 function sendOk() {
@@ -51,6 +61,12 @@ function sendOk() {
 
 	  f.submit();
 }
+
+$(function() {
+		$("form input[name=startDate]").datepicker({showMonthAfterYear:true});
+		$("form input[name=endDate]").datepicker({showMonthAfterYear:true});
+});
+
 </script>
 
 <div class="body-container" style="width: 700px; margin: 20px auto 10px;">
@@ -59,7 +75,7 @@ function sendOk() {
 	</div>
 	
 	<div>
-		<form name="photoForm" method="post" enctype="multipart/form-data">
+		<form name="eventForm" method="post" enctype="multipart/form-data">
 			<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
 				<tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 					<td width="100" bgcolor="#eeeeee" style="text-align: center;">제&nbsp;&nbsp;&nbsp;&nbsp;목</td>
@@ -79,7 +95,7 @@ function sendOk() {
 					<td width="100" bgcolor="#eeeeee" style="text-align: center;">시&nbsp;작&nbsp;일</td>
 					<td style="padding-left:10px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
-						<input type="text" name="startDate" id="form-startDate" maxlength="10" class="boxTF" readonly="readonly" style="width: 25%; background: #ffffff;">
+						<input type="text" name="startDate" maxlength="10" class="boxTF" readonly="readonly" style="width: 20%; text-align: center; background: #ffffff;">
 						</p>
 					</td>
 				</tr>
@@ -87,7 +103,7 @@ function sendOk() {
 				<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
 					<td width="100" bgcolor="#eeeeee" style="text-align: center;">종&nbsp;료&nbsp;일</td>
 					<td style="padding-left:10px;">
-						<input type="text" name="endDate" id="form-endDate" maxlength="10" class="boxTF" readonly="readonly" style="width: 25%; background: #ffffff;">
+						<input type="text" name="endDate" maxlength="10" class="boxTF" readonly="readonly" style="width: 20%; text-align: center; background: #ffffff;">
 					</td>
 				</tr>
 				
@@ -122,4 +138,4 @@ function sendOk() {
 			</table>
 		</form>
 	</div>
-</div>
+</div>s

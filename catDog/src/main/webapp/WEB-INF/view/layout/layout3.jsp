@@ -28,17 +28,17 @@
 <title>Agency - Start Bootstrap Theme</title>
 
 <!-- Bootstrap core CSS -->
-<link href="<%=cp%>/resource/vendor/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet">
+<link href="<%=cp%>/resource/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 
 <!-- 전체 폰트 적용 -->
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
-<link href="<%=cp%>/resource/vendor/fontawesome-free/css/all.min.css"
-   rel="stylesheet" type="text/css">
+<link href="<%=cp%>/resource/vendor/fontawesome-free/css/all.min.css"  rel="stylesheet" type="text/css">
    
 <!-- Custom styles for this template -->
 <link href="<%=cp%>/resource/css/agency.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="<%=cp%>/resource/vendor/jquery-ui/css/smoothness/jquery-ui.min.css" type="text/css">
 
 <script src="<%=cp%>/resource/vendor/jquery/jquery.min.js"></script>
 
@@ -87,10 +87,6 @@
 	<img id="loadingImage" src="<%=cp%>/resource/img/123123.gif">
 </div>
 
-<!-- 
-<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-ui.min.js"></script>
-<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.ui.datepicker-ko.js"></script>
- -->
 
 <!-- Portfolio Modals -->
 	<!-- Modal 1 -->
@@ -283,6 +279,9 @@
       },
     });
   </script>
+
+   <script type="text/javascript" src="<%=cp%>/resource/vendor/jquery-ui/jquery-ui.min.js"></script>
+   <script type="text/javascript" src="<%=cp%>/resource/vendor/jquery-ui/jquery.ui.datepicker-ko.js"></script>
 
 	<!-- Bootstrap core JavaScript -->
 

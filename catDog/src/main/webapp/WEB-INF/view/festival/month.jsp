@@ -7,7 +7,6 @@
 %>
 
 <link rel="stylesheet" href="<%=cp%>/resource/css/tabs.css" type="text/css">
-<link rel="stylesheet" href="<%=cp%>/resource/vendor/jquery-ui/css/smoothness/jquery-ui.min.css" type="text/css">
 
 <style type="text/css">
 .ui-widget-header {
@@ -95,9 +94,6 @@
 	text-align: right;
 }
 </style>
-
-<script type="text/javascript" src="<%=cp%>/resource/vendor/jquery-ui/jquery-ui.min.js"></script>
-<script type="text/javascript" src="<%=cp%>/resource/vendor/jquery-ui/jquery.ui.datepicker-ko.js"></script>
 
 
 <script type="text/javascript">
