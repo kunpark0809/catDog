@@ -37,8 +37,16 @@
 	function pay() {
 		var f= document.payForm;
 
+		if(f.payMethod.value == "0"){
+			f.action = "<%=cp%>/pay/pay";
+			f.submit();
+			return;
+		}
+		
 		var email = f.email1.value+"@"+f.email2.value;
 		var tel = f.tel1.value+"-"+f.tel2.value+"-"+f.tel3.value;
+		
+	<%-- 	
 		IMP.request_pay({
 			pg : 'inicis', // version 1.1.0부터 지원.
 			pay_method : 'card',
@@ -53,7 +61,8 @@
 			m_redirect_url : '<%=cp%>/pay/complete'
 		}, function(rsp) {
 			if (rsp.success) {
-				paySuccess(f);
+				f.action = "<%=cp%>/pay/pay";
+				f.submit();
 				
 				var msg = '결제가 완료되었습니다.';
 				msg += '고유ID : ' + rsp.imp_uid;
@@ -66,16 +75,31 @@
 			}
 			//alert(msg);
 		});
+ --%>
+	}
+	
+	// xml 파싱하는법 공부
+	function zipSerach(){
+		var xhr = new XMLHttpRequest();
+		//url = "http://openapi.epost.go.kr/postal/retrieveNewAdressAreaCdSearchAllService/retrieveNewAdressAreaCdSearchAllService/getNewAddressListAreaCdSearchAll?ServiceKey=인증키&countPerPage=10&currentPage=1&srchwrd=세종로17"
+		var url = 'http://openapi.epost.go.kr/postal/retrieveNewAdressAreaCdSearchAllService/retrieveNewAdressAreaCdSearchAllService/getNewAddressListAreaCdSearchAll'; /*URL*/
+		var queryParams = '?' + encodeURIComponent('ServiceKey') + '='+'U4DSQooBi3rQnU3HF9Z6tXH%2FH5nEaR2EjMxq6XjqAkVO1hW3LP%2BvtFJNinrBiXcqCE%2BO%2FMmxDqWizrN3%2BuSZgA%3D%3D'; /*Service Key*/
+		queryParams += '&' + encodeURIComponent('srchwrd') + '=' + encodeURIComponent('공평동'); /*검색어*/
+		queryParams += '&' + encodeURIComponent('countPerPage') + '=' + encodeURIComponent('10'); /*페이지당 출력될 개수를 지정(최대50)*/
+		queryParams += '&' + encodeURIComponent('currentPage') + '=' + encodeURIComponent('1'); /*출력될 페이지 번호*/
+		xhr.open('GET', url + queryParams);
+		xhr.onreadystatechange = function () {
+		    if (this.readyState == 4) {
+		        alert('Status: '+this.status+' Headers: '+JSON.stringify(this.getAllResponseHeaders())+' Body: '+this.responseText);
+		    }
+		};
 
+		xhr.send('');
 	}
 	
 
-	function paySuccess(f){
-		f.action = "<%=cp%>/pay/pay";
-		f.submit();
-	}
 	function changeEmail() {
-	    var f = document.payForm;
+		var f= document.payForm;
 		    
 	    var str = f.selectEmail.value;
 	    if(str!="etc") {
@@ -89,6 +113,27 @@
 	        f.email1.focus();
 	    }
 	}
+	
+	function changePoint(){
+ 		var point = $("#usePoint");
+		
+		if(point.val() < 0){
+			point.val("0");
+			return;
+		}
+		
+		if(point.val() > ${customer.mileage}){
+			alert("보유금액 이상은 사용불가합니다.");
+			point.val(${customer.mileage});
+		}
+		
+		if(point.val() > ${product.total}){
+			alert("결제금액을 초과하는 포인트 입니다.");
+			point.val(${product.total});
+		}
+		
+		$("#purchase").val($("#total").val()-point.val()); 
+	}
 </script>
 
 
@@ -99,7 +144,6 @@
 				<td colspan="2">상품정보</td>
 				<td>판매가</td>
 				<td>수량</td>
-				<td>적립금</td>
 				<td>배송비</td>
 				<td>합계</td>
 			</tr>
@@ -108,7 +152,6 @@
 				<td>${product.productName}</td>
 				<td>${product.productSum}</td>
 				<td>${product.productCount}</td>
-				<td>${product.point}</td>
 				<td>2,500</td>
 				<td>${product.productSum}</td>
 			</tr>
@@ -204,16 +247,11 @@
 								<th>배송지 선택</th>
 								<td>
 									<div class="address">
-										<input id="" name="" value="T" type="radio">
+										<input id="" name="addressType" value="same" type="radio" ${not empty sessionScope.member?"checked='checked'":""}>
+										${not empty sessionScope.member?"기본 배송지":"주문자 정보와 동일"}
 										
-										<label for="sameaddr0">주문자 정보와 동일</label> 
-										<input id="" name="" value="F" type="radio">
-										
-										<label for="sameaddr1">직접 입력</label> 
-										<span class="recent ec-shop-RecentDelivery "> 
-											<input id="" name="" value="47229" type="radio">
-											최근 배송지 : <label for="recent_delivery_info0"></label>
-										</span> 
+										<input id="" name="addressType" value="direct" type="radio">
+										직접 입력
 										<a href="#none" id="btn_shipp_addr" class="">
 										<span class="">주소록 보기</span></a>
 									</div>
@@ -222,17 +260,17 @@
 							<tr>
 								<th scope="row">받으시는 분 </th>
 								<td>
-								<input name="deliverName" class="" placeholder="" size="15" value="" type="text">
+								<input name="deliverName" class="" placeholder="" size="15" value="${customer.name}" type="text">
 								</td>
 							</tr>
 							<tr class="">
 								<th>주소</th>
 								<td>
-									<input id="" name="deliverZip" type="text"> 
-									<a id="" class="">
-										<span class="">우편번호</span>
+									<input id="" name="deliverZip" type="text" value="<%-- ${customer.zip} --%>"> 
+									<a id="" class="" >
+										<span class="" onclick="zipSerach()">우편번호</span>
 									</a><br> 
-									<input id="" name="deliverAddr1" class="" placeholder="" size="40" value="" type="text"> 
+									<input id="" name="deliverAddr1" class="" placeholder="" size="40" value="${customer.addr}" type="text"> 
 									<span class="">기본주소</span><br>
 									<input id="" name="deliverAddr2" class="" size="40" value="" type="text"> 
 									<span class="">나머지주소</span><span class=" ">(선택입력가능)</span>
@@ -242,15 +280,15 @@
 								<th>휴대전화 </th>
 								<td>
 									<select id="" name="deliverTel1">
-											<option value="010">010</option>
-											<option value="011">011</option>
-											<option value="016">016</option>
-											<option value="017">017</option>
-											<option value="018">018</option>
-											<option value="019">019</option>
+											<option value="010" ${customer.tel1=="010" ? "selected='selected'" : ""}>010</option>
+											<option value="011" ${customer.tel1=="011" ? "selected='selected'" : ""}>011</option>
+											<option value="016" ${customer.tel1=="016" ? "selected='selected'" : ""}>016</option>
+											<option value="017" ${customer.tel1=="017" ? "selected='selected'" : ""}>017</option>
+											<option value="018" ${customer.tel1=="018" ? "selected='selected'" : ""}>018</option>
+											<option value="019" ${customer.tel1=="019" ? "selected='selected'" : ""}>019</option>
 									</select>
-									-<input id="" name="deliverTel2" maxlength="4" size="4" value="" type="text">
-									-<input id="" name="deliverTel3" maxlength="4" size="4" value="" type="text">
+									-<input id="" name="deliverTel2" maxlength="4" size="4" value="${customer.tel2}" type="text">
+									-<input id="" name="deliverTel3" maxlength="4" size="4" value="${customer.tel3}" type="text">
 								</td>
 							</tr>
 						</tbody>
@@ -275,7 +313,7 @@
 						<tbody>
 							<tr>
 								<th >상품 합계 금액</th>
-								<td><strong id="" class=""><input id="" name="total" readonly="readonly" value="${product.productSum}"></strong>
+								<td><strong id="" class=""><input id="total" name="total" readonly="readonly" value="${product.total}"></strong>
 								</td>
 							</tr>
 							<tr>
@@ -284,27 +322,29 @@
 									<span id="">2,500</span>원 
 								</td>
 							</tr>
-							<tr>
-								<th>적립 포인트</th>
-								<td>
-							
-									<span id=""><input id="" name="point" readonly="readonly" value="${product.point}"></span>원 
-							
-								</td>
-							</tr>
-							<tr>
-								<th>포인트 사용</th>
-								<td>
-							
-									<span id=""><input type="text" value="0" name="point"> </span>원 
-									<span id="">(보유 포인트 : ${customer.point}원)</span>
-							
-								</td>
-							</tr>
+							<c:if test="${not empty sessionScope.member}">
+								<tr>
+									<th>적립 포인트</th>
+									<td>
+								
+										<span id=""><input id="" name="point" readonly="readonly" value="${product.point}"></span>원 
+								
+									</td>
+								</tr>
+								<tr>
+									<th>포인트 사용</th>
+									<td>
+								
+										<span id=""><input id="usePoint" type="text" value="0" name="usePoint" onchange="changePoint();"> </span>원 
+										<span id="">(보유 포인트 : ${customer.mileage}원)</span>
+								
+									</td>
+								</tr>
+							</c:if>
 							<tr>
 								<th>최종 결제 금액</th>
 								<td>
-									<strong id="" class=""><input id="" name="purchase" readonly="readonly" value="${product.productSum}"></strong>원
+									<strong id="" class=""><input id="purchase" name="purchase" readonly="readonly" value="${product.total}"></strong>원
 
 								</td>
 							</tr>
@@ -330,7 +370,7 @@
 							</div>
 
 							<div class="">
-								<!-- 무통장입금, 카드결제, 휴대폰결제, 실시간계좌이체 -->
+								<!-- 무통장입금, 카드결제 -->
 								<div id="" class=""
 									style="display: block;">
 									<p id="" class=""
@@ -340,7 +380,7 @@
 									<p id="" class="" style="display: none;">소액 결제의 경우 PG사 정책에 따라 결제 금액 제한이 있을 수
 										있습니다.</p>
 								</div>
-						</div>
+							</div>
 
 						<!-- 최종결제금액 -->
 						<div class="" style="float: left;">
@@ -351,8 +391,8 @@
 							
 							</p>
 							<div class="btn">
-								<input type="hidden" name="productNum" value="${product.productNum}">
-								<input type="hidden" name="num" value="${sessionScope.member.memberIdx}">  
+								<input type="hidden" name="mileage" value="${customer.mileage}">
+								<input type="hidden" name="productNum" value="${product.productNum}"> 
 								<input type="hidden" name="productCount" value="${product.productCount}">
 								<input type="hidden" name="productSum" value="${product.productSum}">
 								<button type="button" onclick="pay();">결제하기</button>

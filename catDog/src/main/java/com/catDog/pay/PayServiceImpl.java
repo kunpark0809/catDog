@@ -89,7 +89,7 @@ public class PayServiceImpl implements PayService{
 			dao.insertData("pay.insertRequest",pay);
 			dao.insertData("pay.insertRequestDetail",pay);
 			dao.insertData("pay.insertpayment",pay);
-			
+			dao.updateData("pay.updatePoint",pay);
 			if(pay.getRefundAccount() != null && !pay.getRefundAccount().equals("")) {
 				dao.insertData("pay.insertrefund",pay);
 			}

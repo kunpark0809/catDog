@@ -5,8 +5,8 @@
 <%
 	String cp=request.getContextPath();
 %>
-
 <script type="text/javascript">
+
 function sendOk() {
 	var f = document.eventForm;
 
@@ -46,8 +46,8 @@ function sendOk() {
     		return;
     	}
      }
-    	
-      f.action="<%=cp%>/event/${mode}";
+     
+     f.action="<%=cp%>/event/${mode}";
 
 	  f.submit();
 }
@@ -69,23 +69,25 @@ function sendOk() {
 				</tr>
 				
 				<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-					<td width="100" bgcolor="#eeeeee" style="text-align: center;">작성자</td>
+					<td width="100" bgcolor="#eeeeee" style="text-align: center;">작&nbsp;성&nbsp;자</td>
 					<td style="padding-left:10px;">
-						${sessionScope.member.userId}
+						${sessionScope.member.nickName}
 					</td>
 				</tr>
 				
 				<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
 					<td width="100" bgcolor="#eeeeee" style="text-align: center;">시&nbsp;작&nbsp;일</td>
 					<td style="padding-left:10px;">
-						<input type="text" name="startDate" id="form-startDate" maxlength="10" class="boxTF" value="${dto.startDate}" readonly="readonly" style="width: 25%; background: #ffffff;">
+						<p style="margin-top: 1px; margin-bottom: 5px;">
+						<input type="text" name="startDate" id="form-startDate" maxlength="10" class="boxTF" readonly="readonly" style="width: 25%; background: #ffffff;">
+						</p>
 					</td>
 				</tr>
 				
 				<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
 					<td width="100" bgcolor="#eeeeee" style="text-align: center;">종&nbsp;료&nbsp;일</td>
 					<td style="padding-left:10px;">
-						<input type="text" name="endDate" id="form-endDate" maxlength="10" class="boxTF" value="${dto.endDate}" readonly="readonly" style="width: 25%; background: #ffffff;">
+						<input type="text" name="endDate" id="form-endDate" maxlength="10" class="boxTF" readonly="readonly" style="width: 25%; background: #ffffff;">
 					</td>
 				</tr>
 				

@@ -18,7 +18,7 @@
 	</select>
 	
 	<select id="readCumstomer" parameterType="Long" resultType="com.catDog.pay.Pay">
-		SELECT md.num, cd.name, md.userId, md.mileage point, cd.email, cd.tel, md.addr
+		SELECT md.num, cd.name, md.userId, md.mileage, cd.email, cd.tel, md.addr
 		FROM customerDetail cd
 		JOIN memberDetail md ON cd.num = md.num
 		WHERE md.num = #{num}
@@ -43,7 +43,7 @@
 	
 	<insert id="insertpayment" parameterType="com.catDog.pay.Pay">
 		INSERT INTO payment(requestNum, payMethod, point, purchase)
-		VALUES(#{requestNum}, #{payMethod}, #{point},#{purchase})
+		VALUES(#{requestNum}, #{payMethod}, #{usePoint},#{purchase})
 				
 	</insert>
 	
@@ -51,4 +51,8 @@
 		INSERT INTO refund(requestNum, refundAccount, bank)
 		VALUES(#{requestNum}, #{refundAccount}, #{bank})
 	</insert>
+	
+	<update id="updatePoint">
+		UPDATE memberdetail SET mileage=#{mileage}+#{point} WHERE userid=#{userId}
+	</update>
 </mapper>
