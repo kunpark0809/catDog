@@ -7,6 +7,10 @@
 %>
 
 <script type="text/javascript">
+function login() {
+	location.href="<%=cp%>/member/login";
+}
+
 function deleteEvent() {
 <c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
 	var q = "eventNum=${dto.eventnum}&${query}";
@@ -33,9 +37,60 @@ function updateEvent() {
 </c:if>
 }
 
+function ajaxJSON(url, type, query, fn) {
+	$.ajax({
+		type:type
+		,url:url
+		,data:query
+		,dataType:"json"
+		,success:function(data) {
+			fn(data);
+		}
+		,beforeSend:function(jqXHR) {
+	        jqXHR.setRequestHeader("AJAX", true);
+	    }
+	    ,error:function(jqXHR) {
+	    	if(jqXHR.status==403) {
+	    		login();
+	    		return false;
+	    	}
+	    	console.log(jqXHR.responseText);
+	    }
+	});
+}
+
+function ajaxHTML(url, type, query, selector) {
+	$.ajax({
+		type:type
+		,url:url
+		,data:query
+		,success:function(data) {
+			$(selector).html(data);
+		}
+		,beforeSend:function(jqXHR) {
+	        jqXHR.setRequestHeader("AJAX", true);
+	    }
+	    ,error:function(jqXHR) {
+	    	if(jqXHR.status==403) {
+	    		login();
+	    		return false;
+	    	}
+	    	console.log(jqXHR.responseText);
+	    }
+	});
+}
+
 $(function(){
 	listPage(1);
 });
+
+function listPage(page) {
+	var url = "<%=cp%>/park/listRate";
+	var query = "recommendNum=${dto.recommendNum}&pageNo="+page;
+	var selector = "#listRate";
+	
+	ajaxHTML(url, "get", query, selector);
+}
 
 function listPage(page) {
 	var url="<%=cp%>/event/listReply";
@@ -84,7 +139,7 @@ $(function(){
 			,dataType:"json"
 			,success:function(data) {
 				$tb.find("textarea").val("");
-				
+		
 				var state=data.state;
 				if(state=="true") {
 					listPage(1);
@@ -158,7 +213,7 @@ $(function(){
 				</td>
 				
 				<td width="50%" align="right" style="font-size: 15px; font-weight: bold;">
-			         날짜&nbsp;&nbsp;${list.get(0).created}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;조회수&nbsp;&nbsp;${list.hitCount}
+			         날짜&nbsp;&nbsp;${list.get(0).created}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;조회수&nbsp;&nbsp;${list.get(0).hitCount}
 			    </td> 
 			</tr>
 			
@@ -167,21 +222,15 @@ $(function(){
 				${sessionScope.member.nickName}
 				</td>
 				<td width="50%" align="right" style="padding-right: 5px;">
-					${list.get(0).created}
+					${list.get(0).content}
 				</td>
 			</tr>
 			
 			<tr>
 				<td colspan="2" align="left" style="padding: 10px 5px;">
 					<c:forEach var="dto" items="${list}">
-					<img alt="" src="<%=cp%>/uploads/event/${dto.imageFilename}" style="max-width:100%; height:auto; resize:both;">
+					<img alt="" src="<%=cp%>/uploads/event/${dto.imageFileName}" style="max-width:100%; height:auto; resize:both;">
 					</c:forEach>
-				</td>
-			</tr>
-			
-			<tr style="border-bottom: 1px solid #cccccc;">
-				<td colspan="2" align="left" style="padding: 10px 5px;" valign="top" height="50">
-					${list.content}
 				</td>
 			</tr>
 			

@@ -49,8 +49,8 @@ public class EventController {
 		
 		int total_page = myUtil.pageCount(rows, dataCount);
 		
-		map.put("offset", offset);
 		map.put("rows", rows);
+		map.put("offset", offset);
 		
 		List<Event> list = service.listEvent(map);
 		
@@ -73,7 +73,7 @@ public class EventController {
 	}
 
 	@RequestMapping(value="/event/created", method=RequestMethod.GET)
-	public String createdForm(Model model) throws Exception {
+	public String createdForm(Model model, HttpSession session) throws Exception {
 		
 		model.addAttribute("mode", "created");
 		return ".event.created";
@@ -101,15 +101,13 @@ public class EventController {
 						  @RequestParam(defaultValue="all") String condition,
 						  @RequestParam(defaultValue="") String keyword, Model model) throws Exception {
 		
-		service.updateHitCount(eventNum);
-		System.out.println(eventNum);
 		List<Event> list = service.readEvent(eventNum);
 		String query="page="+page;
 		if(list.size() == 0) {
 			return "redirect:/event/list?"+query;
 		}
 		
-
+		service.updateHitCount(eventNum);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("condition", condition);
