@@ -64,7 +64,7 @@ function deleteAnswer(qnaNum) {
 
 function updateAnswer(qnaNum) {
 	<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
-		var q = "qnaNum=${answerDto.qnaNum}&pageNo=${pageNo}";
+		var q = "qnaNum=${questionDto.qnaNum}&pageNo=${pageNo}";
 		var url = "<%=cp%>/qna/updateAnswer?"+q;
 		
 		location.href=url;

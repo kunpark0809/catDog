@@ -323,6 +323,16 @@ public class CsServiceImpl implements CsService {
 		
 		return dto;
 	}
+	
+	@Override
+	public void updateQnaAnswer(Qna dto) throws Exception {
+		try{
+			dao.updateData("qna.updateQnaAnswer", dto);
+		} catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
 
 	@Override
 	public void deleteQnaAnswer(int qnaNum) throws Exception {
@@ -378,56 +388,90 @@ public class CsServiceImpl implements CsService {
 
 	@Override
 	public void insertFaq(Qna dto) throws Exception {
-		// TODO Auto-generated method stub
+		try {		
+		int seq = dao.selectOne("faq.seq");
+		dto.setFaqNum(seq);
 		
+		dao.insertData("faq.insertFaq", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}		
 	}
 
 	@Override
 	public List<Qna> listFaq(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Qna> list = null;
+		try {
+			list = dao.selectList("faq.listFaq", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	@Override
 	public Qna readFaq(int faqNum) {
-		// TODO Auto-generated method stub
-		return null;
+		Qna dto = null;
+		try {
+			dto = dao.selectOne("faq.readFaq", faqNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
 	}
 
 	@Override
 	public Qna preReadFaq(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Qna dto = null;
+		try {
+			dto = dao.selectOne("faq.preReadFaq", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
 	}
 
 	@Override
 	public Qna nextReadFaq(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Qna dto = null;
+		
+		try {
+			dto = dao.selectOne("faq.nextReadFaq", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;	
 	}
 
 	@Override
 	public void updateFaq(Qna dto) throws Exception {
-		// TODO Auto-generated method stub
-		
+		try {
+			dao.updateData("faq.updateFaq", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	@Override
 	public void deleteFaq(int faqNum) throws Exception {
-		// TODO Auto-generated method stub
-		
+		try {
+			dao.deleteData("faq.deleteFaq", faqNum);			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-
 	
-
 	@Override
 	public int faqDataCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result = dao.selectOne("faq.dataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
-
-	
-
-	
 
 }

@@ -20,6 +20,12 @@ function searchList() {
 		<h3><span style="font-family: Webdings"></span> 공지사항 </h3>
 	</div>
 	
+	<div class="alert-info">
+    <i class="fas fa-info-circle"></i>
+         중요하니 꼭 읽어보라냥!
+	</div>
+	
+	
 	<div>
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
 			<tr height="35">

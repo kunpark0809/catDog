@@ -37,6 +37,7 @@ public interface CsService {
 	public Qna nextReadQnaQuestion(Map<String, Object> map);
 	
 	public void updateQna(Qna dto) throws Exception;
+	public void updateQnaAnswer(Qna dto) throws Exception;
 	
 	public void deleteQnaQuestion(int qnaNum) throws Exception;
 	public void deleteQnaAnswer(int qnaNum) throws Exception;

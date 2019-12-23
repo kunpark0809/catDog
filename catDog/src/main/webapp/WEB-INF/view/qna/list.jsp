@@ -15,6 +15,11 @@ function searchList() {
 </script>
 
 <div class="body-container" style="width: 830px; margin: 20px auto 0px; border-spacing: 0px;">
+
+<div class="body-title">
+		<h3><span style="font-family: Webdings"></span> QnA </h3>
+</div>
+
 <div class="alert-info">
   <i class="fas fa-info-circle"></i>
     궁금하신 질문을 해달라냥!

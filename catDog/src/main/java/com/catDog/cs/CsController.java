@@ -587,11 +587,11 @@ public class CsController {
 	@RequestMapping(value="/qna/updateAnswer", method=RequestMethod.GET)
 	public String qnaAnswerUpdateForm(
 			@RequestParam int qnaNum,
-			@RequestParam String pageNo,
+			@RequestParam int pageNo,
 			HttpSession session,
 			Model model) throws Exception {
 		
-		Qna dto = service.readQnaAnswer(qnaNum);
+		Qna dto = service.readQnaQuestion(qnaNum);
 		
 	
 		if(dto==null) {
@@ -621,7 +621,7 @@ public class CsController {
 			
 			dto.setParent(qnaNum);
 			dto.setNum(info.getMemberIdx());
-			service.insertQna(dto);
+			service.updateQnaAnswer(dto);
 		} catch (Exception e) {
 		}
 		return "redirect:/qna/list";
@@ -673,7 +673,164 @@ public class CsController {
 			HttpServletRequest req,
 			Model model) throws Exception {
 		
+		String cp = req.getContextPath();
+		
+		int rows = 5;
+		int total_page = 0;
+		int dataCount = 0;
+		
+		if(req.getMethod().equalsIgnoreCase("GET")) {
+			keyword = URLDecoder.decode(keyword, "utf-8");
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		
+		dataCount = service.faqDataCount(map);
+		if(dataCount != 0)
+			total_page = util.pageCount(rows, dataCount);
+		
+		if(total_page < current_page)
+			current_page = total_page;
+		
+		int offset = (current_page-1) * rows;
+		if(offset < 0) offset = 0;
+		map.put("offset", offset);
+		map.put("rows", rows);
+		
+		List<Qna> list = service.listFaq(map);
+		
+		String query = "";
+		String listUrl;
+		String articleUrl;
+		if(keyword.length()!=0) {
+			query = "condition=" +condition + 
+       	         "&keyword=" + URLEncoder.encode(keyword, "utf-8");	
+		}
+		
+		listUrl = cp+"/faq/list";
+		articleUrl = cp + "/faq/article?page="+current_page;
+		if(query.length()!=0) {
+			listUrl = listUrl + "?" + query;
+			articleUrl = articleUrl + "&" + query;
+		}
+		
+		String paging = util.paging(current_page, total_page, listUrl);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("page", current_page);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("paging", paging);
+		model.addAttribute("articleUrl", articleUrl);
+		
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+		
 		return ".faq.list";
 	}
 	
+	@RequestMapping(value="/faq/created", method=RequestMethod.GET)
+	public String faqCreatedForm(Model model,
+			  HttpSession session) throws Exception {
+		model.addAttribute("mode", "created");
+		
+		return ".faq.created";
+	}
+
+	public String faqCreatedSubmit(Qna dto,
+			HttpSession session) throws Exception {
+		try {					
+			service.insertFaq(dto);
+		} catch (Exception e) {
+		}	
+		
+		return "redirect:/faq/list";
+	}
+	
+	@RequestMapping(value="/faq/update", method=RequestMethod.GET)
+	public String faqUpdateForm(@RequestParam int faqNum,
+							 @RequestParam String page,
+							 HttpSession session,
+							 Model model) {
+		
+		Qna dto = service.readFaq(faqNum);
+		
+		model.addAttribute("mode", "update");
+		model.addAttribute("dto", dto);
+		model.addAttribute("page", page);
+		
+		return ".faq.created";
+	}
+	
+	@RequestMapping(value="/faq/update", method=RequestMethod.POST)
+	public String faqUpdateSubmit(Qna dto,
+							   @RequestParam String page,
+							   HttpSession session) {
+		try {
+			service.updateFaq(dto);
+		} catch (Exception e) {			
+		}
+		return "redirect:/faq/list?page="+page;
+	}
+	
+	@RequestMapping(value="/faq/article")
+	public String faqArticle(@RequestParam int faqNum,			
+			@RequestParam String page,
+			@RequestParam(defaultValue="all") String condition,
+			@RequestParam(defaultValue="") String keyword,
+			Model model,
+			HttpServletResponse resp) throws Exception {
+		
+		keyword = URLDecoder.decode(keyword, "utf-8");
+		
+		String query = "page="+page;
+		if(keyword.length()!=0) {
+			query += "&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "utf-8");
+		}
+		
+		Qna dto = service.readFaq(faqNum);
+		if(dto==null)
+			return "redirect:/faq/list?"+query;
+		
+		 Map<String, Object> map = new HashMap<String, Object>();
+	        map.put("condition", condition);
+	        map.put("keyword", keyword);
+	        map.put("faqNum", faqNum);
+	        
+	     Qna preReadDto = service.preReadFaq(map);
+	     Qna nextReadDto = service.nextReadFaq(map);
+	     
+	     model.addAttribute("dto", dto);
+	     model.addAttribute("preReadDto", preReadDto);
+	     model.addAttribute("nextReadDto", nextReadDto);
+	     
+	     model.addAttribute("page", page);
+	     model.addAttribute("query", query);
+		
+		return ".faq.article";
+	}
+	
+	@RequestMapping(value="/faq/delete")
+	public String faqDelete(@RequestParam int faqNum,
+			 @RequestParam String page,
+			 @RequestParam(defaultValue="all") String condition,
+			 @RequestParam(defaultValue="") String keyword,
+			 HttpSession session) throws Exception {
+		keyword = URLDecoder.decode(keyword, "utf-8");
+		
+		String query = "page="+page;
+		if(keyword.length()!=0) {
+			query += "&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "utf-8");
+		}
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		Qna dto = service.readFaq(faqNum);
+		if(dto!=null && (dto.getUserId().equals(info.getUserId()) || info.getUserId().equals("admin"))) {
+			service.deleteFaq(faqNum);
+		}
+		
+		return "redirect:/faq/list?"+query;
+	}
 }

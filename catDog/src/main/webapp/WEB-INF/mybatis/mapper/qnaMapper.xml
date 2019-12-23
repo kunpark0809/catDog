@@ -114,6 +114,12 @@
 		WHERE qnaNum = #{qnaNum} AND num = #{num}
 	</update>
 	
+	<update id="updateQnaAnswer" parameterType="com.catDog.cs.Qna">
+		UPDATE qna SET subject=#{subject}, content=#{content},
+			qnaCategoryNum=#{qnaCategoryNum}, questionPrivate=#{questionPrivate}
+		WHERE parent = #{qnaNum} AND num = #{num}
+	</update>
+	
 	<delete id="deleteQnaQuestion" parameterType="Integer">
 		DELETE FROM qna WHERE qnaNum IN
 			(SELECT qnaNum FROM qna START WITH qnaNum = #{qnaNum}

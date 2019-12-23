@@ -37,9 +37,12 @@ function updateNotice(noticeNum) {
 </script>
 
 <div class="body-container" style="width: 700px; margin: 20px auto 0px; border-spacing: 0px;">
-	<div class="body-title">
-		<h3><span style="font-family: Webdings"></span> 공지사항 </h3>
-	</div>
+	<div class="alert-info">
+  <i class="fas fa-info-circle"></i>
+    중요하니 꼼꼼히 읽어보라냥!
+</div>
+	
+	
 
 	<div>
 		<table style="width: 100%; margin-top: 20px; border-spacing: 0px; border-collapse: collapse;">
