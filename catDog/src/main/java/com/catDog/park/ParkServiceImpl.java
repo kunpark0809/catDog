@@ -189,7 +189,7 @@ public class ParkServiceImpl implements ParkService {
 	@Override
 	public void insertRate(Park dto) throws Exception {
 		try {
-			dao.insertData("Park.insertRate", dto);
+			dao.insertData("park.insertRate", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

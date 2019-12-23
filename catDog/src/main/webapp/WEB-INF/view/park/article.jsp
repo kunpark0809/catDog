@@ -26,7 +26,7 @@
 
 <script type="text/javascript">
 function deletePark() {
-<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
+<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">
 	var q = "recommendNum=${dto.recommendNum}&${query}";
     var url = "<%=cp%>/park/delete?" + q;
 
@@ -34,20 +34,20 @@ function deletePark() {
   	  location.href=url;
 </c:if>
 
-<c:if test="${sessionScope.member.userId!='admin' && sessionScope.member.userId!=dto.userId}">
+<c:if test="${sessionScope.member.userId!='admin' && sessionScope.member.userId!='admin2' && sessionScope.member.userId!='admin3'}">
   alert("해당 게시물을 삭제할 수 없습니다.");
 </c:if>
 }
 
 function updatePark() {
-<c:if test="${sessionScope.member.userId==dto.userId}">
+<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">
 	var q = "recommendNum=${dto.recommendNum}&page=${page}";
     var url = "<%=cp%>/park/update?" + q;
 
     location.href=url;
 </c:if>
 
-<c:if test="${sessionScope.member.userId!=dto.userId}">
+<c:if test="${sessionScope.member.userId!='admin' && sessionScope.member.userId!='admin2' && sessionScope.member.userId!='admin3'}">
    alert("게시물을 수정할 수  없습니다.");
 </c:if>
 }
@@ -66,36 +66,36 @@ $(function(){
         level: 4 // 지도의 확대 레벨
     };  
 
-// 지도를 생성합니다    
-var map = new kakao.maps.Map(mapContainer, mapOption); 
-
-// 주소-좌표 변환 객체를 생성합니다
-var geocoder = new kakao.maps.services.Geocoder();
-
-// 주소로 좌표를 검색합니다
-geocoder.addressSearch(addr, function(result, status) {
-
-    // 정상적으로 검색이 완료됐으면 
-     if (status === kakao.maps.services.Status.OK) {
-
-        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-        // 결과값으로 받은 위치를 마커로 표시합니다
-        var marker = new kakao.maps.Marker({
-            map: map,
-            position: coords
-        });
-
-        // 인포윈도우로 장소에 대한 설명을 표시합니다
-        var infowindow = new kakao.maps.InfoWindow({
-            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+placeName+'</div>'
-        });
-        infowindow.open(map, marker);
-
-        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-        map.setCenter(coords);
-    } 
-});    
+	// 지도를 생성합니다    
+	var map = new kakao.maps.Map(mapContainer, mapOption); 
+	
+	// 주소-좌표 변환 객체를 생성합니다
+	var geocoder = new kakao.maps.services.Geocoder();
+	
+	// 주소로 좌표를 검색합니다
+	geocoder.addressSearch(addr, function(result, status) {
+	
+	    // 정상적으로 검색이 완료됐으면 
+	     if (status === kakao.maps.services.Status.OK) {
+	
+	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+	
+	        // 결과값으로 받은 위치를 마커로 표시합니다
+	        var marker = new kakao.maps.Marker({
+	            map: map,
+	            position: coords
+	        });
+	
+	        // 인포윈도우로 장소에 대한 설명을 표시합니다
+	        var infowindow = new kakao.maps.InfoWindow({
+	            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+placeName+'</div>'
+	        });
+	        infowindow.open(map, marker);
+	
+	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+	        map.setCenter(coords);
+	    } 
+	});    
 	
 });
 </script>
@@ -105,28 +105,21 @@ function login() {
 	location.href="<%=cp%>/member/login";
 }
 
-//페이징 처리
-$(function(){
-	listPage(1);
-});
-
-function listPage(page) {
-	var url="<%=cp%>/bbs/listReply";
-	var query="num=${dto.num}&pageNo="+page;
-	
+function ajaxJSON(url, type, query, fn) {
 	$.ajax({
-		type:"get"
+		type:type
 		,url:url
 		,data:query
+		,dataType:"json"
 		,success:function(data) {
-			$("#listReply").html(data);
+			fn(data);
 		}
-	    ,beforeSend :function(jqXHR) {
-	    	jqXHR.setRequestHeader("AJAX", true);
+		,beforeSend:function(jqXHR) {
+	        jqXHR.setRequestHeader("AJAX", true);
 	    }
 	    ,error:function(jqXHR) {
 	    	if(jqXHR.status==403) {
-	    		location.href="<%=cp%>/member/login";
+	    		login();
 	    		return false;
 	    	}
 	    	console.log(jqXHR.responseText);
@@ -134,87 +127,76 @@ function listPage(page) {
 	});
 }
 
-// 리플 등록
+function ajaxHTML(url, type, query, selector) {
+	$.ajax({
+		type:type
+		,url:url
+		,data:query
+		,success:function(data) {
+			$(selector).html(data);
+		}
+		,beforeSend:function(jqXHR) {
+	        jqXHR.setRequestHeader("AJAX", true);
+	    }
+	    ,error:function(jqXHR) {
+	    	if(jqXHR.status==403) {
+	    		login();
+	    		return false;
+	    	}
+	    	console.log(jqXHR.responseText);
+	    }
+	});
+}
+
+//페이징 처리
 $(function(){
-	$(".btnSendReply").click(function(){
+	listPage(1);
+});
+
+function listPage(page) {
+	var url = "<%=cp%>/park/listRate";
+	var query = "recommendNum=${dto.recommendNum}&pageNo="+page;
+	var selector = "#listRate";
+	
+	ajaxHTML(url, "get", query, selector);
+}
+
+//댓글 등록
+$(function(){
+	$(".btnSendRate").click(function(){
 		
-		var num="${dto.num}";
+		var num=${list.get(0).recommendNum};
+
 		var $tb = $(this).closest("table");
 		var content=$tb.find("textarea").val().trim();
+		var rate = $("input[name=rate]").val();
+		if(!rate)
+			rate="0";
+		
 		if(! content) {
 			$tb.find("textarea").focus();
 			return false;
 		}
 		content = encodeURIComponent(content);
 		
-		var query="num="+num+"&content="+content+"&answer=0";
-		var url="<%=cp%>/bbs/insertReply";
-		$.ajax({
-			type:"post"
-			,url:url
-			,data:query
-			,dataType:"json"
-			,success:function(data) {
-				$tb.find("textarea").val("");
-				
-				var state=data.state;
-				if(state=="true") {
-					listPage(1);
-				} else if(state=="false") {
-					alert("댓글을 추가 하지 못했습니다.");
-				}
-			}
-			,beforeSend : function(jqXHR) {
-		        jqXHR.setRequestHeader("AJAX", true);
-		    }
-		    ,error:function(jqXHR) {
-		    	if(jqXHR.status==403) {
-		    		login();
-		    		return false;
-		    	}
-		    	console.log(jqXHR.responseText);
-		    }
-		});
+		var url="<%=cp%>/park/insertRate";
+		var query="recommendNum="+num+"&content="+content+"&rate="+rate;
 		
+		var fn = function(data){
+			$tb.find("textarea").val("");
+			
+			var state=data.state;
+			if(state=="true") {
+				listPage(1);
+			} else if(state=="false") {
+				alert("댓글을 추가 하지 못했습니다.");
+			}
+		};
+		
+		ajaxJSON(url, "post", query, fn);
 	});
 });
 
-// 댓글 삭제
-$(function(){
-	$("body").on("click", ".deleteReply", function(){
-		if(! confirm("게시물을 삭제하시겠습니까 ? ")) {
-		    return false;
-		}
-		
-		var replyNum=$(this).attr("data-replyNum");
-		var page=$(this).attr("data-pageNo");
-		
-		var url="<%=cp%>/bbs/deleteReply";
-		var query="replyNum="+replyNum+"&mode=reply";
-		
-		$.ajax({
-			type:"post"
-			,url:url
-			,data:query
-			,dataType:"json"
-			,success:function(data) {
-				// var state=data.state;
-				listPage(page);
-			}
-			,beforeSend : function(jqXHR) {
-		        jqXHR.setRequestHeader("AJAX", true);
-		    }
-		    ,error:function(jqXHR) {
-		    	if(jqXHR.status==403) {
-		    		login();
-		    		return false;
-		    	}
-		    	console.log(jqXHR.responseText);
-		    }
-		});
-		
-	});
-});
 </script>
 
 
@@ -299,10 +281,10 @@ $(function(){
 			 <table style="width: 100%; margin: 0px auto 20px; border-spacing: 0px;"> 
 			 <tr>
 			    <td align="right">
-			       <c:if test="${sessionScope.member.userId=='admin'}">				    
+			       <c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">				    
 			          <button type="button" class="btn" onclick="updatepark();">수정</button>
 			       </c:if>
-			       <c:if test="${sessionScope.member.userId=='admin'}">				    
+			       <c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">				    
 			          <button type="button" class="btn" onclick="deletepark();">삭제</button>
 			       </c:if>
 			    </td>
@@ -313,18 +295,21 @@ $(function(){
 		<table style='width: 100%; margin: 15px auto 0px; border-spacing: 0px;'>
 			<tr height='30'> 
 				 <td align='left' >
-				 <p>★★★★★</p>
-				 	<span style='font-weight: bold;' >한줄평쓰기</span><span> !!!!!한줄평기능구현중!!!!!</span>
+				 	<span style='font-weight: bold;' >한줄평쓰기</span><span> - 해당 장소와 관련없는 댓글은 관리자에 의해 삭제될 수 있습니다.</span>
 				 </td>
 			</tr>
+			
 			<tr>
 			   	<td align="left" style='padding:5px 5px 0px;'>
+			   	
+			   		  <label><input type="text" name="rate"></label>
+				      
 					<textarea class='boxTA' style='width:100%; height: 70px;'></textarea>
 			    </td>
 			</tr>
 			<tr>
 			   <td align='right'>
-			        <button type='button' class='btn' data-num='10' style='padding:10px 10px; font-size: 5px;'>등록하기</button>
+			        <button type='button' class='btn btnSendRate' data-num='10' style="padding:10px 10px; font-size: 12px;">등록하기</button>
 			    </td>
 			 </tr>
 		</table>

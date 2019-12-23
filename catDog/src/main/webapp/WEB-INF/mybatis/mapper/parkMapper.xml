@@ -102,15 +102,23 @@
 	</delete>
 	
 	<insert id="insertRate" parameterType="com.catDog.park.Park">
-		INSERT INTO recommendRate(rateNum, recommendNum, rate, content, created, num, sortNum)
-			VALUES (recommendRate_seq.NEXTVAL, #{recommendNum}, #{rate}, #{content}, #{created}, #{num}, 1)
+		INSERT INTO recommendRate(rateNum, recommendNum, num, rate, content, sortNum)
+			VALUES (recommendRate_seq.NEXTVAL, #{recommendNum}, #{num}, #{rate}, #{content}, 1)
 	</insert>
-
+	
+	<select id="listRate" parameterType="map" resultType="com.catDog.park.Park">
+		SELECT rr.rateNum, r.recommendNum, num, rr.rate, r.content, r.created, r.sortNum
+		FROM recommendRate rr
+		JOIN recommend r ON r.recommendNum = rr.recommendNum
+		WHERE r.recommendNum=#{r.recommendNum}
+		ORDER BY rr.rateNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
 	<select id="rateCount" parameterType="map" resultType="Integer">
 		SELECT NVL(COUNT(*), 0)
 		FROM recommendRate rr
+		WHERE recommendNum=#{recommendNum}
 	</select>
-	
-	
 	
 </mapper>

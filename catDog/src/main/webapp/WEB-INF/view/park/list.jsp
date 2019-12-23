@@ -58,12 +58,12 @@ function searchList() {
 		      <table>
 		      <tr>
 		      <td align="left">
-		      <c:if test="${sessionScope.member.userId=='admin'}">
+		      <c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">
 		          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/park/list';">새로고침</button>
 		      </c:if>
 		      </td>
 		      <td align="left">
-		      <c:if test="${sessionScope.member.userId=='admin'}">
+		      <c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">
 		          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/park/created';">등록하기</button>
 		      </c:if>
 		      </td>	      

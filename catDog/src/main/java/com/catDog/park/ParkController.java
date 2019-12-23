@@ -222,7 +222,7 @@ public String list(
 		String state="true";
 		
 		try {
-			dto.setUserId(info.getUserId());
+			dto.setNum(info.getMemberIdx());
 			service.insertRate(dto);
 		} catch (Exception e) {
 			state="false";
@@ -231,6 +231,46 @@ public String list(
 		Map<String, Object> model = new HashMap<>();
 		model.put("state", state);
 		return model;
+	}
+	
+	@RequestMapping(value="/park/listRate")
+	public String listRate(
+			@RequestParam int recommendNum,
+			@RequestParam(value="pageNo", defaultValue="1") int current_page,
+			Model model
+			) throws Exception {
+		
+		int rows=5;
+		int total_page=0;
+		int dataCount=0;
+		
+		Map<String, Object> map=new HashMap<>();
+		map.put("recommendNum", recommendNum);
+		
+		dataCount=service.rateCount(map);
+		total_page = myUtil.pageCount(rows, dataCount);
+		if(current_page>total_page)
+			current_page=total_page;
+		
+        int offset = (current_page-1) * rows;
+		if(offset < 0) offset = 0;
+        map.put("offset", offset);
+        map.put("rows", rows);
+		List<Park> listRate=service.listRate(map);
+		
+		for(Park dto : listRate) {
+			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+		}
+		
+		String paging=myUtil.pagingMethod(current_page, total_page, "listPage");
+		
+		model.addAttribute("listRate", listRate);
+		model.addAttribute("pageNo", current_page);
+		model.addAttribute("rateCount", dataCount);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);
+		
+		return "park/listRate";
 	}
 	
 	
