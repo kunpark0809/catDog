@@ -37,8 +37,8 @@
     			VALUES(#{num}, '1')
     		INTO customerDetail(num, name, email, tel) 
     			VALUES(#{num}, #{name}, #{email}, #{tel})
-    		INTO memberDetail(num, userId, userPwd, nickName, userPic, addr, birth, modify_date)
-    			VALUES(#{num}, #{userId}, #{userPwd}, #{nickName}, #{userPic, jdbcType=VARCHAR}, #{addr, jdbcType=VARCHAR}, #{birth}, SYSDATE)
+    		INTO memberDetail(num, userId, userPwd, nickName, userPic, zip, addr1, addr2, birth, modify_date)
+    			VALUES(#{num}, #{userId}, #{userPwd}, #{nickName}, #{userPic, jdbcType=VARCHAR}, #{zip, jdbcType=VARCHAR}, #{addr1, jdbcType=VARCHAR}, #{addr2, jdbcType=VARCHAR}, #{birth}, SYSDATE)
     		INTO memberAuthority(userId, authority)
     			VALUES (#{userId}, 'ROLE_USER')
     	SELECT * FROM DUAL

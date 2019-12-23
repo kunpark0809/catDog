@@ -8,7 +8,8 @@ public class Customer {
 	private String email, email1, email2;
 	private String tel, tel1, tel2, tel3;
 	private String birth;
-	private String addr, addr1, addr2;
+	private String addr1, addr2;
+	private String zip;
 	private int enabled;
 	private String userPic;
 	private MultipartFile upload;
@@ -136,14 +137,6 @@ public class Customer {
 		this.birth = birth;
 	}
 
-	public String getAddr() {
-		return addr;
-	}
-
-	public void setAddr(String addr) {
-		this.addr = addr;
-	}
-
 	public String getAddr1() {
 		return addr1;
 	}
@@ -158,6 +151,14 @@ public class Customer {
 
 	public void setAddr2(String addr2) {
 		this.addr2 = addr2;
+	}
+
+	public String getZip() {
+		return zip;
+	}
+
+	public void setZip(String zip) {
+		this.zip = zip;
 	}
 
 	public int getEnabled() {

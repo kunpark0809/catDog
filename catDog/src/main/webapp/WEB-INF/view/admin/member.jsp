@@ -63,8 +63,8 @@
 				<th style="color: #787878;">닉네임</th>
 				<th width="80" style="color: #787878;">성명</th>
 				<th width="90" style="color: #787878;">마일리지</th>
-				<th width="90" style="color: #787878;">신고횟수</th>
 				<th width="90" style="color: #787878;">주문횟수</th>
+				<th width="90" style="color: #787878;">신고횟수</th>
 				<th width="250" style="color: #787878;">최종접속시간</th>
 				<th width="180" style="color: #787878;">로그인실패횟수</th>
 				<th width="120" style="color: #787878;">활성화</th>
