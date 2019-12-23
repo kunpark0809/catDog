@@ -6,7 +6,7 @@
    String cp = request.getContextPath();
 %>
 
-<div class="body-container" style="width: 700px;">
+<div class="body-container" style="width: 1100px;">
     <div class="body-title">
         <h3><span style="font-family: Webdings">2</span> 냥멍놀이터 관리입니다. </h3>
     </div>

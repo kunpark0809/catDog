@@ -36,4 +36,6 @@ public interface CustomerService {
 
 	void updatePwd(Customer dto) throws Exception;
 
+	void generatePwd(Customer dto) throws Exception;
+
 }

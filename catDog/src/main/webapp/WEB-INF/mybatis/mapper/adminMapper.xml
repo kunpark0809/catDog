@@ -64,16 +64,48 @@
 		</choose>
 	</sql>
 
-<!-- 일정 기간 동안의 총 매출 구하기. 시작날짜, 끝날짜 -->
-<select id="calculateTotal" parameterType="Map" resultType="Integer">
+
+
+<!-- 실 거래가만 계산(마일리지 사용액은 계산되지 않음) -->
+<!-- 일정 기간 동안의 총 매출 구하기. 해당 월, 분기, 연별-->
+
+<!-- 월별 매출. 년도와 월을 YYYYMM 꼴로 결합해야 함 -->
+<select id="monthSales" parameterType="Integer" resultType="Integer">
 	SELECT SUM(purchase)
 	FROM request r
 	JOIN payment p ON r.requestNum =  p.requestNum
 	<![CDATA[
-		WHERE TO_CHAR(requestDate, 'YYYYMMDD') >= #{startDate} AND
-		TO_CHAR(requestDate, 'YYYYMMDD') <=#{endDate}
+		WHERE TO_CHAR(requestDate, 'YYYYMM') >= '#{yearMonth}' AND
+		TO_CHAR(requestDate, 'YYYYMM') < '#{yearMonth}'+1
 	]]>
 </select>
+
+<!-- 분기별 매출. 년도와 첫 월을 YYYYMM 꼴로 결합해야 함 -->
+<select id="quarterSales" parameterType="Integer" resultType="Integer">
+	SELECT SUM(purchase)
+	FROM request r
+	JOIN payment p ON r.requestNum =  p.requestNum
+	<![CDATA[
+		WHERE TO_CHAR(requestDate, 'YYYYMM') >= '#{yearMonth}' AND
+		TO_CHAR(requestDate, 'YYYYMM') < '#{yearMonth}'+3
+	]]>
+</select>
+
+<!-- 연도별 매출. -->
+<select id="yearSales" parameterType="Integer" resultType="Integer">
+	SELECT SUM(purchase)
+	FROM request r
+	JOIN payment p ON r.requestNum =  p.requestNum
+	<![CDATA[
+		WHERE TO_CHAR(requestDate, 'YYYY') >= '#{year}' AND
+		TO_CHAR(requestDate, 'YYYY') < '#{year}'+1
+	]]>
+</select>
+
+
+
+
+
 
 <!-- 일정 기간 동안의 한 품목의 매출 구하기. 시작날짜, 끝날짜, 상품번호 -->
 <select id="calculateProduct" parameterType="Map" resultType="com.catDog.admin.Money">
