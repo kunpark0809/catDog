@@ -32,9 +32,120 @@ function updateEvent() {
    alert("게시물을 수정할 수  없습니다.");
 </c:if>
 }
+
+$(function(){
+	listPage(1);
+});
+
+function listPage(page) {
+	var url="<%=cp%>/event/listReply";
+	var query="eventNum=${dto.eventNum}&pageNo="+page;
+	
+	$.ajax({
+		type:"get"
+		,url:url
+		,data:query
+		,success:function(data) {
+			$("#listReply").html(data);
+		}
+	    ,beforeSend :function(jqXHR) {
+	    	jqXHR.setRequestHeader("AJAX", true);
+	    }
+	    ,error:function(jqXHR) {
+	    	if(jqXHR.status==403) {
+	    		location.href="<%=cp%>/member/login";
+	    		return false;
+	    	}
+	    	console.log(jqXHR.responseText);
+	    }
+	});
+}
+
+
+//리플 등록
+$(function(){
+	$(".btnSendReply").click(function(){
+		
+		var eventNum="${dto.eventNum}";
+		var $tb = $(this).closest("table");
+		var content=$tb.find("textarea").val().trim();
+		if(! content) {
+			$tb.find("textarea").focus();
+			return false;
+		}
+		content = encodeURIComponent(content);
+		
+		var query="eventNum="+eventNum+"&content="+content+"&answer=0";
+		var url="<%=cp%>/bbs/insertReply";
+		$.ajax({
+			type:"post"
+			,url:url
+			,data:query
+			,dataType:"json"
+			,success:function(data) {
+				$tb.find("textarea").val("");
+				
+				var state=data.state;
+				if(state=="true") {
+					listPage(1);
+				} else if(state=="false") {
+					alert("댓글을 추가 하지 못했습니다.");
+				}
+			}
+			,beforeSend : function(jqXHR) {
+		        jqXHR.setRequestHeader("AJAX", true);
+		    }
+		    ,error:function(jqXHR) {
+		    	if(jqXHR.status==403) {
+		    		login();
+		    		return false;
+		    	}
+		    	console.log(jqXHR.responseText);
+		    }
+		});
+		
+	});
+});
+
+$(function(){
+	$("body").on("click", ".deleteReply", function(){
+		if(! confirm("게시물을 삭제하시겠습니까 ? ")) {
+		    return false;
+		}
+		
+		var replyNum=$(this).attr("data-replyNum");
+		var page=$(this).attr("data-pageNo");
+		
+		var url="<%=cp%>/bbs/deleteReply";
+		var query="replyNum="+replyNum+"&mode=reply";
+		
+		$.ajax({
+			type:"post"
+			,url:url
+			,data:query
+			,dataType:"json"
+			,success:function(data) {
+				// var state=data.state;
+				listPage(page);
+			}
+			,beforeSend : function(jqXHR) {
+		        jqXHR.setRequestHeader("AJAX", true);
+		    }
+		    ,error:function(jqXHR) {
+		    	if(jqXHR.status==403) {
+		    		login();
+		    		return false;
+		    	}
+		    	console.log(jqXHR.responseText);
+		    }
+		});
+		
+	});
+});
+
 </script>
 
-<div class="body-container" style="width: 700px;">
+<div class="body-container" style="width: 700px; margin: 20px auto 10px;">
 	<div class="body-title">
 		<h3><i class="far fa-image"></i> 이벤트 </h3>
 	</div>
@@ -42,29 +153,35 @@ function updateEvent() {
 	<div>
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
 			<tr height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td colspan="2" align="center">
-					${dto.subject}
+				<td width="50%" align="left" style="padding-left: 20px; font-size: 20px;">
+					${list.get(0).subject}
 				</td>
+				
+				<td width="50%" align="right" style="font-size: 15px; font-weight: bold;">
+			         날짜&nbsp;&nbsp;${list.get(0).created}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;조회수&nbsp;&nbsp;${list.hitCount}
+			    </td> 
 			</tr>
 			
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
 				<td width="50%" align="left" style="padding-left: 5px;">
-				이름 : ${dto.userName}
+				${sessionScope.member.nickName}
 				</td>
 				<td width="50%" align="right" style="padding-right: 5px;">
-					${dto.created}
+					${list.get(0).created}
 				</td>
 			</tr>
 			
 			<tr>
 				<td colspan="2" align="left" style="padding: 10px 5px;">
-					<img src="<%=cp%>/uploads/event/${dto.imageFilename}" style="max-width:100%; height:auto; resize:both;">
+					<c:forEach var="dto" items="${list}">
+					<img alt="" src="<%=cp%>/uploads/event/${dto.imageFilename}" style="max-width:100%; height:auto; resize:both;">
+					</c:forEach>
 				</td>
 			</tr>
 			
 			<tr style="border-bottom: 1px solid #cccccc;">
 				<td colspan="2" align="left" style="padding: 10px 5px;" valign="top" height="50">
-					${dto.content}
+					${list.content}
 				</td>
 			</tr>
 			
@@ -72,7 +189,7 @@ function updateEvent() {
 				<td colspan="2" align="left" style="padding-left: 5px;">
 				이전글 :
 					<c:if test="${not empty preReadDto}">
-						<a href="<%=cp%>/event/article?${query}&eventNum=${preReadDto.num}">${preReadDto.subject}</a>
+						<a href="<%=cp%>/event/article?${query}&eventNum=${preReadDto.eventNum}">${preReadDto.subject}</a>
 					</c:if>
 				</td>
 			</tr>
@@ -81,7 +198,7 @@ function updateEvent() {
 				<td colspan="2" align="left" style="padding-left: 5px;">
 				다음글 :
 					<c:if test="${not empty nextReadDto}">
-						<a href="<%=cp%>/event/article?${query}&eventNum=${nextReadDto.num}">${nextReadDto.subject}</a>
+						<a href="<%=cp%>/event/article?${query}&eventNum=${nextReadDto.eventNum}">${nextReadDto.subject}</a>
 					</c:if>
 				</td>
 			</tr>

@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.catDog.common.FileManager;
 import com.catDog.common.dao.CommonDAO;
 
+
 @Service("event.eventService")
 public class EventServiceImpl implements EventService {
 	@Autowired
@@ -83,10 +84,10 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	public List<Event> readEvent(int eventNum) {
-		List<Event> list=null;
+		List<Event> list = null;
 		
 		try {
-			list=dao.selectOne("event.readEvent", eventNum);
+			list = dao.selectList("event.readEvent", eventNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -133,8 +134,8 @@ public class EventServiceImpl implements EventService {
 			String saveFilename=fileManager.doMainFileUpload(dto.getMainUpload(), pathname);
 			
 			if(saveFilename != null) {
-				if(dto.getImageFilename().length()!=0) {
-					fileManager.doFileDelete(dto.getImageFilename(), pathname);
+				if(dto.getImageFileName().length()!=0) {
+					fileManager.doFileDelete(dto.getImageFileName(), pathname);
 				}
 				dto.setImageFilename(saveFilename);
 			}
@@ -149,21 +150,21 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	public void deleteEvent(int eventNum, String pathname, String userId) throws Exception {
-		try {
-			List<Event> list = readEvent(eventNum);
-			
-			if(list==null || (! userId.equals("admin")))
-				return;
-			
-			if(list.remove(eventNum)!=null)
-				fileManager.doFileDelete(userId, pathname);
-			
-			dao.deleteData("event.deleteEvent", eventNum);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
-		
+//		try {
+//			List<Event> list = readEvent(eventNum);
+//			if(list==null || (! (userId.indexOf("admin") > 0)))
+//				return;
+//			
+//			for(Event dto : list) {
+//				fileManager.doFileDelete(dto.getImageFileName(), pathname);
+//			}
+//			
+//			dao.deleteData("event.deleteEvent", eventNum);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			throw e;
+//		}
+//		
 	}
 
 	@Override
@@ -214,7 +215,7 @@ public class EventServiceImpl implements EventService {
 	public int replyCount(Map<String, Object> map) {
 		int result=0;
 		try {
-			result=dao.selectOne("event.rePlyCount", map);
+			result=dao.selectOne("event.replyCount", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

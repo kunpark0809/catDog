@@ -36,49 +36,26 @@ public class EventController {
 		
 		String cp = req.getContextPath();
 		
-		int rows = 6;
-		int total_page;
-		int dataCount;
+		Map<String, Object> map = new HashMap<>();
 		
-		if(req.getMethod().equalsIgnoreCase("GET")) {
-			keyword = URLDecoder.decode(keyword, "utf-8");
-		}
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("condition", condition);
 		map.put("keyword", keyword);
+		map.put("condition", condition);
 		
-		dataCount = service.dataCount(map);
-		total_page = myUtil.pageCount(rows, dataCount);
+		int dataCount = service.dataCount(map);
 		
-		if(total_page < current_page)
-			current_page = total_page;
-		
-		int offset = (current_page-1) * rows;
+		int rows = 6;
+		int offset = (current_page-1)*rows;
 		if(offset < 0) offset = 0;
+		
+		int total_page = myUtil.pageCount(rows, dataCount);
+		
 		map.put("offset", offset);
 		map.put("rows", rows);
 		
 		List<Event> list = service.listEvent(map);
 		
-		int listNum, n = 0;
-		for(Event dto : list) {
-			listNum = dataCount - (offset + n);
-			dto.setListNum(listNum);
-			n++;
-		}
-		
-		String query = "";
 		String listUrl = cp+"/event/list";
 		String articleUrl = cp+"/event/article?page=" + current_page;
-		if(keyword.length()!=0) {
-			query = "condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "utf-8");
-		}
-		
-		if(query.length()!=0) {
-			listUrl = cp+"/event/list?" + query;
-			articleUrl = cp+"/event/article?page=" + current_page + "&" + query;
-		}
 		
 		String paging = myUtil.paging(current_page, total_page, listUrl);
 		
@@ -123,15 +100,16 @@ public class EventController {
 	public String article(@RequestParam int eventNum, @RequestParam(defaultValue="1") String page,
 						  @RequestParam(defaultValue="all") String condition,
 						  @RequestParam(defaultValue="") String keyword, Model model) throws Exception {
-		List<Event> list = service.readEvent(eventNum);
-		keyword = URLDecoder.decode(keyword, "utf-8");
 		
+		service.updateHitCount(eventNum);
+		System.out.println(eventNum);
+		List<Event> list = service.readEvent(eventNum);
 		String query="page="+page;
 		if(list.size() == 0) {
 			return "redirect:/event/list?"+query;
 		}
 		
-		service.updateHitCount(eventNum);
+
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("condition", condition);

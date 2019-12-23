@@ -36,7 +36,7 @@ function searchList() {
 }
 
 function article(eventNum) {
-	var url="${articleUrl}&eventNum"+eventNum;
+	var url="${articleUrl}&eventNum="+eventNum;
 	location.href=url;
 }
 </script>
@@ -68,9 +68,9 @@ function article(eventNum) {
 				</c:if>
 				<td width="210" align="center">
 					<div class="imgLayout">
-						<img src="<%=cp%>/uploads/photo/${dto.imageFilename}" width="180" 
-						height="180" border="0" onclick="javascript:article('${dto.eventNum}');">
-						<span class="subject" onclick="javascript:article('${dto.eventNum}');" >
+						<img src="<%=cp%>/uploads/event/${dto.imageFileName}" width="180" 
+						height="180" border="0" onclick="article('${dto.eventNum}');">
+						<span class="subject" onclick="article('${dto.eventNum}');" >
 						${dto.subject}
 						</span>
 					</div>
@@ -81,7 +81,7 @@ function article(eventNum) {
 			<c:if test="${n>0&&n%3!=0}">
 				<c:forEach var="i" begin="${n%3+1}" end="3" step="1">
 					<td width="210">
-						<divclass="imgLayout">&nbsp;</div>
+						<div class="imgLayout">&nbsp;</div>
 					</td>
 				</c:forEach>
 			</c:if>
@@ -105,7 +105,7 @@ function article(eventNum) {
 					<button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/event/list';">새로고침</button>
 				</td>
 				<td align="center">
-					<form name="searchForm" action="<%=cp%>/photo/list" method="post">
+					<form name="searchForm" action="<%=cp%>/event/list" method="post">
 						<select name="condition" class="selectField">
 							<option value="all" ${condition=="all"?"selected='selected'":""}>모두</option>
 							<option value="subject" ${condition=="subject"?"selected='selected'":""}>제목</option>
