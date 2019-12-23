@@ -155,7 +155,7 @@ $(function(){
 
 function listPage(page) {
 	var url = "<%=cp%>/park/listRate";
-	var query = "recommendNum=${dto.recommendNum}&pageNo="+page;
+	var query = "rateNum=${dto.rateNum}&pageNo="+page;
 	var selector = "#listRate";
 	
 	ajaxHTML(url, "get", query, selector);
