@@ -17,6 +17,18 @@
 		WHERE p.productNum=#{productNum} AND INSTR(pp.imageFileName,'main') &gt; 0
 	</select>
 	
+	<insert id="insertCart" parameterType="com.catDog.pay.Pay">
+		INSERT INTO cart(cartNum, num, productNum, productCount, productSum) VALUES(CART_SEQ.NEXTVAL, #{num}, #{productNum}, #{productCount}, #{productSum})
+	</insert>
+	
+	<select id="cartList" parameterType="Long" resultType="com.catDog.pay.Pay">
+		SELECT cartNum, num, c.productNum, productCount, productSum, pp.imageFileName, p.name productName
+		FROM cart c 
+		JOIN product p ON c.productNum = p.productNum 
+		JOIN productpic pp ON p.productNum = pp.productNum  
+		WHERE num=#{num} and INSTR(imagefilename,'main')>0
+	</select>
+	
 	<select id="readCumstomer" parameterType="Long" resultType="com.catDog.pay.Pay">
 		SELECT md.num, cd.name, md.userId, md.mileage, cd.email, cd.tel, md.addr1, md.addr2, md.zip
 		FROM customerDetail cd

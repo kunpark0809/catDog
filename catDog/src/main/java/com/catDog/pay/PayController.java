@@ -1,5 +1,7 @@
 package com.catDog.pay;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.catDog.customer.SessionInfo;
 
@@ -18,20 +21,41 @@ public class PayController {
 	
 	@RequestMapping(value="/pay/cart")
 	public String cart(
+			HttpSession session,
+			Model model 
 			) throws Exception{
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		List<Pay> cartList = service.cartList(info.getMemberIdx());
+		
+		model.addAttribute("cartList",cartList);
 		return ".pay.cart";
+	}
+	
+	@RequestMapping(value="/pay/insertCart")
+	@ResponseBody
+	public void insertCart(
+			@RequestParam int productNum,
+			@RequestParam int productCount,
+			HttpSession session
+			) throws Exception{
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		Pay product = service.readProudct(productNum);
+		product.setProductCount(productCount);
+		product.setProductSum(product.getPrice()*productCount);
+		product.setNum(info.getMemberIdx());
+		service.insertCart(product);
 	}
 	
 	@RequestMapping(value="/pay/pay", method=RequestMethod.GET)
 	public String payForm(
 			@RequestParam int productNum,
-			@RequestParam int quantity,
+			@RequestParam int productCount,
 			Model model,
 			HttpSession session
 			) throws Exception{
 		Pay product = service.readProudct(productNum);
-		product.setProductCount(quantity);
-		product.setProductSum(product.getPrice()*quantity);
+		product.setProductCount(productCount);
+		product.setProductSum(product.getPrice()*productCount);
 		product.setPoint((int)(product.getProductSum() * 0.01));
 		product.setTotal(product.getProductSum()+2500);
 		

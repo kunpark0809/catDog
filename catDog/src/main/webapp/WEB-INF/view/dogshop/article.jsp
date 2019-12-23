@@ -8,6 +8,30 @@
 <link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
 <script type="text/javascript" src="<%=cp%>/resource/vendor/jquery-ui/jquery-ui.min.js"></script>
 <script type="text/javascript">
+
+function ajaxJSON(url, type, query, fn) {
+	$.ajax({
+		type:type
+		,url:url
+		,data:query
+		,dataType:"json"
+		,success:function(data) {
+			fn(data);
+		}
+		,beforeSend:function(jqXHR) {
+	        jqXHR.setRequestHeader("AJAX", true);
+	    }
+	    ,error:function(jqXHR) {
+	    	if(jqXHR.status==403) {
+	    		login();
+	    		return false;
+	    	}
+	    	console.log(jqXHR.responseText);
+	    }
+	});
+}
+
+
 $(function(){
 	$("#sort-${smallSortNum}").addClass("sortActive");
 	
@@ -31,14 +55,21 @@ $(function(){
 	});
 });
 
-function cart(productNum){
-	console.log(productNum);
+function cart(){
 	
+	var productNum = ${list.get(0).productNum};
+	var productCount = $("input[name=productCount]").val();
+	var url = "<%=cp%>/pay/insertCart";
+	var query = "productNum="+productNum+"&productCount="+productCount;
+	var fn = function(data){
+	}
+	
+	ajaxJSON(url, "get", query, fn);
 	
 	$('#cart_dialog').dialog({
 		  modal: true,
-		  height: 650,
-		  width: 600,
+		  height: 300,
+		  width: 300,
 		  title: '장바구니 담기',
 		  close: function(event, ui) {
 		  }
@@ -52,8 +83,8 @@ $(function(){
 });
 
 function pay(productNum){
-	var quantity = $("input[name=quantity]").val();
-	location.href="<%=cp%>/pay/pay?productNum="+productNum+"&quantity="+quantity;
+	var productCount = $("input[name=productCount]").val();
+	location.href="<%=cp%>/pay/pay?productNum="+productNum+"&productCount="+productCount;
 }
 </script>
 	<div>
@@ -98,17 +129,20 @@ function pay(productNum){
 					<td>${point}원</td>
 				</tr>
 				</table>
-				<div class="product_quantity">
-					<input type="text" value="1" name="quantity">
+				<div class="product_count">
+					<input type="number" value="1" name="productCount">
 					<span>
-						<button type="button"  class="quantity_up"></button>
-						<button type="button" class="quantity_down"></button> 
+						<button type="button"  class="count_up"></button>
+						
 					</span>
+					<span>
+					<button type="button" class="count_down"></button>
+					</span> 
 					<span>${price}원</span>
 				</div>
 				<div class="product_btn">
 					<button type="button" class="shop_order" onclick="pay('${list.get(0).productNum}');">구매하기</button>
-					<button type="button" class="shop_cart" onclick="cart('${list.get(0).productNum}');">장바구니</button>
+					<button type="button" class="shop_cart" onclick="cart();">장바구니</button>
 				</div>
 			</div>
 		</div>
