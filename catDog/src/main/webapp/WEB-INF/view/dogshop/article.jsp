@@ -6,6 +6,7 @@
    String cp = request.getContextPath();
 %>
 <link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
+<script type="text/javascript" src="<%=cp%>/resource/vendor/jquery-ui/jquery-ui.min.js"></script>
 <script type="text/javascript">
 $(function(){
 	$("#sort-${smallSortNum}").addClass("sortActive");
@@ -32,7 +33,23 @@ $(function(){
 
 function cart(productNum){
 	console.log(productNum);
+	
+	
+	$('#cart_dialog').dialog({
+		  modal: true,
+		  height: 650,
+		  width: 600,
+		  title: '장바구니 담기',
+		  close: function(event, ui) {
+		  }
+	});
 }
+
+$(function(){
+	$(".btnDialogCanecl").click(function(){
+		$('#cart_dialog').dialog("close");
+	});
+});
 
 function pay(productNum){
 	var quantity = $("input[name=quantity]").val();
@@ -97,5 +114,15 @@ function pay(productNum){
 		</div>
 		<div class="product-main" style="clear: both;">
 			${list.get(0).content}
+		</div>
+		
+		<div id="cart_dialog" style="display: none;">
+			<strong>상품이 장바구니에 담겼습니다.</strong>
+			<br>
+			바로 확인하시겠습니까?
+			<div class="btn_box">
+				<button type="button" class="btnDialogCanecl">취소</button>
+				<button type="button" onclick="javascript:location.href='<%=cp%>/pay/cart';">확인</button>
+			</div>
 		</div>
 	</div>

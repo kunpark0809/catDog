@@ -16,6 +16,12 @@ public class PayController {
 	@Autowired
 	private PayService service;
 	
+	@RequestMapping(value="/pay/cart")
+	public String cart(
+			) throws Exception{
+		return ".pay.cart";
+	}
+	
 	@RequestMapping(value="/pay/pay", method=RequestMethod.GET)
 	public String payForm(
 			@RequestParam int productNum,

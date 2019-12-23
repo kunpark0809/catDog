@@ -6,6 +6,7 @@ public class Pay {
 	private String email, email1, email2;
 	private String tel, tel1, tel2, tel3;
 	private String addr, addr1, addr2;
+	private String zip;
 	private int mileage; // 보유 포인트
 	
 	private String deliverAddr1;
@@ -281,6 +282,12 @@ public class Pay {
 	}
 	public void setMileage(int mileage) {
 		this.mileage = mileage;
+	}
+	public String getZip() {
+		return zip;
+	}
+	public void setZip(String zip) {
+		this.zip = zip;
 	}
 
 

@@ -18,7 +18,7 @@
 	</select>
 	
 	<select id="readCumstomer" parameterType="Long" resultType="com.catDog.pay.Pay">
-		SELECT md.num, cd.name, md.userId, md.mileage, cd.email, cd.tel, md.addr
+		SELECT md.num, cd.name, md.userId, md.mileage, cd.email, cd.tel, md.addr1, md.addr2, md.zip
 		FROM customerDetail cd
 		JOIN memberDetail md ON cd.num = md.num
 		WHERE md.num = #{num}

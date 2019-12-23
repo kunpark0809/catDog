@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
 <script type="text/javascript"
 	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	<script type="text/javascript" src="<%=cp%>/resource/vendor/jquery-ui/jquery-ui.min.js"></script>
 <script type="text/javascript">
 	var IMP = window.IMP; // 생략가능
 	IMP.init('imp14710810'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
@@ -46,7 +47,7 @@
 		var email = f.email1.value+"@"+f.email2.value;
 		var tel = f.tel1.value+"-"+f.tel2.value+"-"+f.tel3.value;
 		
-	<%-- 	
+	
 		IMP.request_pay({
 			pg : 'inicis', // version 1.1.0부터 지원.
 			pay_method : 'card',
@@ -75,26 +76,21 @@
 			}
 			//alert(msg);
 		});
- --%>
+
 	}
 	
 	// xml 파싱하는법 공부
 	function zipSerach(){
-		var xhr = new XMLHttpRequest();
-		//url = "http://openapi.epost.go.kr/postal/retrieveNewAdressAreaCdSearchAllService/retrieveNewAdressAreaCdSearchAllService/getNewAddressListAreaCdSearchAll?ServiceKey=인증키&countPerPage=10&currentPage=1&srchwrd=세종로17"
-		var url = 'http://openapi.epost.go.kr/postal/retrieveNewAdressAreaCdSearchAllService/retrieveNewAdressAreaCdSearchAllService/getNewAddressListAreaCdSearchAll'; /*URL*/
-		var queryParams = '?' + encodeURIComponent('ServiceKey') + '='+'U4DSQooBi3rQnU3HF9Z6tXH%2FH5nEaR2EjMxq6XjqAkVO1hW3LP%2BvtFJNinrBiXcqCE%2BO%2FMmxDqWizrN3%2BuSZgA%3D%3D'; /*Service Key*/
-		queryParams += '&' + encodeURIComponent('srchwrd') + '=' + encodeURIComponent('공평동'); /*검색어*/
-		queryParams += '&' + encodeURIComponent('countPerPage') + '=' + encodeURIComponent('10'); /*페이지당 출력될 개수를 지정(최대50)*/
-		queryParams += '&' + encodeURIComponent('currentPage') + '=' + encodeURIComponent('1'); /*출력될 페이지 번호*/
-		xhr.open('GET', url + queryParams);
-		xhr.onreadystatechange = function () {
-		    if (this.readyState == 4) {
-		        alert('Status: '+this.status+' Headers: '+JSON.stringify(this.getAllResponseHeaders())+' Body: '+this.responseText);
-		    }
-		};
-
-		xhr.send('');
+		var url = "<%=cp%>/pay/zip";
+		var query = "srchwrd="+srchwrd;
+		
+		var fn = function(data){
+			console.log(data);
+		}
+		
+		ajaxJSON(url, "get", query, fn);
+		
+		
 	}
 	
 
@@ -134,6 +130,19 @@
 		
 		$("#purchase").val($("#total").val()-point.val()); 
 	}
+	
+	$(function(){
+		$("#btnZip").click(function(){
+			$('#zip_dialog').dialog({
+				  modal: true,
+				  height: 300,
+				  width: 300,
+				  title: '우편번호 검색',
+				  close: function(event, ui) {
+				  }
+			});
+		});
+	});
 </script>
 
 
@@ -266,13 +275,13 @@
 							<tr class="">
 								<th>주소</th>
 								<td>
-									<input id="" name="deliverZip" type="text" value="<%-- ${customer.zip} --%>"> 
+									<input id="" name="deliverZip" type="text" value="${customer.zip}"> 
 									<a id="" class="" >
-										<span class="" onclick="zipSerach()">우편번호</span>
+										<button type="button" class="btn" id="btnZip" data-toggle="modal">우편번호</button>
 									</a><br> 
-									<input id="" name="deliverAddr1" class="" placeholder="" size="40" value="${customer.addr}" type="text"> 
+									<input id="" name="deliverAddr1" class="" placeholder="" size="40" value="${customer.addr1}" type="text"> 
 									<span class="">기본주소</span><br>
-									<input id="" name="deliverAddr2" class="" size="40" value="" type="text"> 
+									<input id="" name="deliverAddr2" class="" size="40" value="${customer.addr2}" type="text"> 
 									<span class="">나머지주소</span><span class=" ">(선택입력가능)</span>
 								</td>
 							</tr>
@@ -402,6 +411,14 @@
 				</div>
 			</div>
 		</form>
+
+		<div id="zip_dialog" style="display: none;">
+			<div class="">
+				안녕
+			</div>
+			
+		</div>
+		
 	</div>
 
 	

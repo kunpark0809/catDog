@@ -99,7 +99,7 @@
 					<li class="nav-icon"><a class="nav-link js-scroll-trigger" href="<%=cp%>/customer/logout"><i
 							class="fas fa-sign-out-alt" style="color: #d96262"></i></a></li>
 				</c:if>
-				<li class="nav-icon"><a class="nav-link js-scroll-trigger"><i
+				<li class="nav-icon"><a class="nav-link js-scroll-trigger" href="<%=cp%>/pay/cart"><i
 						class="fas fa-cart-plus" style="color: #d96262"></i></a></li>
 			</ul>
 		</div>
