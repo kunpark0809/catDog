@@ -63,6 +63,7 @@ public class PayController {
 		Pay customer = null;
 		if(info != null) {
 			customer = service.readCustomer(info.getMemberIdx());
+			service.insertCart(product);
 		}
 		model.addAttribute("customer",customer);
 		model.addAttribute("product",product);

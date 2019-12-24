@@ -84,11 +84,12 @@
 		  });
 	</script>
 	<link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
+	<div class="shin_body">
 	<div class="body-title">
 		<h3><i class="fas fa-chalkboard-teacher"></i> DogShop 용품등록 </h3>
 	</div>
 
-	<div style="width: 100%">
+	<div>
 
 		<form name="dogshopForm" method="post" enctype="multipart/form-data" onsubmit="return submitContents(this);">
 			<table style="width: 100%; border-collapse: collapse; border-spacing: 0">
@@ -148,6 +149,7 @@
 			</table>
 		</form>
 
+	</div>
 	</div>
 <script type="text/javascript">
 var oEditors = [];

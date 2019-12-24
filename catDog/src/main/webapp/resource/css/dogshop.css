@@ -83,3 +83,35 @@ a.productLink{
 	cursor: pointer;
 	height: 10px;
 }
+
+.shin_body{
+	width: 1200px;
+	margin: 10px auto;
+}
+
+.btnList{
+	width: 100%;
+}
+
+.btn_left_box{
+	float: left;
+}
+
+.btn_right_box{
+	float: right;
+}
+
+.cartList{
+	width: 100%;
+}
+
+.cartTable{
+	width:100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+	margin: 0px auto;
+}
+
+.cartTable > tr{
+	text-align: center;
+}

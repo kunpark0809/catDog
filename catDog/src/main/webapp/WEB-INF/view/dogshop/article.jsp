@@ -87,7 +87,7 @@ function pay(productNum){
 	location.href="<%=cp%>/pay/pay?productNum="+productNum+"&productCount="+productCount;
 }
 </script>
-	<div>
+	<div class="shin_body"> 
 		<div class="sortList">
 		
 			<a class="sortName" data-num="0" id="sort-0">전체</a>

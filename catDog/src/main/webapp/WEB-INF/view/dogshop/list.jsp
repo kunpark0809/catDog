@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
    String cp = request.getContextPath();
 %>
@@ -22,9 +23,11 @@ $(function(){
 	})
 });
 </script>
-	<div>
-		<h2 class="text-uppercase">DogShop</h2>
-		<button type="button" onclick="javascript:location.href='<%=cp%>/dogshop/created'">글올리기</button>
+	<div class="shin_body">
+		<h3 style="display: inline;">DogShop</h3>
+		<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
+			<span><button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/dogshop/created'">글올리기</button></span>
+		</c:if>
 		
 		<div class="bestProduct">
 		<h3 class="text-muted">BEST</h3>
@@ -37,14 +40,24 @@ $(function(){
 			</c:forEach>
 		</div>
 		<div class="productList">	
-			<c:forEach var="dto" items="${list}">
-				<a onclick="javascript:location.href='${articleUrl}&productNum=${dto.productNum}'" class="productLink">
-					<input type="hidden" value="${dto.productNum}">
-					<input type="hidden" value="${dto.price}">
-					<img alt="" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}" width="200">
-					<p>${dto.name}</p>
-				</a>	
-			</c:forEach>
+			<table>
+				<tr>
+					<c:forEach var="dto" items="${list}" varStatus="status">
+					
+						<a onclick="javascript:location.href='${articleUrl}&productNum=${dto.productNum}'" class="productLink">
+							<input type="hidden" value="${dto.productNum}">
+							<input type="hidden" value="${dto.price}">
+							<td class="proudct">
+							<img alt="" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}" width="200" height="200">
+							<p>${dto.name}</p>
+							</td>
+						</a>
+						<c:if test="${status.index!=0 && status.index%3==0}">
+                        <c:out value="</tr><tr>" escapeXml="false"/>
+                 		</c:if>
+					</c:forEach>
+				</tr>
+			</table>
 		</div>
 		
 		<div class="paging">
