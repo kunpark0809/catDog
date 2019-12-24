@@ -81,10 +81,10 @@ function ajaxHTML(url, type, query, selector) {
 	});
 }
 
-$(function(){
+/* $(function(){
 	listPage(1);
 });
-
+ */
 
 //리플 등록
 $(function(){

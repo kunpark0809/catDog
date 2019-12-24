@@ -17,7 +17,7 @@
 	</insert>
 	
 	<select id="listEvent" parameterType="map" resultType="com.catDog.event.Event">
-		SELECT e.eventNum, e.subject, e.content, e.hitCount, ep.imageFileName
+		SELECT e.eventNum, e.num, e.subject, e.content, e.hitCount, ep.imageFileName
 		FROM event e JOIN eventPic ep ON e.eventNum = ep.eventNum
 		<where>
 			<if test="keyword!=null and keyword!=''">
@@ -52,9 +52,15 @@
 	</select>
 	
 	<select id="readEvent" parameterType="Integer" resultType="com.catDog.event.Event">
-		SELECT e.eventNum, e.subject, e.content, e.hitCount, TO_CHAR(e.created, 'yyyy.mm.dd') created, e.startDate, e.endDate, ep.imageFileName
+		SELECT e.eventNum, e.num, e.subject, e.content, e.hitCount, TO_CHAR(e.created, 'yyyy.mm.dd') created, e.startDate, e.endDate, ep.imageFileName
 		FROM event e JOIN eventPic ep ON e.eventNum = ep.eventNum
 		WHERE e.eventNum=#{eventNum} AND INSTR(ep.imageFileName, 'main') = 0
+	</select>
+	
+	<select id="upReEvent" parameterType="Integer" resultType="com.catDog.event.Event">
+		SELECT e.eventNum, e.num, e.subject, e.content, e.hitCount, TO_CHAR(e.created, 'yyyy.mm.dd') created, e.startDate, e.endDate, ep.imageFileName
+		FROM event e JOIN eventPic ep ON e.eventNum = ep.eventNum
+		WHERE e.eventNum=#{eventNum} 
 	</select>
 	
 	<update id="updateHitCount" parameterType="Integer">

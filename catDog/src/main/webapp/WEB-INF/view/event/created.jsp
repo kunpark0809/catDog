@@ -2,6 +2,7 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	String cp=request.getContextPath();
 %>
@@ -112,7 +113,7 @@ $(function() {
 				<tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 					<td width="100" bgcolor="#eeeeee" style="text-align: center;">제&nbsp;&nbsp;&nbsp;&nbsp;목</td>
 					<td style="padding-left:10px;">
-						<input type="text" name="subject" maxlength="100" class="boxTF" style="width: 95%;" value="${dto.subject}">
+						<input type="text" name="subject" maxlength="100" class="boxTF" style="width: 95%;" value="${list.get(0).subject}">
 					</td>
 				</tr>
 				
@@ -142,24 +143,31 @@ $(function() {
 				<tr align="left" style="border-bottom: 1px solid #cccccc;">
 					<td width="100" bgcolor="#eeeeee" style="text-align: center; padding-top:5px;" valign="top">설&nbsp;&nbsp;&nbsp;&nbsp;명</td>
 					<td valign="top" style="padding:5px 0px 5px 10px;">
-						<textarea name="content" rows="12" class="boxTA" style="width: 95%;">${dto.content}</textarea>
+						<textarea name="content" rows="12" class="boxTA" style="width: 95%;">${list.get(0).content}</textarea>
 					</td>
 				</tr>
 				
-				<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-					<td width="100" bgcolor="#eeeeee" style="text-align: center;">썸네일사진</td>
-					<td style="padding-left:10px;">
-						<input type="file" name="mainUpload" class="boxTF" size="53" style="height: 25px;">
-					</td>
-				</tr>
-				
-				<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-			    	<td width="100" bgcolor="#eeeeee" style="text-align: center; font-weight: bold;">본문사진</td>
-			    	<td style="padding-left:10px;"> 
-			       		<input type="file" name="upload" class="boxTF" size="53" style="height: 25px;">
-			      	</td>
-			 	</tr>
-			  
+			<c:forEach var="image" items="${list}">
+				<c:if test="${fn:indexOf(image.imageFileName,'main') >= 0}">
+					<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
+						<td width="100" bgcolor="#eeeeee" style="text-align: center;">썸네일사진</td>
+						<td style="padding-left:10px;">
+							<input type="file" name="mainUpload" class="boxTF" size="53" style="height: 25px;" >
+							${image.imageFileName}
+						</td>
+					</tr>
+				</c:if>
+				<c:if test="${fn:indexOf(image.imageFileName,'main') < 0}">
+					<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
+				    	<td width="100" bgcolor="#eeeeee" style="text-align: center; font-weight: bold;">본문사진</td>
+				    	<td style="padding-left:10px;"> 
+				       		<input type="file" name="upload" class="boxTF" size="53" style="height: 25px;">
+				       		${image.imageFileName}
+				      	</td>
+				 	</tr>
+				 	
+				</c:if>
+			</c:forEach>
 			</tbody>
 			</table>
 			
@@ -170,8 +178,8 @@ $(function() {
 						<button type="reset" class="btn">다시입력</button>
 						<button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/event/list';">${mode=='update'?'수정취소':'등록취소'}</button>
 							<c:if test="${mode=='update'}">
-								<input type="hidden" name="eventNum" value="${dto.eventNum}">
-								<input type="hidden" name="imageFilename" value="${dto.imageFilename}">
+								<input type="hidden" name="eventNum" value="${list.get(0).eventNum}">
+								<input type="hidden" name="imageFilename" value="${dto.imageFileName}">
 								<input type="hidden" name="page" value="${page}">
 							</c:if>
 					</td>

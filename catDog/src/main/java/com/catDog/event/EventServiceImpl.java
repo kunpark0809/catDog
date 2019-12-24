@@ -247,4 +247,17 @@ public class EventServiceImpl implements EventService {
 		return result;
 	}
 */
+
+	@Override
+	public List<Event> upReEvent(int eventNum) {
+		
+List<Event> list = null;
+		
+		try {
+			list = dao.selectList("event.upReEvent", eventNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 }

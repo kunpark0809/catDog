@@ -129,24 +129,24 @@ public class EventController {
 	
 	
 	@RequestMapping(value="/event/update", method=RequestMethod.GET)
-	public String updateForm(Event dto, @RequestParam int eventNum,
+	public String updateForm(@RequestParam int eventNum,
 							 @RequestParam String page, HttpSession session,
 							 Model model) throws Exception {
 		
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
-		service.readEvent(eventNum);
+		List<Event> list = service.upReEvent(eventNum);
 		
-		if(dto == null)
+		if(list == null || list.size()==0)
 			return "redirect:/event/list?page="+page;
 		
-		if( dto.getNum()!=info.getMemberIdx()) {
+		if(list.get(0).getNum()!=info.getMemberIdx()) {
 			return "redirect:/event/list?page="+page;
 		}
 		
-		model.addAttribute("dto", dto);
 		model.addAttribute("page", page);
 		model.addAttribute("mode", "update");
+		model.addAttribute("list", list);
 		
 		return ".event.created";
 	}

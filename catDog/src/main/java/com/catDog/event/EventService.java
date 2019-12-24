@@ -9,6 +9,7 @@ public interface EventService {
 	public List<Event> listEvent(Map<String, Object> map);
 	public int dataCount(Map<String, Object> map);
 	public List<Event> readEvent(int eventNum);
+	public List<Event> upReEvent(int eventNum);
 	public void updateHitCount(int eventNum) throws Exception;
 	public Event preReadEvent(Map<String, Object> map);
 	public Event nextReadEvent(Map<String, Object> map);
