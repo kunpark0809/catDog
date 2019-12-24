@@ -20,6 +20,25 @@
     border-radius:10px;
 }
 
+.star-input>.input,
+.star-input>.input>label:hover,
+.star-input>.input>input:focus+label,
+.star-input>.input>input:checked+label{display: inline-block;vertical-align:middle;background:url('<%=cp%>/resource/img/star.png')no-repeat;}
+.star-input{white-space:nowrap;width:225px;height:40px;line-height:30px;}
+.star-input>.input{width:150px;background-size:150px;height:28px;white-space:nowrap;overflow:hidden;position: relative;}
+.star-input>.input>input{position:absolute;width:1px;height:1px;opacity:0;}
+.star-input>.input.focus{outline:1px dotted #ddd;}
+.star-input>.input>label{width:30px;height:0;padding:28px 0 0 0;overflow: hidden;float:left;cursor: pointer;position: absolute;top: 0;left: 0;}
+.star-input>.input>label:hover,
+.star-input>.input>input:focus+label,
+.star-input>.input>input:checked+label{background-size: 150px;background-position: 0 bottom;}
+.star-input>.input>label:hover~label{background-image: none;}
+.star-input>.input>label[for="p1"]{width:30px;z-index:5;}
+.star-input>.input>label[for="p2"]{width:60px;z-index:4;}
+.star-input>.input>label[for="p3"]{width:90px;z-index:3;}
+.star-input>.input>label[for="p4"]{width:120px;z-index:2;}
+.star-input>.input>label[for="p5"]{width:150px;z-index:1;}
+.star-input>output{display:inline-block;width:60px; font-size:18px;text-align:right; vertical-align:middle;}
 
 </style>
 
@@ -155,7 +174,7 @@ $(function(){
 
 function listPage(page) {
 	var url = "<%=cp%>/park/listRate";
-	var query = "rateNum=${dto.rateNum}&pageNo="+page;
+	var query = "recommendNum=${list.get(0).recommendNum}&pageNo="+page;
 	var selector = "#listRate";
 	
 	ajaxHTML(url, "get", query, selector);
@@ -181,7 +200,7 @@ $(function(){
 		
 		var url="<%=cp%>/park/insertRate";
 		var query="recommendNum="+num+"&content="+content+"&rate="+rate;
-		
+	
 		var fn = function(data){
 			$tb.find("textarea").val("");
 			
@@ -197,8 +216,64 @@ $(function(){
 	});
 });
 
+//댓글 삭제
+$(function(){
+	$("body").on("click", ".deleteRate", function(){
+		if(! confirm("게시물을 삭제하시겠습니까 ? ")) {
+		    return false;
+		}
+		
+		var rateNum=$(this).attr("data-rateNum");
+		var page=$(this).attr("data-pageNo");
+		
+		var url="<%=cp%>/park/deleteRate";
+		var query="rateNum="+rateNum;
+		
+		var fn = function(data){
+			// var state=data.state;
+			listPage(page);
+		};
+		
+		ajaxJSON(url, "post", query, fn);
+	});
+});
+
 </script>
 
+<script type="text/javascript">
+$(function(){
+	var $star = $(".star-input"),
+    $result = $("input[name=rate]");
+	
+  	$(document)
+	    .on("focusin", ".star-input>.input", 
+		    function(){
+   		       $(this).addClass("focus");
+ 	    })
+	    .on("focusout", ".star-input>.input", function(){
+		    var $this = $(this);
+		    setTimeout(function(){
+      		    if($this.find(":focus").length === 0){
+       			  $this.removeClass("focus");
+     	 	    }
+    		 }, 100);
+  	    })
+	    .on("change", ".star-input :radio", function(){
+		    $result.val($(this).next().text());
+	    })
+	    .on("mouseover", ".star-input label", function(){
+		    $result.val($(this).text());
+	    })
+	    .on("mouseleave", ".star-input>.input", function(){
+		    var $checked = $star.find(":checked");
+		    if($checked.length === 0){
+			    $result.val("0");
+		    } else {
+			    $result.val($checked.next().text());
+		    }
+	    });
+});
+</script>
 
 <div class="page-section" id="command" style="text-align: center;">
 		<div class="container">
@@ -301,10 +376,22 @@ $(function(){
 			
 			<tr>
 			   	<td align="left" style='padding:5px 5px 0px;'>
-			   	
-			   		  <label><input type="text" name="rate"></label>
-				      
-					<textarea class='boxTA' style='width:100%; height: 70px;'></textarea>
+					<span class="star-input">
+						<span class="input">
+					    	<input type="radio" name="star_input" value="1" id="p1">
+					    	<label for="p1">1</label>
+					    	<input type="radio" name="star_input" value="2" id="p2">
+					    	<label for="p2">2</label>
+					    	<input type="radio" name="star_input" value="3" id="p3">
+					    	<label for="p3">3</label>
+					    	<input type="radio" name="star_input" value="4" id="p4">
+					    	<label for="p4">4</label>
+					    	<input type="radio" name="star_input" value="5" id="p5">
+					    	<label for="p5">5</label>
+					  	</span>
+					  	<output for="star-input" ><input type="hidden" name="rate" value="0"></output>						
+					</span>			   	
+					<textarea class='boxTA' style='width:100%; height: 70px; color: #262626;'></textarea>
 			    </td>
 			</tr>
 			<tr>

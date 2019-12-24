@@ -273,5 +273,22 @@ public String list(
 		return "park/listRate";
 	}
 	
+		@RequestMapping(value="/park/deleteRate", method=RequestMethod.POST)
+		@ResponseBody
+		public Map<String, Object> deleteRate(
+				@RequestParam Map<String, Object> paramMap
+				) {
+			
+			String state="true";
+			try {
+				service.deleteRate(paramMap);
+			} catch (Exception e) {
+				state="false";
+			}
+		
+			Map<String, Object> map = new HashMap<>();
+			map.put("state", state);
+			return map;
+		}
 	
 }

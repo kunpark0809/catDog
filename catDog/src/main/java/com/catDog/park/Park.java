@@ -28,6 +28,7 @@ public class Park {
 	private int listNum;
 	
 	private String userId;
+	private String nickName;
 	
 	private long gap;
 
@@ -184,6 +185,14 @@ public class Park {
 
 	public void setUpload(List<MultipartFile> upload) {
 		this.upload = upload;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 	
 }

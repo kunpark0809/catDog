@@ -107,10 +107,10 @@
 	</insert>
 	
 	<select id="listRate" parameterType="map" resultType="com.catDog.park.Park">
-		SELECT rr.rateNum, r.recommendNum, num, rr.rate, r.content, r.created, r.sortNum
+		SELECT rr.rateNum, r.recommendNum, rr.num, rr.rate, rr.content, TO_CHAR(rr.created, 'yyyy.mm.dd') created, rr.sortNum
 		FROM recommendRate rr
 		JOIN recommend r ON r.recommendNum = rr.recommendNum
-		WHERE r.recommendNum=#{r.recommendNum}
+		WHERE r.recommendNum=#{recommendNum}
 		ORDER BY rr.rateNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
@@ -120,5 +120,10 @@
 		FROM recommendRate rr
 		WHERE recommendNum=#{recommendNum}
 	</select>
+	
+	<delete id="deleteRate" parameterType="map">
+		DELETE FROM recommendRate
+		WHERE rateNum=#{rateNum}
+	</delete>
 	
 </mapper>
