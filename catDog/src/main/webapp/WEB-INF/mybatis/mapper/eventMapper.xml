@@ -31,7 +31,7 @@
 	
 	<sql id="where-list">
 		<if test="condition=='all'">
-			( INSTR(subject, #{keyword}) &gt; 0 OR INSTR(content, #{keyword}) &gt; 0)
+			(INSTR(subject, #{keyword}) &gt; 0 OR INSTR(content, #{keyword}) &gt; 0)
 		</if>
 		<if test="condition=='subject'">
 			INSTR(subject, #{keyword}) &gt; 0
@@ -53,9 +53,8 @@
 	
 	<select id="readEvent" parameterType="Integer" resultType="com.catDog.event.Event">
 		SELECT e.eventNum, e.subject, e.content, e.hitCount, TO_CHAR(e.created, 'yyyy.mm.dd') created, e.startDate, e.endDate, ep.imageFileName
-		FROM event e
-		JOIN eventPic ep ON e.eventNum = ep.eventNum
-		WHERE e.eventNum=#{eventNum}
+		FROM event e JOIN eventPic ep ON e.eventNum = ep.eventNum
+		WHERE e.eventNum=#{eventNum} AND INSTR(ep.imageFileName, 'main') = 0
 	</select>
 	
 	<update id="updateHitCount" parameterType="Integer">

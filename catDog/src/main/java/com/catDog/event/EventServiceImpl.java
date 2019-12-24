@@ -28,7 +28,7 @@ public class EventServiceImpl implements EventService {
 			if(! dto.getMainUpload().isEmpty()) {
 				String saveFilename = fileManager.doMainFileUpload(dto.getMainUpload(), pathname);
 				if(saveFilename != null) {
-					dto.setImageFilename(saveFilename);
+					dto.setImageFileName(saveFilename);
 					insertImgFile(dto, pathname);
 				}
 			}
@@ -37,7 +37,7 @@ public class EventServiceImpl implements EventService {
 					String saveFilename = fileManager.doFileUpload(mf, pathname);
 					if(saveFilename == null) continue;
 					
-					dto.setImageFilename(saveFilename);
+					dto.setImageFileName(saveFilename);
 					insertImgFile(dto, pathname);
 				}
 			}
@@ -131,13 +131,23 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public void updateEvent(Event dto, String pathname) throws Exception {
 		try {
-			String saveFilename=fileManager.doMainFileUpload(dto.getMainUpload(), pathname);
+			String saveFilename=fileManager.doFileUpload(dto.getMainUpload(), pathname);
 			
-			if(saveFilename != null) {
-				if(dto.getImageFileName().length()!=0) {
-					fileManager.doFileDelete(dto.getImageFileName(), pathname);
+			if(! dto.getMainUpload().isEmpty()) {
+				String ImageFileName = fileManager.doMainFileUpload(dto.getMainUpload(), pathname);
+				if(ImageFileName != null) {
+					dto.setImageFileName(saveFilename);
+					insertImgFile(dto, pathname);
 				}
-				dto.setImageFilename(saveFilename);
+			}
+			if(! dto.getUpload().isEmpty()) {
+				for(MultipartFile mf : dto.getUpload()) {
+					String ImageFileName = fileManager.doFileUpload(mf, pathname);
+					if(ImageFileName == null) continue;
+					
+					dto.setImageFileName(ImageFileName);
+					insertImgFile(dto, pathname);
+				}
 			}
 			
 			dao.updateData("event.updateEvent", dto);
@@ -150,23 +160,27 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	public void deleteEvent(int eventNum, String pathname, String userId) throws Exception {
-//		try {
-//			List<Event> list = readEvent(eventNum);
-//			if(list==null || (! (userId.indexOf("admin") > 0)))
-//				return;
-//			
-//			for(Event dto : list) {
-//				fileManager.doFileDelete(dto.getImageFileName(), pathname);
-//			}
-//			
-//			dao.deleteData("event.deleteEvent", eventNum);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			throw e;
-//		}
-//		
+		try {
+			List<Event> list = readEvent(eventNum);
+			
+			// if(list==null || (! (userId.indexOf("admin") > 0)))
+			//	return;
+			
+			if(list==null || userId.indexOf("admin") != 0 )
+				return;
+			
+			for(Event dto : list) {
+				fileManager.doFileDelete(dto.getImageFileName(), pathname);
+			}
+			
+			dao.deleteData("event.deleteEvent", eventNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
 	}
-
+/*
 	@Override
 	public void insertReply(Reply dto) throws Exception {
 		try {
@@ -232,5 +246,5 @@ public class EventServiceImpl implements EventService {
 		}
 		return result;
 	}
-
+*/
 }

@@ -15,10 +15,10 @@ public interface EventService {
 	public void updateEvent(Event dto, String pathname) throws Exception;
 	public void deleteEvent(int eventNum, String pathname, String userId) throws Exception;
 	
-	public void insertReply(Reply dto) throws Exception;
+	/*public void insertReply(Reply dto) throws Exception;
 	public List<Reply> listReply(Map<String, Object> map);
 	public void deleteReply(Map<String, Object> map) throws Exception;
 	public int replyCount(Map<String, Object> map);
 	public List<Reply> listReplyAnswer(int answer);
-	public int replyAnswerCount(int answer);
+	public int replyAnswerCount(int answer);*/
 }

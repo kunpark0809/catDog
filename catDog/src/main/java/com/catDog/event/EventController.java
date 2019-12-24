@@ -16,7 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+// import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.catDog.common.MyUtil;
 import com.catDog.customer.SessionInfo;
@@ -140,7 +140,7 @@ public class EventController {
 		if(dto == null)
 			return "redirect:/event/list?page="+page;
 		
-		if(! dto.getUserId().equals(info.getUserId())) {
+		if( dto.getNum()!=info.getMemberIdx()) {
 			return "redirect:/event/list?page="+page;
 		}
 		
@@ -174,6 +174,7 @@ public class EventController {
 		
 		keyword = URLDecoder.decode(keyword, "utf-8");
 		String query="page="+page;
+		
 		if(keyword.length()!=0) {
 			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "utf-8");
 		}
@@ -191,7 +192,7 @@ public class EventController {
 		
 		return "redirect:/event/list?"+query;
 	}
-	
+/*	
 	@RequestMapping(value="/event/listReply")
 	public String listReply(@RequestParam int eventNum, Model model,
 							@RequestParam(value="pageNo", defaultValue="1") int current_page) throws Exception {
@@ -282,5 +283,5 @@ public class EventController {
 		
 		return model;
 	}
-	
+	*/
 }
