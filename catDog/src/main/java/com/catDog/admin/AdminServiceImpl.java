@@ -17,7 +17,7 @@ public class AdminServiceImpl implements AdminService {
 
 	
 	@Override
-	public int monthSales(int yearMonth) {
+	public int monthSales(String yearMonth) {
 		int result = -1;
 
 		try {
@@ -30,7 +30,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	@Override
-	public int quarterSales(int yearMonth) {
+	public int quarterSales(String yearMonth) {
 		int result = -1;
 
 		try {
@@ -43,7 +43,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	@Override
-	public int yearSales(int year) {
+	public int yearSales(String year) {
 		int result = -1;
 
 		try {

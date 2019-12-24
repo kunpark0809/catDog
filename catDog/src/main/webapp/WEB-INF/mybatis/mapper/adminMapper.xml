@@ -70,35 +70,35 @@
 <!-- 일정 기간 동안의 총 매출 구하기. 해당 월, 분기, 연별-->
 
 <!-- 월별 매출. 년도와 월을 YYYYMM 꼴로 결합해야 함 -->
-<select id="monthSales" parameterType="Integer" resultType="Integer">
-	SELECT SUM(purchase)
+<select id="monthSales" parameterType="String" resultType="Integer">
+	SELECT NVL(SUM(purchase),0)
 	FROM request r
 	JOIN payment p ON r.requestNum =  p.requestNum
 	<![CDATA[
-		WHERE TO_CHAR(requestDate, 'YYYYMM') >= '#{yearMonth}' AND
-		TO_CHAR(requestDate, 'YYYYMM') < '#{yearMonth}'+1
+		WHERE TO_CHAR(requestDate, 'YYYYMM') >= #{yearMonth} AND
+		TO_CHAR(requestDate, 'YYYYMM') < #{yearMonth}+1
 	]]>
 </select>
 
 <!-- 분기별 매출. 년도와 첫 월을 YYYYMM 꼴로 결합해야 함 -->
-<select id="quarterSales" parameterType="Integer" resultType="Integer">
+<select id="quarterSales" parameterType="String" resultType="Integer">
 	SELECT SUM(purchase)
 	FROM request r
 	JOIN payment p ON r.requestNum =  p.requestNum
 	<![CDATA[
-		WHERE TO_CHAR(requestDate, 'YYYYMM') >= '#{yearMonth}' AND
-		TO_CHAR(requestDate, 'YYYYMM') < '#{yearMonth}'+3
+		WHERE TO_CHAR(requestDate, 'YYYYMM') >= #{yearMonth} AND
+		TO_CHAR(requestDate, 'YYYYMM') < #{yearMonth}+3
 	]]>
 </select>
 
 <!-- 연도별 매출. -->
-<select id="yearSales" parameterType="Integer" resultType="Integer">
+<select id="yearSales" parameterType="String" resultType="Integer">
 	SELECT SUM(purchase)
 	FROM request r
 	JOIN payment p ON r.requestNum =  p.requestNum
 	<![CDATA[
-		WHERE TO_CHAR(requestDate, 'YYYY') >= '#{year}' AND
-		TO_CHAR(requestDate, 'YYYY') < '#{year}'+1
+		WHERE TO_CHAR(requestDate, 'YYYY') >= #{year} AND
+		TO_CHAR(requestDate, 'YYYY') < #{year}+1
 	]]>
 </select>
 

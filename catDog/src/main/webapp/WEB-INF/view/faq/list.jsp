@@ -6,12 +6,33 @@
 <%
 	String cp=request.getContextPath();
 %>
+
+<script src="<%=cp%>/resource/vendor/jquery/jquery.min.js"></script>
+
 <script type="text/javascript">
 function searchList() {
 	var f=document.searchForm;
 	f.submit();
 }
+
+$(function(){
+    $("table").on('click', '.faqSub', function () {
+    	
+    	var num = $(this).attr("data-subjectNum");
+    	
+      	if( $("#contentNum"+num).is(":visible") ){
+            $("#contentNum"+num).hide(300);
+        }
+      	else if(!$("#contentNum"+num).is(":visible")){
+    		$("#contentNum"+num).show(300);
+        } 
+   });
+ });
+
+ 
 </script>
+
+
 
 <div class="body-container" style="width: 830px; margin: 20px auto 0px; border-spacing: 0px;">
 
@@ -32,12 +53,19 @@ function searchList() {
   </tr>
  
 <c:forEach var="dto" items="${list}">
-  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
+  <tr class="faqSub" align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;" data-subjectNum="${dto.faqNum}"> 
       <td>${dto.listNum}</td>
       <td align="left" style="padding-left: 10px;">
-      	<a href="${articleUrl}&faqNum=${dto.faqNum}">${dto.subject}</a>      	
+      	${dto.subject}     	
       </td>
       <td>멍냥개냥</td>
+  </tr>
+  <tr class="faqCon" align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc; display: none;" id="contentNum${dto.faqNum}" >  	
+      <td colspan="3" align="center" style="padding-left: 10px;">
+      	${dto.content}  
+      	<button type="button" class="btn" onclick="updateFaq();" ${fn:indexOf(sessionScope.member.userId,'admin') == 0 ? "style='pointer-events:none;'":""}>수정</button>
+		<button type="button" class="btn" onclick="deleteFaq();" ${fn:indexOf(sessionScope.member.userId,'admin') == 0 ? "style='pointer-events:none;'":""}>삭제</button> 	
+      </td>     
   </tr>
   </c:forEach>
 </table>

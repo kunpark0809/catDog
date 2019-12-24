@@ -7,20 +7,20 @@ public interface AdminService {
 
 	public Money calculateProduct(Map<String, Object> map);
 
-	List<Member> memberList(Map<String, Object> map);
+	public List<Member> memberList(Map<String, Object> map);
 
-	int memberCount(Map<String, Object> map);
+	public int memberCount(Map<String, Object> map);
 
-	List<Report> reportList(Map<String, Object> map);
+	public List<Report> reportList(Map<String, Object> map);
 
-	int reportCount(Map<String, Object> map);
+	public int reportCount(Map<String, Object> map);
 
 
-	int quarterSales(int yearMonth);
+	public int quarterSales(String yearMonth);
 
-	int yearSales(int year);
+	public int yearSales(String year);
 
-	int monthSales(int yearMonth);
+	public int monthSales(String yearMonth);
 
 	
 

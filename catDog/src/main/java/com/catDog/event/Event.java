@@ -90,7 +90,7 @@ public class Event {
 	public String getImageFileName() {
 		return imageFileName;
 	}
-	public void setImageFilename(String imageFileName) {
+	public void setImageFileName(String imageFileName) {
 		this.imageFileName = imageFileName;
 	}
 
