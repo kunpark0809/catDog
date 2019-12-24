@@ -43,16 +43,16 @@ function sendOk() {
     
     str = f.content.value;
     if(!str) {
-         alert("설명을 입력하세요. ");
+         alert("내용을 입력하세요. ");
          f.content.focus();
          return;
     }
 
      var mode="${mode}";
      if(mode=="created"||mode=="update" && f.upload.value!="") {
-    	if(! /(\.gif|\.jpg|\.png|\.jpeg)$/i.test(f.upload.value)) {
+    	if(! /(\.gif|\.jpg|\.png|\.jpeg)$/i.test(f.mainUpload.value)) {
     		alert('이미지 파일만 가능합니다.(bmp 파일은 불가) !!!');
-    		f.upload.focus();
+    		f.mainUpload.focus();
     		return;
     	}
      }
@@ -61,6 +61,37 @@ function sendOk() {
 
 	  f.submit();
 }
+
+$(function(){
+	$("body").on("change", "input[name=upload]", function(){
+		if(! $(this).val()) {
+			return;
+		}
+		
+		var b=false;
+		$("input[name=upload]").each(function(){
+			if(! $(this).val()) {
+				b=true;
+				return false;
+			}
+		});
+		
+		if(b) return;
+		
+		var $tr, $td, $input;
+		
+		$tr=$("<tr align='left' height='40' style='border-bottom: 1px solid #cccccc;'>");
+	      $td=$("<td>", {width:"100", bgcolor:"#262626", style:"text-align: center;", html:"본문사진"});
+	      $tr.append($td);
+	      $td=$("<td style='padding-left:10px; color: #262626;'>");
+	      $input=$("<input>", {type:"file", name:"upload", class:"boxTF", style:"width: 95%; height: 25px;"});
+	      $td.append($input);
+	      $tr.append($td);
+	    
+	      $("#eventb").append($tr);
+	});
+});
+
 
 $(function() {
 		$("form input[name=startDate]").datepicker({showMonthAfterYear:true});
@@ -77,6 +108,7 @@ $(function() {
 	<div>
 		<form name="eventForm" method="post" enctype="multipart/form-data">
 			<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
+			<tbody id="eventb">
 				<tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 					<td width="100" bgcolor="#eeeeee" style="text-align: center;">제&nbsp;&nbsp;&nbsp;&nbsp;목</td>
 					<td style="padding-left:10px;">
@@ -115,11 +147,20 @@ $(function() {
 				</tr>
 				
 				<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-					<td width="100" bgcolor="#eeeeee" style="text-align: center;">이미지</td>
+					<td width="100" bgcolor="#eeeeee" style="text-align: center;">썸네일사진</td>
 					<td style="padding-left:10px;">
-						<input type="file" name="upload" class="boxTF" size="53" accept="image/*" style="height: 25px;">
+						<input type="file" name="mainUpload" class="boxTF" size="53" style="height: 25px;">
 					</td>
 				</tr>
+				
+				<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
+			    	<td width="100" bgcolor="#eeeeee" style="text-align: center; font-weight: bold;">본문사진</td>
+			    	<td style="padding-left:10px;"> 
+			       		<input type="file" name="upload" class="boxTF" size="53" style="height: 25px;">
+			      	</td>
+			 	</tr>
+			  
+			</tbody>
 			</table>
 			
 			<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">

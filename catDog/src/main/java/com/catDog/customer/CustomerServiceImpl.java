@@ -2,12 +2,16 @@ package com.catDog.customer;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.catDog.common.FileManager;
 import com.catDog.common.dao.CommonDAO;
+import com.catDog.mail.Mail;
+import com.catDog.mail.MailSender;
 
 @Service("customer.customerService")
 public class CustomerServiceImpl implements CustomerService {
@@ -17,6 +21,12 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
 	private FileManager fileManager;
+
+	@Autowired
+	private MailSender mailSender;
+
+	@Autowired
+	private BCryptPasswordEncoder bcryptEncoder;
 
 	@Override
 	public void insertMember(Customer dto, String pathname) throws Exception {
@@ -29,7 +39,6 @@ public class CustomerServiceImpl implements CustomerService {
 					&& dto.getTel2().length() != 0 && dto.getTel3() != null && dto.getTel3().length() != 0)
 				dto.setTel(dto.getTel1() + "-" + dto.getTel2() + "-" + dto.getTel3());
 
-			
 			long customerSeq = dao.selectOne("customer.customerSeq");
 			dto.setNum(customerSeq);
 
@@ -235,4 +244,39 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 
 	}
+
+	@Override
+	public void generatePwd(Customer dto) throws Exception {
+		// 10 자리 임시 패스워드 생성
+		StringBuilder sb = new StringBuilder();
+		Random rd = new Random();
+		String s = "!@#$%^&*~-+ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
+		for (int i = 0; i < 10; i++) {
+			int n = rd.nextInt(s.length());
+			sb.append(s.substring(n, n + 1));
+		}
+
+		String result;
+		result = "안녕하세요, 멍냥멍냥입니다.<br>";
+		result += dto.getUserId() + "님의 새로 발급된 임시 패스워드는 <b>" + sb.toString() + "</b> 입니다.<br>"
+				+ "로그인 후 반드시 패스워드를 변경 하시기 바랍니다.";
+
+		Mail mail = new Mail();
+		mail.setReceiverEmail(dto.getEmail());
+
+		mail.setSenderEmail("catdogincorporated@gmail.com");
+		mail.setSenderName("관리자");
+		mail.setContent(result);
+		mail.setSubject("[멍냥멍냥]임시 패스워드 발급");
+
+		boolean b = mailSender.mailSend(mail);
+		System.out.println(b);
+		if (b) {
+			dto.setUserPwd(bcryptEncoder.encode(sb.toString()));
+			updatePwd(dto);
+		} else {
+			throw new Exception("이메일 전송중 오류가 발생했습니다.");
+		}
+	}
+
 }

@@ -14,18 +14,50 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private CommonDAO dao;
 
+
+	
 	@Override
-	public int calculateTotal(Map<String, Object> map) {
+	public int monthSales(int yearMonth) {
 		int result = -1;
 
 		try {
-			result = dao.selectOne("admin.calculateTotal", map);
+			result = dao.selectOne("admin.monthSales", yearMonth);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return result;
 	}
+	
+	@Override
+	public int quarterSales(int yearMonth) {
+		int result = -1;
+
+		try {
+			result = dao.selectOne("admin.quarterSales", yearMonth);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+	
+	@Override
+	public int yearSales(int year) {
+		int result = -1;
+
+		try {
+			result = dao.selectOne("admin.yearSales", year);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+	
+	
+	
+	
 
 	@Override
 	public Money calculateProduct(Map<String, Object> map) {

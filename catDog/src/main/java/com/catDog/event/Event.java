@@ -17,7 +17,7 @@ public class Event {
 	private int hitCount;
 	
 	private int eventPicNum;
-	private String imageFilename;
+	private String imageFileName;
 	private MultipartFile mainUpload;
 	private List<MultipartFile> upload;
 	
@@ -87,11 +87,11 @@ public class Event {
 	public void setEventPicNum(int eventPicNum) {
 		this.eventPicNum = eventPicNum;
 	}
-	public String getImageFilename() {
-		return imageFilename;
+	public String getImageFileName() {
+		return imageFileName;
 	}
-	public void setImageFilename(String imageFilename) {
-		this.imageFilename = imageFilename;
+	public void setImageFilename(String imageFileName) {
+		this.imageFileName = imageFileName;
 	}
 
 	public MultipartFile getMainUpload() {

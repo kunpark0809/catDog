@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface AdminService {
-	public int calculateTotal(Map<String, Object> map);
 
 	public Money calculateProduct(Map<String, Object> map);
 
@@ -15,6 +14,13 @@ public interface AdminService {
 	List<Report> reportList(Map<String, Object> map);
 
 	int reportCount(Map<String, Object> map);
+
+
+	int quarterSales(int yearMonth);
+
+	int yearSales(int year);
+
+	int monthSales(int yearMonth);
 
 	
 

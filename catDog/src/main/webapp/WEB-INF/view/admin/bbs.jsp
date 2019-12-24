@@ -32,7 +32,7 @@ $(function(){
 </script>
 
 
-<div class="body-container" style="width: 1000px; margin: 0px auto;">
+<div class="body-container" style="width: 1100px; margin: 0px auto;">
 	<div class="body-title">
 		<h3><i class="fas fa-comments"></i> 수다방 관리</h3>
 	</div>
