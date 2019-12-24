@@ -214,15 +214,16 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/admin/money")
-	public String moneyManage() throws Exception {
-
+	public String moneyManage(@RequestParam(defaultValue = "0") int group, Model model) throws Exception {
+		model.addAttribute("group", group);
+		
 		return ".admin.money";
 	}
 
 	// 1년 매출을 월별로 보여줌
 	@RequestMapping(value = "/admin/money/yearSalesChart")
 	@ResponseBody
-	public Map<String, Object> yearSalesChart(@RequestParam int year) throws Exception {
+	public Map<String, Object> yearSalesChart(@RequestParam(defaultValue="2019") int year) throws Exception {
 		Map<String, Object> model = new HashMap<String, Object>();
 
 		List<Map<String, Object>> list = new ArrayList<>();
@@ -231,21 +232,21 @@ public class AdminController {
 		map = new HashMap<>();
 		map.put("name", year + "년");
 
-		double[] sales = new double[12];
-		int yearMonth = year*100;
+		int[] sales = new int[12];
+		int yearMonth;
 
 		for (int i = 0; i < 12; i++) {
 
-			yearMonth+=i;
+			yearMonth = year * 100 + i+1;
 
-			sales[i] = service.monthSales(yearMonth);
+			sales[i] = service.monthSales(Integer.toString(yearMonth));
 		}
 
 		map.put("data", sales);
 
 		list.add(map);
 
-		model.put("title", "2015년 월평균 기온");
+		model.put("title", year+"년 월별 매출");
 		model.put("series", list);
 
 		return model;

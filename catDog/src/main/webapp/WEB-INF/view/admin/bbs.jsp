@@ -24,7 +24,6 @@ $(function(){
 	
 		var url = "<%=cp%>/admin/bbs?group="+tab;
 		location.href=url
-		
 	});
 
 });
