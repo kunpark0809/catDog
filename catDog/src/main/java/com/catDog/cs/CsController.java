@@ -666,7 +666,7 @@ public class CsController {
 	}
 	
 	@RequestMapping(value="/faq/list")
-	public String faqList(
+	public String faqList(	
 			@RequestParam(value="pageNo", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
@@ -701,19 +701,23 @@ public class CsController {
 		
 		List<Qna> list = service.listFaq(map);
 		
+		int listNum, n = 0;
+		for(Qna dto : list) {
+			listNum = dataCount - (offset + n);
+			dto.setListNum(listNum);
+			n++;
+		}
+		
 		String query = "";
 		String listUrl;
-		String articleUrl;
 		if(keyword.length()!=0) {
 			query = "condition=" +condition + 
        	         "&keyword=" + URLEncoder.encode(keyword, "utf-8");	
 		}
 		
 		listUrl = cp+"/faq/list";
-		articleUrl = cp + "/faq/article?page="+current_page;
 		if(query.length()!=0) {
 			listUrl = listUrl + "?" + query;
-			articleUrl = articleUrl + "&" + query;
 		}
 		
 		String paging = util.paging(current_page, total_page, listUrl);
@@ -723,7 +727,6 @@ public class CsController {
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("paging", paging);
-		model.addAttribute("articleUrl", articleUrl);
 		
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
@@ -739,6 +742,7 @@ public class CsController {
 		return ".faq.created";
 	}
 
+	@RequestMapping(value="/faq/created", method=RequestMethod.POST)
 	public String faqCreatedSubmit(Qna dto,
 			HttpSession session) throws Exception {
 		try {					
@@ -775,42 +779,42 @@ public class CsController {
 		return "redirect:/faq/list?page="+page;
 	}
 	
-	@RequestMapping(value="/faq/article")
-	public String faqArticle(@RequestParam int faqNum,			
-			@RequestParam String page,
-			@RequestParam(defaultValue="all") String condition,
-			@RequestParam(defaultValue="") String keyword,
-			Model model,
-			HttpServletResponse resp) throws Exception {
-		
-		keyword = URLDecoder.decode(keyword, "utf-8");
-		
-		String query = "page="+page;
-		if(keyword.length()!=0) {
-			query += "&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "utf-8");
-		}
-		
-		Qna dto = service.readFaq(faqNum);
-		if(dto==null)
-			return "redirect:/faq/list?"+query;
-		
-		 Map<String, Object> map = new HashMap<String, Object>();
-	        map.put("condition", condition);
-	        map.put("keyword", keyword);
-	        map.put("faqNum", faqNum);
-	        
-	     Qna preReadDto = service.preReadFaq(map);
-	     Qna nextReadDto = service.nextReadFaq(map);
-	     
-	     model.addAttribute("dto", dto);
-	     model.addAttribute("preReadDto", preReadDto);
-	     model.addAttribute("nextReadDto", nextReadDto);
-	     
-	     model.addAttribute("page", page);
-	     model.addAttribute("query", query);
-		
-		return ".faq.article";
-	}
+//	@RequestMapping(value="/faq/list")
+//	public String faqArticle(@RequestParam int faqNum,			
+//			@RequestParam String page,
+//			@RequestParam(defaultValue="all") String condition,
+//			@RequestParam(defaultValue="") String keyword,
+//			Model model,
+//			HttpServletResponse resp) throws Exception {
+//		
+//		keyword = URLDecoder.decode(keyword, "utf-8");
+//		
+//		String query = "page="+page;
+//		if(keyword.length()!=0) {
+//			query += "&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "utf-8");
+//		}
+//		
+//		Qna dto = service.readFaq(faqNum);
+//		if(dto==null)
+//			return "redirect:/faq/list?"+query;
+//		
+//		 Map<String, Object> map = new HashMap<String, Object>();
+//	        map.put("condition", condition);
+//	        map.put("keyword", keyword);
+//	        map.put("faqNum", faqNum);
+//	        
+//	     Qna preReadDto = service.preReadFaq(map);
+//	     Qna nextReadDto = service.nextReadFaq(map);
+//	     
+//	     model.addAttribute("dto", dto);
+//	     model.addAttribute("preReadDto", preReadDto);
+//	     model.addAttribute("nextReadDto", nextReadDto);
+//	     
+//	     model.addAttribute("page", page);
+//	     model.addAttribute("query", query);
+//		
+//		return ".faq.list";
+//	}
 	
 	@RequestMapping(value="/faq/delete")
 	public String faqDelete(@RequestParam int faqNum,

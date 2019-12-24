@@ -50,31 +50,6 @@
 		WHERE faqNum=#{faqNum}                   
 	</select>
 	
-	<select id="preReadFaq" parameterType="map" resultType="com.catDog.cs.Qna">
-		SELECT faqNum, subject
-		FROM faq
-		<where>
-			<if test="keyword != null and keyword != '' ">
-				AND <include refid="where-list"/>
-			</if>
-			AND (faqNum &gt; #{faqNum})
-		</where>
-		ORDER BY faqNum ASC
-		FETCH FIRST 1 ROWS ONLY
-	</select>
-	
-	<select id="nextReadFaq" parameterType="map" resultType="com.catDog.cs.Qna">
-		SELECT faqNum, subject
-		FROM faq
-		<where>
-			<if test="keyword != null and keyword != '' ">
-				AND <include refid="where-list"/>
-			</if>
-			AND (faqNum &lt; #{faqNum})
-		</where>
-		ORDER BY faqNum desc
-		FETCH FIRST 1 ROWS ONLY
-	</select>
 	
 	<update id="updateFaq" parameterType="com.catDog.cs.Qna">
 		UPDATE faq SET subject=#{subject}, content=#{content}
