@@ -178,9 +178,21 @@ public class EventServiceImpl implements EventService {
 			e.printStackTrace();
 			throw e;
 		}
-		
 	}
-/*
+	
+	@Override
+	public List<Event> upReEvent(int eventNum) {
+		
+		List<Event> list = null;
+		
+		try {
+			list = dao.selectList("event.upReEvent", eventNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 	@Override
 	public void insertReply(Reply dto) throws Exception {
 		try {
@@ -194,7 +206,7 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	public List<Reply> listReply(Map<String, Object> map) {
-		List<Reply> list =null;
+		List<Reply> list=null;
 		try {
 			list=dao.selectList("event.listReply", map);
 		} catch (Exception e) {
@@ -204,60 +216,27 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
+	public int replyCount(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
 	public void deleteReply(Map<String, Object> map) throws Exception {
-		try {
-			dao.deleteData("event.deleteReply", map);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
+		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public List<Reply> listReplyAnswer(int answer) {
-		List<Reply> list=null;
-		try {
-			list=dao.selectList("event.listReplyAnswer", answer);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
-
-	@Override
-	public int replyCount(Map<String, Object> map) {
-		int result=0;
-		try {
-			result=dao.selectOne("event.replyCount", map);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public int replyAnswerCount(int answer) {
-		int result=0;
-		try {
-			result=dao.selectOne("event.replyAnswerCount", answer);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
+		// TODO Auto-generated method stub
+		return 0;
 	}
-*/
 
-	@Override
-	public List<Event> upReEvent(int eventNum) {
-		
-List<Event> list = null;
-		
-		try {
-			list = dao.selectList("event.upReEvent", eventNum);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
 }

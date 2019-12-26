@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 // import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.catDog.common.MyUtil;
 import com.catDog.customer.SessionInfo;
@@ -192,7 +193,7 @@ public class EventController {
 		
 		return "redirect:/event/list?"+query;
 	}
-/*	
+
 	@RequestMapping(value="/event/listReply")
 	public String listReply(@RequestParam int eventNum, Model model,
 							@RequestParam(value="pageNo", defaultValue="1") int current_page) throws Exception {
@@ -237,11 +238,12 @@ public class EventController {
 				String state="true";
 		
 		try {
-			dto.setUserId(info.getUserId());
+			dto.setNum(info.getMemberIdx());
 			service.insertReply(dto);
 		} catch (Exception e) {
 			state="false";
 		}
+		
 		Map<String, Object> model = new HashMap<>();
 		model.put("state", state);
 		return model;
@@ -263,6 +265,7 @@ public class EventController {
 	
 	@RequestMapping(value="/event/listReplyAnswer")
 	public String listReplyAnswer(@RequestParam int answer, Model model) throws Exception {
+		
 		List<Reply> listReplyAnswer=service.listReplyAnswer(answer);
 		for(Reply dto : listReplyAnswer) {
 			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
@@ -283,5 +286,5 @@ public class EventController {
 		
 		return model;
 	}
-	*/
+	
 }

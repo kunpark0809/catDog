@@ -99,4 +99,26 @@
 	<delete id="deleteEvent" parameterType="Integer">
 		DELETE FROM event WHERE eventNum=#{eventNum}
 	</delete>
+	
+	<insert id="insertReply" parameterType="com.catDog.event.Reply">
+		INSERT INTO eventReply(eventReplyNum, eventNum, num, content, answer)
+		VALUES (eventReply_seq.NEXTVAL, #{eventNum}, #{num}, #{content}, #{answer})
+	</insert>
+	
+	<select id="replyCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM eventReply
+		WHERE eventNum=#{eventNum} AND answer=0
+	</select>
+	
+	<select id="listReply" parameterType="map" resultType="com.catDog.event.Reply">
+		SELECT er.eventReplyNum, er.eventNum, m.userId, er.content, er.created, NVL(answerCount, 0) answerCount
+		FROM eventReply er JOIN memberDetail m ON er.num = m.num
+		LEFT OUTER JOIN (
+			SELECT answer, COUNT(*) answerCount
+			FROM eventReply WHERE answer !=0 GROUP BY answer
+		) a ON er.replyNum = a.answer
+		WHERE eventNum=#{eventNum} AND er.answer=0
+		ORDER BY er.replyNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
 </mapper>
