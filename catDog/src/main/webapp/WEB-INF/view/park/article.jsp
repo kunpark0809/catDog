@@ -402,7 +402,7 @@ $(function(){
 		</table>
 		     
 		<div id="listRate"></div>
- 
+
    	 </div>
 	  
 			
