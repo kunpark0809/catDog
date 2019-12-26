@@ -399,7 +399,7 @@ $(function(){
 			 </tr>
 		</table>
 		     
-		<div id="listRate"></div>
+		<div id="listRate" style="width: 100%"></div>
 
    	 </div>
 	  
