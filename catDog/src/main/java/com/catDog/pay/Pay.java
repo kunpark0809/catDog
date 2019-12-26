@@ -33,6 +33,7 @@ public class Pay {
 	private int point; // 적립 포인트
 	private int purchase; // 결제금액
 	
+	private String cartNum; // 장바구니 번호
 	private String productName; // 용품 이름 (db - name)
 	private String productNum; // 용품번호
 	private String refundAccount; // 환불계좌
@@ -288,6 +289,12 @@ public class Pay {
 	}
 	public void setZip(String zip) {
 		this.zip = zip;
+	}
+	public String getCartNum() {
+		return cartNum;
+	}
+	public void setCartNum(String cartNum) {
+		this.cartNum = cartNum;
 	}
 
 
