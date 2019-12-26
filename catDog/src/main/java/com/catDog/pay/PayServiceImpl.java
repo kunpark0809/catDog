@@ -1,6 +1,8 @@
 package com.catDog.pay;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -105,7 +107,19 @@ public class PayServiceImpl implements PayService{
 	@Override
 	public void insertCart(Pay product) throws Exception {
 		try {
-			dao.insertData("pay.insertCart",product);
+			Map<String, Object> map = new HashMap<>();
+			map.put("num",product.getNum());
+			map.put("productNum", product.getProductNum());
+			
+			Pay search = dao.selectOne("pay.readCart",map);
+			if(search != null) {
+				search.setProductCount(search.getProductCount()+product.getProductCount());
+				search.setProductSum(search.getProductSum()+product.getProductSum());
+				updateCount(search);
+			} else {
+				dao.insertData("pay.insertCart",product);
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

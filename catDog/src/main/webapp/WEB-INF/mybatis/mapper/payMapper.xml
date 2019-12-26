@@ -21,6 +21,10 @@
 		INSERT INTO cart(cartNum, num, productNum, productCount, productSum) VALUES(CART_SEQ.NEXTVAL, #{num}, #{productNum}, #{productCount}, #{productSum})
 	</insert>
 	
+	<select id="readCart" parameterType="map" resultType="com.catDog.pay.Pay">
+		SELECT cartNum, num, productNum, productCount, productSum FROM cart WHERE num = #{num} AND productNum = #{productNum}
+	</select>
+	  
 	<select id="cartList" parameterType="Long" resultType="com.catDog.pay.Pay">
 		SELECT cartNum, num, c.productNum, productCount, productSum, pp.imageFileName, p.name productName
 		FROM cart c 
@@ -33,6 +37,10 @@
 	<update id="updateCount" parameterType="com.catDog.pay.Pay">
 		UPDATE cart SET productCount=#{productCount}, productSum=#{productSum} WHERE cartNum=#{cartNum} AND num=#{num}
 	</update>
+	
+	<delete id="deleteCart" parameterType="Integer">
+		
+	</delete>
 	<select id="readCumstomer" parameterType="Long" resultType="com.catDog.pay.Pay">
 		SELECT md.num, cd.name, md.userId, md.mileage, cd.email, cd.tel, md.addr1, md.addr2, md.zip
 		FROM customerDetail cd

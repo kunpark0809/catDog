@@ -66,6 +66,7 @@ public class PayController {
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		Pay customer = null;
 		if(info != null) {
+			product.setNum(info.getMemberIdx());
 			customer = service.readCustomer(info.getMemberIdx());
 			service.insertCart(product);
 		}
