@@ -146,9 +146,7 @@ $(function() {
 						<textarea name="content" rows="12" class="boxTA" style="width: 95%;">${list.get(0).content}</textarea>
 					</td>
 				</tr>
-				
-			<c:forEach var="image" items="${list}">
-				<c:if test="${fn:indexOf(image.imageFileName,'main') >= 0}">
+				<c:if test="${mode=='created'}">	
 					<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
 						<td width="100" bgcolor="#eeeeee" style="text-align: center;">썸네일사진</td>
 						<td style="padding-left:10px;">
@@ -156,8 +154,6 @@ $(function() {
 							${image.imageFileName}
 						</td>
 					</tr>
-				</c:if>
-				<c:if test="${fn:indexOf(image.imageFileName,'main') < 0}">
 					<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
 				    	<td width="100" bgcolor="#eeeeee" style="text-align: center; font-weight: bold;">본문사진</td>
 				    	<td style="padding-left:10px;"> 
@@ -165,9 +161,29 @@ $(function() {
 				       		${image.imageFileName}
 				      	</td>
 				 	</tr>
-				 	
-				</c:if>
-			</c:forEach>
+				</c:if>	
+				
+				<c:forEach var="image" items="${list}">
+					<c:if test="${fn:indexOf(image.imageFileName,'main') >= 0}">
+						<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
+							<td width="100" bgcolor="#eeeeee" style="text-align: center;">썸네일사진</td>
+							<td style="padding-left:10px;">
+								<input type="file" name="mainUpload" class="boxTF" size="53" style="height: 25px;" >
+								${image.imageFileName}
+							</td>
+						</tr>
+					</c:if>
+					<c:if test="${fn:indexOf(image.imageFileName,'main') < 0}">
+						<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
+					    	<td width="100" bgcolor="#eeeeee" style="text-align: center; font-weight: bold;">본문사진</td>
+					    	<td style="padding-left:10px;"> 
+					       		<input type="file" name="upload" class="boxTF" size="53" style="height: 25px;">
+					       		${image.imageFileName}
+					      	</td>
+					 	</tr>
+					 	
+					</c:if>
+				</c:forEach>
 			</tbody>
 			</table>
 			

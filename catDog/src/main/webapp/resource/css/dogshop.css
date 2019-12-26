@@ -89,6 +89,17 @@ a.productLink{
 	margin: 10px auto;
 }
 
+.productList > table{
+	width: 100%;
+	margin: 0px auto;
+}
+
+.productList > td {
+	width: 20%;
+    text-align: center;
+
+}
+
 .btnList{
 	width: 100%;
 }
@@ -115,3 +126,4 @@ a.productLink{
 .cartTable > tr{
 	text-align: center;
 }
+
