@@ -53,8 +53,6 @@ public interface CsService {
 	public List<Qna> listFaq(Map<String, Object> map);
 	
 	public Qna readFaq(int faqNum);
-	public Qna preReadFaq(Map<String, Object> map);
-	public Qna nextReadFaq(Map<String, Object> map);
 	
 	public void updateFaq(Qna dto) throws Exception;
 	

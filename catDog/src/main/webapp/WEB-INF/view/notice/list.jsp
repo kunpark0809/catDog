@@ -48,18 +48,18 @@ function searchList() {
 				<th width="50" style="color: #787878;">파일</th>
 			</tr>
 		 
-		 <c:forEach var="dto" items="${noticeList}">
+		 <c:forEach var="vo" items="${listNoticeTop}">
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
 				<td><span style="display: inline-block;padding: 1px 3px; background: #ED4C00; color: #FFFFFF">공지</span></td>
 				<td align="left" style="padding-left: 10px;">
-					<a href="${articleUrl}&noticeNum=${dto.noticeNum}">${dto.subject}</a>
+					<a href="${articleUrl}&noticeNum=${vo.noticeNum}">${vo.subject}</a>
 				</td>
-				<td>${dto.nickName}</td>
-				<td>${dto.created}</td>
-				<td>${dto.hitCount}</td>
+				<td>${vo.nickName}</td>
+				<td>${vo.created}</td>
+				<td>${vo.hitCount}</td>
 				<td>
-					<c:if test="${dto.fileCount != 0}">
-						<a href="<%=cp%>/notice/zipdownload?noticeNum=${dto.num}"><i class="far fa-file"></i></a>
+					<c:if test="${vo.fileCount != 0}">
+						<a href="<%=cp%>/notice/zipdownload?noticeNum=${vo.noticeNum}"><i class="far fa-file"></i></a>
 					</c:if>
 				</td>
 			</tr>

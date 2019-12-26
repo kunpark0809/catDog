@@ -9,7 +9,7 @@
 
 <script type="text/javascript">
 function deleteNotice(noticeNum) {
-	<c:if test="${sessionScope.member.userId=='admin'}">
+	<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
 		var q = "noticeNum=${dto.noticeNum}&${query}";
 		var url = "<%=cp%>/notice/delete?"+q;
 		
@@ -17,20 +17,20 @@ function deleteNotice(noticeNum) {
 		location.href=url;
 	}
 	</c:if>
-	<c:if test="${sessionScope.member.userId!='admin'}">
+	<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') != 0}">
 		alert("게시물을 삭제할 수 없습니다.");
 	</c:if>
 }
 
 function updateNotice(noticeNum) {
-	<c:if test="${sessionScope.member.userId=='admin'}">
+	<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
 		var q = "noticeNum=${dto.noticeNum}&page=${page}";
 		var url = "<%=cp%>/notice/update?"+q;
 		
 		location.href=url;
 	</c:if>
 	
-	<c:if test="${sessionScope.member.userId!='admin'}">
+	<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') != 0}">
 		alert("게시물을 수정할 수 없습니다.");
 	</c:if>
 }
@@ -100,8 +100,8 @@ function updateNotice(noticeNum) {
 			<tr height="45">
 			<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
 				<td width="300" align="left">
-					<button type="button" class="btn" onclick="updateNotice();" ${sessionScope.member.userId!="admin" ? "style='pointer-events:none;'":""}>수정</button>
-					<button type="button" class="btn" onclick="deleteNotice();" ${sessionScope.member.userId!="admin" ? "style='pointer-events:none;'":""}>삭제</button>
+					<button type="button" class="btn" onclick="updateNotice();" ${fn:indexOf(sessionScope.member.userId,'admin') != 0 ? "style='pointer-events:none;'":""}>수정</button>
+					<button type="button" class="btn" onclick="deleteNotice();" ${fn:indexOf(sessionScope.member.userId,'admin') != 0 ? "style='pointer-events:none;'":""}>삭제</button>
 				</td>
 			</c:if>
 				<td align="right">

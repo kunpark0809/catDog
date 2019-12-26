@@ -75,14 +75,14 @@ public class CsServiceImpl implements CsService {
 
 	@Override
 	public List<Notice> listNoticeTop() {
-		List<Notice> list = null;
+		List<Notice> listNoticeTop = null;
 		
 		try {
-			list = dao.selectList("notice.listNoticeTop");
+			listNoticeTop = dao.selectList("notice.listNoticeTop");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return list;
+		return listNoticeTop;
 	}
 
 	@Override
@@ -419,29 +419,6 @@ public class CsServiceImpl implements CsService {
 			e.printStackTrace();
 		}
 		return dto;
-	}
-
-	@Override
-	public Qna preReadFaq(Map<String, Object> map) {
-		Qna dto = null;
-		try {
-			dto = dao.selectOne("faq.preReadFaq", map);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return dto;
-	}
-
-	@Override
-	public Qna nextReadFaq(Map<String, Object> map) {
-		Qna dto = null;
-		
-		try {
-			dto = dao.selectOne("faq.nextReadFaq", map);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return dto;	
 	}
 
 	@Override

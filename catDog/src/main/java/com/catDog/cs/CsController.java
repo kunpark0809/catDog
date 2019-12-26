@@ -68,9 +68,9 @@ public class CsController {
 		if(total_page < current_page)
 			current_page = total_page;
 		
-		List<Notice> noticeList = null;
+		List<Notice> listNoticeTop = null;
 		if(current_page==1) {
-			noticeList = service.listNoticeTop();
+			listNoticeTop = service.listNoticeTop();
 		}
 		
 		int offset = (current_page-1) * rows;
@@ -115,7 +115,7 @@ public class CsController {
 		
 		String paging = util.paging(current_page, total_page, listUrl);
 		
-		model.addAttribute("noticeList", noticeList);
+		model.addAttribute("listNoticeTop", listNoticeTop);
 		model.addAttribute("list", list);
 		model.addAttribute("page", current_page);
 		model.addAttribute("total_page", total_page);
@@ -158,12 +158,7 @@ public class CsController {
 							 HttpSession session,
 							 Model model) {
 		
-		SessionInfo info = (SessionInfo)session.getAttribute("member");
-		
 		Notice dto = service.readNotice(noticeNum);
-		if(dto==null || ! dto.getUserId().equals(info.getUserId())) {
-			return "redirect:/notice/list?page="+page;
-		}
 		
 		List<Notice> listFile = service.listFile(noticeNum);
 		
@@ -346,11 +341,10 @@ public class CsController {
 		String root = session.getServletContext().getRealPath("/");
 		String pathname = root + "uploads" + File.separator +"notice";
 		
-		SessionInfo info = (SessionInfo)session.getAttribute("member");
-		Notice dto = service.readNotice(noticeNum);
-		if(dto!=null && (dto.getUserId().equals(info.getUserId()) || info.getUserId().equals("admin"))) {
+		
+		
 			service.deleteNotice(noticeNum, pathname);
-		}
+		
 		
 		return "redirect:/notice/list?"+query;
 	}
@@ -462,18 +456,12 @@ public class CsController {
 			HttpSession session,
 			Model model) throws Exception {
 		
-		SessionInfo info=(SessionInfo)session.getAttribute("member");
-		
 		if(req.getMethod().equalsIgnoreCase("GET")) { // GET 방식인 경우
 			keyword = URLDecoder.decode(keyword, "utf-8");
 		}
 		
 		Qna questionDto = service.readQnaQuestion(qnaNum);
 		if(questionDto==null) {
-			return ".qna.list";
-		}
-		if(questionDto.getQuestionPrivate()==1 &&
-				 (! info.getUserId().equals("admin") && ! info.getUserId().equals(questionDto.getUserId()))) {
 			return ".qna.list";
 		}
 		
@@ -508,14 +496,8 @@ public class CsController {
 			HttpSession session,
 			Model model) throws Exception {
 		
-		SessionInfo info=(SessionInfo)session.getAttribute("member");
-		
 		Qna dto = service.readQnaQuestion(qnaNum);
 		if(dto==null) {
-			return ".qna.list";
-		}
-		
-		if(! info.getUserId().equals(dto.getUserId())) {
 			return ".qna.list";
 		}
 		
@@ -667,7 +649,7 @@ public class CsController {
 	
 	@RequestMapping(value="/faq/list")
 	public String faqList(	
-			@RequestParam(value="pageNo", defaultValue="1") int current_page,
+			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
 			HttpServletRequest req,
@@ -779,43 +761,6 @@ public class CsController {
 		return "redirect:/faq/list?page="+page;
 	}
 	
-//	@RequestMapping(value="/faq/list")
-//	public String faqArticle(@RequestParam int faqNum,			
-//			@RequestParam String page,
-//			@RequestParam(defaultValue="all") String condition,
-//			@RequestParam(defaultValue="") String keyword,
-//			Model model,
-//			HttpServletResponse resp) throws Exception {
-//		
-//		keyword = URLDecoder.decode(keyword, "utf-8");
-//		
-//		String query = "page="+page;
-//		if(keyword.length()!=0) {
-//			query += "&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "utf-8");
-//		}
-//		
-//		Qna dto = service.readFaq(faqNum);
-//		if(dto==null)
-//			return "redirect:/faq/list?"+query;
-//		
-//		 Map<String, Object> map = new HashMap<String, Object>();
-//	        map.put("condition", condition);
-//	        map.put("keyword", keyword);
-//	        map.put("faqNum", faqNum);
-//	        
-//	     Qna preReadDto = service.preReadFaq(map);
-//	     Qna nextReadDto = service.nextReadFaq(map);
-//	     
-//	     model.addAttribute("dto", dto);
-//	     model.addAttribute("preReadDto", preReadDto);
-//	     model.addAttribute("nextReadDto", nextReadDto);
-//	     
-//	     model.addAttribute("page", page);
-//	     model.addAttribute("query", query);
-//		
-//		return ".faq.list";
-//	}
-	
 	@RequestMapping(value="/faq/delete")
 	public String faqDelete(@RequestParam int faqNum,
 			 @RequestParam String page,
@@ -829,11 +774,8 @@ public class CsController {
 			query += "&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "utf-8");
 		}
 		
-		SessionInfo info = (SessionInfo)session.getAttribute("member");
-		Qna dto = service.readFaq(faqNum);
-		if(dto!=null && (dto.getUserId().equals(info.getUserId()) || info.getUserId().equals("admin"))) {
-			service.deleteFaq(faqNum);
-		}
+		service.deleteFaq(faqNum);
+		
 		
 		return "redirect:/faq/list?"+query;
 	}

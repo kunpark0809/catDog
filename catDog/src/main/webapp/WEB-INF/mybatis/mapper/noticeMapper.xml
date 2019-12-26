@@ -53,7 +53,7 @@
 			select noticeNum, count(*) fileCount from noticeFile
 			group by noticeNum
 		) nf on n.noticeNum = nf.noticeNum
-		where n.notice = #{notice}
+		where n.notice = 1
 		order by n.noticeNum desc
 	</select>
 	

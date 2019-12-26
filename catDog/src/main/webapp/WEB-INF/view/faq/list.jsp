@@ -28,6 +28,33 @@ $(function(){
         } 
    });
  });
+ 
+function deleteFaq(faqNum) {
+	<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
+		var q = "faqNum="+faqNum+"&page=${page}";
+		var url = "<%=cp%>/faq/delete?"+q;
+		
+	if(confirm("게시물을 삭제 하시겠습니까 ?")) {
+		location.href=url;
+	}
+	</c:if>
+	<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') != 0}">
+		alert("게시물을 삭제할 수 없습니다.");
+	</c:if>
+}
+
+function updateFaq(faqNum) {
+	<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
+		var q = "faqNum="+faqNum+"&page=${page}";
+		var url = "<%=cp%>/faq/update?"+q;
+		
+		location.href=url;
+	</c:if>
+	
+	<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') != 0}">
+		alert("게시물을 수정할 수 없습니다.");
+	</c:if>
+}
 
  
 </script>
@@ -63,8 +90,12 @@ $(function(){
   <tr class="faqCon" align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc; display: none;" id="contentNum${dto.faqNum}" >  	
       <td colspan="3" align="center" style="padding-left: 10px;">
       	${dto.content}  
-      	<button type="button" class="btn" onclick="updateFaq();" ${fn:indexOf(sessionScope.member.userId,'admin') == 0 ? "style='pointer-events:none;'":""}>수정</button>
-		<button type="button" class="btn" onclick="deleteFaq();" ${fn:indexOf(sessionScope.member.userId,'admin') == 0 ? "style='pointer-events:none;'":""}>삭제</button> 	
+      	<br>
+      	<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
+      	<button type="button" class="btn" onclick="updateFaq(${dto.faqNum});" ${fn:indexOf(sessionScope.member.userId,'admin') != 0 ? "style='pointer-events:none;'":""}>수정</button>
+		<button type="button" class="btn" onclick="deleteFaq(${dto.faqNum});" ${fn:indexOf(sessionScope.member.userId,'admin') != 0 ? "style='pointer-events:none;'":""}>삭제</button>
+		</c:if> 
+		
       </td>     
   </tr>
   </c:forEach>
