@@ -6,8 +6,7 @@
 	String cp = request.getContextPath();
 %>
 <link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
-<script type="text/javascript"
-	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	<script type="text/javascript" src="<%=cp%>/resource/vendor/jquery-ui/jquery-ui.min.js"></script>
 <script type="text/javascript">
 	var IMP = window.IMP; // 생략가능

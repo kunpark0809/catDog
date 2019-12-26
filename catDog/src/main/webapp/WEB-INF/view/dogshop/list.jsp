@@ -6,6 +6,7 @@
    String cp = request.getContextPath();
 %>
 <link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
+<script type="text/javascript" src="<%=cp%>/resource/vendor/jquery-ui/jquery-ui.min.js"></script>
 <script type="text/javascript">
 $(function(){
 	$("#sort-${smallSortNum}").addClass("sortActive");

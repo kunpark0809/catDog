@@ -5,10 +5,10 @@
 	color: #A66E4E;
 	font-weight: bold;
 }
-p{
+ p{
 	padding: 0px;
 	margin: 0px;
-}
+} 
 a.sortName{
 	display: inline-block;
 	text-align: center;
@@ -133,7 +133,12 @@ a.productLink{
 	text-align: center;
 }
 
-li, ol, ul{
+
+.order_tit > li{
+	display: inline;
+}
+
+
+.order_tit > ol{
 	list-style: none;
-	display: inline-block;
 }

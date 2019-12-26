@@ -56,6 +56,7 @@ function changeDialog(productNum, cartNum){
 		  width: 750,
 		  title: '수량 변경',
 		  close: function(event, ui) {
+			  $("input[name=productCount]").val(1);
 		  }
 	});
 }
@@ -84,7 +85,7 @@ function changePrice(){
 <div class="shin_body">
 	<div class="order_tit" style="width: 100%;">
         <h2 style="display: inline; float: left;">장바구니</h2>
-        <ol style="display: inline; float: right: ;">
+        <ol style="display: inline-block; float: right;">
             <li class="page_on"><span>01</span>장바구니 > </li>
             <li><span>02</span> 주문서작성/결제 > </li>
             <li><span>03</span> 주문완료</li>
