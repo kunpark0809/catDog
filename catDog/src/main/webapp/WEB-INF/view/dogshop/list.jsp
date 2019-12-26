@@ -32,7 +32,7 @@ $(function(){
 		<div class="bestProduct">
 		<h3 class="text-muted">BEST</h3>
 		</div>
-		<div class="sortList">
+		<div class=" ">
 		
 			<a class="sortName" data-num="0" id="sort-0">전체</a>
 			<c:forEach var="sort" items="${sortList}">
@@ -41,22 +41,23 @@ $(function(){
 		</div>
 		<div class="productList">	
 			<table>
-				<tr>  
 					<c:forEach var="dto" items="${list}" varStatus="status">
-					
+					     <c:if test="${status.index==0}">
+                     		  <tr>
+		                 </c:if>
+		                 <c:if test="${status.index!=0 && status.index%4==0}">
+		                       <c:out value="</tr><tr>" escapeXml="false"/>
+		                 </c:if>
 						<a onclick="javascript:location.href='${articleUrl}&productNum=${dto.productNum}'" class="productLink">
 							<input type="hidden" value="${dto.productNum}">
 							<input type="hidden" value="${dto.price}">
-							<td class="proudct">
-							<img alt="" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}" width="200" height="200">
-							<p>${dto.name}</p>
+							<td width="20%" style="text-align: center;">
+								<img alt="" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}" width="200" height="200">
+								<p>${dto.name}</p>
 							</td>
 						</a>
-						<c:if test="${status.index!=0 && status.index%3==0}">
-                        <c:out value="</tr><tr>" escapeXml="false"/>
-                 		</c:if>
+
 					</c:forEach>
-				</tr>
 			</table>
 		</div>
 		

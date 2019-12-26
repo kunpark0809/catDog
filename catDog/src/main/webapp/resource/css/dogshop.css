@@ -9,7 +9,7 @@
 a.sortName{
 	display: inline-block;
 	text-align: center;
-	width : 130px;
+	width : 125px;
 	height : 50px;
 	line-height : 50px;
 	border: 1px solid #d8d8d8;
@@ -23,7 +23,11 @@ a.productLink{
 	text-decoration: none;
 	color:#262626;
 }
-
+.sortList{
+	width: 100%;
+	margin: 0px auto;
+	text-align: center;
+}
 .sortActive {
 	color: #A66E4E;
 	font-weight: bold;
@@ -92,11 +96,12 @@ a.productLink{
 .productList > table{
 	width: 100%;
 	margin: 0px auto;
+	border-collapse: collapse;
+	border-spacing: 0;
 }
 
 .productList > td {
-	width: 20%;
-    text-align: center;
+	
 
 }
 
