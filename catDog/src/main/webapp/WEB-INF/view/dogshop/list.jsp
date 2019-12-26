@@ -48,14 +48,16 @@ $(function(){
 		                 <c:if test="${status.index!=0 && status.index%4==0}">
 		                       <c:out value="</tr><tr>" escapeXml="false"/>
 		                 </c:if>
-						<a onclick="javascript:location.href='${articleUrl}&productNum=${dto.productNum}'" class="productLink">
-							<input type="hidden" value="${dto.productNum}">
-							<input type="hidden" value="${dto.price}">
+						
 							<td width="20%" style="text-align: center;">
-								<img alt="" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}" width="200" height="200">
-								<p>${dto.name}</p>
+							<a onclick="javascript:location.href='${articleUrl}&productNum=${dto.productNum}'" class="productLink">
+								<input type="hidden" value="${dto.productNum}">
+								<input type="hidden" value="${dto.price}">
+									<img alt="" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}" width="200" height="200">
+								<p style="margin: 0px;">${dto.name}</p>
+							</a>
 							</td>
-						</a>
+				
 
 					</c:forEach>
 			</table>

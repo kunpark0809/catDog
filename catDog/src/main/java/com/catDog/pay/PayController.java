@@ -1,6 +1,8 @@
 package com.catDog.pay;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -25,8 +27,10 @@ public class PayController {
 			Model model 
 			) throws Exception{
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
-		List<Pay> cartList = service.cartList(info.getMemberIdx());
-		
+		List<Pay> cartList = null;
+		if(info != null) {
+			cartList = service.cartList(info.getMemberIdx());
+		}
 		model.addAttribute("cartList",cartList);
 		return ".pay.cart";
 	}
@@ -94,5 +98,34 @@ public class PayController {
 			@RequestParam String productNum 
 			) throws Exception{
 		return ".pay.complete";
+	}
+	
+	@RequestMapping(value="/pay/changeCount", method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> changeCountForm(
+			@RequestParam int productNum
+			){
+		Pay product = service.readProudct(productNum);
+		
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("product", product);
+		return model;
+	}
+	
+	@RequestMapping(value="/pay/changeCount", method=RequestMethod.POST)
+	public String changeCountSubmit(
+			Pay pay,
+			HttpSession session
+			){
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		pay.setNum(info.getMemberIdx());
+		
+		try {
+			service.updateCount(pay);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/pay/cart";
 	}
 }

@@ -9,4 +9,5 @@ public interface PayService {
 	public void insertRequest(Pay pay) throws Exception;
 	public void insertCart(Pay product) throws Exception;
 	public List<Pay> cartList(long num);
+	public void updateCount(Pay pay) throws Exception;
 }

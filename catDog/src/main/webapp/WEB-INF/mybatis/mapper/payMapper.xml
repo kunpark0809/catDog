@@ -29,6 +29,10 @@
 		WHERE num=#{num} and INSTR(imagefilename,'main')>0
 	</select>
 	
+	
+	<update id="updateCount" parameterType="com.catDog.pay.Pay">
+		UPDATE cart SET productCount=#{productCount}, productSum=#{productSum} WHERE cartNum=#{cartNum} AND num=#{num}
+	</update>
 	<select id="readCumstomer" parameterType="Long" resultType="com.catDog.pay.Pay">
 		SELECT md.num, cd.name, md.userId, md.mileage, cd.email, cd.tel, md.addr1, md.addr2, md.zip
 		FROM customerDetail cd
@@ -64,7 +68,7 @@
 		VALUES(#{requestNum}, #{refundAccount}, #{bank})
 	</insert>
 	
-	<update id="updatePoint">
+	<update id="updatePoint" parameterType="com.catDog.pay.Pay">
 		UPDATE memberdetail SET mileage=#{mileage}+#{point} WHERE userid=#{userId}
 	</update>
 </mapper>

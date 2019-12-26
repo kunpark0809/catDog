@@ -86,6 +86,18 @@ function pay(productNum){
 	var productCount = $("input[name=productCount]").val();
 	location.href="<%=cp%>/pay/pay?productNum="+productNum+"&productCount="+productCount;
 }
+
+function changePrice(){
+	var count = $("input[name=productCount]").val();
+	
+	if(count <= 0){
+		alert("잘못된 수량입니다.");
+		$("input[name=productCount]").val(1);
+		count = 1;
+	}
+	
+	$("input[name=productSum]").val(count*${list.get(0).price});
+}
 </script>
 	<div class="shin_body"> 
 		<div class="sortList">
@@ -130,15 +142,9 @@ function pay(productNum){
 				</tr>
 				</table>
 				<div class="product_count">
-					<input type="number" value="1" name="productCount">
-					<span>
-						<button type="button"  class="count_up"></button>
-						
-					</span>
-					<span>
-					<button type="button" class="count_down"></button>
-					</span> 
-					<span>${price}원</span>
+					<input type="number" value="1" name="productCount" onchange="changePrice();">
+
+					<span><input type="text" readonly="readonly" name="productSum" value="${price}">원</span>
 				</div>
 				<div class="product_btn">
 					<button type="button" class="shop_order" onclick="pay('${list.get(0).productNum}');">구매하기</button>

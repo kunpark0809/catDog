@@ -125,4 +125,15 @@ public class PayServiceImpl implements PayService{
 		return list;
 	}
 
+	@Override
+	public void updateCount(Pay pay) throws Exception {
+		try {
+			dao.updateData("pay.updateCount",pay);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
 }

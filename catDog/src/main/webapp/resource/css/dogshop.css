@@ -5,7 +5,10 @@
 	color: #A66E4E;
 	font-weight: bold;
 }
-
+p{
+	padding: 0px;
+	margin: 0px;
+}
 a.sortName{
 	display: inline-block;
 	text-align: center;
@@ -100,10 +103,7 @@ a.productLink{
 	border-spacing: 0;
 }
 
-.productList > td {
-	
 
-}
 
 .btnList{
 	width: 100%;
@@ -126,9 +126,14 @@ a.productLink{
 	border-collapse: collapse;
 	border-spacing: 0;
 	margin: 0px auto;
+	text-align: center;
 }
 
 .cartTable > tr{
 	text-align: center;
 }
 
+li, ol, ul{
+	list-style: none;
+	display: inline-block;
+}
