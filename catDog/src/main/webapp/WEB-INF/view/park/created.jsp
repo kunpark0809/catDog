@@ -2,6 +2,7 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	String cp=request.getContextPath();
 %>
@@ -46,20 +47,7 @@
          f.tel.focus();
          return false;
      }
-     
-     str = f.lat.value;
-     if(!str) {
-         alert("지도 좌표 위치의 경도를 입력하세요. ");
-         f.lat.focus();
-         return false;
-     }
-     
-     str = f.lon.value;
-     if(!str) {
-         alert("지도 좌표 위치의 위도를 입력하세요. ");
-         f.lon.focus();
-         return false;
-     }
+
      
  	str = f.content.value;
      if(!str) {
@@ -68,6 +56,7 @@
          return false;
      }
      
+     var mode="${mode}";
      if(mode=="created"||mode=="update" && $f.main.value!="") {
  		if(! /(\.gif|\.jpg|\.png|\.jpeg)$/i.test(f.main.value)) {
  			alert('이미지 파일만 업로드 가능합니다.');
@@ -81,35 +70,6 @@
  	return true;
  }
 
- $(function(){
- 	  $("body").on("change", "input[name=upload]", function(){
- 		  if(! $(this).val()) {
- 			  return;	
- 		  }
- 		
- 		  var b=false;
- 		  $("input[name=upload]").each(function(){
- 			  if(! $(this).val()) {
- 				  b=true;
- 			  	  return false;
- 			  }
- 		  });
- 		
- 		  if(b) return;
-
- 		  var $tr, $td, $input;
- 		
- 	      $tr=$("<tr align='left' height='40' style='border-bottom: 1px solid #cccccc;'>");
- 	      $td=$("<td>", {width:"100", bgcolor:"#262626", style:"text-align: center;", html:"본문사진"});
- 	      $tr.append($td);
- 	      $td=$("<td style='padding-left:10px; color: #262626;'>");
- 	      $input=$("<input>", {type:"file", name:"upload", class:"boxTF", style:"width: 95%; height: 25px;"});
- 	      $td.append($input);
- 	      $tr.append($td);
- 	    
- 	      $("#parkb").append($tr);
- 	  });
- });
  
  
 </script>
@@ -167,20 +127,13 @@
 			      </td>
 			  </tr>
 			  
-			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-			      <td width="100" bgcolor="#262626" style="text-align: center; font-weight: bold;">썸네일사진</td>
-			      <td style="padding-left:10px; color: #262626;"> 
-			         <input type="file" name="mainUpload" class="boxTF" size="53" style="height: 25px;">
-			       </td>
-			  </tr>
-			  
-			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-			      <td width="100" bgcolor="#262626" style="text-align: center; font-weight: bold;">본문사진</td>
-			      <td style="padding-left:10px; color: #262626;"> 
-			         <input type="file" name="upload" class="boxTF" size="53" style="height: 25px;">
-			       </td>
-			  </tr>
-			  
+			<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
+		    	<td width="100" bgcolor="#262626" style="text-align: center; font-weight: bold;">본문사진</td>
+		    	<td style="padding-left:10px;"> 
+		       		<input type="file" name="upload" class="boxTF" size="53" style="height: 25px; color: black;">
+		       		${dto.imageFileName}
+		      	</td>
+		 	</tr>
 			</table>
 			</div>
 			<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
@@ -189,6 +142,11 @@
 			        <button type="submit" class="btn">${mode=='update'?'수정완료':'등록하기'}</button>
 			        <button type="reset" class="btn">다시입력</button>
 			        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/park/list';">${mode=='update'?'수정취소':'등록취소'}</button>
+			        	<c:if test="${mode=='update'}">
+								<input type="hidden" name="recommendNum" value="${dto.recommendNum}">
+								<input type="hidden" name="imageFilename" value="${dto.imageFileName}">
+								<input type="hidden" name="page" value="${page}">
+						</c:if>
 			      </td>
 			    </tr>
 			   </tbody>

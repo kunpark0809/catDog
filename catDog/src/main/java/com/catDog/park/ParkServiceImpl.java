@@ -1,16 +1,24 @@
 package com.catDog.park;
 
+import java.io.File;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.catDog.common.FileManager;
 import com.catDog.common.dao.CommonDAO;
+import com.catDog.customer.SessionInfo;
 
-@Service("park.parkServiceImpl")
+@Service("park.ParkServiceImpl")
 public class ParkServiceImpl implements ParkService {
 	
 	@Autowired
@@ -18,6 +26,10 @@ public class ParkServiceImpl implements ParkService {
 	
 	@Autowired
 	private FileManager fileManager;
+	
+	@Autowired
+	private ParkService service;
+	
 
 	@Override
 	public void insertPark(Park dto, String pathname) throws Exception {
@@ -25,22 +37,14 @@ public class ParkServiceImpl implements ParkService {
 			dto.setRecommendNum(dao.selectOne("park.seq"));
 			dao.insertData("park.insertPark", dto);
 			
-			if(! dto.getMainUpload().isEmpty()) {
-				String saveFilename = fileManager.doMainFileUpload(dto.getMainUpload(), pathname);
+			if(! dto.getUpload().isEmpty()) {
+				String saveFilename = fileManager.doFileUpload(dto.getUpload(), pathname);
 				if(saveFilename != null) {
 					dto.setImageFileName(saveFilename);
 					insertImgFile(dto, pathname);
 				}
 			}
-			if(! dto.getUpload().isEmpty()) {
-				for(MultipartFile mf : dto.getUpload()) {
-					String saveFilename = fileManager.doFileUpload(mf, pathname);
-					if(saveFilename == null) continue;
-					
-					dto.setImageFileName(saveFilename);
-					insertImgFile(dto, pathname);
-				}
-			}
+	
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -86,15 +90,15 @@ public class ParkServiceImpl implements ParkService {
 	}
 
 	@Override
-	public List<Park> readPark(int recommendNum) {
-		List<Park> list = null;
+	public Park readPark(int recommendNum) {
+		Park dto = null;
 		try {
-			list = dao.selectList("park.readPark",recommendNum);
+			dto = dao.selectOne("park.readPark",recommendNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		return list;
+		return dto;
 	}
 		
 
@@ -127,33 +131,25 @@ public class ParkServiceImpl implements ParkService {
 	@Override
 	public void updatePark(Park dto, String pathname) throws Exception {
 		try {
-			String saveFilename = fileManager.doFileUpload(dto.getMainUpload(), pathname);
 			
-			if(! dto.getMainUpload().isEmpty()) {
-				String ImageFileName = fileManager.doMainFileUpload(dto.getMainUpload(), pathname);
-				if(ImageFileName != null) {
-					dto.setImageFileName(saveFilename);
-					insertImgFile(dto, pathname);
-				}
-			}
+			
 			if(! dto.getUpload().isEmpty()) {
-				for(MultipartFile mf : dto.getUpload()) {
-					String ImageFileName = fileManager.doFileUpload(mf, pathname);
-					if(ImageFileName == null) continue;
-					
-					dto.setImageFileName(ImageFileName);
-					insertImgFile(dto, pathname);
-				}
+					String saveFilename=fileManager.doFileUpload(dto.getUpload(), pathname);
+					dto.setImageFileName(saveFilename);
+					updateImgFile(dto);
 			}
+
 			
 			dao.updateData("park.updatePark", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
+		
 	}
-	
 
+
+	
 	@Override
 	public void updateHitCount(int recommendNum) throws Exception {
 		try {
@@ -168,15 +164,14 @@ public class ParkServiceImpl implements ParkService {
 	@Override
 	public void deletePark(int recommendNum, String pathname, String userId) throws Exception {
 		try {
-			List<Park> list=readPark(recommendNum);
+			Park dto = readPark(recommendNum);
+	
+			if(dto==null || userId.indexOf("admin") != 0 )
+				return;
+	
+			fileManager.doFileDelete(dto.getImageFileName(), pathname);
 			
-			if(list==null || (! (userId.indexOf("admin") > 0)))
-				return;		
-			
-			for(Park dto : list) {
-				fileManager.doFileDelete(dto.getImageFileName(), pathname);
-			}
-			
+
 			dao.deleteData("park.deletePark", recommendNum);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -185,6 +180,37 @@ public class ParkServiceImpl implements ParkService {
 		
 	}
 
+	@RequestMapping(value="/park/delete", method=RequestMethod.GET)
+	public String delete(@RequestParam int recommendNum,
+						 @RequestParam String page,
+						 @RequestParam(defaultValue="all") String condition,
+						 @RequestParam(defaultValue="") String keyword,
+						 HttpSession session
+						 ) throws Exception {
+		
+		keyword = URLDecoder.decode(keyword, "utf-8");
+		String query="page="+page;
+		
+		if(keyword.length()!=0) {
+			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "utf-8");
+		}
+		
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+"uploads"+File.separator+"park";
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		try {
+			service.deletePark(recommendNum, pathname, info.getUserId());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/park/list?"+query;
+	}
+	
+	
 
 	@Override
 	public void insertRate(Park dto) throws Exception {
@@ -232,4 +258,18 @@ public class ParkServiceImpl implements ParkService {
 		}
 		
 	}
+
+
+	@Override
+	public void updateImgFile(Park dto) throws Exception {
+		try {
+			dao.updateData("park.updateImgFile", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
+
 }

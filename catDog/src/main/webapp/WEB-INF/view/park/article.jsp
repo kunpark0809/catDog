@@ -44,40 +44,39 @@
 
 
 <script type="text/javascript">
-function deletePark() {
-<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">
-	var q = "recommendNum=${dto.recommendNum}&${query}";
+function deletePark(recommendNum) {
+	<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">
+	var q = "recommendNum="+recommendNum+"&${query}";
     var url = "<%=cp%>/park/delete?" + q;
 
-    if(confirm("해당 게시물을 삭제하시겠습니까?"))
+    if(confirm("위 게시물을 삭제 하시겠습니까 ? "))
   	  location.href=url;
-</c:if>
-
+</c:if>    
 <c:if test="${sessionScope.member.userId!='admin' && sessionScope.member.userId!='admin2' && sessionScope.member.userId!='admin3'}">
-  alert("해당 게시물을 삭제할 수 없습니다.");
+  alert("게시물을 삭제할 수  없습니다.");
 </c:if>
 }
 
-function updatePark() {
-<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">
-	var q = "recommendNum=${dto.recommendNum}&page=${page}";
+function updatePark(recommendNum) {
+	<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">
+	var q = "recommendNum="+recommendNum+"&page=${page}";
     var url = "<%=cp%>/park/update?" + q;
 
     location.href=url;
 </c:if>
-
 <c:if test="${sessionScope.member.userId!='admin' && sessionScope.member.userId!='admin2' && sessionScope.member.userId!='admin3'}">
    alert("게시물을 수정할 수  없습니다.");
 </c:if>
 }
+
 </script>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=60c1097ba8f6f767297a53630f9853eb&libraries=services"></script>
 <script>
 $(function(){
 	
-	var placeName="${list.get(0).placeName}";
-	var addr="${list.get(0).addr}";
+	var placeName="${dto.placeName}";
+	var addr="${dto.addr}";
 	
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = {
@@ -174,17 +173,17 @@ $(function(){
 
 function listPage(page) {
 	var url = "<%=cp%>/park/listRate";
-	var query = "recommendNum=${list.get(0).recommendNum}&pageNo="+page;
+	var query = "recommendNum=${dto.recommendNum}&pageNo="+page;
 	var selector = "#listRate";
 	
 	ajaxHTML(url, "get", query, selector);
 }
 
-//댓글 등록
+//한줄평 등록
 $(function(){
 	$(".btnSendRate").click(function(){
 		
-		var num=${list.get(0).recommendNum};
+		var num=${dto.recommendNum};
 
 		var $tb = $(this).closest("table");
 		var content=$tb.find("textarea").val().trim();
@@ -208,7 +207,7 @@ $(function(){
 			if(state=="true") {
 				listPage(1);
 			} else if(state=="false") {
-				alert("댓글을 추가 하지 못했습니다.");
+				alert("별점을 선택한 뒤 한줄평 등록이 가능합니다.");
 			}
 		};
 		
@@ -286,33 +285,32 @@ $(function(){
 		<table style="width: 98%; margin: 10px auto 0px; border-spacing: 0px; border-collapse: collapse;">
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
 			    <td width="50%" align="left" style="padding-bottom: 20px; padding-left: 20px; font-size: 20px;">
-			        ${list.get(0).placeName}
+			        ${dto.placeName}
 			    </td>
 			    <td width="50%" align="right" style="padding-bottom: 20px; font-size: 15px; font-weight: bold;">
-			         날짜&nbsp;&nbsp;${list.get(0).created}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;조회수&nbsp;&nbsp;${list.get(0).hitCount}
+			         날짜&nbsp;&nbsp;${dto.created}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;조회수&nbsp;&nbsp;${dto.hitCount}
 			    </td>  
 			</tr>
 			
 			<tr>
 			<td colspan="2" align="center" style="padding: 10px 5px;">
 			<br><br>
-			     <c:forEach var="dto" items="${list}">
 				<img alt="" src="<%=cp%>/uploads/park/${dto.imageFileName}">
-				</c:forEach> 
+
 			  </td>
 			</tr>
 
 			<tr>
 			  <td colspan="2" align="center" style="padding: 10px 5px;" valign="top" height="50">
-			       ${list.get(0).content}
+			       ${dto.content}
 			       <br><br>
 			   </td>
 			</tr>
 			
 			<tr align="left">
 			  <td>
-			      <p style="font-weight: bold; font-size: 18px;">전화번호&nbsp;&nbsp;&nbsp;&nbsp;${list.get(0).tel}</p>
-			      <p style="font-weight: bold; font-size: 18px;">주&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소&nbsp;&nbsp;&nbsp;&nbsp;${list.get(0).addr}</p>
+			      <p style="font-weight: bold; font-size: 18px;">전화번호&nbsp;&nbsp;&nbsp;&nbsp;${dto.tel}</p>
+			      <p style="font-weight: bold; font-size: 18px;">주&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소&nbsp;&nbsp;&nbsp;&nbsp;${dto.addr}</p>
 			   <br>
 			   </td>
 			</tr>
@@ -357,10 +355,10 @@ $(function(){
 			 <tr>
 			    <td align="right">
 			       <c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">				    
-			          <button type="button" class="btn" onclick="updatepark();">수정</button>
+			         <button type="button" class="btn" onclick="updatePark('${dto.recommendNum}');">수정</button>
 			       </c:if>
 			       <c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">				    
-			          <button type="button" class="btn" onclick="deletepark();">삭제</button>
+			         <button type="button" class="btn" onclick="deletePark('${dto.recommendNum}');">삭제</button>
 			       </c:if>
 			    </td>
 			</tr>

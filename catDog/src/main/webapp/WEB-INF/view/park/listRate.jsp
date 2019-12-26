@@ -24,7 +24,7 @@
 	    <tr height='35' style='background: white;'>
 	       <td style='width: 50%; padding:5px 5px; border-right:none;'>
 	           <span><b>${vo.rate}</b></span>
-	           <span><b>${vo.nickName}</b></span>
+	           <span><b>${vo.userId}</b></span>
 	        </td>
 	       <td style='width: 50%; padding:5px 5px; border-left:none;' align='right'>
 	           <span>${vo.created}</span> |

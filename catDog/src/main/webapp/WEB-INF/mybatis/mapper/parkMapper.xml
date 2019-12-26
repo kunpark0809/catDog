@@ -25,7 +25,6 @@
 			<if test="keyword!=null and keyword!=''">
 				<include refid="where-list"/>
 			</if>
-			AND INSTR(rp.imageFileName,'main') &gt; 0
 		</where>
 		ORDER BY r.recommendNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
@@ -55,11 +54,13 @@
 	</select>
 	
 	<select id="readPark" parameterType="Integer" resultType="com.catDog.park.Park">
-		SELECT r.recommendNum, r.placeName, r.content, r.hitCount, TO_CHAR(r.created, 'yyyy.mm.dd') created, r.tel, r.addr, rp.imageFileName
+		SELECT r.recommendNum, r.num, md.userId, r.placeName, r.content, r.hitCount, TO_CHAR(r.created, 'yyyy.mm.dd') created, r.tel, r.addr, rp.imageFileName
 		FROM recommend r
+		LEFT OUTER JOIN memberDetail md ON r.num = md.num
 		JOIN recommendPic rp ON r.recommendNum = rp.recommendNum
 		WHERE r.recommendNum=#{recommendNum}
 	</select>
+
 	
 	<update id="updateHitCount" parameterType="Integer">
 		UPDATE recommend r SET hitCount=hitCount+1 WHERE recommendNum = #{recommendNum}
@@ -92,13 +93,17 @@
 	</select>
 	
 	<update id="updatePark" parameterType="com.catDog.park.Park">
-		UPDATE park SET placeName=#{placeName}, addr=#{addr}, tel=#{tel}, content=#{content}, imageFileName=#{imageFileName}
+		UPDATE recommend SET placeName=#{placeName}, addr=#{addr}, tel=#{tel}, content=#{content}
 		WHERE recommendNum=#{recommendNum}
+	</update>
 	
+	<update id="updateImgFile" parameterType="com.catDog.park.Park">
+		UPDATE recommendPic SET recommendPicNum=#{recommendPicNum}, imageFileName=#{imageFileName}, recommendNum=#{recommendNum}
+		WHERE recommendNum=#{recommendNum}
 	</update>
 	
 	<delete id="deletePark" parameterType="Integer">
-		DELETE FROM park WHERE recommendNum=#{recommendNum}
+		DELETE FROM recommend WHERE recommendNum=#{recommendNum}
 	</delete>
 	
 	<insert id="insertRate" parameterType="com.catDog.park.Park">

@@ -100,6 +100,7 @@ public String list(
 			
 			service.insertPark(dto, pathname);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		return "redirect:/park/list";
@@ -113,10 +114,10 @@ public String list(
 			@RequestParam(defaultValue="") String keyword,
 			Model model
 			) throws Exception{
-		List<Park> list = service.readPark(recommendNum);
+		Park dto = service.readPark(recommendNum);
 		
 		String query="page="+page;
-		if(list.size() == 0) {
+		if(dto == null) {
 			return "redirect:/park/list?"+query;
 		}
 		
@@ -135,7 +136,7 @@ public String list(
 		
 		model.addAttribute("page",page);
 		model.addAttribute("query",query);
-		model.addAttribute("list",list);
+		model.addAttribute("dto",dto);
 		
 		return ".park.article";
 	}
@@ -171,27 +172,26 @@ public String list(
 	
 	@RequestMapping(value="/park/update", method=RequestMethod.GET)
 	public String updateForm(
-			Park dto,
 			@RequestParam int recommendNum,
 			@RequestParam String page,
 			HttpSession session,
-			Model model) throws Exception {
+			Model model
+			) throws Exception {
 		
-		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
-		service.readPark(recommendNum);
 		
-		if (dto == null)
+		Park dto = service.readPark(recommendNum);
+		
+		if(dto == null)
 			return "redirect:/park/list?page="+page;
-
 		
-		if(! dto.getUserId().equals(info.getUserId())) {
+		if(dto.getUserId().indexOf("admin") < 0) {
 			return "redirect:/park/list?page="+page;
 		}
 		
-		model.addAttribute("dto", dto);
 		model.addAttribute("page", page);
 		model.addAttribute("mode", "update");
+		model.addAttribute("dto", dto);
 		
 		return ".park.created";
 	}
@@ -200,16 +200,19 @@ public String list(
 	public String updateSubmit(
 			Park dto,
 			@RequestParam String page,
-			HttpSession session) throws Exception {
+			HttpSession session
+			) throws Exception {
+		
 		String root=session.getServletContext().getRealPath("/");
 		String pathname=root+"uploads"+File.separator+"park";
 		
 		try {
 			service.updatePark(dto, pathname);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
-		return "redirect:/park/article?RecommendNum="+dto.getRecommendNum()+"&page="+page;
+		return "redirect:/park/article?recommendNum="+dto.getRecommendNum()+"&page="+page;
 	}
 	
 	@RequestMapping(value="/park/insertRate", method=RequestMethod.POST)

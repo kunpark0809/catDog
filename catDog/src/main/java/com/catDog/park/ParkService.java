@@ -13,12 +13,13 @@ public interface ParkService {
 	public void updateHitCount(int recommendNum) throws Exception;
 	
 	public List<Park> listPark(Map<String, Object> map);
-	public List<Park> readPark(int recommendNum);
+	public Park readPark(int recommendNum);
 	
 	public Park preReadPark(Map<String, Object> map);
 	public Park nextReadPark(Map<String, Object> map);
 	
 	public void updatePark(Park dto, String pathname) throws Exception;
+	public void updateImgFile(Park dto) throws Exception;
 	public void deletePark(int recommendNum, String pathname, String userId) throws Exception;
 	
 	public void insertRate(Park dto) throws Exception;
