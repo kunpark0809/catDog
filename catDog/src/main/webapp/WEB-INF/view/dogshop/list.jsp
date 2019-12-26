@@ -41,7 +41,7 @@ $(function(){
 		</div>
 		<div class="productList">	
 			<table>
-				<tr>
+				<tr>  
 					<c:forEach var="dto" items="${list}" varStatus="status">
 					
 						<a onclick="javascript:location.href='${articleUrl}&productNum=${dto.productNum}'" class="productLink">

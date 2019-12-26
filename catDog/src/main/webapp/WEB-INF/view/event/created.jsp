@@ -145,7 +145,7 @@ $(function() {
 					<td valign="top" style="padding:5px 0px 5px 10px;">
 						<textarea name="content" rows="12" class="boxTA" style="width: 95%;">${list.get(0).content}</textarea>
 					</td>
-				</tr>
+				</tr>  
 				<c:if test="${mode=='created'}">	
 					<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
 						<td width="100" bgcolor="#eeeeee" style="text-align: center;">썸네일사진</td>
