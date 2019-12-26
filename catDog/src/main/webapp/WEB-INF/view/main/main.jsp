@@ -40,19 +40,19 @@
 				</div>
 			</div>
 			<div class="row text-center">
-				<div class="col-md-4">
+				<div class="col-md-4" style="max-width: 30%;">
 					<img alt="" src="<%=cp%>/resource/img/소금후추맘.jpg"
 						style="width: 100%;">
 					<h4 class="service-heading">장소1</h4>
 					<p class="text-muted">멋진장소</p>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-4" style="max-width: 30%;">
 					<img alt="" src="<%=cp%>/resource/img/소금후추맘.jpg"
 						style="width: 100%;">
 					<h4 class="service-heading">장소2</h4>
 					<p class="text-muted">예쁜장소</p>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-4" style="max-width: 30%;">
 					<img alt="" src="<%=cp%>/resource/img/소금후추맘.jpg"
 						style="width: 100%;">
 					<h4 class="service-heading">장소3</h4>
@@ -72,7 +72,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-4 col-sm-6 portfolio-item">
+				<div class="col-md-4 col-sm-6 portfolio-item" style="max-width: 30%;">
 					<a class="portfolio-link" data-toggle="modal"
 						href="#portfolioModal1">
 						<div class="portfolio-hover">
@@ -88,7 +88,7 @@
 						<p class="text-muted">추천1</p>
 					</div>
 				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item">
+				<div class="col-md-4 col-sm-6 portfolio-item" style="max-width: 30%;">
 					<a class="portfolio-link" data-toggle="modal"
 						href="#portfolioModal2">
 						<div class="portfolio-hover">
@@ -103,7 +103,7 @@
 						<p class="text-muted">추천2</p>
 					</div>
 				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item">
+				<div class="col-md-4 col-sm-6 portfolio-item" style="max-width: 30%;">
 					<a class="portfolio-link" data-toggle="modal"
 						href="#portfolioModal3">
 						<div class="portfolio-hover">
@@ -118,7 +118,7 @@
 						<p class="text-muted">추천3</p>
 					</div>
 				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item">
+				<div class="col-md-4 col-sm-6 portfolio-item" style="max-width: 30%;">
 					<a class="portfolio-link" data-toggle="modal"
 						href="#portfolioModal4">
 						<div class="portfolio-hover">
@@ -133,7 +133,7 @@
 						<p class="text-muted">추천4</p>
 					</div>
 				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item">
+				<div class="col-md-4 col-sm-6 portfolio-item" style="max-width: 30%;">
 					<a class="portfolio-link" data-toggle="modal"
 						href="#portfolioModal5">
 						<div class="portfolio-hover">
@@ -148,7 +148,7 @@
 						<p class="text-muted">추천5</p>
 					</div>
 				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item">
+				<div class="col-md-4 col-sm-6 portfolio-item" style="max-width: 30%;">
 					<a class="portfolio-link" data-toggle="modal"
 						href="#portfolioModal6">
 						<div class="portfolio-hover">
@@ -177,7 +177,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-4 col-sm-6 portfolio-item">
+				<div class="col-md-4 col-sm-6 portfolio-item" style="max-width: 30%;">
 					<a class="portfolio-link" data-toggle="modal"
 						href="#portfolioModal1">
 						<div class="portfolio-hover">
@@ -192,7 +192,7 @@
 						<p class="text-muted">추천1</p>
 					</div>
 				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item">
+				<div class="col-md-4 col-sm-6 portfolio-item" style="max-width: 30%;">
 					<a class="portfolio-link" data-toggle="modal"
 						href="#portfolioModal2">
 						<div class="portfolio-hover">
@@ -207,7 +207,7 @@
 						<p class="text-muted">추천2</p>
 					</div>
 				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item">
+				<div class="col-md-4 col-sm-6 portfolio-item" style="max-width: 30%;">
 					<a class="portfolio-link" data-toggle="modal"
 						href="#portfolioModal3">
 						<div class="portfolio-hover">
@@ -222,7 +222,7 @@
 						<p class="text-muted">추천3</p>
 					</div>
 				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item">
+				<div class="col-md-4 col-sm-6 portfolio-item" style="max-width: 30%;">
 					<a class="portfolio-link" data-toggle="modal"
 						href="#portfolioModal4">
 						<div class="portfolio-hover">
@@ -237,7 +237,7 @@
 						<p class="text-muted">추천4</p>
 					</div>
 				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item">
+				<div class="col-md-4 col-sm-6 portfolio-item" style="max-width: 30%;">
 					<a class="portfolio-link" data-toggle="modal"
 						href="#portfolioModal5">
 						<div class="portfolio-hover">
@@ -252,7 +252,7 @@
 						<p class="text-muted">추천5</p>
 					</div>
 				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item">
+				<div class="col-md-4 col-sm-6 portfolio-item" style="max-width: 30%;">
 					<a class="portfolio-link" data-toggle="modal"
 						href="#portfolioModal6">
 						<div class="portfolio-hover">
@@ -281,7 +281,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-6" style="max-width: 46%;">
 					<div class="team-member">
 						<a href="#"> <img class="mx-auto rounded-circle"
 							src="<%=cp%>/resource/img/dog1.jpg" alt="">
@@ -289,7 +289,7 @@
 						<h4>댕댕이</h4>
 					</div>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-6" style="max-width: 46%;">
 					<div class="team-member">
 						<a href="#"> <img class="mx-auto rounded-circle"
 							src="<%=cp%>/resource/img/소금후추맘.jpg" alt="">
@@ -314,7 +314,9 @@
 					<span> <font color="#F2F2F2" size="4px;"><i
 							class="fas fa-check" style="color: #F2F2F2">&nbsp;</i>공지사항</font><br>
 					</span> <br>
-					<p style="color: #666666">공지사항입니다.</p>
+					<p style="color: #666666">
+						<a href="<%=cp%>/notice/article?page=1&noticeNum=43">★메리 크리스마스★</a>
+					</p>
 					<p style="color: #666666">공지사항입니다.</p>
 					<p style="color: #666666">공지사항입니다.</p>
 					<p style="color: #666666">공지사항입니다.</p>
