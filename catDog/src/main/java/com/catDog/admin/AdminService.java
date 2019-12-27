@@ -20,7 +20,7 @@ public interface AdminService {
 
 	public int yearSales(String year);
 
-	public int monthSales(String yearMonth);
+	public List<Money> monthSales(Map<String, Object> map);
 
 	
 

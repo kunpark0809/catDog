@@ -46,46 +46,65 @@ $(function(){
 function yearSalesChart(url){
 	$.getJSON(url, function(data){
 		$("#yearSales").highcharts({
-			chart: {type: 'column'},
-			title : {text : data.title},
-			xAxis : {
-				categories : ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-				crosshair : true,
-				labels: {
-	                style: {
-	                	fontSize:'15px'
-	                }
-	            }
-			},
-			yAxis : {
-				min : 0,
-				title : {
-					text : '매출(원)'
-				},
-				labels: {
-	                style: {
-	                	fontSize:'15px'
-	                }
-				}
-				
-			},
-			tooltip: {
-		       headerFormat: '<span style="font-size:15px">{point.key}</span><table>',
-		       pointFormat: '<tr><td style="color:{series.color};padding:0"></td>' +
-		           '<td style="padding:0"><b>{point.y:,.0f}원</b></td></tr>',
-		       footerFormat: '</table>',
-		       shared: true,
-		       useHTML: true
-			    },
-			plotOptions: {
-				column: {
-			    	pointPadding: 0.2,
-			    	borderWidth: 0
-			        }
-			    },
-			
-			series : data.series
-			
+			chart: {
+		        type: 'column'
+		    },
+		    title: {
+		        text: 'Stacked column chart'
+		    },
+		    xAxis: {
+		        categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
+		    },
+		    yAxis: {
+		        min: 0,
+		        title: {
+		            text: 'Total fruit consumption'
+		        },
+		        stackLabels: {
+		            enabled: true,
+		            style: {
+		                fontWeight: 'bold',
+		                color: ( // theme
+		                    Highcharts.defaultOptions.title.style &&
+		                    Highcharts.defaultOptions.title.style.color
+		                ) || 'gray'
+		            }
+		        }
+		    },
+		    legend: {
+		        align: 'right',
+		        x: -30,
+		        verticalAlign: 'top',
+		        y: 25,
+		        floating: true,
+		        backgroundColor:
+		            Highcharts.defaultOptions.legend.backgroundColor || 'white',
+		        borderColor: '#CCC',
+		        borderWidth: 1,
+		        shadow: false
+		    },
+		    tooltip: {
+		        headerFormat: '<b>{point.x}</b><br/>',
+		        pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+		    },
+		    plotOptions: {
+		        column: {
+		            stacking: 'normal',
+		            dataLabels: {
+		                enabled: true
+		            }
+		        }
+		    },
+		    series: [{
+		        name: 'John',
+		        data: [5, 3, 4, 7, 2]
+		    }, {
+		        name: 'Jane',
+		        data: [2, 2, 3, 2, 1]
+		    }, {
+		        name: 'Joe',
+		        data: [3, 4, 4, 2, 5]
+		    }]
 		});
 	
 	});	

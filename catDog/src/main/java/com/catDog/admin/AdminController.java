@@ -24,6 +24,9 @@ import com.catDog.common.MyUtil;
 import com.catDog.customer.Customer;
 import com.catDog.customer.CustomerService;
 
+import oracle.net.aso.h;
+import oracle.security.o3logon.a;
+
 @Controller("admin.adminController")
 public class AdminController {
 
@@ -220,35 +223,69 @@ public class AdminController {
 		return ".admin.money";
 	}
 
-	// 1년 매출을 월별로 보여줌
+	// 1년 매출을 월별, 품목별로
 	@RequestMapping(value = "/admin/money/yearSalesChart")
 	@ResponseBody
 	public Map<String, Object> yearSalesChart(@RequestParam(defaultValue="2019") int year) throws Exception {
 		Map<String, Object> model = new HashMap<String, Object>();
-
-		List<Map<String, Object>> list = new ArrayList<>();
-		Map<String, Object> map;
-
+	
+		Map<String, Object> map = null; // service.monthSales에 넣을때 쓸 map
+		
+		List<Money> moneyList = null;// monthSales를 return하여 받을 map
+		
+		List<Map<String, Object>> productList = null; // 한 품목의 연간 정보를 담고 있는 list
+		
+		List<List<Map<String, Object>>> series = new ArrayList<>(); // 보낼 list
+		
+		
+		for(int i = 1;i<=16;i++) {
 		map = new HashMap<>();
-		map.put("name", year + "년");
-
-		int[] sales = new int[12];
-		int yearMonth;
-
-		for (int i = 0; i < 12; i++) {
-
-			yearMonth = year * 100 + i+1;
-
-			sales[i] = service.monthSales(Integer.toString(yearMonth));
+		moneyList = new ArrayList<>();
+		productList = new ArrayList<>();
+		
+		map.put("year", year);
+		map.put("smallSortNum", i);
+		
+		moneyList = service.monthSales(map);// 한 카데고리의 연간 정보가 담겨짐
+		
+		//////여기부터 필기 보고 다시 정리해서 만들기
+		
+		
 		}
-
-		map.put("data", sales);
-
-		list.add(map);
-
-		model.put("title", year+"년 월별 매출");
-		model.put("series", list);
-
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//		List<Map<String, Object>> list = new ArrayList<>();
+//		Map<String, Object> map;
+//
+//		map = new HashMap<>();
+//		map.put("name", year + "년");
+//
+//		int[] sales = new int[12];
+//		int yearMonth;
+//
+//		for (int i = 0; i < 12; i++) {
+//
+//			yearMonth = year * 100 + i+1;
+//
+//			// sales[i] = service.monthSales(Integer.toString(yearMonth));
+//		}
+//
+//		map.put("data", sales);
+//
+//		list.add(map);
+//
+//		model.put("title", year+"년 월별 매출");
+//		model.put("series", list);
+//
 		return model;
 
 	}

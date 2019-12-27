@@ -66,18 +66,22 @@
 
 
 
-<!-- 실 거래가만 계산(마일리지 사용액은 계산되지 않음) -->
+
 <!-- 일정 기간 동안의 총 매출 구하기. 해당 월, 분기, 연별-->
 
-<!-- 월별 매출. 년도와 월을 YYYYMM 꼴로 결합해야 함 -->
-<select id="monthSales" parameterType="String" resultType="Integer">
-	SELECT NVL(SUM(purchase),0)
-	FROM request r
-	JOIN payment p ON r.requestNum =  p.requestNum
-	<![CDATA[
-		WHERE TO_CHAR(requestDate, 'YYYYMM') >= #{yearMonth} AND
-		TO_CHAR(requestDate, 'YYYYMM') < #{yearMonth}+1
+<!--모든 품목의 월별 매출(금액). 년도와 월을 YYYYMM 꼴로 결합해야 함 -->
+<select id="monthSalesByCategory" parameterType="Map" resultType="com.catDog.admin.Money">
+SELECT p.smallSortNum, ss.sortName smallSortName, TO_CHAR(requestDate,'YYYYMM') requestDate, SUM(NVL(productSum,0)) productSum FROM request r
+JOIN requestDetail rd ON r.requestNum = rd.requestNum 
+JOIN product p ON rd.productNum = p.productNum
+JOIN smallSort ss ON p.smallSortNum = ss.smallSortNum
+WHERE p.smallSortNum = #{smallSortNum}
+<![CDATA[
+		AND TO_CHAR(requestDate, 'YYYY') >= #{year} AND
+		TO_CHAR(requestDate, 'YYYY') < #{year}+1
 	]]>
+GROUP BY p.smallSortNum, ss.sortName, TO_CHAR(requestDate,'YYYYMM')
+ORDER BY requestDate ASC;
 </select>
 
 <!-- 분기별 매출. 년도와 첫 월을 YYYYMM 꼴로 결합해야 함 -->

@@ -17,16 +17,16 @@ public class AdminServiceImpl implements AdminService {
 
 	
 	@Override
-	public int monthSales(String yearMonth) {
-		int result = -1;
+	public List<Money> monthSales(Map<String, Object> map) {
+		List<Money> list = null;
 
 		try {
-			result = dao.selectOne("admin.monthSales", yearMonth);
+			list = dao.selectOne("admin.monthSalesByCategory", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return result;
+		return list;
 	}
 	
 	@Override
