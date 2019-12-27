@@ -22,19 +22,19 @@
 	<tbody id='listRateBody'>
 	<c:forEach var="vo" items="${listRate}">
 	    <tr height='35' style='background: white;'>
-	       <td style='width: 50%; padding:5px 5px; border-right:none;'>
-	       	
-	       	<span><b>${vo.userId}</b></span>
+	       <td style='width: 50%; padding:5px 5px; border-right:none; text-align: left;'>
 	       	
 			<c:forEach  var="i" begin="1" end="5" step="1">
 				<c:if test="${i<=vo.rate}">
-					<span><img src="<%=cp%>/resource/img/starred.png" width="50px;"></span>
+					<span><img src="<%=cp%>/resource/img/starred.png" width="25px;"></span>
 				</c:if>
 				<c:if test="${i>vo.rate}">
-					<span><img src="<%=cp%>/resource/img/stargray.png" width="50px;"></span>
+					<span><img src="<%=cp%>/resource/img/stargray.png" width="25px;"></span>
 				</c:if>
 			</c:forEach>
 	          
+	      
+	       	
 	        </td>
 	       <td style='width: 50%; padding:5px 5px; border-left:none;' align='right'>
 	           <span>${vo.created}</span> |
@@ -44,8 +44,10 @@
 	        </td>
 	    </tr>
 	    <tr>
-	        <td colspan='2' valign='top' style='padding:5px 5px; width: 100%; border-bottom: 1px solid;' align="left">
-	              ${vo.content}
+	     	<td colspan='2' valign='top' style='padding:5px 5px; width: 100%; border-bottom: 1px solid;' align="left">
+	     	<b>${vo.nickName}</b>
+	        <br>
+	           ${vo.content}
 	        </td>
 	    </tr>
 	    

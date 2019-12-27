@@ -98,7 +98,7 @@
 	</update>
 	
 	<update id="updateImgFile" parameterType="com.catDog.park.Park">
-		UPDATE recommendPic SET recommendPicNum=#{recommendPicNum}, imageFileName=#{imageFileName}, recommendNum=#{recommendNum}
+		UPDATE recommendPic SET imageFileName=#{imageFileName}
 		WHERE recommendNum=#{recommendNum}
 	</update>
 	
@@ -108,12 +108,13 @@
 	
 	<insert id="insertRate" parameterType="com.catDog.park.Park">
 		INSERT INTO recommendRate(rateNum, recommendNum, num, rate, content, sortNum)
-			VALUES (recommendRate_seq.NEXTVAL, #{recommendNum}, #{num}, #{rate}, #{content}, 1)
+		VALUES (recommendRate_seq.NEXTVAL, #{recommendNum}, #{num}, #{rate}, #{content}, 1)
 	</insert>
 	
 	<select id="listRate" parameterType="map" resultType="com.catDog.park.Park">
-		SELECT rr.rateNum, r.recommendNum, rr.num, rr.rate, rr.content, TO_CHAR(rr.created, 'yyyy.mm.dd') created, rr.sortNum
+		SELECT rr.rateNum, r.recommendNum, rr.num, rr.rate, rr.content, TO_CHAR(rr.created, 'yyyy.mm.dd') created, rr.sortNum, md.nickName
 		FROM recommendRate rr
+		LEFT OUTER JOIN memberDetail md ON rr.num = md.num
 		JOIN recommend r ON r.recommendNum = rr.recommendNum
 		WHERE r.recommendNum=#{recommendNum}
 		ORDER BY rr.rateNum DESC

@@ -9,9 +9,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>박서현</title>
+<title>Insert title here</title>
 </head>
 <body>
+
+꿀팁 리스트입니다
 
 </body>
 </html>

@@ -80,7 +80,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 text-center">
-					<p class="section-heading text-uppercase" style="font-size: 40px; border-bottom: 2px solid;">공원/산책</p>
+					<p class="section-heading text-uppercase" style="font-size: 45px; font-weight:bold; border-bottom: 3px solid; border-bottom-width: 100%; padding-bottom: 20px;">공원/산책</p>
 				</div>
 			</div>
     	</div>

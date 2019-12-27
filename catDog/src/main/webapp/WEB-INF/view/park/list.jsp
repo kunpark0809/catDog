@@ -77,7 +77,6 @@ function searchList() {
 					<img alt="" src="<%=cp%>/uploads/park/${dto.imageFileName}" width="400" style="padding-top: 15px;"><br>
 					<span class="placeName" onclick="javascript:article('${dto.recommendNum}');" style="font-weight: bold; font-size: 24px;">${dto.placeName}</span><br>
 				</a>
-					<span class="content" onclick="javascript:article('${dto.recommendNum}');" style="font-size: 18px;">${dto.content}</span>	
 					<p><i class="fas fa-eye"></i>&nbsp;&nbsp;${dto.hitCount}</p>
 				
 			</c:forEach>
