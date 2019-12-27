@@ -53,7 +53,7 @@ function searchList() {
 		         </form>
 		      </td>
 		      </tr>
-		      </table>
+		     </table>
 		      
 		      <table>
 		      <tr>
@@ -70,6 +70,7 @@ function searchList() {
 		  	 </tr>
 			</table>
   
+
 	<div class="parklist">	
 			<c:forEach var="dto" items="${list}">
 				<a onclick="javascript:location.href='${articleUrl}&recommendNum=${dto.recommendNum}'" style="color: #262626;">
@@ -85,8 +86,9 @@ function searchList() {
 		<div class="paging">
 			${dataCount==0?"게시판에 등록된 글이 없습니다.":paging}
 		</div>
-		</div>
+	</div>
 
-		
+	
+
 	
 </section>
