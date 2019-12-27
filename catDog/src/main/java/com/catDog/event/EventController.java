@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 // import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.catDog.common.FileManager;
 import com.catDog.common.MyUtil;
 import com.catDog.customer.SessionInfo;
 
@@ -28,6 +30,9 @@ public class EventController {
 	private EventService service;
 	@Autowired
 	private MyUtil myUtil;
+	
+	@Autowired
+	private FileManager fileManager;
 	
 	@RequestMapping(value="/event/list")
 	public String list(@RequestParam(value="page", defaultValue="1") int current_page,
@@ -165,7 +170,7 @@ public class EventController {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/event/article?EventNum="+dto.getEventNum()+"&page="+page;
+		return "redirect:/event/article?eventNum="+dto.getEventNum()+"&page="+page;
 	}
 	
 	@RequestMapping(value="/event/delete", method=RequestMethod.GET)
@@ -192,6 +197,30 @@ public class EventController {
 		}
 		
 		return "redirect:/event/list?"+query;
+	}
+	@RequestMapping(value="/event/update/deleteFile", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteFile(@RequestParam int eventPicNum, HttpServletResponse resp,
+										  HttpSession session) throws Exception {
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "event";
+		
+		Event dto = service.readFile(eventPicNum);
+		if(dto!=null) {
+			fileManager.doFileDelete(dto.getImageFileName(), pathname);
+		}
+		
+		Map<String, Object> model = new HashMap<String, Object>();
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("field", "eventPicNum");
+			map.put("eventPicNum", eventPicNum);
+			service.deleteFile(map);
+			model.put("state", "true");
+		} catch (Exception e) {
+			model.put("state", "false");
+		}
+		return model;
 	}
 
 	@RequestMapping(value="/event/listReply")
@@ -253,11 +282,13 @@ public class EventController {
 	@ResponseBody
 	public Map<String, Object> deleteReply(@RequestParam Map<String, Object> paramMap) {
 		String state="true";
+		
 		try {
 			service.deleteReply(paramMap);
 		} catch (Exception e) {
 			state="false";
 		}
+		
 		Map<String, Object> map = new HashMap<>();
 				map.put("state", state);
 		return map;

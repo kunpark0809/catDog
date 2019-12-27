@@ -8,6 +8,7 @@ public class Reply {
 	private String content;
 	private String created;
 	private int answer;
+	private int answerCount;
 	
 	public int getEventReplyNum() {
 		return eventReplyNum;
@@ -50,6 +51,12 @@ public class Reply {
 	}
 	public void setAnswer(int answer) {
 		this.answer = answer;
+	}
+	public int getAnswerCount() {
+		return answerCount;
+	}
+	public void setAnswerCount(int answerCount) {
+		this.answerCount = answerCount;
 	}
 	
 	

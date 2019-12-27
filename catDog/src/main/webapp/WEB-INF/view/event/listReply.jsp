@@ -22,7 +22,7 @@
 		<c:forEach var="vo" items="${listReply}">
 			<tr height='35' style='background: #eeeeee;'>
 				<td width='50%' style='padding:5px 5px; border:1px solid #cccccc; border-right:none;'>
-					<span>${vo.userName}</span>
+					<span>${vo.userId}</span>
 				</td>
 				<td width='50%' style='padding:5px 5px; border:1px solid #cccccc; border-left:none;' align='right'>
 					<span>${vo.created}</span>

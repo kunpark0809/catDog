@@ -165,7 +165,7 @@ function countReplyAnswer(answer) {
 }
 
 $(function(){
-	$("body").on("click", ".btnReplyAnswerLayOut", function(){
+	$("body").on("click", ".btnReplyAnswerLayout", function(){
 		var $trReplyAnswer = $(this).closest("tr").next();
 		
 		var isVisible = $trReplyAnswer.is(':visible');
@@ -178,14 +178,14 @@ $(function(){
 			
 			listReplyAnswer(eventReplyNum);
 			
-			countReplyAnswer(EventReplyNum);
+			countReplyAnswer(eventReplyNum);
 		}
 	});
 });
 
 $(function(){
 	$("body").on("click", ".btnSendReplyAnswer", function(){
-		var eventNum="${dto.eventNum}";
+		var eventNum="${list.get(0).eventNum}";
 		var eventReplyNum = $(this).attr("data-eventReplyNum");
 		var $td = $(this).closest("td");
 		var content=$td.find("textarea").val().trim();
@@ -219,7 +219,7 @@ $(function(){
 		var answer=$(this).attr("data-answer");
 		
 		var url="<%=cp%>/event/deleteReply";
-		var query="evnetReplyNum="+eventReplyNum+"&mode=answer";
+		var query="eventReplyNum="+eventReplyNum+"&mode=answer";
 		
 		var fn = function(data) {
 			listReplyAnswer(answer);

@@ -29,7 +29,7 @@ public class EventServiceImpl implements EventService {
 				String saveFilename = fileManager.doMainFileUpload(dto.getMainUpload(), pathname);
 				if(saveFilename != null) {
 					dto.setImageFileName(saveFilename);
-					insertImgFile(dto, pathname);
+					insertImgFile(dto);
 				}
 			}
 			if(! dto.getUpload().isEmpty()) {
@@ -38,7 +38,7 @@ public class EventServiceImpl implements EventService {
 					if(saveFilename == null) continue;
 					
 					dto.setImageFileName(saveFilename);
-					insertImgFile(dto, pathname);
+					insertImgFile(dto);
 				}
 			}
 		} catch (Exception e) {
@@ -49,7 +49,7 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public void insertImgFile(Event dto, String pathname) throws Exception {
+	public void insertImgFile(Event dto) throws Exception {
 		try {
 			dao.insertData("event.insertImgFile", dto);
 		} catch (Exception e) {
@@ -131,22 +131,23 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public void updateEvent(Event dto, String pathname) throws Exception {
 		try {
-			String saveFilename=fileManager.doFileUpload(dto.getMainUpload(), pathname);
-			
 			if(! dto.getMainUpload().isEmpty()) {
-				String ImageFileName = fileManager.doMainFileUpload(dto.getMainUpload(), pathname);
-				if(ImageFileName != null) {
-					dto.setImageFileName(saveFilename);
-					insertImgFile(dto, pathname);
+				String imageFileName = fileManager.doMainFileUpload(dto.getMainUpload(), pathname);
+				if(imageFileName != null) {
+					fileManager.doFileDelete(dto.getImageFileName(), pathname);
+					
+					dto.setImageFileName(imageFileName);
+					updatePic(dto);
 				}
 			}
+			
 			if(! dto.getUpload().isEmpty()) {
 				for(MultipartFile mf : dto.getUpload()) {
-					String ImageFileName = fileManager.doFileUpload(mf, pathname);
-					if(ImageFileName == null) continue;
+					String imageFileName = fileManager.doFileUpload(mf, pathname);
+					if(imageFileName == null) continue;
 					
-					dto.setImageFileName(ImageFileName);
-					insertImgFile(dto, pathname);
+					dto.setImageFileName(imageFileName);
+					insertImgFile(dto);
 				}
 			}
 			
@@ -194,6 +195,42 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
+	public List<Event> listFile(int eventNum) {
+		List<Event> listFile=null;
+		
+		try {
+			listFile=dao.selectList("event.listFile", eventNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return listFile;
+	}
+	
+	@Override
+	public Event readFile(int eventPicNum) {
+		Event dto=null;
+		
+		try {
+			dto=dao.selectOne("event.readFile", eventPicNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
+	
+	@Override
+	public void deleteFile(Map<String, Object> map) throws Exception {
+		try {
+			dao.deleteData("event.deleteFile", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	@Override
 	public void insertReply(Reply dto) throws Exception {
 		try {
 			dao.insertData("event.insertReply", dto);
@@ -217,26 +254,57 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	public int replyCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			result=dao.selectOne("event.replyCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
 	public void deleteReply(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
+		try {
+			dao.deleteData("event.deleteReply", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
 	}
 
 	@Override
 	public List<Reply> listReplyAnswer(int answer) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Reply> list = null;
+		try {
+			list=dao.selectList("event.listReplyAnswer", answer);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	@Override
 	public int replyAnswerCount(int answer) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result = dao.selectOne("event.replyAnswerCount", answer);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public void updatePic(Event dto) throws Exception {
+		try {
+			dao.updateData("event.updatePic", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
 	}
 
 }

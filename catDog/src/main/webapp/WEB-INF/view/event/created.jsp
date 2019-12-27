@@ -50,7 +50,7 @@ function sendOk() {
     }
 
      var mode="${mode}";
-     if(mode=="created"||mode=="update" && f.upload.value!="") {
+     if(mode=="created"||mode=="update" && f.mainUpload.value!="") {
     	if(! /(\.gif|\.jpg|\.png|\.jpeg)$/i.test(f.mainUpload.value)) {
     		alert('이미지 파일만 가능합니다.(bmp 파일은 불가) !!!');
     		f.mainUpload.focus();
@@ -60,7 +60,7 @@ function sendOk() {
      
      f.action="<%=cp%>/event/${mode}";
 
-	  f.submit();
+	 f.submit();
 }
 
 $(function(){
@@ -93,6 +93,14 @@ $(function(){
 	});
 });
 
+<c:if test="${mode=='update'}">
+function deleteFile(eventPicNum) {
+		var url="<%=cp%>/event/update/deleteFile";
+		$.post(url, {eventPicNum:eventPicNum}, function(data){
+			$("#f"+eventPicNum).remove();
+		}, "json");
+}
+</c:if>
 
 $(function() {
 		$("form input[name=startDate]").datepicker({showMonthAfterYear:true});
@@ -168,17 +176,18 @@ $(function() {
 						<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
 							<td width="100" bgcolor="#eeeeee" style="text-align: center;">썸네일사진</td>
 							<td style="padding-left:10px;">
-								<input type="file" name="mainUpload" class="boxTF" size="53" style="height: 25px;" >
+								<input type="file" name="mainUpload" class="boxTF" size="53" style="height: 25px;">
 								${image.imageFileName}
 							</td>
 						</tr>
 					</c:if>
 					<c:if test="${fn:indexOf(image.imageFileName,'main') < 0}">
-						<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
+						<tr id="f${image.eventPicNum}" align="left" height="40" style="border-bottom: 1px solid #cccccc;">
 					    	<td width="100" bgcolor="#eeeeee" style="text-align: center; font-weight: bold;">본문사진</td>
 					    	<td style="padding-left:10px;"> 
 					       		<input type="file" name="upload" class="boxTF" size="53" style="height: 25px;">
-					       		${image.imageFileName}
+					       			<a href="javascript:deleteFile('${image.eventPicNum}');"><i class="far fa-trash-alt"></i></a> 
+										${image.imageFileName}
 					      	</td>
 					 	</tr>
 					 	
@@ -186,7 +195,7 @@ $(function() {
 				</c:forEach>
 			</tbody>
 			</table>
-			
+
 			<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
 				<tr height="45">
 					<td align="center">
@@ -195,7 +204,8 @@ $(function() {
 						<button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/event/list';">${mode=='update'?'수정취소':'등록취소'}</button>
 							<c:if test="${mode=='update'}">
 								<input type="hidden" name="eventNum" value="${list.get(0).eventNum}">
-								<input type="hidden" name="imageFilename" value="${dto.imageFileName}">
+								<input type="hidden" name="eventPicNum" value="${list.get(0).eventPicNum}">
+								<input type="hidden" name="imageFilename" value="${list.get(0).imageFileName}">
 								<input type="hidden" name="page" value="${page}">
 							</c:if>
 					</td>

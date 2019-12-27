@@ -52,13 +52,13 @@
 	</select>
 	
 	<select id="readEvent" parameterType="Integer" resultType="com.catDog.event.Event">
-		SELECT e.eventNum, e.num, e.subject, e.content, e.hitCount, TO_CHAR(e.created, 'yyyy.mm.dd') created, e.startDate, e.endDate, ep.imageFileName
+		SELECT e.eventNum, e.num, e.subject, e.content, e.hitCount, TO_CHAR(e.created, 'yyyy.mm.dd') created, e.startDate, e.endDate, ep.eventPicNum, ep.imageFileName
 		FROM event e JOIN eventPic ep ON e.eventNum = ep.eventNum
 		WHERE e.eventNum=#{eventNum} AND INSTR(ep.imageFileName, 'main') = 0
 	</select>
 	
 	<select id="upReEvent" parameterType="Integer" resultType="com.catDog.event.Event">
-		SELECT e.eventNum, e.num, e.subject, e.content, e.hitCount, TO_CHAR(e.created, 'yyyy.mm.dd') created, e.startDate, e.endDate, ep.imageFileName
+		SELECT e.eventNum, e.num, e.subject, e.content, e.hitCount, TO_CHAR(e.created, 'yyyy.mm.dd') created, e.startDate, e.endDate, ep.eventPicNum, ep.imageFileName
 		FROM event e JOIN eventPic ep ON e.eventNum = ep.eventNum
 		WHERE e.eventNum=#{eventNum} 
 	</select>
@@ -92,12 +92,32 @@
 	</select>
 	
 	<update id="updateEvent" parameterType="com.catDog.event.Event">
-		UPDATE event SET subject=#{subject}, content=#{content}, imageFileName=#{imageFileName}, startDate=#{startDate}, endDate=#{endDate}
+		UPDATE event SET subject=#{subject}, content=#{content}, startDate=#{startDate}, endDate=#{endDate}
 		WHERE eventNum=#{eventNum}
+	</update>
+	
+	<update id="updatePic" parameterType="com.catDog.event.Event">
+		UPDATE eventPic SET imageFileName=#{imageFileName} WHERE eventPicNum=#{eventPicNum}
 	</update>
 	
 	<delete id="deleteEvent" parameterType="Integer">
 		DELETE FROM event WHERE eventNum=#{eventNum}
+	</delete>
+	
+	<select id="listFile" parameterType="Integer" resultType="com.catDog.event.Event">
+		SELECT eventPicNum, eventNum, imageFileName
+		FROM eventPic
+	    WHERE eventNum=#{eventNum}     
+	</select>
+	
+	<select id="readFile" parameterType="Integer" resultType="com.catDog.event.Event">
+		SELECT eventPicNum, eventNum, imageFileName
+		FROM eventPic
+	    WHERE eventPicNum=#{eventPicNum}      
+	</select>
+	
+	<delete id="deleteFile" parameterType="map">
+		DELETE FROM eventPic WHERE ${field} = #{eventPicNum}
 	</delete>
 	
 	<insert id="insertReply" parameterType="com.catDog.event.Reply">
@@ -116,9 +136,35 @@
 		LEFT OUTER JOIN (
 			SELECT answer, COUNT(*) answerCount
 			FROM eventReply WHERE answer !=0 GROUP BY answer
-		) a ON er.replyNum = a.answer
+		) a ON er.eventReplyNum = a.answer
 		WHERE eventNum=#{eventNum} AND er.answer=0
-		ORDER BY er.replyNum DESC
+		ORDER BY er.eventReplyNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<delete id="deleteReply" parameterType="map">
+		DELETE FROM eventReply WHERE
+		<if test="mode=='reply' ">
+			eventReplyNum IN (
+				SELECT eventReplyNum FROM eventReply
+					START WITH eventReplyNum=#{eventReplyNum}
+					CONNECT BY PRIOR eventReplyNum = answer
+			)
+		</if>
+		<if test="mode=='answer' ">
+			eventReplyNum = #{eventReplyNum}
+		</if>
+	</delete>
+	
+	<select id="listReplyAnswer" parameterType="Integer" resultType="com.catDog.event.Reply">
+		SELECT eventReplyNum, er.num, m.userId, er.content, er.created, answer
+		FROM eventReply er JOIN memberDetail m ON m.num = er.num
+		WHERE answer = #{answer}
+		ORDER BY eventReplyNum DESC
+	</select>
+	
+	<select id="replyAnswerCount" parameterType="Integer" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM eventReply WHERE answer = #{answer}
 	</select>
 </mapper>
