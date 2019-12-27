@@ -11,7 +11,7 @@
 	<footer class="footer">
 	<div class="info_foot_co">
 				<div class="template_width">
-					<ul style="margin: 0px 340px 0px;">
+					<ul style="margin: 0px auto; width: 1185px;">
 						<li><a href="#">회사소개&nbsp;&nbsp;&nbsp;</a></li>
 						<li><a href="#">이용약관&nbsp;&nbsp;&nbsp;</a></li>
 						<li><a href="#"><strong>개인정보취급방침&nbsp;&nbsp;&nbsp;</strong></a></li>
