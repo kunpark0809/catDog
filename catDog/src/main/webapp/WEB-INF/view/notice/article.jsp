@@ -6,7 +6,7 @@
 <%
 	String cp=request.getContextPath();
 %>
-
+<link rel="stylesheet" href="<%=cp%>/resource/css/cs.css">
 <script type="text/javascript">
 function deleteNotice(noticeNum) {
 	<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">

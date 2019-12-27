@@ -6,7 +6,7 @@
 <%
 	String cp=request.getContextPath();
 %>
-
+<link rel="stylesheet" href="<%=cp%>/resource/css/cs.css">
 <script type="text/javascript">
 function deleteQuestion(qnaNum) {
 	<c:if test="${sessionScope.member.userId==questionDto.userId || fn:indexOf(sessionScope.member.userId,'admin') == 0}">

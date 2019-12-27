@@ -88,7 +88,7 @@
 				
 			</ul>
 		</div>
-		<div class="navbar-nav text-uppercase text-Image" id="icon-image" style="float: right;">
+		<div class="navbar-nav text-uppercase text-Image" id="icon-image" style="margin: 0px auto;">
 			<ul>
 				<c:if test="${empty sessionScope.member}">
 					<li class="nav-icon"><a class="nav-link js-scroll-trigger"

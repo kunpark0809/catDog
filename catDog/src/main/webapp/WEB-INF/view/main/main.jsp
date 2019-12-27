@@ -310,21 +310,20 @@
 	<section class="main_bottom" style="background-color: #262626;">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-6" style="box-sizing: border-box;">
 					<span> <font color="#F2F2F2" size="4px;"><i
 							class="fas fa-check" style="color: #F2F2F2">&nbsp;</i>공지사항</font><br>
-					</span> <br>
-					<p style="color: #666666">
-						<a href="<%=cp%>/notice/article?page=1&noticeNum=43">★메리 크리스마스★</a>
+					</span>
+					<c:forEach var="vo" items="${list}">
+					<p >
+						<a href="${listUrl}" style="color: #666666">${vo.subject}</a>
 					</p>
-					<p style="color: #666666">공지사항입니다.</p>
-					<p style="color: #666666">공지사항입니다.</p>
-					<p style="color: #666666">공지사항입니다.</p>
+					</c:forEach>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-6" style="box-sizing: border-box;">
 					<span> <font color="#F2F2F2" size="4px;"><i
 							class="far fa-grin-hearts" style="color: #F2F2F2">&nbsp;</i>후기</font><br>
-					</span> <br>
+					</span> 
 					<p style="color: #666666">후기입니다후기입니다후기입니다후기입니다후기입니다후기입니다</p>
 					<p style="color: #666666">후기입니다후기입니다후기입니다후기입니다후기입니다후기입니다</p>
 					<p style="color: #666666">후기입니다후기입니다후기입니다후기입니다후기입니다후기입니다</p>

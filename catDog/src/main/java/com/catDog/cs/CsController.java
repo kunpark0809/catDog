@@ -39,7 +39,7 @@ public class CsController {
 	@Autowired
 	private FileManager fileManager;
 	
-	@RequestMapping(value="/notice/list")
+	@RequestMapping(value= "/notice/list")
 	public String noticeList(
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="all") String condition,
