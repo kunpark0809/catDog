@@ -155,6 +155,7 @@
 				<td>배송비</td>
 				<td>합계</td>
 			</tr>
+		<c:if test="${mode=='direct'}">
 			<tr>
 				<td><img alt="" src="<%=cp%>/uploads/dogshop/${product.imageFileName}" width="50"></td>
 				<td>${product.productName}</td>
@@ -163,6 +164,20 @@
 				<td>2,500</td>
 				<td>${product.productSum}</td>
 			</tr>
+		</c:if>
+		
+		<c:if test="${mode=='cart'}">
+			<c:forEach var="dto" items="${cartList}">
+				<tr>
+				<td><img alt="" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}" width="50"></td>
+				<td>${dto.productName}</td>
+				<td>${dto.productSum}</td>
+				<td>${dto.productCount}</td>
+				<td>2,500</td>
+				<td>${dto.productSum}</td>
+			</tr>
+			</c:forEach>
+		</c:if>
 		</table>
 	</div>
 	<div>

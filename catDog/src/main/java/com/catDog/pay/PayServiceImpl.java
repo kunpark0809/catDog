@@ -127,6 +127,17 @@ public class PayServiceImpl implements PayService{
 		
 	}
 
+
+	@Override
+	public void deleteCart(Map<String, Object> map) {
+		
+		try {
+			dao.deleteData("pay.deleteCart",map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	public List<Pay> cartList(long num) {
 		List<Pay> list = null;
@@ -149,5 +160,19 @@ public class PayServiceImpl implements PayService{
 		}
 		
 	}
+
+	@Override
+	public List<Pay> cartPayList(Map<String, Object> map) {
+		List<Pay> list = null;
+		
+		try {
+			list = dao.selectList("pay.cartPayList",map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
 
 }

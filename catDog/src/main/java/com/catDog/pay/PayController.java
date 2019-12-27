@@ -50,6 +50,21 @@ public class PayController {
 		service.insertCart(product);
 	}
 	
+	@RequestMapping(value="/pay/deleteCart")
+	public String deleteCart(
+			@RequestParam List<String> productCheck,
+			HttpSession session
+			) throws Exception{
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("num", info.getMemberIdx());
+		map.put("list", productCheck);
+		service.deleteCart(map);
+		
+		return "redirect:/pay/cart";
+	}
+	
 	@RequestMapping(value="/pay/pay", method=RequestMethod.GET)
 	public String payForm(
 			@RequestParam int productNum,
@@ -72,6 +87,30 @@ public class PayController {
 		}
 		model.addAttribute("customer",customer);
 		model.addAttribute("product",product);
+		model.addAttribute("mode","direct");
+		return ".pay.pay";
+	}
+	
+	@RequestMapping(value="/pay/cart/pay", method=RequestMethod.POST)
+	public String payForm(
+			@RequestParam List<String> productCheck,
+			Model model,
+			HttpSession session
+			) throws Exception{
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		Pay customer = null;
+		Map<String, Object> map = new HashMap<>();
+		map.put("list", productCheck);
+		
+		if(info != null) {
+			map.put("num", info.getMemberIdx());
+			customer = service.readCustomer(info.getMemberIdx());
+			List<Pay> cartList=service.cartPayList(map);
+			model.addAttribute("cartList",cartList);
+		}
+		model.addAttribute("customer",customer);
+		model.addAttribute("mode","cart");
 		return ".pay.pay";
 	}
 	

@@ -80,6 +80,40 @@ function changePrice(){
 	$("input[name=productSum]").val(count*$("#proudct_price").val());
 }
 
+function deleteCart(){
+	
+	var cnt = $("input[name=productCheck]:checked").length;
+	
+	if(cnt == 0){
+		alert("선택된 장바구니 항목이 없습니다.");
+		return;
+	}
+	
+	if(confirm("선택한 게시물을 삭제하시겠습니까? ")){
+		var f = document.cartList;
+		f.action="<%=cp%>/pay/deleteCart";
+		f.submit();
+	}
+	
+}
+
+function productPay(mode){
+	if(mode=="all"){
+		$("input[name=productCheck]").prop("checked",true);
+	}
+	
+	var cnt = $("input[name=productCheck]:checked").length;
+	
+	if(cnt == 0){
+		alert("선택된 장바구니 항목이 없습니다.");
+		return;
+	}
+	
+	var f = document.cartList;
+	f.action="<%=cp%>/pay/cart/pay";
+	f.submit();
+	
+}
 </script>
 
 <div class="shin_body">
@@ -93,7 +127,7 @@ function changePrice(){
     </div>
 
 	<c:if test="${not empty cartList}">
-		<form>
+		<form name="cartList" method="post">
 			<div class="cartList">
 				<table class="cartTable">
 				<tr>
@@ -145,12 +179,11 @@ function changePrice(){
 	
 	<div class="btnList">
         <span class="btn_left_box">
-            <button type="button" class="btn" onclick="">선택 상품 삭제</button>
-            <button type="button" class="btn" onclick="">선택 상품 찜</button>
+            <button type="button" class="btn" onclick="deleteCart();">선택 상품 삭제</button>
         </span>
         <span class="btn_right_box">
-            <button type="button" class="btn" onclick="">선택 상품 주문</button>
-            <button type="button" class="btn" onclick="">전체 상품 주문</button>
+            <button type="button" class="btn" onclick="productPay('select');">선택 상품 주문</button>
+            <button type="button" class="btn" onclick="productPay('all');">전체 상품 주문</button>
         </span>
 	</div>
 	
