@@ -24,7 +24,7 @@ import com.catDog.common.FileManager;
 import com.catDog.common.MyUtil;
 import com.catDog.customer.SessionInfo;
 
-@Controller("evert.eventController")
+@Controller("event.eventController")
 public class EventController {
 	@Autowired
 	private EventService service;

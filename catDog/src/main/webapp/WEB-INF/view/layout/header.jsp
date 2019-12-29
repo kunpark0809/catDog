@@ -70,7 +70,7 @@
 							<li><a class="nav-sub-link" href="<%=cp%>/mypage/list">내가 쓴 글</a></li>
 							<li><a class="nav-sub-link" href="<%=cp%>/mypage/list">구매정보</a></li>
 							<li><a class="nav-sub-link" href="<%=cp%>/mypage/list">출석체크</a></li>
-							<li><a class="nav-sub-link" href="<%=cp%>/mypage/list">기부</a></li>
+							<li><a class="nav-sub-link" href="<%=cp%>/mypage/donation">기부</a></li>
 						</ul></li>
 				</c:if>
 				
