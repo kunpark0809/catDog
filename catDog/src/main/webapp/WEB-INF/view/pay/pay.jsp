@@ -43,6 +43,11 @@
 			return;
 		}
 		
+		if(f.checkAgree.value!=1){
+			alert("상기 내용 확인 후 동의해주셔야 결제진행이 가능합니다.");
+			return;
+		}
+		
 		var email = f.email1.value+"@"+f.email2.value;
 		var tel = f.tel1.value+"-"+f.tel2.value+"-"+f.tel3.value;
 		
@@ -111,6 +116,7 @@
 	
 	function changePoint(){
  		var point = $("#usePoint");
+		var total = $("#total").val();
 		
 		if(point.val() < 0){
 			point.val("0");
@@ -122,12 +128,12 @@
 			point.val(${customer.mileage});
 		}
 		
-		if(point.val() > ${product.total}){
+		if(point.val() > total){
 			alert("결제금액을 초과하는 포인트 입니다.");
-			point.val(${product.total});
+			point.val(total);
 		}
 		
-		$("#purchase").val($("#total").val()-point.val()); 
+		$("#purchase").val(total-point.val()); 
 	}
 	
 	$(function(){
@@ -142,46 +148,60 @@
 			});
 		});
 	});
+	
+	$(function(){
+		$("input[name=payMethod]").click(function(){
+			if($(this).val()==0){
+				$("#bankBox").show();
+			} else{
+				$("#bankBox").hide();
+			}
+		})
+	});
 </script>
 
 
 <div>
-	<div class="payProduct">
-		<table>
-			<tr>
-				<td colspan="2">상품정보</td>
-				<td>판매가</td>
-				<td>수량</td>
-				<td>배송비</td>
-				<td>합계</td>
-			</tr>
-		<c:if test="${mode=='direct'}">
-			<tr>
-				<td><img alt="" src="<%=cp%>/uploads/dogshop/${product.imageFileName}" width="50"></td>
-				<td>${product.productName}</td>
-				<td>${product.productSum}</td>
-				<td>${product.productCount}</td>
-				<td>2,500</td>
-				<td>${product.productSum}</td>
-			</tr>
-		</c:if>
-		
-		<c:if test="${mode=='cart'}">
-			<c:forEach var="dto" items="${cartList}">
-				<tr>
-				<td><img alt="" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}" width="50"></td>
-				<td>${dto.productName}</td>
-				<td>${dto.productSum}</td>
-				<td>${dto.productCount}</td>
-				<td>2,500</td>
-				<td>${dto.productSum}</td>
-			</tr>
-			</c:forEach>
-		</c:if>
-		</table>
-	</div>
+	
 	<div>
 		<form action="" method="post" name="payForm">
+			<div class="payProduct">
+				<table>
+					<tr>
+						<td colspan="2">상품정보</td>
+						<td>판매가</td>
+						<td>수량</td>
+						<td>배송비</td>
+						<td>합계</td>
+					</tr>
+					<c:if test="${mode=='direct'}">
+						<tr>
+							<td><img alt=""
+								src="<%=cp%>/uploads/dogshop/${product.imageFileName}"
+								width="50"></td>
+							<td>${product.productName}</td>
+							<td>${product.productSum}</td>
+							<td>${product.productCount}</td>
+							<td>2,500</td>
+							<td>${product.productSum}</td>
+						</tr>
+					</c:if>
+
+					<c:if test="${mode=='cart'}">
+						<c:forEach var="dto" items="${cartList}">
+							<tr>
+								<td><input type="hidden" name="cartNum" value="${dto.cartNum}"></td>
+								<td><img alt="" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}" width="50"></td>
+								<td>${dto.productName}</td>
+								<td>${dto.productSum}</td>
+								<td>${dto.productCount}</td>
+								<td>2,500</td>
+								<td>${dto.productSum}</td>
+							</tr>
+						</c:forEach>
+					</c:if>
+				</table>
+			</div>
 			<div class="pay_customer">
 				<div class="title">
 					<h3>주문 정보</h3>
@@ -320,7 +340,7 @@
 							<tr class="">
 								<th>배송 메시지</th>
 								<td>
-									<textarea rows="" cols="" name="memo"></textarea>
+									<textarea rows="" cols="60" name="memo"></textarea>
 								</td>
 							</tr>
 						</tbody>
@@ -336,7 +356,7 @@
 						<tbody>
 							<tr>
 								<th >상품 합계 금액</th>
-								<td><strong id="" class=""><input id="total" name="total" readonly="readonly" value="${product.total}"></strong>
+								<td><strong id="" class=""><input id="total" name="total" readonly="readonly" value="${mode=='cart'? cartList.get(0).total:product.total}"></strong>
 								</td>
 							</tr>
 							<tr>
@@ -350,7 +370,7 @@
 									<th>적립 포인트</th>
 									<td>
 								
-										<span id=""><input id="" name="point" readonly="readonly" value="${product.point}"></span>원 
+										<span id=""><input id="" name="point" readonly="readonly" value="${mode=='cart'? cartList.get(0).point:product.point}"></span>원 
 								
 									</td>
 								</tr>
@@ -367,7 +387,7 @@
 							<tr>
 								<th>최종 결제 금액</th>
 								<td>
-									<strong id="" class=""><input id="purchase" name="purchase" readonly="readonly" value="${product.total}"></strong>원
+									<strong id="" class=""><input id="purchase" name="purchase" readonly="readonly" value="${mode=='cart'? cartList.get(0).total:product.total}"></strong>원
 
 								</td>
 							</tr>
@@ -390,26 +410,45 @@
 									<input id="" name="payMethod" value="1" type="radio">
 									신용카드
 								</span> 
+								<span class="">
+									<input id="" name="payMethod" value="2" type="radio">
+									계좌이체
+								</span> 
+								<span class="">
+									<input id="" name="payMethod" value="3" type="radio">
+									휴대폰결제
+								</span> 
 							</div>
 
-							<div class="">
-								<!-- 무통장입금, 카드결제 -->
-								<div id="" class=""
-									style="display: block;">
-									<p id="" class=""
-										style="display: block;">
-										최소 결제 가능 금액은 결제금액에서 배송비를 제외한 금액입니다.<br>
-									</p>
-									<p id="" class="" style="display: none;">소액 결제의 경우 PG사 정책에 따라 결제 금액 제한이 있을 수
-										있습니다.</p>
-								</div>
-							</div>
+						<div id="bankBox" class="pay_bankbook_box" style="display: none;">
+                            <em class="pay_bankbook_txt">( 무통장 입금 의 경우 입금확인 후부터 배송단계가 진행됩니다. )</em>
+                            <table>
+                            <tr>
+                                
+                                 <td>   <strong>입금자명</strong></td>
+                                  <td>  <input type="text" name="bankSender"></td>
+                              </tr>  
+                               <tr>
+                              	  <td>      <strong>입금은행</strong></td>
+	                              <td>
+	                                    <select name="bankAccount" class="chosen-select">
+	                                        <option value="">선택하세요</option>
+	                                        <option value="1">농협 355-0033-7027-63 주식회사 이에쓰씨컴퍼니</option>
+	                                        <option value="2">우리은행 1005-402-637917 주식회사 이에쓰씨컴퍼니</option>
+	                                        <option value="3">국민은행 367237-04-007878 주식회사 이에쓰씨컴퍼니</option>
+	                                        <option value="4">기업은행 061-098212-04-018 주식회사 이에쓰씨컴퍼니</option>
+	                                        <option value="5">신한은행 140-011-817118 주식회사 이에쓰씨컴퍼니</option>
+	                                    </select>
+	                                </td>
+                                </tr>
+                            </table>
+                        </div>
 
 						<!-- 최종결제금액 -->
 						<div class="" style="float: left;">
 
 							<p class="" id="">
-								<input id="" name="" value="T" type="checkbox" >
+								<input id="" name="checkAgree" value="T" type="checkbox" >
 								결제정보를 확인하였으며, 구매진행에 동의합니다.
 							
 							</p>

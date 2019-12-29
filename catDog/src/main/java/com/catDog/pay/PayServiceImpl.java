@@ -167,6 +167,12 @@ public class PayServiceImpl implements PayService{
 		
 		try {
 			list = dao.selectList("pay.cartPayList",map);
+			int total = 0;
+			for(Pay dto : list) {
+				total +=dto.getProductSum();
+			}
+			list.get(0).setTotal(total);
+			list.get(0).setPoint((int)(total*0.01));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
