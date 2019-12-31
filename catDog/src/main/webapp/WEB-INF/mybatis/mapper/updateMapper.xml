@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mypage">
+
+	<update id="updateMemberDetail" parameterType="com.catDog.customer.Customer">
+		UPDATE memberDetail SET nickName=#{nickName, jdbcType=VARCHAR}, userPic=#{userPic, jdbcType=VARCHAR}, zip=#{zip, jdbcType=VARCHAR},
+		 addr1=#{addr1, jdbcType=VARCHAR}, adde2=#{addr2, jdbcType=VARCHAR}, birth=#{birth, jdbcType=DATE} WHERE userid=#{userId}
+	</update>
+</mapper>

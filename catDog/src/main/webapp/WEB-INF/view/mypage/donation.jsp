@@ -6,6 +6,4 @@
 	String cp = request.getContextPath();
 %>
 
-<link rel="stylesheet" href="<%=cp%>/resource/css/tabs.css" type="text/css">
-
 <h1>기부 (디자인 해야함)</h1>
