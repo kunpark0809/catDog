@@ -9,7 +9,7 @@
 
 <div class="body-container" style="width: 1200px; margin: 20px auto 0px; border-spacing: 0px;">
 	<div class="body-title">
-		<h3><span style="font-family: Webdings"></span> 인사말 </h3>
+		<h3><span style="font-family: Webdings"></span> 캡틴 띠이이모오오오 ^오^7  </h3>
 	</div>
 	
 	<div>
