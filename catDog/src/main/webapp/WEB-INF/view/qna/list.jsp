@@ -42,7 +42,7 @@ function searchList() {
       <th width="100" style="color: #787878;">유형</th>
       <th style="color: #787878;">제목</th>
       <th width="100" style="color: #787878;">작성자</th>
-      <th width="80" style="color: #787878;">문의일자</th>
+      <th width="100" style="color: #787878;">문의일자</th>
       <th width="80" style="color: #787878;">처리결과</th>
   </tr>
  

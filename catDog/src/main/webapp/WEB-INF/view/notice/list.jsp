@@ -14,7 +14,7 @@ function searchList() {
 }
 </script>
 
-<div class="body-container" style="width: 700px; margin: 20px auto 0px; border-spacing: 0px;">
+<div class="body-container" style="width: 830px; margin: 20px auto 0px; border-spacing: 0px;">
 
 	<div class="body-title">
 		<h3><span style="font-family: Webdings"></span> 공지사항 </h3>
@@ -43,7 +43,7 @@ function searchList() {
 				<th width="60" style="color: #787878;">번호</th>
 				<th style="color: #787878;">제목</th>
 				<th width="100" style="color: #787878;">작성자</th>
-				<th width="80" style="color: #787878;">작성일</th>
+				<th width="100" style="color: #787878;">작성일</th>
 				<th width="60" style="color: #787878;">조회수</th>
 				<th width="50" style="color: #787878;">파일</th>
 			</tr>

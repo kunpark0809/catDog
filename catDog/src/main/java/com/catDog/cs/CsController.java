@@ -278,8 +278,9 @@ public class CsController {
 		String root = session.getServletContext().getRealPath("/");
 		String pathname = root + "uploads" + File.separator +"notice";
 		
-		Notice dto = service.readFile(noticeFileNum);
 		boolean b = false;
+		
+		Notice dto = service.readFile(noticeFileNum);
 		
 		if(dto != null) {
 			b = fileManager.doFileDownload(dto.getSaveFileName(), dto.getOriginalFileName(),

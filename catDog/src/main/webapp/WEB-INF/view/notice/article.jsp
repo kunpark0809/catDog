@@ -36,7 +36,7 @@ function updateNotice(noticeNum) {
 }
 </script>
 
-<div class="body-container" style="width: 700px; margin: 20px auto 0px; border-spacing: 0px;">
+<div class="body-container" style="width: 830px; margin: 20px auto 0px; border-spacing: 0px;">
 	<div class="alert-info">
   <i class="fas fa-info-circle"></i>
     중요하니 꼼꼼히 읽어보라냥!
