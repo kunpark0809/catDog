@@ -1,27 +1,33 @@
 package com.catDog.funeral;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Funeral {
 	private int rateNum;
 	private int recommendNum;
 	private int rate;
 	private String content;
 	private String created;
-	private int num;
+	private long num;
 	
 	private int recommendPicNum;
 	private String imageFileName;
+	private MultipartFile upload;
 	
 	private int sortNum;
 	private String placeName;
 	private String tel;
 	private int hitCount;
 	private String addr;
-	private String lat;
-	private String lon;
 	
 	private String sortName;
 	
 	private int listNum;
+	
+	private String userId;
+	private String nickName;
+	
+	private long gap;
 
 	public int getRateNum() {
 		return rateNum;
@@ -63,14 +69,7 @@ public class Funeral {
 		this.created = created;
 	}
 
-	public int getNum() {
-		return num;
-	}
-
-	public void setNum(int num) {
-		this.num = num;
-	}
-
+	
 	public int getRecommendPicNum() {
 		return recommendPicNum;
 	}
@@ -127,22 +126,6 @@ public class Funeral {
 		this.addr = addr;
 	}
 
-	public String getLat() {
-		return lat;
-	}
-
-	public void setLat(String lat) {
-		this.lat = lat;
-	}
-
-	public String getLon() {
-		return lon;
-	}
-
-	public void setLon(String lon) {
-		this.lon = lon;
-	}
-
 	public String getSortName() {
 		return sortName;
 	}
@@ -157,6 +140,46 @@ public class Funeral {
 
 	public void setListNum(int listNum) {
 		this.listNum = listNum;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public long getGap() {
+		return gap;
+	}
+
+	public void setGap(long gap) {
+		this.gap = gap;
+	}
+
+	public long getNum() {
+		return num;
+	}
+
+	public void setNum(long num) {
+		this.num = num;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public MultipartFile getUpload() {
+		return upload;
+	}
+
+	public void setUpload(MultipartFile upload) {
+		this.upload = upload;
 	}
 	
 }

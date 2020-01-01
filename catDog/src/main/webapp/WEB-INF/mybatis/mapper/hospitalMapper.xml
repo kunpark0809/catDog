@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hospital">
+	<select id="seq" resultType="Integer">
+		SELECT recommend_seq.NEXTVAL FROM dual
+	</select>
+
+	<insert id="insertHospital" parameterType="com.catDog.hospital.Hospital">
+		INSERT INTO recommend(recommendNum, sortNum, num, placeName, content, tel, addr) 
+		VALUES(#{recommendNum}, 4, #{num}, #{placeName}, #{content}, #{tel}, #{addr})
+	</insert>
+	
+	<insert id="insertImgFile" parameterType="com.catDog.hospital.Hospital">
+		INSERT INTO recommendPic(recommendPicNum, imageFileName, recommendNum) 
+		VALUES(recommendPic_seq.NEXTVAL, #{imageFileName}, #{recommendNum})
+	</insert>
+	
+	
+	<select id="listHospital" parameterType="map" resultType="com.catDog.hospital.Hospital">
+		SELECT r.recommendNum, r.placeName, r.content, r.hitCount, rp.imageFileName
+		FROM recommend r
+		JOIN recommendPic rp ON r.recommendNum = rp.recommendNum
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY r.recommendNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<sql id="where-list">
+		<if test="condition=='all'">
+			( INSTR(placeName, #{keyword}) &gt; 0
+				OR INSTR(content, #{keyword}) &gt; 0 )
+		</if>
+		<if test="condition=='placeName'">
+			INSTR(placeName, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='content'">
+			INSTR(content, #{keyword}) &gt; 0 
+		</if>
+	</sql>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(count(*), 0)
+		FROM recommend r
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<select id="readHospital" parameterType="Integer" resultType="com.catDog.hospital.Hospital">
+		SELECT r.recommendNum, r.num, md.userId, r.placeName, r.content, r.hitCount, TO_CHAR(r.created, 'yyyy.mm.dd') created, r.tel, r.addr, rp.imageFileName
+		FROM recommend r
+		LEFT OUTER JOIN memberDetail md ON r.num = md.num
+		JOIN recommendPic rp ON r.recommendNum = rp.recommendNum
+		WHERE r.recommendNum=#{recommendNum}
+	</select>
+
+	
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE recommend r SET hitCount=hitCount+1 WHERE recommendNum = #{recommendNum}
+	</update>
+	
+	<select id="preReadHospital" parameterType="map" resultType="com.catDog.hospital.Hospital">
+		SELECT recommendNum, placeName
+		FROM recommend r
+	<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			AND (recommendNum &gt; #{recommendNum})
+		</where>
+		ORDER BY recommendNum ASC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+
+	<select id="nextReadHospital" parameterType="map" resultType="com.catDog.hospital.Hospital">
+		SELECT recommendNum, placeName
+		FROM recommend r
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			AND (recommendNum &lt; #{recommendNum})
+		</where>
+		ORDER BY recommendNum DESC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+	
+	<update id="updateHospital" parameterType="com.catDog.hospital.Hospital">
+		UPDATE recommend SET placeName=#{placeName}, addr=#{addr}, tel=#{tel}, content=#{content}
+		WHERE recommendNum=#{recommendNum}
+	</update>
+	
+	<update id="updateImgFile" parameterType="com.catDog.hospital.Hospital">
+		UPDATE recommendPic SET imageFileName=#{imageFileName}
+		WHERE recommendNum=#{recommendNum}
+	</update>
+	
+	<delete id="deleteHospital" parameterType="Integer">
+		DELETE FROM recommend WHERE recommendNum=#{recommendNum}
+	</delete>
+	
+	<insert id="insertRate" parameterType="com.catDog.hospital.Hospital">
+		INSERT INTO recommendRate(rateNum, recommendNum, num, rate, content, sortNum)
+		VALUES (recommendRate_seq.NEXTVAL, #{recommendNum}, #{num}, #{rate}, #{content}, 4)
+	</insert>
+	
+	<select id="listRate" parameterType="map" resultType="com.catDog.hospital.Hospital">
+		SELECT rr.rateNum, r.recommendNum, rr.num, rr.rate, rr.content, TO_CHAR(rr.created, 'yyyy.mm.dd') created, rr.sortNum, md.nickName
+		FROM recommendRate rr
+		LEFT OUTER JOIN memberDetail md ON rr.num = md.num
+		JOIN recommend r ON r.recommendNum = rr.recommendNum
+		WHERE r.recommendNum=#{recommendNum}
+		ORDER BY rr.rateNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="rateCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM recommendRate rr
+		WHERE recommendNum=#{recommendNum}
+	</select>
+	
+	<delete id="deleteRate" parameterType="map">
+		DELETE FROM recommendRate
+		WHERE rateNum=#{rateNum}
+	</delete>
+	
+</mapper>
