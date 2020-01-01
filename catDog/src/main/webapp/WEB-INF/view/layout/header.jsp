@@ -29,8 +29,8 @@
 					<ul class="nav-sub-menu">
 						<li><a class="nav-sub-link" href="<%=cp%>/park/list">공원/산책</a></li>
 						<li><a class="nav-sub-link" href="<%=cp%>/cafe/list">카페/식당</a></li>
-						<li><a class="nav-sub-link" href="<%=cp%>/hospital/list">훈련/유치원</a></li>
-						<li><a class="nav-sub-link" href="<%=cp%>/training/list">동물병원</a></li>
+						<li><a class="nav-sub-link" href="<%=cp%>/training/list">훈련/유치원</a></li>
+						<li><a class="nav-sub-link" href="<%=cp%>/hospital/list">동물병원</a></li>
 						<li><a class="nav-sub-link" href="<%=cp%>/funeral/list">장례식장</a></li>
 					</ul></li>
 				<li class="nav-item"><a class="nav-link js-scroll-trigger">로스트펫</a>
