@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pet">
+	<select id="seq" resultType="Integer">
+		SELECT myPet_seq.NEXTVAL FROM dual
+	</select>
+
+	<insert id="insertPet" parameterType="com.catDog.pet.Pet">
+		INSERT INTO myPet(myPetNum, subject, imageFileName, num) 
+		VALUES(#{myPetNum}, #{subject}, #{imageFileName}, #{num})
+	</insert>
+	
+	<insert id="insertImgFile" parameterType="com.catDog.pet.Pet">
+		INSERT INTO myPet(imageFileName) 
+		VALUES(#{imageFileName})
+	</insert>
+	
+	<select id="listPet" parameterType="map" resultType="com.catDog.pet.Pet">
+		SELECT mp.myPetNum, mp.subject, mp.imageFileName, mp.num
+		FROM myPet mp
+		LEFT OUTER JOIN myPetLike ml ON mp.num = ml.num
+		JOIN myPetLike ml ON mp.myPetNum = ml.myPetNum
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY mp.myPetNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<sql id="where-list">
+		<if test="condition=='all'">
+			( INSTR(subject, #{keyword}) &gt; 0
+				OR INSTR(created, #{keyword}) &gt; 0 )
+		</if>
+		<if test="condition=='subject'">
+			INSTR(subject, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='created'">
+			INSTR(created, #{keyword}) &gt; 0 
+		</if>
+	</sql>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(count(*), 0)
+		FROM myPet mp
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<select id="readPet" parameterType="Integer" resultType="com.catDog.pet.Pet">
+		SELECT mp.myPetNum, mp.subject, mp.hitCount, TO_CHAR(mp.created, 'yyyy.mm.dd') created, mp.num, mp.imageFileName
+		FROM myPet mp
+		LEFT OUTER JOIN myPetLike ml ON mp.num = ml.num
+		JOIN myPetLike ml ON mp.myPetNum = ml.myPetNum
+		WHERE mp.myPetNum=#{myPetNum}
+	</select>
+
+	
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE myPet mp SET hitCount=hitCount+1 WHERE myPetNum = #{myPetNum}
+	</update>
+	
+	<select id="preReadPet" parameterType="map" resultType="com.catDog.pet.Pet">
+		SELECT myPetNum, subject
+		FROM myPet mp
+	<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			AND (myPetNum &gt; #{myPetNum})
+		</where>
+		ORDER BY myPetNum ASC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+
+	<select id="nextReadPet" parameterType="map" resultType="com.catDog.pet.Pet">
+		SELECT myPetNum, subject
+		FROM myPet mp
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			AND (myPetNum &lt; #{myPetNum})
+		</where>
+		ORDER BY myPetNum DESC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+	
+	<update id="updatePet" parameterType="com.catDog.pet.Pet">
+		UPDATE myPet SET subject=#{subject}
+		WHERE myPetNum=#{myPetNum}
+	</update>
+	
+	<update id="updateImgFile" parameterType="com.catDog.pet.Pet">
+		UPDATE myPet SET imageFileName=#{imageFileName}
+		WHERE myPetNum=#{myPetNum}
+	</update>
+	
+	<delete id="deletePet" parameterType="Integer">
+		DELETE FROM myPet WHERE myPetNum=#{myPetNum}
+	</delete>
+	
+</mapper>
