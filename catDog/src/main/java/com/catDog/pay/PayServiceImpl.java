@@ -78,9 +78,11 @@ public class PayServiceImpl implements PayService{
 	}
 
 	@Override
-	public void insertRequest(Pay pay) throws Exception {
+	public String insertRequest(Pay pay) throws Exception {
+		String requestNum = null;
 		try {
-			pay.setRequestNum(dao.selectOne("pay.requestSeq"));
+			requestNum = dao.selectOne("pay.requestSeq");
+			pay.setRequestNum(requestNum);
 			
 			if(pay.getDeliverTel1() !=null && pay.getDeliverTel1().length() !=0 && 
 					pay.getDeliverTel2() !=null && pay.getDeliverTel2().length() !=0 &&
@@ -91,7 +93,6 @@ public class PayServiceImpl implements PayService{
 
 			
 			dao.insertData("pay.insertRequest",pay);
-			dao.insertData("pay.insertRequestDetail",pay);
 			dao.insertData("pay.insertpayment",pay);
 			dao.updateData("pay.updatePoint",pay);
 			if(pay.getRefundAccount() != null && !pay.getRefundAccount().equals("")) {
@@ -101,9 +102,22 @@ public class PayServiceImpl implements PayService{
 			e.printStackTrace();
 			throw e;
 		}
-		
+		return requestNum;
 	}
 
+	@Override
+	public void insertRequestDetail(Pay pay) throws Exception {
+		try {
+			dao.insertData("pay.insertRequestDetail",pay);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+		
+		
+	}
+	
 	@Override
 	public void insertCart(Pay product) throws Exception {
 		try {
@@ -124,9 +138,19 @@ public class PayServiceImpl implements PayService{
 			e.printStackTrace();
 			throw e;
 		}
-		
 	}
 
+	@Override
+	public Pay readCart(String cartNum) throws Exception {
+		Pay dto = null;
+		try {
+			dto = dao.selectOne("pay.searchCartNum",cartNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		return dto;
+	}
 
 	@Override
 	public void deleteCart(Map<String, Object> map) {
@@ -179,6 +203,21 @@ public class PayServiceImpl implements PayService{
 		
 		return list;
 	}
+
+	@Override
+	public List<Pay> requestList(String requestNum) throws Exception {
+		List<Pay> list = null;
+		
+		try {
+			list = dao.selectList("pay.readRequest",requestNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+
+
 
 
 }

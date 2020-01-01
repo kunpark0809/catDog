@@ -2,12 +2,16 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="pay">
-	<select id="requestSeq" resultType="Integer">
+	<select id="requestSeq" resultType="String">
 		SELECT REQUEST_SEQ.NEXTVAL FROM dual
 	</select>
 	
 	<select id="customerSeq" resultType="Long">
 		SELECT CUSTOMER_SEQ.NEXTVAL FROM dual
+	</select>
+	
+	<select id="cartSeq" resultType="Long">
+		SELECT CART_SEQ.NEXTVAL FROM dual
 	</select>
 	
 	<select id="readProduct" parameterType="Integer" resultType="com.catDog.pay.Pay">
@@ -18,13 +22,17 @@
 	</select>
 	
 	<insert id="insertCart" parameterType="com.catDog.pay.Pay">
-		INSERT INTO cart(cartNum, num, productNum, productCount, productSum) VALUES(CART_SEQ.NEXTVAL, #{num}, #{productNum}, #{productCount}, #{productSum})
+		INSERT INTO cart(cartNum, num, productNum, productCount, productSum) VALUES(#{cartNum}, #{num}, #{productNum}, #{productCount}, #{productSum})
 	</insert>
 	
 	<select id="readCart" parameterType="map" resultType="com.catDog.pay.Pay">
 		SELECT cartNum, num, productNum, productCount, productSum FROM cart WHERE num = #{num} AND productNum = #{productNum}
 	</select>
-	  
+	 
+	<select id="searchCartNum" parameterType="String" resultType="com.catDog.pay.Pay">
+		SELECT cartNum, num, productNum, productCount, productSum FROM cart WHERE cartNum = #{cartNum}
+	</select>
+	
 	<select id="cartList" parameterType="Long" resultType="com.catDog.pay.Pay">
 		SELECT cartNum, num, c.productNum, productCount, productSum, pp.imageFileName, p.name productName
 		FROM cart c 
@@ -94,4 +102,15 @@
 	<update id="updatePoint" parameterType="com.catDog.pay.Pay">
 		UPDATE memberdetail SET mileage=#{mileage}+#{point} WHERE userid=#{userId}
 	</update>
+	
+	<select id="readRequest" parameterType="String" resultType="com.catDog.pay.Pay">
+	select pr.productNum, requestDate ,pr.name productName,r.requestNum, c.num, r.total, r.addr1 deliverAddr1, r.addr2 deliverAddr2, r.zip deliverZip, r.tel deliverTel, r.name deliverName, r.memo, r.status, p.payMethod, p.point usePoint, p.purchase, 
+	rd.requestDetailNum, rd.productCount, rd.productNum, rd.productSum
+	FROM request r
+	JOIN customer c ON r.num = c.num
+	JOIN requestDetail rd ON r.requestNum = rd.requestNum
+	JOIN product pr ON pr.productNum = rd.productNum
+	JOIN payment p ON r.requestNum = p.requestNum
+	WHERE  r.requestNum = #{requestNum}
+	</select>
 </mapper>

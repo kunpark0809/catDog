@@ -19,7 +19,7 @@ public class Pay {
 	private String deliverName;
 	
 	private String memo; // 배송메모
-	private int requestNum; // 주문번호
+	private String requestNum; // 주문번호
 	private String requestDate; // 주문날짜
 	private int total; // 총결제금액 (배송비포함)
 	private int status; // 진행상태
@@ -260,10 +260,10 @@ public class Pay {
 	public void setImageFileName(String imageFileName) {
 		this.imageFileName = imageFileName;
 	}
-	public int getRequestNum() {
+	public String getRequestNum() {
 		return requestNum;
 	}
-	public void setRequestNum(int requestNum) {
+	public void setRequestNum(String requestNum) {
 		this.requestNum = requestNum;
 	}
 	public String getProductNum() {

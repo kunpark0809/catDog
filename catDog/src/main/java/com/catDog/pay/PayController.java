@@ -65,7 +65,7 @@ public class PayController {
 		return "redirect:/pay/cart";
 	}
 	
-	@RequestMapping(value="/pay/pay", method=RequestMethod.GET)
+	@RequestMapping(value="/pay/direct/pay", method=RequestMethod.GET)
 	public String payForm(
 			@RequestParam int productNum,
 			@RequestParam int productCount,
@@ -83,7 +83,6 @@ public class PayController {
 		if(info != null) {
 			product.setNum(info.getMemberIdx());
 			customer = service.readCustomer(info.getMemberIdx());
-			service.insertCart(product);
 		}
 		model.addAttribute("customer",customer);
 		model.addAttribute("product",product);
@@ -91,7 +90,7 @@ public class PayController {
 		return ".pay.pay";
 	}
 	
-	@RequestMapping(value="/pay/cart/pay", method=RequestMethod.POST)
+	@RequestMapping(value="/pay/cart/payForm", method=RequestMethod.POST)
 	public String payForm(
 			@RequestParam List<String> productCheck,
 			Model model,
@@ -114,7 +113,7 @@ public class PayController {
 		return ".pay.pay";
 	}
 	
-	@RequestMapping(value="/pay/pay", method=RequestMethod.POST)
+	@RequestMapping(value="/pay/direct/pay", method=RequestMethod.POST)
 	public String paySubmit(
 			@RequestParam String productNum, 
 			Pay pay,
@@ -129,14 +128,49 @@ public class PayController {
 			pay.setUserId(info.getUserId());
 		}
 		
-		service.insertRequest(pay);
-		return ".pay.complete";
+		String requestNum = service.insertRequest(pay);
+		service.insertRequestDetail(pay);
+		return "redirect:/pay/complete?requestNum="+requestNum;
+	}
+
+	@RequestMapping(value="/pay/cart/pay", method=RequestMethod.POST)
+	public String paySubmit( 
+			@RequestParam List<String> payCartNum,
+			Pay pay,
+			HttpSession session
+			) throws Exception{
+
+		pay.setPoint(pay.getPoint()-pay.getUsePoint());	
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+	
+		if(info != null) {
+			pay.setNum(info.getMemberIdx());
+			pay.setUserId(info.getUserId());
+		}
+		
+		String requestNum = service.insertRequest(pay);
+				
+		for(String ss : payCartNum) {
+			Pay dto = service.readCart(ss);
+			dto.setRequestNum(requestNum);
+			service.insertRequestDetail(dto);
+		}
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("list", payCartNum);
+		map.put("num", info.getMemberIdx());
+		service.deleteCart(map);
+		return "redirect:/pay/complete?requestNum="+requestNum;
 	}
 	
-	@RequestMapping(value="/pay/complete")
+	@RequestMapping(value="/pay/complete", method=RequestMethod.GET)
 	public String payComplete(
-			@RequestParam String productNum 
+			@RequestParam String requestNum,
+			Model model
 			) throws Exception{
+		List<Pay> list = service.requestList(requestNum);
+		
+		model.addAttribute("list",list);
 		return ".pay.complete";
 	}
 	

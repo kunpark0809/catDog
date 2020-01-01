@@ -38,7 +38,7 @@
 		var f= document.payForm;
 
 		if(f.payMethod.value == "0"){
-			f.action = "<%=cp%>/pay/pay";
+			f.action = "<%=cp%>/pay/${mode}/pay";
 			f.submit();
 			return;
 		}
@@ -66,7 +66,7 @@
 			m_redirect_url : '<%=cp%>/pay/complete'
 		}, function(rsp) {
 			if (rsp.success) {
-				f.action = "<%=cp%>/pay/pay";
+				f.action = "<%=cp%>/pay/${mode}/pay";
 				f.submit();
 				
 				var msg = '결제가 완료되었습니다.';
@@ -116,7 +116,7 @@
 	
 	function changePoint(){
  		var point = $("#usePoint");
-		var total = $("#total").val();
+		
 		
 		if(point.val() < 0){
 			point.val("0");
@@ -128,12 +128,12 @@
 			point.val(${customer.mileage});
 		}
 		
-		if(point.val() > total){
-			alert("결제금액을 초과하는 포인트 입니다.");
-			point.val(total);
+		if(point.val() > $("#total").val()){
+			alert(point.val()+"결제금액을 초과하는 포인트 입니다.");
+			point.val($("#total").val());
 		}
 		
-		$("#purchase").val(total-point.val()); 
+		$("#purchase").val($("#total").val()-point.val()); 
 	}
 	
 	$(function(){
@@ -164,7 +164,7 @@
 <div>
 	
 	<div>
-		<form action="" method="post" name="payForm">
+		<form method="post" name="payForm">
 			<div class="payProduct">
 				<table>
 					<tr>
@@ -176,21 +176,22 @@
 					</tr>
 					<c:if test="${mode=='direct'}">
 						<tr>
+							<td><input type="hidden" name="productNum" value="${product.productNum}"> </td>
 							<td><img alt=""
 								src="<%=cp%>/uploads/dogshop/${product.imageFileName}"
 								width="50"></td>
 							<td>${product.productName}</td>
 							<td>${product.productSum}</td>
-							<td>${product.productCount}</td>
+							<td><input type="hidden" name="productCount" value="${product.productCount}">${product.productCount}</td>
 							<td>2,500</td>
-							<td>${product.productSum}</td>
+							<td><input type="hidden" name="productSum" value="${product.productSum}">${product.productSum}</td>
 						</tr>
 					</c:if>
 
 					<c:if test="${mode=='cart'}">
 						<c:forEach var="dto" items="${cartList}">
 							<tr>
-								<td><input type="hidden" name="cartNum" value="${dto.cartNum}"></td>
+								<td><input type="hidden" name="payCartNum" value="${dto.cartNum}"></td>
 								<td><img alt="" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}" width="50"></td>
 								<td>${dto.productName}</td>
 								<td>${dto.productSum}</td>
@@ -448,15 +449,12 @@
 						<div class="" style="float: left;">
 
 							<p class="" id="">
-								<input id="" name="checkAgree" value="T" type="checkbox" >
+								<input id="" name="checkAgree" value="1" type="checkbox" >
 								결제정보를 확인하였으며, 구매진행에 동의합니다.
 							
 							</p>
 							<div class="btn">
 								<input type="hidden" name="mileage" value="${customer.mileage}">
-								<input type="hidden" name="productNum" value="${product.productNum}"> 
-								<input type="hidden" name="productCount" value="${product.productCount}">
-								<input type="hidden" name="productSum" value="${product.productSum}">
 								<button type="button" onclick="pay();">결제하기</button>
 							</div>
 						</div>

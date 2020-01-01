@@ -110,7 +110,7 @@ function productPay(mode){
 	}
 	
 	var f = document.cartList;
-	f.action="<%=cp%>/pay/cart/pay";
+	f.action="<%=cp%>/pay/cart/payForm";
 	f.submit();
 	
 }

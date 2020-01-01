@@ -14,6 +14,107 @@
 
 
 <div>
+	<div class="order_table_type">
+                    <table class="table_left">
+                        <colgroup>
+                            <col style="width:15%;">
+                            <col style="width:85%;">
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <th>결제수단</th>
+                            <td><div class="pay_with_list">
+                                <strong>무통장 입금</strong>
+                                <ul>
+                                    <li>입금은행 : 농협</li>
+                                    <li>입금계좌 : 355-0033-7027-63</li>
+                                    <li>예금주명 : 주식회사 이에쓰씨컴퍼니</li>
+                                    <li>입금금액 : <strong class="deposit_money">26,480원</strong></li>
+                                    <li>입금자명 : 신승연</li>
+                                </ul>
+                            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>주문번호</th>
+                            <td>${list.get(0).requestNum}</td>
+                        </tr>
+                        <tr>
+                            <th>주문일자</th>
+                            <td>${list.get(0).requestDate}</td>
+                        </tr>
+                        <tr>
+                            <th>주문자명</th>
+                            <td>신승연</td>
+                        </tr>
+                        <tr>
+                            <th>배송정보</th>
+                            <td>
+                                <p>
+                                    <strong>신승연</strong> <br>
+                                    [08056] 서울특별시 양천구 신정로7길 17 (양천공영차고지) 111<br>
+                                      /    /  010-9911-0488<br>
+                                    남기실 말씀 : 
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>상품 금액</th>
+                            <td><strong class="order_payment_sum">26,480원</strong>
+                                <span class="add_currency"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>배송비</th>
+                            <td>기본배송 0원
+                                <span class="add_currency"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>할인 및 적립</th>
+                            <td>
+                                <ul class="order_benefit_list">
+                                    <li class="order_benefit_sale">
+                                        <em>할인 : <strong>(-) 0원</strong>
+                                            <span>(
+                                            상품 0원
+                                            , 회원 0원
+                                            , 배송비 0원
+                                            , 상품쿠폰 0원
+                                            , 주문쿠폰 0원
+                                            , 배송비쿠폰 0원
+                                            )</span>
+                                        </em>
+                                    </li>
+                                    <li class="order_benefit_mileage">
+                                        <em> 적립 포인트 : <strong>(+) 528원</strong>
+                                            <span>(
+상품 264원, 회원 264원                                            )</span>
+                                        </em>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>총 결제금액</th>
+                            <td><strong class="order_payment_sum">26,480원</strong>
+                                <span class="add_currency"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>현금영수증</th>
+                            <td>
+                                미발급
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>세금계산서</th>
+                            <td>
+                                미발급
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </div>
 	<div class="ec-base-help">
 		<h3>이용안내</h3>
 		<div class="inner">

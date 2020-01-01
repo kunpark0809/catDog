@@ -84,7 +84,7 @@ $(function(){
 
 function pay(productNum){
 	var productCount = $("input[name=productCount]").val();
-	location.href="<%=cp%>/pay/pay?productNum="+productNum+"&productCount="+productCount;
+	location.href="<%=cp%>/pay/direct/pay?productNum="+productNum+"&productCount="+productCount;
 }
 
 function changePrice(){
