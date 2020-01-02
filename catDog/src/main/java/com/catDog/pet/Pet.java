@@ -17,6 +17,8 @@ public class Pet {
 	
 	private MultipartFile upload;
 	
+	private int petLikeCount;
+	
 	public int getListNum() {
 		return listNum;
 	}
@@ -76,6 +78,12 @@ public class Pet {
 	}
 	public void setUpload(MultipartFile upload) {
 		this.upload = upload;
+	}
+	public int getPetLikeCount() {
+		return petLikeCount;
+	}
+	public void setPetLikeCount(int petLikeCount) {
+		this.petLikeCount = petLikeCount;
 	}
 	
 	

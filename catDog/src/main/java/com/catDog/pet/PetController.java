@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.catDog.common.MyUtil;
 import com.catDog.customer.SessionInfo;
@@ -39,29 +40,55 @@ public String list(
 
 	String cp = req.getContextPath();
 
-	Map<String, Object> map = new HashMap<String, Object>();
-	
-	map.put("keyword", keyword);
-	map.put("condition", condition);
-			
-	int dataCount = service.dataCount(map);
-	
 	int rows = 6;
-	int offset = (current_page-1)*rows;
-	if(offset  < 0) offset = 0;
+	int total_page;
+	int dataCount;
+
+	if(req.getMethod().equalsIgnoreCase("GET")) { // GET 방식인 경우
+		keyword = URLDecoder.decode(keyword, "utf-8");
+	}
 	
-	int total_page = myUtil.pageCount(rows, dataCount);
-	
-	map.put("rows", rows);
-	map.put("offset", offset);
-	
+    // 전체 페이지 수
+    Map<String, Object> map = new HashMap<String, Object>();
+    map.put("condition", condition);
+    map.put("keyword", keyword);
+
+	dataCount = service.dataCount(map);
+	total_page = myUtil.pageCount(rows, dataCount);
+
+	if (total_page < current_page)
+		current_page = total_page;
+
+    int offset = (current_page-1) * rows;
+	if(offset < 0) offset = 0;
+    map.put("offset", offset);
+    map.put("rows", rows);
+
 	List<Pet> list = service.listPet(map);
+
+	// 글번호 만들기
+	int listNum, n = 0;
+	for(Pet dto : list) {
+		listNum = dataCount - (offset + n);
+		dto.setListNum(listNum);
+		n++;
+	}
+
+    String query = "";
+    String listUrl = cp+"/pet/list";
+    String articleUrl = cp+"/pet/article?page=" + current_page;
+    if(keyword.length()!=0) {
+    	query = "condition=" +condition + 
+    	           "&keyword=" + URLEncoder.encode(keyword, "utf-8");	
+    }
+    
+    if(query.length()!=0) {
+    	listUrl = cp+"/pet/list?" + query;
+    	articleUrl = cp+"/pet/article?page=" + current_page + "&"+ query;
+    }
 	
-	String listUrl = cp+"/pet/list";
-	String articleUrl = cp+"/pet/article?page=" + current_page;
-	
-	String paging = myUtil.paging(current_page, total_page, listUrl);
-	
+    String paging = myUtil.paging(current_page, total_page, listUrl);
+    		
 	model.addAttribute("list", list);
 	model.addAttribute("dataCount", dataCount);
 	model.addAttribute("total_page", total_page);
@@ -70,7 +97,7 @@ public String list(
 	model.addAttribute("paging", paging);
 	
 	model.addAttribute("condition", condition);
-	model.addAttribute("keyword", keyword);		
+	model.addAttribute("keyword", keyword);
 	
 	return ".pet.list";
 }
@@ -102,7 +129,7 @@ public String list(
 		
 		return "redirect:/pet/list";
 	}
-	
+
 	@RequestMapping(value="/pet/article", method=RequestMethod.GET)
 	public String article(
 			@RequestParam int myPetNum,
@@ -119,6 +146,7 @@ public String list(
 		}
 		
 		service.updateHitCount(myPetNum);
+		dto.setPetLikeCount(service.petLikeCount(myPetNum));
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("condition", condition);
@@ -174,19 +202,20 @@ public String list(
 			HttpSession session,
 			Model model
 			) throws Exception {
+
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
 		Pet dto = service.readPet(myPetNum);
-		
-		if(dto == null)
+		if (dto == null)
 			return "redirect:/pet/list?page="+page;
-		
-		if(dto.getUserId().indexOf("admin") < 0) {
+
+		if(! dto.getUserId().equals(info.getUserId())) {
 			return "redirect:/pet/list?page="+page;
 		}
 		
+		model.addAttribute("dto", dto);
 		model.addAttribute("page", page);
 		model.addAttribute("mode", "update");
-		model.addAttribute("dto", dto);
 		
 		return ".pet.created";
 	}
@@ -197,7 +226,7 @@ public String list(
 			@RequestParam String page,
 			HttpSession session
 			) throws Exception {
-		
+	
 		String root=session.getServletContext().getRealPath("/");
 		String pathname=root+"uploads"+File.separator+"pet";
 		
@@ -209,5 +238,37 @@ public String list(
 		
 		return "redirect:/pet/article?myPetNum="+dto.getMyPetNum()+"&page="+page;
 	}
+
+	// 게시글 좋아요 추가 :  : AJAX-JSON
+	@RequestMapping(value="/pet/insertPetLike", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> insertPetLike(
+			@RequestParam int myPetNum,
+			HttpSession session
+			) {
+		String state="true";
+		int petLikeCount=0;
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		Map<String, Object> paramMap=new HashMap<>();
+		paramMap.put("myPetNum", myPetNum);
+		paramMap.put("num", info.getMemberIdx());
+		
+		try {
+			service.insertPetLike(paramMap);
+		} catch (Exception e) {
+			state="false";
+		}
+			
+		petLikeCount = service.petLikeCount(myPetNum);
+		
+		Map<String, Object> model=new HashMap<>();
+		model.put("state", state);
+		model.put("petLikeCount", petLikeCount);
+		
+		return model;
+	}
+	
+	
 	
 }

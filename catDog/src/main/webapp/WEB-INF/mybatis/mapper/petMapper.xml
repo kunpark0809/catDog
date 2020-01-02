@@ -7,20 +7,6 @@
 		VALUES(myPet_seq.NEXTVAL, #{num}, #{subject}, #{imageFileName})
 	</insert>
 	
-	<select id="listPet" parameterType="map" resultType="com.catDog.pet.Pet">
-		SELECT mp.myPetNum, mp.subject, mp.imageFileName, mp.num
-		FROM myPet mp
-		LEFT OUTER JOIN myPetLike ml ON mp.num = ml.num
-		JOIN myPetLike ml ON mp.myPetNum = ml.myPetNum
-		<where>
-			<if test="keyword!=null and keyword!=''">
-				<include refid="where-list"/>
-			</if>
-		</where>
-		ORDER BY mp.myPetNum DESC
-		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
-	</select>
-	
 	<sql id="where-list">
 		<if test="condition=='all'">
 			( INSTR(subject, #{keyword}) &gt; 0
@@ -30,7 +16,8 @@
 			INSTR(subject, #{keyword}) &gt; 0
 		</if>
 		<if test="condition=='created'">
-			INSTR(created, #{keyword}) &gt; 0 
+			( TO_CHAR(mp.created, 'YYYY-MM-DD') = #{keyword}
+				OR TO_CHAR(mp.created, 'YYYYMMDD') = #{keyword} )
 		</if>
 	</sql>
 	
@@ -44,15 +31,26 @@
 		</where>
 	</select>
 	
-	<select id="readPet" parameterType="Integer" resultType="com.catDog.pet.Pet">
-		SELECT mp.myPetNum, mp.subject, mp.hitCount, TO_CHAR(mp.created, 'yyyy.mm.dd') created, mp.num, mp.imageFileName
+	<select id="listPet" parameterType="map" resultType="com.catDog.pet.Pet">
+		SELECT mp.myPetNum, mp.subject, mp.imageFileName, mp.num, TO_CHAR(created, 'yyyy.mm.dd') as created
 		FROM myPet mp
-		LEFT OUTER JOIN myPetLike ml ON mp.num = ml.num
-		JOIN myPetLike ml ON mp.myPetNum = ml.myPetNum
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY myPetNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	 
+	<select id="readPet" parameterType="Integer" resultType="com.catDog.pet.Pet">
+		SELECT mp.myPetNum, md.nickName, md.userId, mp.subject, mp.hitCount, TO_CHAR(mp.created, 'yyyy.mm.dd') created, mp.num, mp.imageFileName
+		FROM myPet mp
+		JOIN memberDetail md ON md.num = mp.num
 		WHERE mp.myPetNum=#{myPetNum}
 	</select>
 
-	
 	<update id="updateHitCount" parameterType="Integer">
 		UPDATE myPet mp SET hitCount=hitCount+1 WHERE myPetNum = #{myPetNum}
 	</update>
@@ -84,13 +82,20 @@
 	</select>
 	
 	<update id="updatePet" parameterType="com.catDog.pet.Pet">
-		UPDATE myPet SET subject=#{subject}
+		UPDATE myPet SET subject=#{subject}, imageFileName=#{imageFileName}
 		WHERE myPetNum=#{myPetNum}
 	</update>
 	
 	<delete id="deletePet" parameterType="Integer">
 		DELETE FROM myPet WHERE myPetNum=#{myPetNum}
 	</delete>
+	
+	<insert id="insertPetLike" parameterType="map">
+		INSERT INTO myPetLike(myPetNum, num) VALUES (#{myPetNum}, #{num})
+	</insert>
+      
+	<select id="petLikeCount" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM myPetLike WHERE myPetNum=#{myPetNum}
+	</select>
 
-  	
 </mapper>
