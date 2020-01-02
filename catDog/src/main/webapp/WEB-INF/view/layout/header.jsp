@@ -11,7 +11,7 @@
 
 <!-- 헤더(카테고리) -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-	<div style="width: 1200px; margin: 0px auto;">
+	<div style="width: 1300px; margin: 0px 300px 0px 270px;">
 		<div style="float: left;">
 			<a class="navbar-brand js-scroll-trigger" href="<%=cp%>/"><img
 				alt="" width="200" src="<%=cp%>/resource/img/logos/dogcatdogcat.png">
@@ -68,8 +68,8 @@
 						<ul class="nav-sub-menu">
 							<li><a class="nav-sub-link" href="<%=cp%>/mypage/pwd">회원정보수정</a></li>
 							<li><a class="nav-sub-link" href="<%=cp%>/mypage/list">내가 쓴 글</a></li>
-							<li><a class="nav-sub-link" href="<%=cp%>/mypage/list">구매정보</a></li>
-							<li><a class="nav-sub-link" href="<%=cp%>/mypage/list">출석체크</a></li>
+							<li><a class="nav-sub-link" href="<%=cp%>/mypage/list">주문조회</a></li>
+							<li><a class="nav-sub-link" href="<%=cp%>/mypage/list">포인트조회</a></li>
 							<li><a class="nav-sub-link" href="<%=cp%>/mypage/donation">기부</a></li>
 						</ul></li>
 				</c:if>
@@ -88,7 +88,10 @@
 				
 			</ul>
 		</div>
-		<div class="navbar-nav text-uppercase text-Image" id="icon-image" style="margin: 0px auto;">
+		<div style="width: 215px; margin: 20px auto; float: right;">
+			<c:if test="${not empty sessionScope.member}">
+			<div style="margin: 12px 10px 0px 0px; float: left;">${sessionScope.member.nickName}님</div>
+			</c:if>
 			<ul>
 				<c:if test="${empty sessionScope.member}">
 					<li class="nav-icon"><a class="nav-link js-scroll-trigger"

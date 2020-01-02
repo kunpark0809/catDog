@@ -2,6 +2,7 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	String cp=request.getContextPath();
 %>
@@ -21,6 +22,10 @@
 </style>
 
 <script type="text/javascript">
+function login() {
+	location.href="<%=cp%>/member/login";
+}
+
 function deletePet(myPetNum) {
 	<c:if test="${sessionScope.member.userId=='userId' || sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">
 	var q = "myPetNum="+myPetNum+"&${query}";
@@ -30,29 +35,26 @@ function deletePet(myPetNum) {
   	  location.href=url;
 </c:if>    
 <c:if test="${sessionScope.member.userId!='userId' && sessionScope.member.userId!='admin' && sessionScope.member.userId!='admin2' && sessionScope.member.userId!='admin3'}">
-  alert("게시물을 삭제할 수  없습니다.");
+  alert("게시물을 삭제할 수 없습니다.");
 </c:if>
 }
 
 function updatePet(myPetNum) {
-	<c:if test="${sessionScope.member.userId=='userId' || sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">
-	var q = "myPetNum="+myPetNum+"&page=${page}";
-    var url = "<%=cp%>/pet/update?" + q;
+	<c:if test="${sessionScope.member.userId==dto.userId}">
+		var q = "myPetNum=${dto.myPetNum}&page=${page}";
+	    var url = "<%=cp%>/pet/update?" + q;
 
-    location.href=url;
-</c:if>
-<c:if test="${sessionScope.member.userId=='userId' && sessionScope.member.userId!='admin' && sessionScope.member.userId!='admin2' && sessionScope.member.userId!='admin3'}">
-   alert("게시물을 수정할 수  없습니다.");
-</c:if>
+	    location.href=url;
+	</c:if>
+
+	<c:if test="${sessionScope.member.userId!=dto.userId }">
+	   alert("게시물을 수정할 수 없습니다.");
+	</c:if>
 }
 
 </script>
 
 <script type="text/javascript">
-function login() {
-	location.href="<%=cp%>/member/login";
-}
-
 function ajaxJSON(url, type, query, fn) {
 	$.ajax({
 		type:type
@@ -96,14 +98,35 @@ function ajaxHTML(url, type, query, selector) {
 	});
 }
 
-//페이징 처리
+// 게시글 공감 여부
 $(function(){
-	listPage(1);
+	$(".btnSendPetLike").click(function(){
+		if(! confirm("게시물에 좋아요를 누르시겠습니까?")) {
+			return false;
+		}
+		
+		var url="<%=cp%>/pet/insertPetLike";
+		var myPetNum="${dto.myPetNum}";
+		var query = {myPetNum:myPetNum};
+		
+		var fn = function(data){
+			var state=data.state;
+			if(state=="true") {
+				var count = data.petLikeCount;
+				$("#petLikeCount").text(count);
+			} else if(state=="false") {
+				alert("좋아요는 한번만 가능합니다.");
+			}
+		};
+		
+		ajaxJSON(url, "post", query, fn);
+	});
 });
 
 </script>
 
-<div class="body-container" style="width: 700px; margin: 20px auto 10px;">
+
+<div class="body-container" style="width: 700px; margin: 20px auto 10px; text-align: center;">
 	<div class="body-title">
 		<h3>내새끼자랑</h3>
 	</div>
@@ -122,15 +145,25 @@ $(function(){
 			
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
 				<td width="50%" align="left" style="padding-left: 5px;">
-				${sessionScope.member.nickName}
+				이름 : ${dto.nickName}
 				</td>
 			</tr>
 			
 			<tr>
 				<td colspan="2" align="center" style="padding: 10px 5px;">
-					<c:forEach var="dto" items="${list}">
-					<img alt="" src="<%=cp%>/uploads/pet/${dto.imageFileName}" style="max-width:100%; height:auto; resize:both;">
-					</c:forEach>
+					<img src="<%=cp%>/uploads/pet/${dto.imageFileName}" style="max-width:100%; height:auto; resize:both;">
+				</td>
+			</tr>
+			
+			<tr style="border-bottom: 1px solid #cccccc;">
+				<td colspan="2" height="40" style="padding-bottom: 15px;" align="center">
+					<button type="button" class="btn btnSendPetLike" title="좋아요"><i class="fas fa-hand-point-up"></i>&nbsp;&nbsp;<span id="petLikeCount">${dto.petLikeCount}</span></button>
+				</td>
+			</tr>
+			
+			<tr>
+				<td align="left">
+					<button type="button" onclick="javascript:location.href='<%=cp%>/pet/list?${query}';">신고</button>
 				</td>
 			</tr>
 			
@@ -156,10 +189,10 @@ $(function(){
 		<table style="width: 100%; margin: 0px auto 20px; border-spacing: 0px;">
 			<tr height="45">
 				<td  width="300" align="left">
-					<c:if test="${sessionScope.member.userId=='userId' || sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">
+					<c:if test="${sessionScope.member.userId==dto.userId}">
 						<button type="button" class="btn" onclick="updatePet('${dto.myPetNum}');">수정</button>
 					</c:if>
-					<c:if test="${sessionScope.member.userId=='userId' || sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">
+					<c:if test="${sessionScope.member.userId==dto.userId || sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">
 						<button type="button" class="btn" onclick="deletePet('${dto.myPetNum}');">삭제</button>
 					</c:if>
 				</td>

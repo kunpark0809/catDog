@@ -20,4 +20,7 @@ public interface PetService {
 	public void updatePet(Pet dto, String pathname) throws Exception;
 	public void deletePet(int myPetNum, String pathname, String userId) throws Exception;
 	
+	public void insertPetLike(Map<String, Object> map) throws Exception;
+	public int petLikeCount(int myPetNum);
+	
 }
