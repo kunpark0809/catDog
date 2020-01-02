@@ -100,7 +100,7 @@
 							<select name="smallSortNum">
 								<option value="0">::용품 선택::</option>
 								<c:forEach var="sort" items="${sortList}">
-									<option value="${sort.smallSortNum}">${sort.sortName}</option>
+									<option value="${sort.smallSortNum}" ${list.get(0).smallSortNum==sort.smallSortNum?"selected='selected'":""}>${sort.sortName}</option>
 								</c:forEach>
 							</select>
 						</td>
@@ -108,19 +108,19 @@
 					<tr>
 						<td>용품명</td>
 						<td>
-							<input type="text" name="name">
+							<input type="text" name="name" value="${list.get(0).name}">
 						</td>
 					</tr>
 					<tr>
 						<td>가&nbsp;&nbsp;격</td>
 						<td>
-							<input type="text" name="price">
+							<input type="text" name="price" value="${list.get(0).price}">
 						</td>
 					</tr>
 					<tr align="left" style="border-bottom: 1px solid #cccccc;"> 
 				      <td width="100" bgcolor="#eeeeee" style="text-align: center; padding-top:5px;" valign="top">본문내용</td>
 				      <td valign="top" style="padding:5px 0px 5px 10px;"> 
-				        <textarea name="content" id="content" class="boxTA" style="width:98%; height: 270px;">${dto.content}</textarea>
+				        <textarea name="content" id="content" class="boxTA" style="width:98%; height: 270px;">${list.get(0).content}</textarea>
 				      </td>
 			  		</tr>
 			  		

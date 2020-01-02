@@ -34,15 +34,16 @@ public class DogShopServiceImp implements DogShopService{
 	public void insertProduct(DogShop dto, String pathname) throws Exception {
 		try {
 			dto.setProductNum(dao.selectOne("dogshop.productSeq"));
-			dao.insertData("dogshop.insertDogProduct",dto);
+			
 			
 			if(!dto.getMain().isEmpty()) {
-				String saveFilename = fileManager.doMainFileUpload(dto.getMain(), pathname);
+				String saveFilename = fileManager.doFileUpload(dto.getMain(), pathname);
 				if(saveFilename != null) {
 					dto.setImageFileName(saveFilename);
-					insertImgFile(dto);
 				}
 			}
+			
+			dao.insertData("dogshop.insertDogProduct",dto);
 			
 			if(! dto.getUpload().isEmpty()) {
 				for(MultipartFile mf : dto.getUpload()) {

@@ -117,6 +117,23 @@ public class DogShopController {
 		return ".dogshop.article";
 	}
 	
+	@RequestMapping(value="/dogshop/update", method=RequestMethod.GET)
+	public String updateForm(
+			@RequestParam String smallSortNum,
+			@RequestParam int productNum,
+			Model model
+			) throws Exception{
+		
+		List<DogShop> list = service.readProduct(productNum);
+		List<DogShop> sortList = service.smallSortList();
+		
+		model.addAttribute("sortList",sortList);
+		model.addAttribute("smallSortNum",smallSortNum);
+		model.addAttribute("list", list);
+		model.addAttribute("mode","update");
+		return ".dogshop.created";
+	}
+	
 	@RequestMapping(value="/dogshop/pay")
 	public String pay(
 			@RequestParam String productNum

@@ -13,14 +13,12 @@
 	</select>
 	
 	<select id="listDogProduct" parameterType="map" resultType="com.catDog.dogShop.DogShop">
-		SELECT p.productNum, p.name, p.price, pp.imageFileName, smallSortNum
+		SELECT productNum, name, price, imageFileName, smallSortNum
 		FROM product p
-		JOIN productPic pp ON p.productNum = pp.productNum
 		<where>
 			<if test="smallSortNum!=0">
 				smallSortNum=#{smallSortNum}
 			</if>
-				AND INSTR(pp.imageFileName,'main') &gt; 0
 		</where>
 		
 		 ORDER BY p.productNum DESC
@@ -35,8 +33,8 @@
 	</select>
 
 	<insert id="insertDogProduct" parameterType="com.catDog.dogShop.DogShop">
-		INSERT INTO product(PRODUCTNUM, NAME, PRICE, CONTENT, SMALLSORTNUM) 
-		VALUES(#{productNum}, #{name}, #{price}, #{content}, #{smallSortNum})
+		INSERT INTO product(PRODUCTNUM, NAME, PRICE, CONTENT, SMALLSORTNUM,IMAGEFILENAME) 
+		VALUES(#{productNum}, #{name}, #{price}, #{content}, #{smallSortNum},#{imageFileName})
 	</insert>
 	
 	<insert id="insertImgFile" parameterType="com.catDog.dogShop.DogShop">
@@ -51,4 +49,5 @@
 		WHERE p.productNum = #{productNum}
 	</select>
 	
+
 </mapper>

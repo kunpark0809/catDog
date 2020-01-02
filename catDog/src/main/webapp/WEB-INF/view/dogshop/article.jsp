@@ -149,6 +149,9 @@ function changePrice(){
 				<div class="product_btn">
 					<button type="button" class="shop_order" onclick="pay('${list.get(0).productNum}');">구매하기</button>
 					<button type="button" class="shop_cart" onclick="cart();">장바구니</button>
+					<button type="button" onclick="javascript:location.href='<%=cp%>/dogshop/update?smallSortNum=${list.get(0).smallSortNum}&productNum=${list.get(0).productNum}';">수정</button>
+					<button type="button" onclick="javascript:location.href='<%=cp%>/dogshop/delete?smallSortNum=${list.get(0).smallSortNum}&productNum=${list.get(0).productNum}';">삭제</button>
+			
 				</div>
 			</div>
 		</div>
@@ -163,6 +166,7 @@ function changePrice(){
 			<div class="btn_box">
 				<button type="button" class="btnDialogCanecl">취소</button>
 				<button type="button" onclick="javascript:location.href='<%=cp%>/pay/cart';">확인</button>
+				
 			</div>
 		</div>
 	</div>
