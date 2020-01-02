@@ -66,7 +66,7 @@
 				<c:if test="${not empty sessionScope.member&&fn:indexOf(sessionScope.member.userId,'admin')!=0}">
 					<li class="nav-item"><a class="nav-link js-scroll-trigger">마이페이지</a>
 						<ul class="nav-sub-menu">
-							<li><a class="nav-sub-link" href="<%=cp%>/mypage/update">회원정보수정</a></li>
+							<li><a class="nav-sub-link" href="<%=cp%>/mypage/pwd">회원정보수정</a></li>
 							<li><a class="nav-sub-link" href="<%=cp%>/mypage/list">내가 쓴 글</a></li>
 							<li><a class="nav-sub-link" href="<%=cp%>/mypage/list">주문조회</a></li>
 							<li><a class="nav-sub-link" href="<%=cp%>/mypage/list">포인트조회</a></li>
