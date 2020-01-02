@@ -288,6 +288,72 @@ public class AdminController {
 		return result;
 	}
 
+	// 3년 매출을 분기별, 품목별로
+		@RequestMapping(value = "/admin/money/quarterSalesChart")
+		@ResponseBody
+		public Map<String,Object> quarteSalesChart(@RequestParam(defaultValue = "2019") int year) throws Exception {
+			Map<String,Object> result = new HashMap<>();
+			
+			
+			Map<String, Object> map = null; // service.quarterSales에 넣을때 쓸 map
+
+			Map<String, Object> map2 = null; // JSONObject 형식으로 담을 map
+
+			List<Money> moneyList = null;// quarterSales를 return하여 받을 map
+
+			int[] data = null; // 각 월의 정보를 담을 배열.
+
+			List<Map<String, Object>> productList = new ArrayList<>(); // 보낼 list
+
+			for (int i = 1; i <= 16; i++) {
+				map = new HashMap<>();
+				map2 = new HashMap<>();
+				moneyList = new ArrayList<>();
+				
+				String name = service.getCategory(i);
+				if(i<=8) {
+					name = "개)"+name;
+				} else {
+					name = "고양이)"+name;
+				}
+				// 여기부터 다시 만들기
+				map.put("year", year);
+				map.put("smallSortNum", i);
+
+				moneyList = service.monthSales(map);// moneyList에 한 소분류의 연간 총매출정보가 담겨짐. 월별로 산출되고 없으면 0
+
+				data = new int[12];
+
+				if (moneyList != null) {
+					for (Money monthlySale : moneyList) {
+						int month = Integer.parseInt(monthlySale.getRequestDate().substring(4));// 월을 가져옴(없는지 있는지 판별해야함)
+						data[month - 1] = monthlySale.getProductSum();
+					}
+				}
+
+				// data에 담아진 소품목 연간 총매출을 map에 담기
+				map2.put("name", name);
+				map2.put("data", data);
+
+				productList.add(map2);
+
+			}
+
+			// productList에 모든 품목의 정보가 담김
+
+			result.put("productList", productList);
+			result.put("year", year);
+			
+			DecimalFormat df = new DecimalFormat("#,###");
+			
+			// result.put("totalYearSales", df.format(totalYearSales));
+			return result;
+		}
+	
+	
+	
+	
+	
 	// produces 속성 : response의 Content-Type
 	@RequestMapping(value = "/hchart/pie3d", produces = "application/json;charset=utf-8")
 	@ResponseBody

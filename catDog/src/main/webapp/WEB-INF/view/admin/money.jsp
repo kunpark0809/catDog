@@ -51,10 +51,8 @@ $(function(){
 	Highcharts.setOptions({
 		lang: {
 			thousandsSep: ','
-		},
-		legend: {
-			enabled: false
 		}
+		
 	});
 
 });

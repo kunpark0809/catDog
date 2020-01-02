@@ -90,15 +90,19 @@ ORDER BY requestDate ASC
 </select>
 
 
-<!-- 분기별 매출. 년도와 첫 월을 YYYYMM 꼴로 결합해야 함 -->
-<select id="quarterSales" parameterType="String" resultType="Integer">
-	SELECT SUM(purchase)
-	FROM request r
-	JOIN payment p ON r.requestNum =  p.requestNum
-	<![CDATA[
-		WHERE TO_CHAR(requestDate, 'YYYYMM') >= #{yearMonth} AND
-		TO_CHAR(requestDate, 'YYYYMM') < #{yearMonth}+3
+<!--모든 품목의 분기별 매출(금액). 년도와 월을 YYYYMM 꼴로 결합해야 함. 가져온 후에 결과값을 Controller에서 1~3/4~6/7~9/10~12끼리 합쳐야 함 -->
+<select id="quarterSalesByCategory" parameterType="Map" resultType="com.catDog.admin.Money">
+SELECT p.smallSortNum, ss.sortName smallSortName, TO_CHAR(requestDate,'YYYYMM') requestDate, SUM(NVL(productSum,0)) productSum FROM request r
+JOIN requestDetail rd ON r.requestNum = rd.requestNum 
+JOIN product p ON rd.productNum = p.productNum
+JOIN smallSort ss ON p.smallSortNum = ss.smallSortNum
+WHERE p.smallSortNum = #{smallSortNum}
+<![CDATA[
+		AND TO_CHAR(requestDate, 'YYYY') >= #{year} AND
+		TO_CHAR(requestDate, 'YYYY') <= #{year}+3
 	]]>
+GROUP BY p.smallSortNum, ss.sortName, TO_CHAR(requestDate,'YYYYMM')
+ORDER BY requestDate ASC
 </select>
 
 <!-- 연도별 매출. -->
