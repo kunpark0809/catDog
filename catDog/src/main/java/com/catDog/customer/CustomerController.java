@@ -75,6 +75,7 @@ public class CustomerController {
 	@RequestMapping(value = "/customer/register", method = RequestMethod.GET)
 	public String registerForm(Model model) {
 
+		model.addAttribute("menu","customer");
 		model.addAttribute("mode", "register");
 
 		return ".customer.register";

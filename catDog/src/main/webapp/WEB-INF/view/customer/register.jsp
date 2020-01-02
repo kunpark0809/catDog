@@ -127,11 +127,7 @@ function memberOk() {
 	
 	}
 	
-    
-    
-    
-    
- 	f.action = "<%=cp%>/customer/${mode}";
+    f.action = "<%=cp%>/${menu}/${mode}";
 
     f.submit();
 }

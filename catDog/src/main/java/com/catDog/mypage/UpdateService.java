@@ -5,5 +5,7 @@ import com.catDog.customer.Customer;
 public interface UpdateService {
 
 	void updateMemberDetail(Customer dto) throws Exception;
+
+	Customer readCustomer(String userId);
 	
 }

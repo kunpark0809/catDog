@@ -3,8 +3,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mypage">
 
+	<select id="readCustomer" parameterType="String" resultType="com.catDog.customer.Customer">
+		SELECT md.num, userId, name, userPwd, nickName, modify_date, email, enabled
+		FROM memberDetail md
+        JOIN customerDetail cm ON md.num = cm.num
+		WHERE userId = #{userId} AND enabled != 0
+	</select>
+	
+	<update id="updateCustomer" parameterType="map">
+		UPDATE customer SET membership = #{membership}
+		WHERE num=#{num}
+	</update>
+	
 	<update id="updateMemberDetail" parameterType="com.catDog.customer.Customer">
-		UPDATE memberDetail SET nickName=#{nickName, jdbcType=VARCHAR}, userPic=#{userPic, jdbcType=VARCHAR}, zip=#{zip, jdbcType=VARCHAR},
-		 addr1=#{addr1, jdbcType=VARCHAR}, adde2=#{addr2, jdbcType=VARCHAR}, birth=#{birth, jdbcType=DATE} WHERE userid=#{userId}
+		UPDATE memberDetail SET userPwd=#{userPwd}, nickName=#{nickName}, userPic=#{userPic, jdbcType=VARCHAR},
+		zip=#{zip}, addr1=#{addr1}, addr2=#{addr2}, birth=#{birth}, modify_date=SYSDATE
+		WHERE userId=#{userId}
+	</update>
+	
+	<update id="updateCustomerDetail" parameterType="com.catDog.customer.Customer">
+		UPDATE customerDetail0 SET name=#{name}, email=#{email}, tel=#{tel}
+		WHERE num=#{num}
 	</update>
 </mapper>
