@@ -2,6 +2,7 @@ package com.catDog.admin;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -219,75 +220,72 @@ public class AdminController {
 	@RequestMapping(value = "/admin/money")
 	public String moneyManage(@RequestParam(defaultValue = "0") int group, Model model) throws Exception {
 		model.addAttribute("group", group);
-		
+
 		return ".admin.money";
 	}
 
 	// 1년 매출을 월별, 품목별로
 	@RequestMapping(value = "/admin/money/yearSalesChart")
 	@ResponseBody
-	public Map<String, Object> yearSalesChart(@RequestParam(defaultValue="2019") int year) throws Exception {
-		Map<String, Object> model = new HashMap<String, Object>();
-	
+	public Map<String,Object> yearSalesChart(@RequestParam(defaultValue = "2020") int year) throws Exception {
+		Map<String,Object> result = new HashMap<>();
+		
+		int totalYearSales = 0;
+		
 		Map<String, Object> map = null; // service.monthSales에 넣을때 쓸 map
-		
-		List<Money> moneyList = null;// monthSales를 return하여 받을 map
-		
-		List<Map<String, Object>> productList = null; // 한 품목의 연간 정보를 담고 있는 list
-		
-		List<List<Map<String, Object>>> series = new ArrayList<>(); // 보낼 list
-		
-		
-		for(int i = 1;i<=16;i++) {
-		map = new HashMap<>();
-		moneyList = new ArrayList<>();
-		productList = new ArrayList<>();
-		
-		map.put("year", year);
-		map.put("smallSortNum", i);
-		
-		moneyList = service.monthSales(map);// 한 카데고리의 연간 정보가 담겨짐
-		
-		//////여기부터 필기 보고 다시 정리해서 만들기
-		
-		
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-//		List<Map<String, Object>> list = new ArrayList<>();
-//		Map<String, Object> map;
-//
-//		map = new HashMap<>();
-//		map.put("name", year + "년");
-//
-//		int[] sales = new int[12];
-//		int yearMonth;
-//
-//		for (int i = 0; i < 12; i++) {
-//
-//			yearMonth = year * 100 + i+1;
-//
-//			// sales[i] = service.monthSales(Integer.toString(yearMonth));
-//		}
-//
-//		map.put("data", sales);
-//
-//		list.add(map);
-//
-//		model.put("title", year+"년 월별 매출");
-//		model.put("series", list);
-//
-		return model;
 
+		Map<String, Object> map2 = null; // JSONObject 형식으로 담을 map
+
+		List<Money> moneyList = null;// monthSales를 return하여 받을 map
+
+		int[] data = null; // 각 월의 정보를 담을 배열.
+
+		List<Map<String, Object>> productList = new ArrayList<>(); // 보낼 list
+
+		for (int i = 1; i <= 16; i++) {
+			map = new HashMap<>();
+			map2 = new HashMap<>();
+			moneyList = new ArrayList<>();
+			
+			String name = service.getCategory(i);
+			if(i<=8) {
+				name = "개)"+name;
+			} else {
+				name = "고양이)"+name;
+			}
+
+			map.put("year", year);
+			map.put("smallSortNum", i);
+
+			moneyList = service.monthSales(map);// moneyList에 한 소분류의 연간 총매출정보가 담겨짐. 월별로 산출되고 없으면 0
+
+			data = new int[12];
+
+			if (moneyList != null) {
+				for (Money monthlySale : moneyList) {
+					int month = Integer.parseInt(monthlySale.getRequestDate().substring(4));// 월을 가져옴(없는지 있는지 판별해야함)
+					data[month - 1] = monthlySale.getProductSum();
+					totalYearSales += monthlySale.getProductSum();
+				}
+			}
+
+			// data에 담아진 소품목 연간 총매출을 map에 담기
+			map2.put("name", name);
+			map2.put("data", data);
+
+			productList.add(map2);
+
+		}
+
+		// productList에 모든 품목의 정보가 담김
+
+		result.put("productList", productList);
+		result.put("year", year);
+		
+		DecimalFormat df = new DecimalFormat("#,###");
+		
+		result.put("totalYearSales", df.format(totalYearSales));
+		return result;
 	}
 
 	// produces 속성 : response의 Content-Type

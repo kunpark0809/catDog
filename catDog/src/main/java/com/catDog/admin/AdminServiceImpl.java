@@ -16,12 +16,14 @@ public class AdminServiceImpl implements AdminService {
 
 
 	
+	//smallSortNum과 year를 map에 넣으면 해당 year에 상품소분류가 smallSortNum인 상품의 총매출을 월별로 산출.
+	// List<Money>로 리턴. 각각의 Money 객체는 한 월의 해당 소분류 총매출이며 해당 월에 매출이 0이면 출력하지 않음.
 	@Override
 	public List<Money> monthSales(Map<String, Object> map) {
 		List<Money> list = null;
 
 		try {
-			list = dao.selectOne("admin.monthSalesByCategory", map);
+			list = dao.selectList("admin.monthSalesByCategory", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -55,7 +57,18 @@ public class AdminServiceImpl implements AdminService {
 		return result;
 	}
 	
-	
+	@Override
+	public String getCategory(int smallSortNum) {
+		String result = null;
+		
+		try {
+			result = dao.selectOne("admin.getCategory", smallSortNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 	
 	
 

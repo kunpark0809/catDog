@@ -15,13 +15,12 @@ public interface AdminService {
 
 	public int reportCount(Map<String, Object> map);
 
-
 	public int quarterSales(String yearMonth);
 
 	public int yearSales(String year);
 
 	public List<Money> monthSales(Map<String, Object> map);
 
-	
+	public String getCategory(int smallSortNum);
 
 }

@@ -5,6 +5,7 @@ public class Money {
 	private String bigSortName, smallSortName;
 	private String requestDate;
 	private int productNum;
+	private int productSum;
 
 	public int getSmallSortNum() {
 		return smallSortNum;
@@ -44,6 +45,14 @@ public class Money {
 
 	public void setProductNum(int productNum) {
 		this.productNum = productNum;
+	}
+
+	public int getProductSum() {
+		return productSum;
+	}
+
+	public void setProductSum(int productSum) {
+		this.productSum = productSum;
 	}
 
 }
