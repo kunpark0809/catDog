@@ -86,7 +86,7 @@ ORDER BY requestDate ASC
 
 <!-- 해당 smallSortNum의 sortName을 가져오는 쿼리 -->
 <select id="getCategory" parameterType="Integer" resultType="String">
-	SELECT sortName FROM smallSort WHERE smallSortNum = #{smallSortNum}
+	SELECT sortName FROM smallSort WHERE smallSortNum = #{smallSortNum}	
 </select>
 
 

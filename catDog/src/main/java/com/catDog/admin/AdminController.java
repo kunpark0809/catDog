@@ -249,9 +249,9 @@ public class AdminController {
 			
 			String name = service.getCategory(i);
 			if(i<=8) {
-				name = "개)"+name;
-			} else {
 				name = "고양이)"+name;
+			} else if(i>=9) {
+				name = "개)"+name;
 			}
 
 			map.put("year", year);
@@ -312,10 +312,11 @@ public class AdminController {
 				
 				String name = service.getCategory(i);
 				if(i<=8) {
-					name = "개)"+name;
-				} else {
 					name = "고양이)"+name;
+				} else if (i>=9) {
+					name = "개)"+name;
 				}
+				
 				// 여기부터 다시 만들기
 				map.put("year", year);
 				map.put("smallSortNum", i);
@@ -344,7 +345,7 @@ public class AdminController {
 			result.put("productList", productList);
 			result.put("year", year);
 			
-			DecimalFormat df = new DecimalFormat("#,###");
+			// DecimalFormat df = new DecimalFormat("#,###");
 			
 			// result.put("totalYearSales", df.format(totalYearSales));
 			return result;
