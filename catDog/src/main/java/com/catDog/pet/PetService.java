@@ -6,7 +6,6 @@ import java.util.Map;
 public interface PetService {
 
 	public void insertPet(Pet dto, String pathname) throws Exception;
-	public void insertImgFile(Pet dto, String pathname) throws Exception;
 	
 	public int dataCount(Map<String, Object> map);
 	
@@ -19,7 +18,6 @@ public interface PetService {
 	public Pet nextReadPet(Map<String, Object> map);
 	
 	public void updatePet(Pet dto, String pathname) throws Exception;
-	public void updateImgFile(Pet dto) throws Exception;
 	public void deletePet(int myPetNum, String pathname, String userId) throws Exception;
 	
 }

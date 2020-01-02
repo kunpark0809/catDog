@@ -88,7 +88,6 @@ function searchList() {
 		</div>
 	</div>
 
-	
 
 	
 </section>

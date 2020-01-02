@@ -34,34 +34,18 @@ public class PetServiceImpl implements PetService {
 	@Override
 	public void insertPet(Pet dto, String pathname) throws Exception {
 		try {
-			dto.setMyPetNum(dao.selectOne("pet.seq"));
-			dao.insertData("pet.insertPet", dto);
-			
-			if(! dto.getUpload().isEmpty()) {
-				String saveFilename = fileManager.doFileUpload(dto.getUpload(), pathname);
-				if(saveFilename != null) {
-					dto.setImageFileName(saveFilename);
-					insertImgFile(dto, pathname);
-				}
+			String saveFilename=fileManager.doFileUpload(dto.getUpload(), pathname);
+			if(saveFilename!=null) {
+				dto.setImageFileName(saveFilename);
+
+				dao.insertData("pet.insertPet", dto);
 			}
-	
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
 	}
 
-	
-	@Override
-	public void insertImgFile(Pet dto, String pathname) throws Exception {
-		try {
-			dao.insertData("pet.insertImgFile",dto);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
-		
-	}
 	
 	@Override
 	public int dataCount(Map<String, Object> map) {
@@ -131,21 +115,23 @@ public class PetServiceImpl implements PetService {
 	@Override
 	public void updatePet(Pet dto, String pathname) throws Exception {
 		try {
-			
-			
-			if(! dto.getUpload().isEmpty()) {
-					String saveFilename=fileManager.doFileUpload(dto.getUpload(), pathname);
-					dto.setImageFileName(saveFilename);
-					updateImgFile(dto);
+			// 업로드한 파일이 존재한 경우
+			String saveFilename = fileManager.doFileUpload(dto.getUpload(), pathname);
+		
+			if (saveFilename != null) {
+				// 이전 파일 지우기
+					if(dto.getImageFileName().length()!=0) {
+					fileManager.doFileDelete(dto.getImageFileName(), pathname);
+				}
+					
+				dto.setImageFileName(saveFilename);
 			}
-
 			
-			dao.updateData("pet.updatePet", dto);
+			dao.updateData("photo.updatePhoto", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
-		
 	}
 
 
@@ -211,16 +197,5 @@ public class PetServiceImpl implements PetService {
 	}
 
 
-	@Override
-	public void updateImgFile(Pet dto) throws Exception {
-		try {
-			dao.updateData("pet.updateImgFile", dto);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
-		
-	}
-	
 	
 }

@@ -68,7 +68,7 @@
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#262626" style="text-align: center; font-weight: bold;">제목</td>
 			      <td style="padding-left:10px;"> 
-			        <input type="text" name="placeName" maxlength="100" class="boxTF" style="width: 100%;" value="${dto.subject}">
+			        <input type="text" name="subject" maxlength="100" class="boxTF" style="width: 100%;" value="${dto.subject}">
 			      </td>
 			  </tr>
 			

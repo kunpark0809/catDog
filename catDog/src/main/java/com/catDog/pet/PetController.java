@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.catDog.common.MyUtil;
 import com.catDog.customer.SessionInfo;
 
-@Controller("pet.Pet")
+@Controller("pet.PetController")
 public class PetController {
 	
 @Autowired
@@ -95,7 +95,6 @@ public String list(
 		
 		try {
 			dto.setNum(info.getMemberIdx());
-			
 			service.insertPet(dto, pathname);
 		} catch (Exception e) {
 			e.printStackTrace();

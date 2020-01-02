@@ -2,18 +2,9 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="pet">
-	<select id="seq" resultType="Integer">
-		SELECT myPet_seq.NEXTVAL FROM dual
-	</select>
-
 	<insert id="insertPet" parameterType="com.catDog.pet.Pet">
-		INSERT INTO myPet(myPetNum, subject, imageFileName, num) 
-		VALUES(#{myPetNum}, #{subject}, #{imageFileName}, #{num})
-	</insert>
-	
-	<insert id="insertImgFile" parameterType="com.catDog.pet.Pet">
-		INSERT INTO myPet(imageFileName) 
-		VALUES(#{imageFileName})
+		INSERT INTO myPet(myPetNum, num, subject, imageFileName) 
+		VALUES(myPet_seq.NEXTVAL, #{num}, #{subject}, #{imageFileName})
 	</insert>
 	
 	<select id="listPet" parameterType="map" resultType="com.catDog.pet.Pet">
@@ -97,13 +88,9 @@
 		WHERE myPetNum=#{myPetNum}
 	</update>
 	
-	<update id="updateImgFile" parameterType="com.catDog.pet.Pet">
-		UPDATE myPet SET imageFileName=#{imageFileName}
-		WHERE myPetNum=#{myPetNum}
-	</update>
-	
 	<delete id="deletePet" parameterType="Integer">
 		DELETE FROM myPet WHERE myPetNum=#{myPetNum}
 	</delete>
-	
+
+  	
 </mapper>
