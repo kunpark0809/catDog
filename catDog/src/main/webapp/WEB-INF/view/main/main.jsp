@@ -40,24 +40,16 @@
 				</div>
 			</div>
 			<div class="row text-center">
+				<c:forEach var="dto" items="${parkList}">
 				<div class="col-md-4" style="max-width: 30%;">
-					<img alt="" src="<%=cp%>/resource/img/소금후추맘.jpg"
-						style="width: 100%;">
-					<h4 class="service-heading">장소1</h4>
-					<p class="text-muted">멋진장소</p>
+					<a onclick="javascript:location.href='${parkListUrl}&recommendNum=${dto.recommendNum}'" style="color: #262626;">
+					<input type="hidden" value="${dto.recommendNum}">
+					<img alt="" src="<%=cp%>/uploads/park/${dto.imageFileName}" width="400" style="padding-top: 15px;"><br>
+					<span class="placeName" onclick="javascript:article('${dto.recommendNum}');" style="font-weight: bold; font-size: 24px;">${dto.placeName}</span><br>
+				</a>
+					<p><i class="fas fa-eye"></i>&nbsp;&nbsp;${dto.hitCount}</p>
 				</div>
-				<div class="col-md-4" style="max-width: 30%;">
-					<img alt="" src="<%=cp%>/resource/img/소금후추맘.jpg"
-						style="width: 100%;">
-					<h4 class="service-heading">장소2</h4>
-					<p class="text-muted">예쁜장소</p>
-				</div>
-				<div class="col-md-4" style="max-width: 30%;">
-					<img alt="" src="<%=cp%>/resource/img/소금후추맘.jpg"
-						style="width: 100%;">
-					<h4 class="service-heading">장소3</h4>
-					<p class="text-muted">예쁘고 멋진 장소</p>
-				</div>
+				</c:forEach>
 			</div>
 		</div>
 	</section>
@@ -314,9 +306,9 @@
 					<span> <font color="#F2F2F2" size="4px;"><i
 							class="fas fa-check" style="color: #F2F2F2">&nbsp;</i>공지사항</font><br>
 					</span>
-					<c:forEach var="vo" items="${list}">
+					<c:forEach var="vo" items="${noticeList}">
 					<p >
-						<a href="${listUrl}" style="color: #666666">${vo.subject}</a>
+						<a href="${noticeListUrl}&noticeNum=${vo.noticeNum}" style="color: #666666">${vo.subject}</a>
 					</p>
 					</c:forEach>
 				</div>

@@ -14,9 +14,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.catDog.cs.CsService;
 import com.catDog.cs.Notice;
+import com.catDog.park.Park;
+import com.catDog.park.ParkService;
 
 @Controller("mainController")
 public class MainController {
+	
+	@Autowired
+	private ParkService parkService;
+	
 	@Autowired
 	private CsService service;
 	 
@@ -26,16 +32,28 @@ public class MainController {
 		String cp = req.getContextPath();
 		
 		int rows = 5;
-		Map<String, Object> map = new HashMap<String, Object>();		
-		map.put("offset", 0);
-		map.put("rows", rows);
+		Map<String, Object> noticeMap = new HashMap<String, Object>();		
+		noticeMap.put("offset", 0);
+		noticeMap.put("rows", rows);
 		
-		List<Notice> list = service.listNotice(map);
+		List<Notice> noticeList = service.listNotice(noticeMap);
 		
-		String listUrl = cp+"/notice/list";
+		String noticeListUrl = cp+"/notice/article?page=1";
 		
-		model.addAttribute("list", list);
-		model.addAttribute("listUrl", listUrl);
+		model.addAttribute("noticeList", noticeList);
+		model.addAttribute("noticeListUrl", noticeListUrl);
+		
+		Map<String, Object> parkMap = new HashMap<String, Object>();
+		parkMap.put("offset", 0);
+		parkMap.put("rows", 3);
+		
+		List<Park> parkList = parkService.listPark(parkMap);
+		
+		String parkListUrl = cp+"/park/article?page=1";
+		
+		model.addAttribute("parkList", parkList);
+		model.addAttribute("parkListUrl", parkListUrl);
+		
 		
 		return ".mainLayout";
 	}
