@@ -15,105 +15,113 @@
 
 <div>
 	<div class="order_table_type">
-                    <table class="table_left">
-                        <colgroup>
-                            <col style="width:15%;">
-                            <col style="width:85%;">
-                        </colgroup>
-                        <tbody>
+	<div class="complete">
+		<p>주문번호 : <strong>${list.get(0).requestNum}</strong></p>
+		<p>주문일자 : ${list.get(0).requestDate}</p>
+	</div>
+		<div class="payProduct">
+			<h3>주문 상품 정보</h3>
+				<table>
+					<tr>
+						<td colspan="2">상품정보</td>
+						<td>판매가</td>
+						<td>수량</td>
+						<td>배송비</td>
+						<td>합계</td>
+					</tr>
+				<c:forEach var="dto" items="${list}">
+					<tr>
+						
+						<td>
+						<input type="hidden" name="requestDetailNum" value="${dto.requestDetailNum}">
+						<img alt="" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}" width="50">
+						</td>
+						<td>${dto.productName}</td>
+						<td>${dto.productSum}</td>
+						<td>${dto.productCount}</td>
+						<td>기본배송</td>
+						<td>${dto.productSum}</td>
+					</tr>
+				</c:forEach>
+				</table>
+			</div>
+			<div class="payment">
+				<h3>결제 정보</h3>
+                    <table>
                         <tr>
                             <th>결제수단</th>
                             <td><div class="pay_with_list">
-                                <strong>무통장 입금</strong>
-                                <ul>
-                                    <li>입금은행 : 농협</li>
-                                    <li>입금계좌 : 355-0033-7027-63</li>
-                                    <li>예금주명 : 주식회사 이에쓰씨컴퍼니</li>
-                                    <li>입금금액 : <strong class="deposit_money">26,480원</strong></li>
-                                    <li>입금자명 : 신승연</li>
-                                </ul>
+                                <strong>
+                                	<c:choose>
+                                		<c:when test="${list.get(0).payMethod==0}">무통장 입금</c:when>
+                                		<c:when test="${list.get(0).payMethod==1}">신용카드</c:when>
+                                		<c:when test="${list.get(0).payMethod==2}">계좌이체</c:when>
+                                		<c:otherwise>핸드폰 결제</c:otherwise>
+                                	</c:choose>
+                                </strong>
+                                <c:if test="${list.get(0).payMethod==0}">
+	                                <ul>
+	                                    <li>입금은행 : 국민은행</li>
+	                                    <li>입금계좌 : 000000-00-000000</li>
+	                                    <li>예금주명 : 주식회사 멍냥개냥</li>
+	                                    <li>입금금액 : <strong class="deposit_money">${list.get(0).purchase}원</strong></li>
+	                                    <li>입금자명 : ${list.get(0).name}</li>
+	                                </ul>
+                                </c:if>
                             </div>
                             </td>
                         </tr>
-                        <tr>
-                            <th>주문번호</th>
-                            <td>${list.get(0).requestNum}</td>
-                        </tr>
-                        <tr>
-                            <th>주문일자</th>
-                            <td>${list.get(0).requestDate}</td>
-                        </tr>
-                        <tr>
-                            <th>주문자명</th>
-                            <td>신승연</td>
-                        </tr>
+                      </table>
+                </div>  
+                <div class="deliver">
+                	<h3>배송지 정보</h3>
+                <table>        
                         <tr>
                             <th>배송정보</th>
-                            <td>
-                                <p>
-                                    <strong>신승연</strong> <br>
-                                    [08056] 서울특별시 양천구 신정로7길 17 (양천공영차고지) 111<br>
-                                      /    /  010-9911-0488<br>
-                                    남기실 말씀 : 
-                                </p>
-                            </td>
-                        </tr>
+	                            <td>
+	                                 <strong>${list.get(0).deliverName}</strong> <br>
+	                            </td>
+                        	</tr>
+                        	<tr>
+                        		<th>주소</th>
+                        		<td>
+                        			[${list.get(0).deliverZip}] ${list.get(0).deliverAddr1} ${list.get(0).deliverAddr2}
+                        		</td>
+                        	</tr>
+                        	<tr>
+                        		<th>전화번호</th>
+                        		<td>${list.get(0).deliverTel}</td>
+                        	</tr>
+                        	<tr>
+                        		<th>남기실 말씀</th>
+                        		<td>${list.get(0).memo}</td>
+                        	</tr>
                         <tr>
                             <th>상품 금액</th>
-                            <td><strong class="order_payment_sum">26,480원</strong>
+                            <td><strong class="order_payment_sum">${list.get(0).total}</strong>
                                 <span class="add_currency"></span>
                             </td>
                         </tr>
                         <tr>
                             <th>배송비</th>
-                            <td>기본배송 0원
+                            <td>2,500원
                                 <span class="add_currency"></span>
                             </td>
                         </tr>
                         <tr>
-                            <th>할인 및 적립</th>
+                            <th>적립 예정 포인트</th>
                             <td>
-                                <ul class="order_benefit_list">
-                                    <li class="order_benefit_sale">
-                                        <em>할인 : <strong>(-) 0원</strong>
-                                            <span>(
-                                            상품 0원
-                                            , 회원 0원
-                                            , 배송비 0원
-                                            , 상품쿠폰 0원
-                                            , 주문쿠폰 0원
-                                            , 배송비쿠폰 0원
-                                            )</span>
-                                        </em>
-                                    </li>
-                                    <li class="order_benefit_mileage">
-                                        <em> 적립 포인트 : <strong>(+) 528원</strong>
-                                            <span>(
-상품 264원, 회원 264원                                            )</span>
-                                        </em>
-                                    </li>
-                                </ul>
+                            	${list.get(0).point}원
                             </td>
                         </tr>
                         <tr>
                             <th>총 결제금액</th>
-                            <td><strong class="order_payment_sum">26,480원</strong>
+                            <td><strong class="order_payment_sum">${list.get(0).purchase}</strong>
                                 <span class="add_currency"></span>
                             </td>
                         </tr>
-                        <tr>
-                            <th>현금영수증</th>
-                            <td>
-                                미발급
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>세금계산서</th>
-                            <td>
-                                미발급
-                            </td>
-                        </tr>
-                    </tbody></table>
+                     </table>
+                     </div>
                 </div>
 	<div class="ec-base-help">
 		<h3>이용안내</h3>

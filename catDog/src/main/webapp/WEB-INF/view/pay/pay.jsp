@@ -114,9 +114,10 @@
 	    }
 	}
 	
+	
 	function changePoint(){
  		var point = $("#usePoint");
-		
+		var total = Number($("#total").val())+2500;
 		
 		if(point.val() < 0){
 			point.val("0");
@@ -128,12 +129,12 @@
 			point.val(${customer.mileage});
 		}
 		
-		if(point.val() > $("#total").val()){
+		if(point.val() > total){
 			alert(point.val()+"결제금액을 초과하는 포인트 입니다.");
-			point.val($("#total").val());
+			point.val(total);
 		}
 		
-		$("#purchase").val($("#total").val()-point.val()); 
+		$("#purchase").val(total-point.val()); 
 	}
 	
 	$(function(){
@@ -176,14 +177,15 @@
 					</tr>
 					<c:if test="${mode=='direct'}">
 						<tr>
-							<td><input type="hidden" name="productNum" value="${product.productNum}"> </td>
-							<td><img alt=""
+							<td>
+							<input type="hidden" name="productNum" value="${product.productNum}">
+							<img alt=""
 								src="<%=cp%>/uploads/dogshop/${product.imageFileName}"
 								width="50"></td>
 							<td>${product.productName}</td>
 							<td>${product.productSum}</td>
 							<td><input type="hidden" name="productCount" value="${product.productCount}">${product.productCount}</td>
-							<td>2,500</td>
+							<td>기본배송</td>
 							<td><input type="hidden" name="productSum" value="${product.productSum}">${product.productSum}</td>
 						</tr>
 					</c:if>
@@ -191,12 +193,13 @@
 					<c:if test="${mode=='cart'}">
 						<c:forEach var="dto" items="${cartList}">
 							<tr>
-								<td><input type="hidden" name="payCartNum" value="${dto.cartNum}"></td>
-								<td><img alt="" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}" width="50"></td>
+								<td>
+								<input type="hidden" name="payCartNum" value="${dto.cartNum}">
+								<img alt="" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}" width="50"></td>
 								<td>${dto.productName}</td>
 								<td>${dto.productSum}</td>
 								<td>${dto.productCount}</td>
-								<td>2,500</td>
+								<td>기본배송</td>
 								<td>${dto.productSum}</td>
 							</tr>
 						</c:forEach>
@@ -363,7 +366,7 @@
 							<tr>
 								<th>배송비</th>
 								<td>
-									<span id="">2,500</span>원 
+									<span id="deliver">2,500</span>원 
 								</td>
 							</tr>
 							<c:if test="${not empty sessionScope.member}">
@@ -371,7 +374,7 @@
 									<th>적립 포인트</th>
 									<td>
 								
-										<span id=""><input id="" name="point" readonly="readonly" value="${mode=='cart'? cartList.get(0).point:product.point}"></span>원 
+										<span id=""><input id="point" name="point" readonly="readonly" value="${mode=='cart'? cartList.get(0).point:product.point}"></span>원 
 								
 									</td>
 								</tr>
@@ -388,7 +391,7 @@
 							<tr>
 								<th>최종 결제 금액</th>
 								<td>
-									<strong id="" class=""><input id="purchase" name="purchase" readonly="readonly" value="${mode=='cart'? cartList.get(0).total:product.total}"></strong>원
+									<strong id="" class=""><input id="purchase" name="purchase" readonly="readonly" value="${mode=='cart'? (cartList.get(0).total+2500):(product.total+2500)}"></strong>원
 
 								</td>
 							</tr>
@@ -427,18 +430,14 @@
                             <tr>
                                 
                                  <td>   <strong>입금자명</strong></td>
-                                  <td>  <input type="text" name="bankSender"></td>
+                                  <td>  <input type="text" name="bankSender" readonly="readonly" value="${sessionScope.member.name}"></td>
                               </tr>  
                                <tr>
                               	  <td>      <strong>입금은행</strong></td>
 	                              <td>
 	                                    <select name="bankAccount" class="chosen-select">
 	                                        <option value="">선택하세요</option>
-	                                        <option value="1">농협 355-0033-7027-63 주식회사 이에쓰씨컴퍼니</option>
-	                                        <option value="2">우리은행 1005-402-637917 주식회사 이에쓰씨컴퍼니</option>
-	                                        <option value="3">국민은행 367237-04-007878 주식회사 이에쓰씨컴퍼니</option>
-	                                        <option value="4">기업은행 061-098212-04-018 주식회사 이에쓰씨컴퍼니</option>
-	                                        <option value="5">신한은행 140-011-817118 주식회사 이에쓰씨컴퍼니</option>
+	                                        <option value="1">국민은행 000000-00-000000 주식회사 멍냥개냥</option>
 	                                    </select>
 	                                </td>
                                 </tr>

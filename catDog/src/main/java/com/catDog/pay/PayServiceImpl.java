@@ -83,7 +83,7 @@ public class PayServiceImpl implements PayService{
 		try {
 			requestNum = dao.selectOne("pay.requestSeq");
 			pay.setRequestNum(requestNum);
-			
+			pay.setPoint((int)(pay.getPurchase()*0.01));
 			if(pay.getDeliverTel1() !=null && pay.getDeliverTel1().length() !=0 && 
 					pay.getDeliverTel2() !=null && pay.getDeliverTel2().length() !=0 &&
 					pay.getDeliverTel3() !=null && pay.getDeliverTel3().length() !=0) {
@@ -94,7 +94,6 @@ public class PayServiceImpl implements PayService{
 			
 			dao.insertData("pay.insertRequest",pay);
 			dao.insertData("pay.insertpayment",pay);
-			dao.updateData("pay.updatePoint",pay);
 			if(pay.getRefundAccount() != null && !pay.getRefundAccount().equals("")) {
 				dao.insertData("pay.insertrefund",pay);
 			}

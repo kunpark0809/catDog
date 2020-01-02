@@ -169,7 +169,9 @@ public class PayController {
 			Model model
 			) throws Exception{
 		List<Pay> list = service.requestList(requestNum);
-		
+		if(list==null || list.size()==0) {
+			return "redirect:/";
+		}
 		model.addAttribute("list",list);
 		return ".pay.complete";
 	}

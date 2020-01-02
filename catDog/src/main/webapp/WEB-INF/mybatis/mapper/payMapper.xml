@@ -22,7 +22,7 @@
 	</select>
 	
 	<insert id="insertCart" parameterType="com.catDog.pay.Pay">
-		INSERT INTO cart(cartNum, num, productNum, productCount, productSum) VALUES(#{cartNum}, #{num}, #{productNum}, #{productCount}, #{productSum})
+		INSERT INTO cart(cartNum, num, productNum, productCount, productSum) VALUES(CART_SEQ.NEXTVAL, #{num}, #{productNum}, #{productCount}, #{productSum})
 	</insert>
 	
 	<select id="readCart" parameterType="map" resultType="com.catDog.pay.Pay">
@@ -89,8 +89,8 @@
 	</insert>
 	
 	<insert id="insertpayment" parameterType="com.catDog.pay.Pay">
-		INSERT INTO payment(requestNum, payMethod, point, purchase)
-		VALUES(#{requestNum}, #{payMethod}, #{usePoint},#{purchase})
+		INSERT INTO payment(requestNum, payMethod, point, purchase, stackPoint)
+		VALUES(#{requestNum}, #{payMethod}, #{usePoint},#{purchase},#{point,jdbcType=INTEGER})
 				
 	</insert>
 	
@@ -104,10 +104,10 @@
 	</update>
 	
 	<select id="readRequest" parameterType="String" resultType="com.catDog.pay.Pay">
-	select pr.productNum, requestDate ,pr.name productName,r.requestNum, c.num, r.total, r.addr1 deliverAddr1, r.addr2 deliverAddr2, r.zip deliverZip, r.tel deliverTel, r.name deliverName, r.memo, r.status, p.payMethod, p.point usePoint, p.purchase, 
+	select pr.productNum, requestDate ,pr.name productName,r.requestNum, c.num,c.name, r.total, r.addr1 deliverAddr1, r.addr2 deliverAddr2, r.zip deliverZip, r.tel deliverTel, r.name deliverName, r.memo, r.status, p.payMethod, p.point usePoint, p.purchase,p.stackPoint point, 
 	rd.requestDetailNum, rd.productCount, rd.productNum, rd.productSum
 	FROM request r
-	JOIN customer c ON r.num = c.num
+	JOIN customerdetail c ON r.num = c.num
 	JOIN requestDetail rd ON r.requestNum = rd.requestNum
 	JOIN product pr ON pr.productNum = rd.productNum
 	JOIN payment p ON r.requestNum = p.requestNum
