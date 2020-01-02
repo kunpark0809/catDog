@@ -161,6 +161,7 @@ $(function(){
 				</td>
 			</tr>
 			
+			
 			<tr>
 				<td align="left">
 					<button type="button" onclick="javascript:location.href='<%=cp%>/pet/list?${query}';">신고</button>
