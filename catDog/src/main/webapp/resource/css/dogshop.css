@@ -21,10 +21,14 @@ a.sortName{
 	color:#262626;
 }
 
-a.productLink{
-	cursor: pointer;
-	text-decoration: none;
-	color:#262626;
+.productLink{
+cursor: pointer;
+    text-align: center;
+    border: 1px solid #e4e4e4;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px 0px;
+    height: 250px;
 }
 .sortList{
 	width: 100%;
@@ -141,4 +145,62 @@ a.productLink{
 
 .order_tit > ol{
 	list-style: none;
+}
+
+.product_btn{
+	margin: 10px 0px;
+}
+
+.product_btn > .payBtn {
+	background: black;
+	color: white;
+	border: 1px solid black;
+	width: 49.6%;
+	height: 50px;
+}
+
+.product_btn > .cartBtn {
+	background: white;
+	color:#262626;
+	border: 1px solid #d8d8d8;
+	width: 49.6%;
+	height: 50px;
+}
+
+.admin_btn{
+	float:right;
+	text-align: right;
+	width: 50%;
+}
+
+.admin_btn > button{
+	background: white;
+	color:#262626;
+	border: 1px solid #d8d8d8;
+	width: 49%;
+}
+
+.dialog_cancel{
+	background: white;
+	color:#262626;
+	border: 1px solid #d8d8d8;
+	width: 30%;
+}
+
+.dialog_submit{
+	background: black;
+	color: white;
+	border: 1px solid black;
+	width: 30%;
+}
+
+.payProduct > table{
+	width: 100%;
+	margin: 0px auto;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.payProduct > table > tr > td{
+	border: 1px solid #d8d8d8;
 }

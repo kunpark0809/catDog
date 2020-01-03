@@ -43,11 +43,22 @@
 	</insert>
 	
 	<select id="readProduct" parameterType="Integer" resultType="com.catDog.dogShop.DogShop">
-		SELECT p.productNum, p.name, price, p.content, pp.imageFileName, smallSortNum, p.created
-		FROM product p
-		JOIN productPic pp ON p.productNum = pp.productNum
-		WHERE p.productNum = #{productNum}
+		SELECT productNum,name, price, content, smallSortNum, imageFileName, created
+		FROM product
+		WHERE productNum = #{productNum}
 	</select>
 	
-
+	<select id="readProductPic" parameterType="Integer" resultType="com.catDog.dogShop.DogShop">
+		SELECT productNum, productPicNum,imageFileName 
+		FROM productPic
+		WHERE productNum = #{productNum}
+	</select>
+	
+	<delete id="deleteProduct" parameterType="Integer">
+		DELETE FROM product WHERE productNum=#{productNum} 
+	</delete>
+	
+	<delete id="deleteProductPic" parameterType="Integer">
+		DELETE FROM productPic WHERE productNum=#{productNum}
+	</delete>
 </mapper>

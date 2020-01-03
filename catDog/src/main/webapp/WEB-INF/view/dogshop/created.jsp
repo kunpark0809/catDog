@@ -100,7 +100,7 @@
 							<select name="smallSortNum">
 								<option value="0">::용품 선택::</option>
 								<c:forEach var="sort" items="${sortList}">
-									<option value="${sort.smallSortNum}" ${list.get(0).smallSortNum==sort.smallSortNum?"selected='selected'":""}>${sort.sortName}</option>
+									<option value="${sort.smallSortNum}" ${dto.smallSortNum==sort.smallSortNum?"selected='selected'":""}>${sort.sortName}</option>
 								</c:forEach>
 							</select>
 						</td>
@@ -108,19 +108,19 @@
 					<tr>
 						<td>용품명</td>
 						<td>
-							<input type="text" name="name" value="${list.get(0).name}">
+							<input type="text" name="name" value="${dto.name}">
 						</td>
 					</tr>
 					<tr>
 						<td>가&nbsp;&nbsp;격</td>
 						<td>
-							<input type="text" name="price" value="${list.get(0).price}">
+							<input type="text" name="price" value="${dto.price}">
 						</td>
 					</tr>
 					<tr align="left" style="border-bottom: 1px solid #cccccc;"> 
 				      <td width="100" bgcolor="#eeeeee" style="text-align: center; padding-top:5px;" valign="top">본문내용</td>
 				      <td valign="top" style="padding:5px 0px 5px 10px;"> 
-				        <textarea name="content" id="content" class="boxTA" style="width:98%; height: 270px;">${list.get(0).content}</textarea>
+				        <textarea name="content" id="content" class="boxTA" style="width:98%; height: 270px;">${dto.content}</textarea>
 				      </td>
 			  		</tr>
 			  		
@@ -141,9 +141,9 @@
 			<table>
 				<tr>
 					<td>
-						<button type="submit">등록하기</button>
+						<button type="submit">${mode=="update"?"수정하기":"등록하기"}</button>
 						<button type="reset">다시입력</button>
-						<button type="button" onclick="">등록취소</button>
+						<button type="button" onclick="javascript:location.href='<%=cp%>/dogshop/list?smallSortNum=${smallSortNum}&page=${page}';">${mode=="update"?"수정취소":"등록취소"}</button>
 					</td>
 				</tr>
 			</table>

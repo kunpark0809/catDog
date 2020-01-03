@@ -162,9 +162,9 @@
 </script>
 
 
-<div>
+<div class="shin_body">
 	
-	<div>
+
 		<form method="post" name="payForm">
 			<div class="payProduct">
 				<table>
@@ -469,7 +469,7 @@
 			
 		</div>
 		
-	</div>
+
 
 	
 </div>
