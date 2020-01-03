@@ -37,9 +37,9 @@
 	       	
 	        </td>
 	       <td style='width: 50%; padding:5px 5px; border-left:none;' align='right'>
-	           <span>${vo.created}</span> |
-	           <c:if test="${vo.userId == sessionScope.member.userId ||  sessionScope.member.userId == 'admin' || sessionScope.member.userId == 'admin2' || sessionScope.member.userId == 'admin3'}">
-	                <span class="deleteRate" style="cursor: pointer;" data-rateNum='${vo.rateNum}' data-pageNo='${pageNo}'>삭제</span>
+	            <span>${vo.created} 방문</span>
+	           <c:if test="${sessionScope.member.userId == 'userId' ||  sessionScope.member.userId == 'admin' || sessionScope.member.userId == 'admin2' || sessionScope.member.userId == 'admin3'}">
+	                <span class="deleteRate" style="cursor: pointer;" data-rateNum='${vo.rateNum}' data-pageNo='${pageNo}'> |삭제</span>
 	           	</c:if>
 	        </td>
 	    </tr>
