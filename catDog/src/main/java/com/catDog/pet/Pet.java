@@ -19,6 +19,8 @@ public class Pet {
 	
 	private int petLikeCount;
 	
+	private int petReportCount;
+	
 	public int getListNum() {
 		return listNum;
 	}
@@ -84,6 +86,12 @@ public class Pet {
 	}
 	public void setPetLikeCount(int petLikeCount) {
 		this.petLikeCount = petLikeCount;
+	}
+	public int getPetReportCount() {
+		return petReportCount;
+	}
+	public void setPetReportCount(int petReportCount) {
+		this.petReportCount = petReportCount;
 	}
 	
 	

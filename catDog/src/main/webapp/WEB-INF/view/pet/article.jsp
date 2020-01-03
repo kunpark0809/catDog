@@ -19,6 +19,20 @@
     margin: 4px;
     border-radius:10px;
 }
+
+.btn2 {
+	width:50px;
+    background-color: white;
+    border: 1px dashed #262626;
+    color:#262626;
+    padding: 5px 0;
+    text-align: center;
+    display: inline-block;
+    font-size: 15px;
+    margin: 4px;
+    border-radius:10px;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -123,6 +137,47 @@ $(function(){
 	});
 });
 
+function report(){
+	$('#report_dialog').dialog({
+		  modal: true,
+		  height: 300,
+		  width: 500,
+		  title: '신고하기',
+		  close: function(event, ui) {
+		  }
+	});
+	
+}
+
+$(function(){
+	$(".btnDialogCanecl").click(function(){
+		$('#report_dialog').dialog("close");
+	});
+});
+
+$(function(){
+	$(".btnDialogOn").click(function(){
+		if(! confirm("해당 게시글을 신고하시겠습니까?")) {
+			return false;
+		}
+		var url="<%=cp%>/pet/insertPetReport";
+		var reportNum="${dto.reportNum}";
+		var query = {reportNum:reportNum};
+		
+		var fn = function(data){
+			var state=data.state;
+			if(state=="true") {
+				var count = data.petReportCount;
+				$("#petReportCount").text(count);
+			} else if(state=="false") {
+				alert("신고는 한번만 가능합니다.");
+			}
+		};
+		
+		ajaxJSON(url, "post", query, fn);
+	});
+});
+
 </script>
 
 
@@ -155,18 +210,17 @@ $(function(){
 				</td>
 			</tr>
 			
-			<tr style="border-bottom: 1px solid #cccccc;">
+			<tr>
 				<td colspan="2" height="40" style="padding-bottom: 15px;" align="center">
 					<button type="button" class="btn btnSendPetLike" title="좋아요"><i class="fas fa-hand-point-up"></i>&nbsp;&nbsp;<span id="petLikeCount">${dto.petLikeCount}</span></button>
 				</td>
 			</tr>
 			
-			
-			<tr>
-				<td align="left">
-					<button type="button" onclick="javascript:location.href='<%=cp%>/pet/list?${query}';">신고</button>
-				</td>
-			</tr>
+		<tr>
+			<td align="right" width="100%">
+				<button type="button" class="btn2" onclick="report();">신고</button>
+			</td>
+		</tr>	
 			
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
 				<td colspan="2" align="left" style="padding-left: 5px;">
@@ -204,5 +258,24 @@ $(function(){
 			</tr>
 		</table>
 	</div>
+	
+		
+	<div id="report_dialog" style="display: none; text-align: left;">
+			<strong>신고사유 : 대표적인 사유 1개를 선택해 주세요</strong>
+			<br><br>
+		<form>
+			<input type="radio" name="report" value="1"/>&nbsp;타 웹사이트 홍보<br>
+			<input type="radio" name="report" value="2"/>&nbsp;도색적이고 폭력적인 내용<br>
+			<input type="radio" name="report" value="3"/>&nbsp;욕설 및 모욕적인 언행<br>
+			<input type="radio" name="report" value="4"/>&nbsp;현행법에 저촉되는 행위(불법거래, 저작권 등)<br>
+			<input type="radio" name="report" value="5"/>&nbsp;기타<br>
+			
+				<div class="btn_box" align="center">
+					<button type="button" class="btnDialogCanecl">취소</button>
+					<button type="button" class="btnDialogOn" onclick="javascript:location.href='<%=cp%>/pet/list';">신고하기</button>
+				</div>
+		</form>
+	</div>
+	
 	
 </div>

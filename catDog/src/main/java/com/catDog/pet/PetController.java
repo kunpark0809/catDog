@@ -270,5 +270,37 @@ public String list(
 	}
 	
 	
+	// 게시글 신고추가 :  : AJAX-JSON
+	@RequestMapping(value="/pet/insertPetReport", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> insertPetReport(
+			@RequestParam int reportNum,
+			HttpSession session
+			) {
+		String state="true";
+		int petReportCount=0;
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		Map<String, Object> paramMap=new HashMap<>();
+		paramMap.put("reportNum", reportNum);
+		paramMap.put("num", info.getMemberIdx());
+		
+		try {
+			service.insertPetReport(paramMap);
+		} catch (Exception e) {
+			state="false";
+		}
+			
+		petReportCount = service.petReportCount(reportNum);
+		
+		Map<String, Object> model=new HashMap<>();
+		model.put("state", state);
+		model.put("reportNum", reportNum);
+		
+		return model;
+	}
+	
+	
+	
 	
 }

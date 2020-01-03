@@ -170,4 +170,18 @@ public class PetServiceImpl implements PetService {
 		}
 		return result;
 	}
+
+
+	@Override
+	public void insertPetReport(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public int petReportCount(int reportNum) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
