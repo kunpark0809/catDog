@@ -58,6 +58,34 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	@Override
+	public Money categorySales(Map<String, Object> map) {
+		Money result = null;
+
+		try {
+			result = dao.selectOne("admin.categorySales", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}	
+	
+	@Override
+	public Money categorySalesVolume(Map<String, Object> map) {
+		Money result = null;
+
+		try {
+			result = dao.selectOne("admin.categorySalesVolume", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	
+	
+	@Override
 	public String getCategory(int smallSortNum) {
 		String result = null;
 		
@@ -69,6 +97,12 @@ public class AdminServiceImpl implements AdminService {
 		
 		return result;
 	}
+	
+	
+	
+	
+	
+	
 	
 	
 

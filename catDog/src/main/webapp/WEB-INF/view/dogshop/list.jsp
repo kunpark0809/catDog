@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
    String cp = request.getContextPath();
@@ -27,7 +28,7 @@ $(function(){
 	<div class="shin_body">
 		<h3 style="display: inline;">DogShop</h3>
 		<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
-			<span><button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/dogshop/created'">글올리기</button></span>
+			<span><button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/dogshop/created?smallSortNum=${smallSortNum}'">글올리기</button></span>
 		</c:if>
 		
 		<div class="bestProduct">
@@ -41,7 +42,7 @@ $(function(){
 			</c:forEach>
 		</div>
 		<div class="productList">	
-			<table>
+			<table style="width: 100%">
 					<c:forEach var="dto" items="${list}" varStatus="status">
 					     <c:if test="${status.index==0}">
                      		  <tr>
@@ -50,16 +51,14 @@ $(function(){
 		                       <c:out value="</tr><tr>" escapeXml="false"/>
 		                 </c:if>
 						
-							<td width="20%" style="text-align: center;">
-							<a onclick="javascript:location.href='${articleUrl}&productNum=${dto.productNum}'" class="productLink">
-								<input type="hidden" value="${dto.productNum}">
-								<input type="hidden" value="${dto.price}">
-									<img alt="" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}" width="200" height="200">
-								<p style="margin: 0px;">${dto.name}</p>
-							</a>
+							<td width="20%">
+								<div class="productLink" onclick="javascript:location.href='${articleUrl}&productNum=${dto.productNum}'">
+									<input type="hidden" value="${dto.productNum}">
+									<input type="hidden" value="${dto.price}">
+										<img alt="" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}" width="200" height="200">
+									<p style="margin: 0px;">${dto.name}</p>
+								</div>
 							</td>
-				
-
 					</c:forEach>
 			</table>
 		</div>

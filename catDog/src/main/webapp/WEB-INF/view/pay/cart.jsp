@@ -145,7 +145,7 @@ function productPay(mode){
 							<input type="checkbox" value="${product.cartNum}" name="productCheck">
 						</td> 
 						<td><img alt="" src="<%=cp%>/uploads/dogshop/${product.imageFileName}" width="50"></td>
-						<td>${product.productName}</td>
+						<td><a href="<%=cp%>/dogshop/article?productNum=${product.productNum}">${product.productName}</a></td>
 						<td>${product.productSum}</td>
 						<td>${product.productCount}
 							<p><button type="button" class="btn" onclick="changeDialog('${product.productNum}','${product.cartNum}');">수량변경</button></p>						

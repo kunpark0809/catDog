@@ -7,6 +7,8 @@ public class Money {
 	private int productNum;
 	private int productSum;
 
+	private int sales, salesVolume;
+
 	public int getSmallSortNum() {
 		return smallSortNum;
 	}
@@ -53,6 +55,22 @@ public class Money {
 
 	public void setProductSum(int productSum) {
 		this.productSum = productSum;
+	}
+
+	public int getSales() {
+		return sales;
+	}
+
+	public void setSales(int sales) {
+		this.sales = sales;
+	}
+
+	public int getSalesVolume() {
+		return salesVolume;
+	}
+
+	public void setSalesVolume(int salesVolume) {
+		this.salesVolume = salesVolume;
 	}
 
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.catDog.common.MyUtil;
+import com.catDog.customer.SessionInfo;
 
 @Controller("dogShop.dogShopController")
 public class DogShopController {
@@ -28,7 +29,7 @@ public class DogShopController {
 	@RequestMapping(value="/dogshop/list")
 	public String list(
 			@RequestParam(defaultValue="0") int smallSortNum,
-			@RequestParam(defaultValue="1") int current_page,
+			@RequestParam(defaultValue="1", name="page") int current_page,
 			HttpServletRequest req,
 			Model model
 			) throws Exception{
@@ -64,17 +65,22 @@ public class DogShopController {
 		model.addAttribute("articleUrl",articleUrl);
 		model.addAttribute("paging",paging);
 		model.addAttribute("smallSortNum",smallSortNum);
+		model.addAttribute("page",current_page);
 		return ".dogshop.list";
 	}
 	
 	@RequestMapping(value="/dogshop/created", method=RequestMethod.GET)
 	public String createdForm(
+			@RequestParam(defaultValue="0") int smallSortNum,
+			@RequestParam(defaultValue="1") String page,
 			Model model
 			) throws Exception{
 		
 		List<DogShop> sortList = service.smallSortList();
 		
 		model.addAttribute("sortList",sortList);
+		model.addAttribute("smallSortNum",smallSortNum);
+		model.addAttribute("page",page);
 		model.addAttribute("mode","created");
 		return ".dogshop.created";
 	}
@@ -103,35 +109,63 @@ public class DogShopController {
 			) throws Exception{
 		List<DogShop> sortList = service.smallSortList();
 		
-		List<DogShop> list = service.readProduct(productNum);
+		DogShop dto = service.readProduct(productNum);
 		String query = "smallSortNum="+smallSortNum+"&page="+page;
-		if(list.size() == 0) {
+		if(dto==null) {
 			return "redirect:/dogshop/list?"+query;
 		}
-		
+
+		List<DogShop> picList = service.readProductPic(productNum);
 		model.addAttribute("smallSortNum",smallSortNum);
 		model.addAttribute("page",page);
 		model.addAttribute("query",query);
-		model.addAttribute("list",list);
+		model.addAttribute("picList", picList);
+		model.addAttribute("dto", dto);
 		model.addAttribute("sortList",sortList);
 		return ".dogshop.article";
 	}
 	
 	@RequestMapping(value="/dogshop/update", method=RequestMethod.GET)
 	public String updateForm(
-			@RequestParam String smallSortNum,
+			@RequestParam(defaultValue="0") String smallSortNum,
 			@RequestParam int productNum,
+			@RequestParam(defaultValue="1") String page,
 			Model model
 			) throws Exception{
 		
-		List<DogShop> list = service.readProduct(productNum);
+		DogShop dto = service.readProduct(productNum);
+		List<DogShop> picList = service.readProductPic(productNum);
 		List<DogShop> sortList = service.smallSortList();
 		
 		model.addAttribute("sortList",sortList);
 		model.addAttribute("smallSortNum",smallSortNum);
-		model.addAttribute("list", list);
+		model.addAttribute("picList", picList);
+		model.addAttribute("dto", dto);
 		model.addAttribute("mode","update");
+		model.addAttribute("page",page);
 		return ".dogshop.created";
+	}
+	
+	@RequestMapping(value="/dogshop/delete", method=RequestMethod.GET)
+	public String delete(
+			@RequestParam(defaultValue="0") String smallSortNum,
+			@RequestParam int productNum,
+			@RequestParam(defaultValue="1") String page,
+			HttpSession session,
+			Model model
+			) throws Exception{
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		if(info == null) {
+			return "redirect:/dogshop/list?"+"smallSortNum="+smallSortNum+"&page="+page;
+		}
+
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root+"uploads"+File.separator+"dogshop";
+		
+		service.deleteProduct(productNum, pathname, info.getUserId());
+		
+		return "redirect:/dogshop/list?"+"smallSortNum="+smallSortNum+"&page="+page;
 	}
 	
 	@RequestMapping(value="/dogshop/pay")

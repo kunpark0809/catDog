@@ -66,10 +66,7 @@
 
 
 
-
-<!-- 일정 기간 동안의 총 매출 구하기. 해당 월, 분기, 연별-->
-
-<!--모든 품목의 월별 매출(금액). 년도와 월을 YYYYMM 꼴로 결합해야 함 -->
+<!--모든 품목의 월별 매출(금액). 년도와 월을 YYYYMM 꼴로 결합해야 함. 연도별 -->
 <select id="monthSalesByCategory" parameterType="Map" resultType="com.catDog.admin.Money">
 SELECT p.smallSortNum, ss.sortName smallSortName, TO_CHAR(requestDate,'YYYYMM') requestDate, SUM(NVL(productSum,0)) productSum FROM request r
 JOIN requestDetail rd ON r.requestNum = rd.requestNum 
@@ -84,13 +81,13 @@ GROUP BY p.smallSortNum, ss.sortName, TO_CHAR(requestDate,'YYYYMM')
 ORDER BY requestDate ASC
 </select>
 
-<!-- 해당 smallSortNum의 sortName을 가져오는 쿼리 -->
+<!-- 해당 smallSortNum의 sortName을 가져오는 쿼리. 연도별 -->
 <select id="getCategory" parameterType="Integer" resultType="String">
 	SELECT sortName FROM smallSort WHERE smallSortNum = #{smallSortNum}	
 </select>
 
 
-<!--모든 품목의 분기별 매출(금액). 년도와 월을 YYYYMM 꼴로 결합해야 함. 가져온 후에 결과값을 Controller에서 1~3/4~6/7~9/10~12끼리 합쳐야 함 -->
+<!--모든 품목의 분기별 매출(금액). 년도와 월을 YYYYMM 꼴로 결합해야 함. 가져온 후에 결과값을 Controller에서 1~3/4~6/7~9/10~12끼리 합쳐야 함. 분기 -->
 <select id="quarterSalesByCategory" parameterType="Map" resultType="com.catDog.admin.Money">
 SELECT p.smallSortNum, ss.sortName smallSortName, TO_CHAR(requestDate,'YYYYMM') requestDate, SUM(NVL(productSum,0)) productSum FROM request r
 JOIN requestDetail rd ON r.requestNum = rd.requestNum 
@@ -105,9 +102,9 @@ GROUP BY p.smallSortNum, ss.sortName, TO_CHAR(requestDate,'YYYYMM')
 ORDER BY requestDate ASC
 </select>
 
-<!-- 연도별 매출. -->
+<!-- 연도별 매출. 이번 년도의 매출 출력에도 사용. 소계에 사용 -->
 <select id="yearSales" parameterType="String" resultType="Integer">
-	SELECT SUM(purchase)
+	SELECT NVL(SUM(purchase),0) yearSales 
 	FROM request r
 	JOIN payment p ON r.requestNum =  p.requestNum
 	<![CDATA[
@@ -116,23 +113,38 @@ ORDER BY requestDate ASC
 	]]>
 </select>
 
-
-
-
-
-
-<!-- 일정 기간 동안의 한 품목의 매출 구하기. 시작날짜, 끝날짜, 상품번호 -->
-<select id="calculateProduct" parameterType="Map" resultType="com.catDog.admin.Money">
-	SELECT rd.productNum, name, SUM(productCount) productCount, SUM(productSum) productSum
+<!-- 전체 기간동안의 매출. 소계에 사용 -->
+<select id="totalSales" resultType="Integer">
+	SELECT NVL(SUM(purchase),0) sales 
 	FROM request r
-	JOIN requestDetail rd ON r.requestNum = rd.requestNum
-	LEFT OUTER JOIN product p ON rd.productNum = p.productNum
-	<![CDATA[
-		WHERE TO_CHAR(requestDate, 'YYYYMMDD') >= #{startDate} AND
-		TO_CHAR(requestDate, 'YYYYMMDD') <=#{endDate} AND
-		rd.productNum=#{productNum}
-	]]>
-	GROUP BY rd.productNum, name
+	JOIN payment p ON r.requestNum =  p.requestNum
+</select>
+
+
+<!-- year와 smallSortNum 입력해서 해당 카테고리의 해당 년도의 총매출을 출력. 품목별 -->
+<select id="categorySales" parameterType="Map" resultType="com.catDog.admin.Money">
+	SELECT bs.bigSortNum, bs.sortName bigSortName, p.smallSortNum, ss.sortName smallSortName, SUM(productSum) sales FROM requestDetail rd
+		JOIN product p ON rd.productNum = p.productNum
+		JOIN smallSort ss ON p.smallSortNum = ss.smallSortNum
+		JOIN bigSort bs ON ss.bigSortNum = bs.bigSortNum
+		JOIN request r ON rd.requestNum = r.requestNum
+	WHERE p.smallSortNum = #{smallSortNum}
+		AND TO_CHAR(requestDate, 'YYYY') = #{year}
+	GROUP BY bs.bigSortNum, bs.sortName, p.smallSortNum, ss.sortName
+	ORDER BY smallSortNum ASC;	
+</select>
+
+<!-- year와 smallSortNum 입력해서 해당 카테고리의 해당 년도의 총 판매개수를 출력. 품목별 -->
+<select id="categorySalesVolume" parameterType="Map" resultType="com.catDog.admin.Money">
+	SELECT bs.bigSortNum, bs.sortName bigSortName, p.smallSortNum, ss.sortName smallSortName, SUM(productCount) salesVolume FROM requestDetail rd
+		JOIN product p ON rd.productNum = p.productNum
+		JOIN smallSort ss ON p.smallSortNum = ss.smallSortNum
+		JOIN bigSort bs ON ss.bigSortNum = bs.bigSortNum
+		JOIN request r ON rd.requestNum = r.requestNum
+	WHERE p.smallSortNum = #{smallSortNum}
+		AND TO_CHAR(requestDate, 'YYYY') = #{year}
+	GROUP BY bs.bigSortNum, bs.sortName, p.smallSortNum, ss.sortName
+	ORDER BY smallSortNum ASC;
 </select>
 
 <!-- 회원 리스트 -->

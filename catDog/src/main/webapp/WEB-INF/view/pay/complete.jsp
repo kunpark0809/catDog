@@ -13,7 +13,7 @@
 </script>
 
 
-<div>
+<div class="shin_body">
 	<div class="order_table_type">
 	<div class="complete">
 		<p>주문번호 : <strong>${list.get(0).requestNum}</strong></p>

@@ -97,16 +97,60 @@ public class DogShopServiceImp implements DogShopService{
 	}
 
 	@Override
-	public List<DogShop> readProduct(int productNum) {
+	public List<DogShop> readProductPic(int productNum) {
 		List<DogShop> list = null;
 		try {
-			list = dao.selectList("dogshop.readProduct",productNum);
+			list = dao.selectList("dogshop.readProductPic",productNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		return list;
 	}
+	
+	@Override
+	public DogShop readProduct(int productNum) {
+		DogShop dto = null;
+		try {
+			dto = dao.selectOne("dogshop.readProduct",productNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
+	
+	@Override
+	public void deleteProduct(int productNum, String pathname, String userId) throws Exception {
+		try {
+			DogShop dto = readProduct(productNum);
+			if(dto==null || ( userId.indexOf("admin") < 0)) {
+				return;
+			}
+			
+			List<DogShop> picList = readProductPic(productNum);
+			if(picList != null && picList.size() != 0) {
+				for(DogShop pic : picList) {
+					fileManager.doFileDelete(pic.getImageFileName(),pathname);
+				}
+
+				dao.deleteData("dogshop.deleteProductPic",productNum);
+			}
+			
+			if(dto.getImageFileName()!=null) {
+				fileManager.doFileDelete(dto.getImageFileName(),pathname);
+			}
+			
+			dao.deleteData("dogshop.deleteProduct",productNum);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
+
 
 
 	

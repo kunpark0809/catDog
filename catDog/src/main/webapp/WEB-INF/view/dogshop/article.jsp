@@ -2,6 +2,7 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
    String cp = request.getContextPath();
 %>
@@ -57,7 +58,7 @@ $(function(){
 
 function cart(){
 	
-	var productNum = ${list.get(0).productNum};
+	var productNum = ${dto.productNum};
 	var productCount = $("input[name=productCount]").val();
 	var url = "<%=cp%>/pay/insertCart";
 	var query = "productNum="+productNum+"&productCount="+productCount;
@@ -96,7 +97,13 @@ function changePrice(){
 		count = 1;
 	}
 	
-	$("input[name=productSum]").val(count*${list.get(0).price});
+	$("input[name=productSum]").val(count*${dto.price});
+}
+
+function deleteProduct(){
+	if(confirm("위 자료를 삭제 하시겠습니까?")){
+		location.href="<%=cp%>/dogshop/delete?${query}&productNum=${dto.productNum}";
+	}
 }
 </script>
 	<div class="shin_body"> 
@@ -110,10 +117,10 @@ function changePrice(){
 		<div class="product-info">
 			<div class="product-img">
 				<div class="main-img">
-					<img alt="" src="<%=cp%>/uploads/dogshop/${list.get(0).imageFileName}">
+					<img alt="" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}">
 				</div>
 				<div class="imgList">
-					<c:forEach var="dto" items="${list}">
+					<c:forEach var="dto" items="${picList}">
 						<div class="sub-img" data-img="${dto.imageFileName}">
 							<img alt="" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}">
 						</div>
@@ -124,11 +131,11 @@ function changePrice(){
 			<div class="product-info-detail"> 
 				<table>
 				<tr>
-					<td colspan="2">${list.get(0).name}</td>
+					<td colspan="2">${dto.name}</td>
 				</tr>
 				<tr>
 					<td>가격</td>
-					<fmt:formatNumber var="price" value="${list.get(0).price}" type="currency" />
+					<fmt:formatNumber var="price" value="${dto.price}" type="currency" />
 					<td>${price}원</td>
 				</tr>
 				<tr>
@@ -137,7 +144,7 @@ function changePrice(){
 				</tr>
 				<tr>
 					<td>포인트</td>
-					<fmt:parseNumber var="point" value="${list.get(0).price*0.01}" integerOnly="true"/>
+					<fmt:parseNumber var="point" value="${dto.price*0.01}" integerOnly="true"/>
 					<td>${point}원</td>
 				</tr>
 				</table>
@@ -147,26 +154,28 @@ function changePrice(){
 					<span><input type="text" readonly="readonly" name="productSum" value="${price}">원</span>
 				</div>
 				<div class="product_btn">
-					<button type="button" class="shop_order" onclick="pay('${list.get(0).productNum}');">구매하기</button>
-					<button type="button" class="shop_cart" onclick="cart();">장바구니</button>
-					<button type="button" onclick="javascript:location.href='<%=cp%>/dogshop/update?smallSortNum=${list.get(0).smallSortNum}&productNum=${list.get(0).productNum}';">수정</button>
-					<button type="button" onclick="javascript:location.href='<%=cp%>/dogshop/delete?smallSortNum=${list.get(0).smallSortNum}&productNum=${list.get(0).productNum}';">삭제</button>
-			
+					<button type="button" class="payBtn" onclick="pay('${dto.productNum}');">구매하기</button>
+					<button type="button" class="cartBtn" onclick="cart();">장바구니</button>
 				</div>
+				<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
+					<div class="admin_btn">
+						<button type="button" onclick="javascript:location.href='<%=cp%>/dogshop/update?${query}&productNum=${dto.productNum}';">수정</button>
+						<button type="button" onclick="deleteProduct();">삭제</button>
+					</div>
+				</c:if>
 			</div>
 		</div>
 		<div class="product-main" style="clear: both;">
-			${list.get(0).content}
+			${dto.content}
 		</div>
 		
-		<div id="cart_dialog" style="display: none;">
+		<div id="cart_dialog" style="display: none; text-align: center;">
 			<strong>상품이 장바구니에 담겼습니다.</strong>
 			<br>
 			바로 확인하시겠습니까?
 			<div class="btn_box">
-				<button type="button" class="btnDialogCanecl">취소</button>
-				<button type="button" onclick="javascript:location.href='<%=cp%>/pay/cart';">확인</button>
-				
+				<button type="button" class="btnDialogCanecl dialog_cancel">취소</button>
+				<button type="button" class="dialog_submit" onclick="javascript:location.href='<%=cp%>/pay/cart';">확인</button>
 			</div>
 		</div>
 	</div>
