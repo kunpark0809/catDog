@@ -201,7 +201,7 @@ $(function(){
 				<button type="button" class="btn2" onclick="report();">신고</button>
 			</td>
 		</tr>	
-			
+			 
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
 				<td colspan="2" align="left" style="padding-left: 5px;">
 				이전글 :
