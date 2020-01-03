@@ -131,7 +131,6 @@ ORDER BY requestDate ASC
 	WHERE p.smallSortNum = #{smallSortNum}
 		AND TO_CHAR(requestDate, 'YYYY') = #{year}
 	GROUP BY bs.bigSortNum, bs.sortName, p.smallSortNum, ss.sortName
-	ORDER BY smallSortNum ASC;	
 </select>
 
 <!-- year와 smallSortNum 입력해서 해당 카테고리의 해당 년도의 총 판매개수를 출력. 품목별 -->
@@ -144,7 +143,6 @@ ORDER BY requestDate ASC
 	WHERE p.smallSortNum = #{smallSortNum}
 		AND TO_CHAR(requestDate, 'YYYY') = #{year}
 	GROUP BY bs.bigSortNum, bs.sortName, p.smallSortNum, ss.sortName
-	ORDER BY smallSortNum ASC;
 </select>
 
 <!-- 회원 리스트 -->

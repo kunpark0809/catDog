@@ -9,8 +9,21 @@
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/variable-pie.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
 <script type="text/javascript">
+$(function(){
+	Highcharts.setOptions({
+		lang: {
+			thousandsSep: ','
+		}
+		
+	});
+
+});
 
 $(function(){
 	// $("#tab-${group}").addClass("active");
@@ -57,15 +70,7 @@ $(function(){
 
 });
 
-$(function(){
-	Highcharts.setOptions({
-		lang: {
-			thousandsSep: ','
-		}
-		
-	});
 
-});
 
 function yearSalesChart(url){
 	$.getJSON(url, function(data){
@@ -76,7 +81,11 @@ function yearSalesChart(url){
 		    },
 		    title: {
 		        text: data.year+'년 연매출 ('+data.totalYearSales+'원)',
-		        align: 'center'
+		        align: 'center',
+		        style: {
+				       fontSize: '23px'
+				    }
+		        
 		    },
 		    xAxis: {
 		        categories: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
@@ -116,8 +125,7 @@ function yearSalesChart(url){
 		    },
 		    tooltip: {
 		        headerFormat: '<b>{point.x}</b><br/>',
-		        pointFormat: '{series.name}: {point.y}<br/>',
-		        valueSuffix: '원',
+		        pointFormat: '{series.name}: <b>{point.y}</b>원<br/>',
 		        style: {
 		           fontSize: '15px'
 		        }
@@ -147,52 +155,46 @@ function categorySalesChart(url){
 		        type: 'variablepie'
 		    },
 		    accessibility: {
-		        description: 'A variable radius pie chart compares the population density and total land mass for seven European nations: Spain, France, Poland, the Czech Republic, Italy, Switzerland and Germany. The chart visualizes the data by using the width of each section to represent total area and the depth of the section to represent population density. Each section is color-coded according to the country and the chart is interactive: by hovering over each section the data points are exposed in a call-out box. The chart is organized by population density in a counterclockwise direction. Germany has the highest population density at 235.6 people per square kilometer, followed by Switzerland, Italy, the Czech Republic, Poland, France and Spain. France has the largest land mass at 551,500 square kilometers. Spain is the second largest country at 505,370 square kilometers but has the lowest population density at 92.9 people per square kilometer. Switzerland is the smallest nation by land mass at 41,277 square kilometers but it has the second highest population density at 214.5 people per square kilometer.'
+		        description: '품목별로 해당 연도의 매출액과 판매개수를 그래프로 출력. 호의 길이는 매출액의 점유율, 반지름은 판매개수'
 		    },
 		    title: {
-		        text: 'Countries compared by population density and total area.'
+		        text: data.year+'년 품목별 매출액 및 판매개수',
+		        style: {
+				       fontSize: '23px'
+				    }
+		    },
+		    subtitle: {
+		        text: '중심각의 크기는 매출액, 반지름의 길이는 판매개수를 의미합니다.',
+		        style: {
+				       fontSize: '13px'
+				    }
 		    },
 		    tooltip: {
-		        headerFormat: '',
+		    	headerFormat: '<b>{point.x}</b><br/>',
 		        pointFormat: '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' +
-		            'Area (square km): <b>{point.y}</b><br/>' +
-		            'Population density (people per square km): <b>{point.z}</b><br/>'
+		            '매출액 : <b>{point.y}</b>원<br/>' +
+		            '판매개수 : <b>{point.z}</b>개<br/>',
+			    style: {
+			       fontSize: '15px'
+			    }
+		            
 		    },
 		    series: [{
-		        minPointSize: 10,
-		        innerSize: '20%',
+		        minPointSize: 1,
+		        innerSize: '30%',
 		        zMin: 0,
-		        name: 'countries',
-		        data: [{
-		            name: 'Spain',
-		            y: 505370,
-		            z: 92.9
-		        }, {
-		            name: 'France',
-		            y: 551500,
-		            z: 118.7
-		        }, {
-		            name: 'Poland',
-		            y: 312685,
-		            z: 124.6
-		        }, {
-		            name: 'Czech Republic',
-		            y: 78867,
-		            z: 137.5
-		        }, {
-		            name: 'Italy',
-		            y: 301340,
-		            z: 201.8
-		        }, {
-		            name: 'Switzerland',
-		            y: 41277,
-		            z: 214.5
-		        }, {
-		            name: 'Germany',
-		            y: 357022,
-		            z: 235.6
-		        }]
-		    }]
+		        name: '그래프',
+		        data: data.series
+		    }],
+		    plotOptions: {
+		        series: {
+		            dataLabels: {
+		            	style: {
+		            		fontSize: '14px'
+		            	}
+		            }
+		    	}
+		    }
 		});
 	});	
 	
@@ -207,6 +209,20 @@ function selectYearSales(){
 	url += "?year="+$("#yearSalesSelect option:selected").val();
 	yearSalesChart(url);
 }
+
+function selectCategorySales(){
+	if(!$("#categorySalesSelect option:selected").val()) {
+		return;
+	}
+	
+	var url = "<%=cp%>/admin/money/categorySalesChart";
+	url += "?year="+$("#categorySalesSelect option:selected").val();
+	categorySalesChart(url);
+}
+
+
+
+
 
 <%-- $(function(){
 	var url = "<%=cp%>/admin/money/productSalesChart";
