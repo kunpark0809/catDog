@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.catDog.common.MyUtil;
+import com.catDog.customer.SessionInfo;
 import com.catDog.dogShop.DogShopService;
 import com.catDog.pay.Pay;
 
@@ -32,8 +34,9 @@ public class RequestController {
 	public String requestList(
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			HttpServletRequest req,
+			HttpSession session,
 			Model model) throws Exception {
-		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		String cp = req.getContextPath();
 		
 		int rows = 5;
@@ -41,6 +44,7 @@ public class RequestController {
 		int dataCount = 0;
 		
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("num", info.getMemberIdx());
 		dataCount = service.dataCount(map);
 		if(dataCount != 0)
 			total_page = util.pageCount(rows, dataCount);
@@ -57,11 +61,9 @@ public class RequestController {
 		
 		String listUrl;
 		String detailUrl;
-		String productUrl;
 		
 		listUrl = cp+"/mypage/requestCheck";
 		detailUrl = cp+"/mypage/requestDetailCheck?page="+current_page;
-		productUrl = cp+"";
 		
 		String paging = util.pagingMethod(current_page, total_page, listUrl);
 		

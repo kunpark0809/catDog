@@ -15,7 +15,7 @@
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
 			<tr height="35">
 				<td align="left" width="50%">
-					dataCount개(page/total_page 페이지)
+					${dataCount}개(${page}/${total_page} 페이지)
 				</td>
 				<td align="right">
 					&nbsp;
@@ -34,32 +34,30 @@
 				<th width="70" style="color: #787878;">취소/교환/반품</th>
 			</tr>
 			
-<%-- 			<c:forEach var="dto" items="${list}"> --%>
-<!-- 			<tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;">  -->
-<%-- 				<td>${dto.listNum}</td> --%>
-<!-- 				<td align="left" style="padding-left: 10px;"> -->
-<%-- 					<a href="${articleUrl}&noticeNum=${dto.noticeNum}">${dto.subject}</a> --%>
-<%-- 					<c:if test="${dto.gap < 1}"> --%>
-<%-- 						<img src="<%=cp%>/resource/img/new.gif"> --%>
-<%-- 					</c:if> --%>
-<!-- 				</td> -->
-<%-- 				<td>${dto.nickName}</td> --%>
-<%-- 				<td>${dto.created}</td> --%>
-<%-- 				<td>${dto.hitCount}</td> --%>
-<!-- 				<td> -->
-<%-- 					<c:if test="${dto.fileCount != 0}"> --%>
-<%-- 						<a href="<%=cp%>/notice/zipdownload?noticeNum=${dto.noticeNum}"><i class="far fa-file"></i></a> --%>
-<%-- 					</c:if> --%>
-<!-- 				</td> -->
-<!-- 			</tr> -->
-<%-- 			</c:forEach> --%>
+			<c:forEach var="dto" items="${list}">
+			<tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
+				<td>${dto.requestDate}<br><a href="<%=cp%>${detailUrl}&requestNum=${dto.requestNum}">${dto.requestNum}</a></td>
+				<td align="left" style="padding-left: 10px;">
+					<a href="<%=cp%>/dogshop/article?productNum=${dto.productNum}"><img style="width: 80px; height: 80px;" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}"></a>
+				</td>
+				<td>
+					<a href="<%=cp%>/dogshop/article?productNum=${dto.productNum}">${dto.productName}</a>
+				</td>
+				<td>${dto.productCount}</td>
+				<td>${dto.productSum}</td>
+				<td>${dto.status}</td>
+				<td>
+					-
+				</td>
+			</tr>
+			</c:forEach>
 		
 		</table>
 		
 		<table style="width: 100%; border-spacing: 0px;">
 			<tr height="35">
 				<td align="center">
-					dataCount==0 ? "등록된 자료가 없습니다." : paging
+					${dataCount==0 ? "등록된 자료가 없습니다." : paging}
 				</td>
 			</tr>
 		</table>

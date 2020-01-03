@@ -21,13 +21,13 @@
 		WHERE  r.requestNum = #{requestNum}
 	</select>
 	
-	<select id="readRequest" parameterType="String" resultType="com.catDog.pay.Pay">
+	<select id="readRequest" parameterType="map" resultType="com.catDog.pay.Pay">
 		select pr.productNum, requestDate, pr.name productName, r.requestNum, c.num,c.name, rd.productSum, r.status, rd.productCount, pr.imageFileName
 		from request r
 		JOIN customerdetail c ON r.num = c.num
 		JOIN requestDetail rd ON r.requestNum = rd.requestNum
 		JOIN product pr ON pr.productNum = rd.productNum
-		where r.requestnum=#{requestNum} and c.num=#{num}
+		where c.num=#{num}
 	</select>
 	
 	<select id="readCumstomer" parameterType="Long" resultType="com.catDog.pay.Pay">
