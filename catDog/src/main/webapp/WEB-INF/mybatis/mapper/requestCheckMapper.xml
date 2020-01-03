@@ -10,7 +10,7 @@
 		WHERE p.productNum=#{productNum} AND INSTR(pp.imageFileName,'main') &gt; 0
 	</select>
 	
-	<select id="readRequest" parameterType="String" resultType="com.catDog.pay.Pay">
+	<select id="readRequestDetail" parameterType="String" resultType="com.catDog.pay.Pay">
 		select pr.productNum, requestDate ,pr.name productName,r.requestNum, c.num,c.name, r.total, r.addr1 deliverAddr1, r.addr2 deliverAddr2, r.zip deliverZip, r.tel deliverTel, r.name deliverName, r.memo, r.status, p.payMethod, p.point usePoint, p.purchase,p.stackPoint point, 
 		rd.requestDetailNum, rd.productCount, rd.productNum, rd.productSum
 		FROM request r
@@ -21,11 +21,23 @@
 		WHERE  r.requestNum = #{requestNum}
 	</select>
 	
+	<select id="readRequest" parameterType="String" resultType="com.catDog.pay.Pay">
+		select pr.productNum, requestDate, pr.name productName, r.requestNum, c.num,c.name, rd.productSum, r.status, rd.productCount 
+		from request r
+		JOIN customerdetail c ON r.num = c.num
+		JOIN requestDetail rd ON r.requestNum = rd.requestNum
+		JOIN product pr ON pr.productNum = rd.productNum
+		where r.requestnum=#{requestNum} and c.num=#{num}
+	</select>
+	
 	<select id="readCumstomer" parameterType="Long" resultType="com.catDog.pay.Pay">
 		SELECT md.num, cd.name, md.userId, md.mileage, cd.email, cd.tel, md.addr1, md.addr2, md.zip
 		FROM customerDetail cd
 		JOIN memberDetail md ON cd.num = md.num
 		WHERE md.num = #{num}
 	</select>
-
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		select nvl(count(*), 0) from request r join customer c on c.num=r.num where c.num=#{num}
+	</select>
 </mapper>
