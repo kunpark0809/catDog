@@ -10,12 +10,7 @@ public class Point {
 	
 	private int point;
 	private int stackPoint;
-	
-	
-	private int productNum;
-	private String name;
-	private int productCount;
-	private int price;
+	private int purchase;
 	
 	public String getUserId() {
 		return userId;
@@ -59,29 +54,12 @@ public class Point {
 	public void setStackPoint(int stackPoint) {
 		this.stackPoint = stackPoint;
 	}
-	public int getProductNum() {
-		return productNum;
+	public int getPurchase() {
+		return purchase;
 	}
-	public void setProductNum(int productNum) {
-		this.productNum = productNum;
+	public void setPurchase(int purchase) {
+		this.purchase = purchase;
 	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public int getProductCount() {
-		return productCount;
-	}
-	public void setProductCount(int productCount) {
-		this.productCount = productCount;
-	}
-	public int getPrice() {
-		return price;
-	}
-	public void setPrice(int price) {
-		this.price = price;
-	}
+	
 	
 }
