@@ -22,7 +22,7 @@
 	</select>
 	
 	<select id="readRequest" parameterType="String" resultType="com.catDog.pay.Pay">
-		select pr.productNum, requestDate, pr.name productName, r.requestNum, c.num,c.name, rd.productSum, r.status, rd.productCount 
+		select pr.productNum, requestDate, pr.name productName, r.requestNum, c.num,c.name, rd.productSum, r.status, rd.productCount, pr.imageFileName
 		from request r
 		JOIN customerdetail c ON r.num = c.num
 		JOIN requestDetail rd ON r.requestNum = rd.requestNum

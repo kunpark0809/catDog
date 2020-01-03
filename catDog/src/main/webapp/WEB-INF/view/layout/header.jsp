@@ -77,9 +77,7 @@
 				<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
 					<li class="nav-item"><a class="nav-link js-scroll-trigger">관리자</a>
 						<ul class="nav-sub-menu">
-							<li><a class="nav-sub-link" href="<%=cp%>/admin/cs/list">고객센터 관리</a></li>
-							<li><a class="nav-sub-link" href="<%=cp%>/admin/bbs">수다방 관리</a></li>
-							<li><a class="nav-sub-link" href="<%=cp%>/admin/play">놀이터 관리</a></li>
+							<li><a class="nav-sub-link" href="<%=cp%>/admin/bbs">신고 관리</a></li>
 							<li><a class="nav-sub-link" href="<%=cp%>/admin/money">매출 관리</a></li>
 							<li><a class="nav-sub-link" href="<%=cp%>/admin/member">회원 관리</a></li>
 						</ul></li>
