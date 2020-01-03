@@ -18,7 +18,7 @@ public class PointServiceImpl implements PointService {
 		List<Point> list = null;
 		
 		try {
-			list=dao.selectList("mypage.listPoint", map);
+			list=dao.selectList("point.listPoint", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -30,7 +30,7 @@ public class PointServiceImpl implements PointService {
 		List<Point> list = null;
 		
 		try {
-			list = dao.selectList("mypage.listPoint", num);
+			list = dao.selectList("point.readPoint", num);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -41,7 +41,7 @@ public class PointServiceImpl implements PointService {
 	public int dataCount(Map<String, Object> map) {
 		int result = 0;
 		try {
-			result = dao.selectOne("mypage.dataCount", map);
+			result = dao.selectOne("point.dataCount", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

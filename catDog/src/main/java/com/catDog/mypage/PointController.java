@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.catDog.common.MyUtil;
@@ -20,6 +21,7 @@ public class PointController {
 	@Autowired
 	private MyUtil myUtil;
 	
+	@RequestMapping(value="/mypage/point")
 	public String list(@RequestParam(value="page", defaultValue="1") int current_page,
 					   @RequestParam(defaultValue="all") String condition,
 					   @RequestParam(defaultValue="") String keyword, HttpServletRequest req,

@@ -17,7 +17,7 @@ function searchList() {
 <div class="body-container" style="width: 830px; margin: 20px auto 0px; border-spacing: 0px;">
 
 	<div class="body-title">
-		<h3><span style="font-family: Webdings"></span> 내가 쓴 글 </h3>
+		<h3><span style="font-family: Webdings"></span> 포인트 조회 </h3>
 	</div>
 	
 	<div>
@@ -25,6 +25,9 @@ function searchList() {
 			<tr height="35">
 				<td align="left" width="50%">
 					${dataCount}개(${page}/${total_page} 페이지)
+				</td>
+				<td align="right" width="50%">
+					잔여포인트 : ${list.get(0).mileage}
 				</td>
 				<td align="right">
 					&nbsp;
@@ -34,49 +37,20 @@ function searchList() {
 		
 		<table style="width: 100%; border-spacing: 0px; border-collapse: collapse;">
 			<tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
-				<th width="60" style="color: #787878;">번호</th>
-				<th style="color: #787878;">제목</th>
-				<th width="100" style="color: #787878;">작성자</th>
-				<th width="100" style="color: #787878;">작성일</th>
-				<th width="60" style="color: #787878;">조회수</th>
-				<th width="50" style="color: #787878;">파일</th>
+				<th width="100" style="color: #787878;">날짜</th>
+				<th style="color: #787878;">내용</th>
+				<th width="100" style="color: #787878;"> 포인트 </th>
 			</tr>
 		 
-		 <c:forEach var="vo" items="${listNoticeTop}">
+		<c:forEach var="dto" items="${list}">
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
-				<td align="left" style="padding-left: 10px;">
-					<a href="${articleUrl}&noticeNum=${vo.noticeNum}">${vo.subject}</a>
-				</td>
-				<td>${vo.nickName}</td>
-				<td>${vo.created}</td>
-				<td>${vo.hitCount}</td>
-				<td>
-					<c:if test="${vo.fileCount != 0}">
-						<a href="<%=cp%>/notice/zipdownload?noticeNum=${vo.noticeNum}"><i class="far fa-file"></i></a>
-					</c:if>
-				</td>
+				<td align="left" style="padding-left: 10px;">${dto.created}</td>
+				<td>${dto.content}</td>
+			<c:if test="$">
+				<td>${dto.point}</td>
+			</c:if>	
 			</tr>
-			</c:forEach>
-			
-			<c:forEach var="dto" items="${list}">
-			<tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
-				<td>${dto.listNum}</td>
-				<td align="left" style="padding-left: 10px;">
-					<a href="${articleUrl}&noticeNum=${dto.noticeNum}">${dto.subject}</a>
-					<c:if test="${dto.gap < 1}">
-						<img src="<%=cp%>/resource/img/new.gif">
-					</c:if>
-				</td>
-				<td>${dto.nickName}</td>
-				<td>${dto.created}</td>
-				<td>${dto.hitCount}</td>
-				<td>
-					<c:if test="${dto.fileCount != 0}">
-						<a href="<%=cp%>/notice/zipdownload?noticeNum=${dto.noticeNum}"><i class="far fa-file"></i></a>
-					</c:if>
-				</td>
-			</tr>
-			</c:forEach>
+		</c:forEach>
 
 		</table>
 
@@ -91,9 +65,9 @@ function searchList() {
 		<table style="width: 100%; margin: 10px auto; border-spacing: 0px;">
 			<tr height="40">
 				<td align="left" width="100">
-					<button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/mypage/myplyList';">새로고침</button>
+					<button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/mypage/point';">새로고침</button>
 				</td>
-				<td align="center">
+				<%-- <td align="center">
 					<form name="searchForm" action="<%=cp%>/notice/list" method="post">
 						<select name="condition" class="selectField">
 							<option value="all" ${condition=="all"?"selected='selected'":""}>제목+내용</option>
@@ -105,7 +79,7 @@ function searchList() {
 						<input type="text" name="keyword" value="${keyword}" class="boxTF">
 						<button type="button" class="btn" onclick="searchList()">검색</button>
 					</form>
-				</td>
+				</td> --%>
 			</tr>
 		</table>
 	</div>

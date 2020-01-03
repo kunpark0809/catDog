@@ -22,7 +22,7 @@
 	</update>
 	
 	<update id="updateCustomerDetail" parameterType="com.catDog.customer.Customer">
-		UPDATE customerDetail0 SET name=#{name}, email=#{email}, tel=#{tel}
+		UPDATE customerDetail SET name=#{name}, email=#{email}, tel=#{tel}
 		WHERE num=#{num}
 	</update>
 </mapper>
