@@ -8,6 +8,7 @@ public class Point {
 	private int point;
 	private String content;
 	private String created;
+	private int checked;
 	
 	public String getUserId() {
 		return userId;
@@ -44,6 +45,12 @@ public class Point {
 	}
 	public void setCreated(String created) {
 		this.created = created;
+	}
+	public int getChecked() {
+		return checked;
+	}
+	public void setChecked(int checked) {
+		this.checked = checked;
 	}
 
 }

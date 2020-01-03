@@ -46,9 +46,7 @@ function searchList() {
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
 				<td align="left" style="padding-left: 10px;">${dto.created}</td>
 				<td>${dto.content}</td>
-			<c:if test="$">
-				<td>${dto.point}</td>
-			</c:if>	
+				<td>${dto.checked!=0?'+':'-'}${dto.point}</td>
 			</tr>
 		</c:forEach>
 
