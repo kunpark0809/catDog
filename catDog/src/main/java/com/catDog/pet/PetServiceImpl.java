@@ -174,14 +174,24 @@ public class PetServiceImpl implements PetService {
 
 	@Override
 	public void insertPetReport(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
-		
+		try {
+			dao.insertData("pet.insertPetReport", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 
 	@Override
 	public int petReportCount(int reportNum) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		try {
+			result=dao.selectOne("pet.petReportCount", reportNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
+
 }

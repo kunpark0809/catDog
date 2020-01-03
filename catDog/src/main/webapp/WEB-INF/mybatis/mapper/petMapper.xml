@@ -97,5 +97,14 @@
 	<select id="petLikeCount" parameterType="Integer" resultType="Integer">
 		SELECT COUNT(*) FROM myPetLike WHERE myPetNum=#{myPetNum}
 	</select>
+	
+	<insert id="insertPetReport" parameterType="map">
+		INSERT INTO report(reportNum, boardSort, reportedPostNum, reportNum, reportenNum, reasonSortNum)
+		VALUES (report.NEXTVAL, #{boardSort}, #{reportedPostNum}, #{reportNum}, #{reportenNum}, #{reasonSortNum})
+	</insert>
+      
+	<select id="petReportCount" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM report WHERE reportNum=#{reportNum}
+	</select>
 
 </mapper>

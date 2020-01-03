@@ -155,28 +155,8 @@ $(function(){
 	});
 });
 
-$(function(){
-	$(".btnDialogOn").click(function(){
-		if(! confirm("해당 게시글을 신고하시겠습니까?")) {
-			return false;
-		}
-		var url="<%=cp%>/pet/insertPetReport";
-		var reportNum="${dto.reportNum}";
-		var query = {reportNum:reportNum};
-		
-		var fn = function(data){
-			var state=data.state;
-			if(state=="true") {
-				var count = data.petReportCount;
-				$("#petReportCount").text(count);
-			} else if(state=="false") {
-				alert("신고는 한번만 가능합니다.");
-			}
-		};
-		
-		ajaxJSON(url, "post", query, fn);
-	});
-});
+
+
 
 </script>
 
@@ -217,7 +197,7 @@ $(function(){
 			</tr>
 			
 		<tr>
-			<td align="right" width="100%">
+			<td align="left">
 				<button type="button" class="btn2" onclick="report();">신고</button>
 			</td>
 		</tr>	
