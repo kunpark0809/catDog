@@ -35,6 +35,7 @@
       <intercept-url pattern="/customer/pwdFind" access="permitAll"/>
       <intercept-url pattern="/resource/**" access="permitAll"/>
       <intercept-url pattern="/uploads/**" access="permitAll"/>
+    
       <intercept-url pattern="/company/**" access="permitAll"/>
       
       <intercept-url pattern="/dogshop/list" access="permitAll"/>
