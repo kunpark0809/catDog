@@ -23,4 +23,8 @@ public interface AdminService {
 
 	public String getCategory(int smallSortNum);
 
+	Money categorySalesVolume(Map<String, Object> map);
+
+	Money categorySales(Map<String, Object> map);
+
 }

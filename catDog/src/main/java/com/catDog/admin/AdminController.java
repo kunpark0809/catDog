@@ -288,6 +288,22 @@ public class AdminController {
 		return result;
 	}
 
+		// 품목별 매출
+		@RequestMapping(value = "/admin/money/categorySalesChart")
+		@ResponseBody
+		public Map<String,Object> categorySalesChart(@RequestParam(defaultValue = "2020") int year) throws Exception {
+			Map<String, Object> result = new HashMap<>();
+			
+			
+			
+			
+			return result;
+		}
+	
+	
+	
+	
+	
 	// 3년 매출을 분기별, 품목별로
 		@RequestMapping(value = "/admin/money/quarterSalesChart")
 		@ResponseBody
