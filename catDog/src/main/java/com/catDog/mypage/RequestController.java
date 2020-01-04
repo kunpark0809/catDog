@@ -63,7 +63,6 @@ public class RequestController {
 		String detailUrl;
 		
 		listUrl = cp+"/mypage/requestCheck";
-		detailUrl = cp+"/mypage/requestDetailCheck?page="+current_page;
 		
 		String paging = util.pagingMethod(current_page, total_page, listUrl);
 		
@@ -72,7 +71,6 @@ public class RequestController {
 		model.addAttribute("page", current_page);
 		model.addAttribute("paging", paging);
 		model.addAttribute("total_page", total_page);
-		model.addAttribute("detailUrl", detailUrl);
 		
 		return ".mypage.requestCheck";
 	}

@@ -36,7 +36,7 @@
 			
 			<c:forEach var="dto" items="${list}">
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
-				<td>${dto.requestDate}<br><a href="<%=cp%>${detailUrl}&requestNum=${dto.requestNum}">${dto.requestNum}</a></td>
+				<td>${dto.requestDate}<br><a href="<%=cp%>/mypage/requestDetailCheck?&requestNum=${dto.requestNum}">${dto.requestNum}</a></td>
 				<td align="left" style="padding-left: 10px;">
 					<a href="<%=cp%>/dogshop/article?productNum=${dto.productNum}"><img style="width: 80px; height: 80px;" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}"></a>
 				</td>

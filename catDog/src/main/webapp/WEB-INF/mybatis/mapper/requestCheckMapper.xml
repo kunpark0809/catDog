@@ -28,6 +28,7 @@
 		JOIN requestDetail rd ON r.requestNum = rd.requestNum
 		JOIN product pr ON pr.productNum = rd.productNum
 		where c.num=#{num}
+		order by r.requestNum desc
 	</select>
 	
 	<select id="readCumstomer" parameterType="Long" resultType="com.catDog.pay.Pay">
