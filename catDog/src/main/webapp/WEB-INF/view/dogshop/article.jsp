@@ -110,7 +110,7 @@ function deleteProduct(){
 		<div class="sortList">
 		
 			<a class="sortName" data-num="0" id="sort-0">전체</a>
-			<c:forEach var="sort" items="${sortList}">
+			<c:forEach var="sort" items="${smallSortList}">
 				<a class="sortName" data-num="${sort.smallSortNum}" id="sort-${sort.smallSortNum}">${sort.sortName}</a>	
 			</c:forEach>
 		</div>

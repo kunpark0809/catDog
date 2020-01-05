@@ -37,7 +37,7 @@ public class DogShopController {
 		String cp = req.getContextPath();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("smallSortNum", smallSortNum);
-		List<DogShop> sortList = service.smallSortList();
+		List<DogShop> smallSortList = service.smallSortList();
 		
 		int dataCount = service.dataCount(map);
 		
@@ -60,7 +60,7 @@ public class DogShopController {
 		
 		
 		model.addAttribute("list",list);
-		model.addAttribute("sortList",sortList);
+		model.addAttribute("smallSortList",smallSortList);
 		model.addAttribute("dataCount",dataCount);
 		model.addAttribute("total_page",total_page);
 		model.addAttribute("articleUrl",articleUrl);
@@ -76,10 +76,11 @@ public class DogShopController {
 			@RequestParam(defaultValue="1") String page,
 			Model model
 			) throws Exception{
+		List<DogShop> bigSortList = service.bigSortList();
+		List<DogShop> smallSortList = service.smallSortList();
 		
-		List<DogShop> sortList = service.smallSortList();
-		
-		model.addAttribute("sortList",sortList);
+		model.addAttribute("bigSortList",bigSortList);
+		model.addAttribute("smallSortList",smallSortList);
 		model.addAttribute("smallSortNum",smallSortNum);
 		model.addAttribute("page",page);
 		model.addAttribute("mode","created");
@@ -108,7 +109,7 @@ public class DogShopController {
 			@RequestParam(defaultValue="1") String page,
 			Model model
 			) throws Exception{
-		List<DogShop> sortList = service.smallSortList();
+		List<DogShop> smallSortList = service.smallSortList();
 		
 		DogShop dto = service.readProduct(productNum);
 		String query = "smallSortNum="+smallSortNum+"&page="+page;
@@ -122,7 +123,7 @@ public class DogShopController {
 		model.addAttribute("query",query);
 		model.addAttribute("picList", picList);
 		model.addAttribute("dto", dto);
-		model.addAttribute("sortList",sortList);
+		model.addAttribute("smallSortList",smallSortList);
 		return ".dogshop.article";
 	}
 	
@@ -136,9 +137,11 @@ public class DogShopController {
 		
 		DogShop dto = service.readProduct(productNum);
 		List<DogShop> picList = service.readProductPic(productNum);
-		List<DogShop> sortList = service.smallSortList();
+		List<DogShop> bigSortList = service.bigSortList();
+		List<DogShop> smallSortList = service.smallSortList();
 		
-		model.addAttribute("sortList",sortList);
+		model.addAttribute("bigSortList",bigSortList);
+		model.addAttribute("smallSortList",smallSortList);
 		model.addAttribute("smallSortNum",smallSortNum);
 		model.addAttribute("picList", picList);
 		model.addAttribute("dto", dto);

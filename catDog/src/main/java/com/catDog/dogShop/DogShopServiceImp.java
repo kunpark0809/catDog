@@ -20,6 +20,19 @@ public class DogShopServiceImp implements DogShopService{
 	private FileManager fileManager;
 	
 	@Override
+	public List<DogShop> bigSortList() {
+		List<DogShop> list = null;
+		
+		try {
+			list = dao.selectList("dogshop.bigSortList");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	@Override
 	public List<DogShop> smallSortList() {
 		List<DogShop> list = null;
 		try {

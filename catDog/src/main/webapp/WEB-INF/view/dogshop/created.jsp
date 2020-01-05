@@ -109,9 +109,15 @@
 					<tr>
 						<td>분&nbsp;&nbsp;류</td>
 						<td>
+							<select name="bigSortNum">
+								<option>::애견동물 선택::</option>
+								<c:forEach var="sort" items="${bigSortList}">
+									<option value="${sort.bigSortNum}" ${dto.bigSortNum==sort.bigSortNum?"selected='selected'":""}>${sort.sortName}</option>
+								</c:forEach>
+							</select>
 							<select name="smallSortNum">
 								<option value="0">::용품 선택::</option>
-								<c:forEach var="sort" items="${sortList}">
+								<c:forEach var="sort" items="${smallSortList}">
 									<option value="${sort.smallSortNum}" ${dto.smallSortNum==sort.smallSortNum?"selected='selected'":""}>${sort.sortName}</option>
 								</c:forEach>
 							</select>
