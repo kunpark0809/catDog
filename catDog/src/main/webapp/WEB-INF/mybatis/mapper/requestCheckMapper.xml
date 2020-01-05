@@ -2,17 +2,10 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="request">
-
-	<select id="readProduct" parameterType="Integer" resultType="com.catDog.pay.Pay">
-		SELECT p.productNum, p.name productName, price, pp.imageFileName 
-		FROM product p 
-		JOIN productPic pp ON p.productNum = pp.productNum
-		WHERE p.productNum=#{productNum} AND INSTR(pp.imageFileName,'main') &gt; 0
-	</select>
 	
 	<select id="readRequestDetail" parameterType="String" resultType="com.catDog.pay.Pay">
 		select pr.productNum, requestDate ,pr.name productName,r.requestNum, c.num,c.name, r.total, r.addr1 deliverAddr1, r.addr2 deliverAddr2, r.zip deliverZip, r.tel deliverTel, r.name deliverName, r.memo, r.status, p.payMethod, p.point usePoint, p.purchase,p.stackPoint point, 
-		rd.requestDetailNum, rd.productCount, rd.productNum, rd.productSum
+		rd.requestDetailNum, rd.productCount, rd.productNum, rd.productSum, pr.imageFileName
 		FROM request r
 		JOIN customerdetail c ON r.num = c.num
 		JOIN requestDetail rd ON r.requestNum = rd.requestNum
@@ -28,7 +21,15 @@
 		JOIN requestDetail rd ON r.requestNum = rd.requestNum
 		JOIN product pr ON pr.productNum = rd.productNum
 		where c.num=#{num}
-		order by r.requestNum desc
+		order by requestDate desc
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="readRequestNum" parameterType="map" resultType="com.catDog.pay.Pay">
+		select r.requestNum, requestDate, requestDetailNum from request r 
+        join customer c on c.num=r.num
+        join requestDetail rd on r.requestNum = rd.requestNum
+        where c.num=#{num}
 	</select>
 	
 	<select id="readCumstomer" parameterType="Long" resultType="com.catDog.pay.Pay">
@@ -39,6 +40,6 @@
 	</select>
 	
 	<select id="dataCount" parameterType="map" resultType="Integer">
-		select nvl(count(*), 0) from request r join customer c on c.num=r.num where c.num=#{num}
+		select nvl(count(*), 0) from request r join customer c on c.num=r.num join requestDetail rd on r.requestNum=rd.requestNum where c.num=#{num}
 	</select>
 </mapper>

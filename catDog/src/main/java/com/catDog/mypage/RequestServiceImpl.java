@@ -51,4 +51,42 @@ public class RequestServiceImpl implements RequestService {
 		}
 		return list;
 	}
+
+	@Override
+	public Pay readCustomer(long num) {
+		Pay dto = null;
+		try {
+			dto = dao.selectOne("request.readCumstomer",num);
+			
+			if(dto != null) {
+				if(dto.getTel() !=null) {
+					String[] s = dto.getTel().split("-");
+					dto.setTel1(s[0]);
+					dto.setTel2(s[1]);
+					dto.setTel3(s[2]);
+				}
+				
+				if(dto.getEmail() !=null) {
+					String[] s = dto.getEmail().split("@");
+					dto.setEmail1(s[0]);
+					dto.setEmail2(s[1]);
+					
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	return dto;
+	}
+
+	@Override
+	public List<Pay> readRequestNum(Map<String, Object> map) {
+		List<Pay> list = null;
+		try {
+			list = dao.selectList("request.readRequestNum", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 }
