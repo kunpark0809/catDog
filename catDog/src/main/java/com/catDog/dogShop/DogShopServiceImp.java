@@ -129,14 +129,15 @@ public class DogShopServiceImp implements DogShopService{
 			}
 			
 			List<DogShop> picList = readProductPic(productNum);
-			if(picList != null && picList.size() != 0) {
+			if(!picList.isEmpty()) {
 				for(DogShop pic : picList) {
 					fileManager.doFileDelete(pic.getImageFileName(),pathname);
 				}
 
-				dao.deleteData("dogshop.deleteProductPic",productNum);
+				
 			}
 			
+			dao.deleteData("dogshop.deleteProductPic",productNum);
 			if(dto.getImageFileName()!=null) {
 				fileManager.doFileDelete(dto.getImageFileName(),pathname);
 			}
@@ -150,7 +151,59 @@ public class DogShopServiceImp implements DogShopService{
 		
 	}
 
+	@Override
+	public void deleteImgFile(String productPicNum, String pathname, String userId) throws Exception {
+		try {
+			DogShop dto = dao.selectOne("dogshop.readPicNum", productPicNum);
+			
+			if(dto==null || ( userId.indexOf("admin") < 0)) {
+				return;
+			}
+			
+			if(dto.getImageFileName()!=null) {
+				fileManager.doFileDelete(dto.getImageFileName(),pathname);
+			}
+			
+			dao.deleteData("dogshop.deletePic", productPicNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
 
+	@Override
+	public void updateproduct(DogShop dto, String pathname) throws Exception {
+		
+		try {
+			if(dto.getMain()!=null) {
+				
+				if(dto.getImageFileName()!=null)
+					fileManager.doFileDelete(dto.getImageFileName(),pathname);
+				
+				String savename = fileManager.doFileUpload(dto.getMain(), pathname);
+				if(savename != null)
+					dto.setImageFileName(savename);
+			}
+			
+			
+			dao.updateData("dogshop.updateProduct",dto);
+			
+			if(!dto.getUpload().isEmpty()) {
+				for(MultipartFile mf : dto.getUpload()) {
+					String savename = fileManager.doFileUpload(mf, pathname);
+					if(savename !=null) {
+						dto.setImageFileName(savename);
+						insertImgFile(dto);
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	
+	
 
 
 	

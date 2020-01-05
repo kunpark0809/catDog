@@ -47,7 +47,7 @@
 	    		}
 	    	}
 	    
-	   		f.action="<%=cp%>/dogshop/created";
+	   		f.action="<%=cp%>/dogshop/${mode}";
 	   		f.submit();
 
 	        return true;
@@ -82,6 +82,18 @@
 		  	      $("#dogshopb").append($tr);
 		  	  });
 		  });
+	   <c:if test="${mode=='update'}">
+		   	function deleteFile(picNum){
+		   		if(confirm("삭제 후 복구 불가합니다. 정말 삭제 하시겠습니까?")){
+			   		var url="<%=cp%>/dogshop/deleteFile";
+			   		$.post(url,{picNum:picNum},function(data){
+			   			$("#fileTr"+picNum).remove();
+			   		},"json");
+		   		}
+		   	};
+	   </c:if>
+	   
+
 	</script>
 	<link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
 	<div class="shin_body">
@@ -118,28 +130,46 @@
 						</td>
 					</tr>
 					<tr align="left" style="border-bottom: 1px solid #cccccc;"> 
-				      <td width="100" bgcolor="#eeeeee" style="text-align: center; padding-top:5px;" valign="top">본문내용</td>
+				      <td width="120" bgcolor="#eeeeee" style="text-align: center; padding-top:5px;" valign="top">본문내용</td>
 				      <td valign="top" style="padding:5px 0px 5px 10px;"> 
 				        <textarea name="content" id="content" class="boxTA" style="width:98%; height: 270px;">${dto.content}</textarea>
 				      </td>
 			  		</tr>
 			  		
 			  		<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-					<td width="100">메인사진</td>
+					<td width="120">메인사진</td>
 					<td style="padding-left:10px;"> 
 						<input type="file" name="main" class="boxTF" size="53" style="height: 25px; width: 95%;">
 					</td>
 					</tr> 
 					<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-					<td width="100">추가사진</td>
+					<td width="120">본문사진</td>
 					<td style="padding-left:10px;"> 
 						<input type="file" name="upload" class="boxTF" size="53" style="height: 25px; width: 95%;">
 					</td>
 					</tr> 
 				</tbody>
+				<c:if test="${mode=='update'}">
+					<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
+					<td width="120">첨부된 메인사진</td>
+					<td style="padding-left:10px;"> 
+						<input type="hidden" name="imageFileName" value="${dto.imageFileName}">
+						${dto.imageFileName} <strong>&nbsp;&nbsp;(새로운 메인사진을 첨부할 시 해당사진은 삭제됩니다.)</strong> 
+					</td>
+					</tr> 
+				<c:forEach var="pic" items="${picList}">
+					<tr align="left" id="fileTr${pic.productPicNum}" height="40" style="border-bottom: 1px solid #cccccc;">
+					<td width="120">첨부된 본문사진</td>
+					<td style="padding-left:10px;"> 
+						<a href="javascript:deleteFile('${pic.productPicNum}')"><i class="far fa-trash-alt"></i></a>&nbsp;${pic.imageFileName}
+					</td>
+					</tr> 
+				</c:forEach>
+				</c:if>
 			</table>
 			<table>
 				<tr>
+
 					<td>
 						<button type="submit">${mode=="update"?"수정하기":"등록하기"}</button>
 						<button type="reset">다시입력</button>
@@ -147,6 +177,10 @@
 					</td>
 				</tr>
 			</table>
+			
+			<c:if test="${mode=='update'}">
+				<input type="hidden" name="productNum" value="${dto.productNum}">
+			</c:if>
 		</form>
 
 	</div>

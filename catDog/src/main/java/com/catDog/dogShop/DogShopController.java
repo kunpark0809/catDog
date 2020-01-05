@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.catDog.common.MyUtil;
 import com.catDog.customer.SessionInfo;
@@ -146,6 +147,20 @@ public class DogShopController {
 		return ".dogshop.created";
 	}
 	
+	@RequestMapping(value="/dogshop/update", method=RequestMethod.POST)
+	public String updateSubmit(
+			@RequestParam(defaultValue="0") String smallSortNum,
+			DogShop dto,
+			HttpSession session
+			) throws Exception{
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root+"uploads"+File.separator+"dogshop";
+		
+		service.updateproduct(dto, pathname);
+
+		return "redirect:/dogshop/list?smallSortNum="+smallSortNum;
+	}
+	
 	@RequestMapping(value="/dogshop/delete", method=RequestMethod.GET)
 	public String delete(
 			@RequestParam(defaultValue="0") String smallSortNum,
@@ -156,16 +171,36 @@ public class DogShopController {
 			) throws Exception{
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
-		if(info == null) {
-			return "redirect:/dogshop/list?"+"smallSortNum="+smallSortNum+"&page="+page;
-		}
-
 		String root = session.getServletContext().getRealPath("/");
 		String pathname = root+"uploads"+File.separator+"dogshop";
 		
 		service.deleteProduct(productNum, pathname, info.getUserId());
 		
 		return "redirect:/dogshop/list?"+"smallSortNum="+smallSortNum+"&page="+page;
+	}
+	
+	@RequestMapping(value="/dogshop/deleteFile", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> deleteFile(
+			@RequestParam String picNum,
+			HttpSession session
+			) throws Exception{
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root+"uploads"+File.separator+"dogshop";
+		String state = "false";
+		
+		try {
+			service.deleteImgFile(picNum, pathname, info.getUserId());
+			state = "true";
+		} catch (Exception e) {
+		}
+		
+		Map<String,Object> model = new HashMap<>();
+		model.put("state", state);
+		
+		return model;
 	}
 	
 	@RequestMapping(value="/dogshop/pay")

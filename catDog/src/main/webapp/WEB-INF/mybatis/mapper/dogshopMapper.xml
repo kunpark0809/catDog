@@ -54,11 +54,26 @@
 		WHERE productNum = #{productNum}
 	</select>
 	
+	<select id="readPicNum" parameterType="String" resultType="com.catDog.dogShop.DogShop">
+		SELECT productNum, productPicNum,imageFileName 
+		FROM productPic
+		WHERE productPicNum = #{productPicNum}
+	</select>
+	
+	<update id="updateProduct" parameterType="com.catDog.dogShop.DogShop">
+		UPDATE product SET name=#{name}, price=#{price}, content=#{content}, smallSortNum=#{smallSortNum}, imageFileName=#{imageFileName} 
+		WHERE productNum=#{productNum}
+	</update>
+	
 	<delete id="deleteProduct" parameterType="Integer">
 		DELETE FROM product WHERE productNum=#{productNum} 
 	</delete>
 	
 	<delete id="deleteProductPic" parameterType="Integer">
 		DELETE FROM productPic WHERE productNum=#{productNum}
+	</delete>
+	
+	<delete id="deletePic" parameterType="String">
+		DELETE FROM productPic WHERE productPicNum = #{productPicNum}
 	</delete>
 </mapper>
