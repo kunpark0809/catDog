@@ -21,6 +21,50 @@ public class Pet {
 	
 	private int petReportCount;
 	
+	private int reportNum;
+	private int boardSort;
+	private int reportedPostNum;
+	private String reportDate;
+	private int reporterNum;
+	private int reportedNum;
+	private int reasonSortNum;
+	
+	public int getBoardSort() {
+		return boardSort;
+	}
+	public void setBoardSort(int boardSort) {
+		this.boardSort = boardSort;
+	}
+	public int getReportedPostNum() {
+		return reportedPostNum;
+	}
+	public void setReportedPostNum(int reportedPostNum) {
+		this.reportedPostNum = reportedPostNum;
+	}
+	public String getReportDate() {
+		return reportDate;
+	}
+	public void setReportDate(String reportDate) {
+		this.reportDate = reportDate;
+	}
+	public int getReporterNum() {
+		return reporterNum;
+	}
+	public void setReporterNum(int reporterNum) {
+		this.reporterNum = reporterNum;
+	}
+	public int getReportedNum() {
+		return reportedNum;
+	}
+	public void setReportedNum(int reportedNum) {
+		this.reportedNum = reportedNum;
+	}
+	public int getReasonSortNum() {
+		return reasonSortNum;
+	}
+	public void setReasonSortNum(int reasonSortNum) {
+		this.reasonSortNum = reasonSortNum;
+	}
 	public int getListNum() {
 		return listNum;
 	}
@@ -92,6 +136,12 @@ public class Pet {
 	}
 	public void setPetReportCount(int petReportCount) {
 		this.petReportCount = petReportCount;
+	}
+	public int getReportNum() {
+		return reportNum;
+	}
+	public void setReportNum(int reportNum) {
+		this.reportNum = reportNum;
 	}
 	
 	

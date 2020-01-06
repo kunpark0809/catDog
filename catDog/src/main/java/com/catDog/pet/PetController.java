@@ -274,7 +274,10 @@ public String list(
 	@RequestMapping(value="/pet/insertPetReport", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> insertPetReport(
-			@RequestParam int reportNum,
+			@RequestParam int reportedPostNum,
+			@RequestParam int reporterNum,
+			@RequestParam int reportedNum,
+			@RequestParam int reasonSortNum,
 			HttpSession session
 			) {
 		String state="true";
@@ -282,25 +285,24 @@ public String list(
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
 		Map<String, Object> paramMap=new HashMap<>();
-		paramMap.put("reportNum", reportNum);
-		paramMap.put("num", info.getMemberIdx());
+		paramMap.put("reportedPostNum", reportedPostNum);
+		paramMap.put("reporterNum", info.getMemberIdx());
+		paramMap.put("reportedNum", reportedNum);
+		paramMap.put("reasonSortNum", reasonSortNum);
 		
 		try {
 			service.insertPetReport(paramMap);
 		} catch (Exception e) {
 			state="false";
 		}
-			
-		petReportCount = service.petReportCount(reportNum);
-		
+
+		petReportCount = service.petReportCount(reportedPostNum);
+
 		Map<String, Object> model=new HashMap<>();
 		model.put("state", state);
-		model.put("reportNum", reportNum);
-		
+		model.put("petReportCount", petReportCount);
+
 		return model;
 	}
-	
-	
-	
 	
 }

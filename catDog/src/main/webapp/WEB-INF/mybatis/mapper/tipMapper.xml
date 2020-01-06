@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tip">
+
+<!--
+	<select id="listReply" parameterType="map" resultType="com.catDog.tip.Reply">
+		SELECT tr.tipReplyNum, tr.tipNum, md.userId, tr.content, tr.created, NVL(parentCount, 0) parentCount
+		FROM tipReply tr JOIN memberDetail md ON tr.num = md.num
+		LEFT OUTER JOIN (
+			SELECT parent, COUNT(*) parentCount
+			FROM tipReply WHERE parent !=0 GROUP BY parent
+		) a ON tr.tipReplyNum = a.parent
+		WHERE tipNum=#{tipNum} AND tr.parent=0
+		ORDER BY tr.tipReplyNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+
+	<select id="replyCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM tipReply
+		WHERE tipNum=#{tipNum} AND parent=0
+	</select>
+	<insert id="insertReply" parameterType="com.catDog.tip.Reply">
+		INSERT INTO tipReply(tipReplyNum, tipNum, num, content, parent)
+		VALUES (tipReply_seq.NEXTVAL, #{tipNum}, #{num}, #{content}, #{parent})
+	</insert>
+	
+	<delete id="deleteReply" parameterType="map">
+		DELETE FROM tipReply WHERE
+		<if test="mode=='reply' ">
+			tipReplyNum IN (
+				SELECT tipReplyNum FROM tipReply
+					START WITH tipReplyNum=#{tipReplyNum}
+					CONNECT BY PRIOR tipReplyNum = parent
+			)
+		</if>
+		<if test="mode=='parent' ">
+			tipReplyNum = #{tipReplyNum}
+		</if>
+	</delete>
+	
+	<select id="listReplyParent" parameterType="Integer" resultType="com.catDog.tip.Reply">
+		SELECT tipReplyNum, tr.num,  md.nickName, tr.content, tr.created, parent
+		FROM tipReply tr JOIN memberDetail md ON md.num = tr.num
+		WHERE parent = #{parent}
+		ORDER BY tipReplyNum DESC
+	</select>
+	
+	<select id="replyParentCount" parameterType="Integer" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM tipReply WHERE parent = #{parent}
+	</select>
+
+
+-->	
+	<sql id="where-list">
+		<if test="condition=='all'">
+			( INSTR(subject, #{keyword}) &gt; 0
+				OR INSTR(content, #{keyword}) &gt; 0
+					OR INSTR(created, #{keyword}) &gt; 0 )
+		</if>
+		<if test="condition=='subject'">
+			INSTR(subject, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='content'">
+			INSTR(content, #{keyword}) &gt; 0 
+		</if>
+		<if test="condition=='created'">
+				(to_char(created, 'yyyy-mm-dd') = #{keyword}
+				 or to_char(created, 'yyyymmdd') = #{keyword})
+		</if>
+	</sql>
+	
+	<select id="listTip" parameterType="map" resultType="com.catDog.tip.Tip">
+		SELECT t.tipNum, t.subject, t.content, created, t.hitCount, md.nickName
+		FROM tip t
+		JOIN memberDetail md ON t.num = md.num
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY t.tipNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(count(*), 0)
+		FROM tip t
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<select id="seq" resultType="Integer">
+		SELECT tip_seq.NEXTVAL FROM dual
+	</select>
+
+	<insert id="insertTip" parameterType="com.catDog.tip.Tip">
+		INSERT INTO tip(tipNum, subject, content, num) 
+		VALUES(tip_seq.NEXTVAL, #{subject}, #{content}, #{num})
+	</insert>
+	<select id="readTip" parameterType="Integer" resultType="com.catDog.tip.Tip">
+		SELECT t.tipNum, t.num, md.userId, md.nickName, t.subject, t.content, t.hitCount, TO_CHAR(t.created, 'yyyy.mm.dd') created
+		FROM tip t
+		JOIN memberDetail md ON t.num = md.num
+		WHERE t.tipNum=#{tipNum}
+	</select>
+
+	
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE tip t SET hitCount=hitCount+1 WHERE tipNum = #{tipNum}
+	</update>
+	
+	<select id="preReadTip" parameterType="map" resultType="com.catDog.tip.Tip">
+		SELECT tipNum, subject
+		FROM tip t
+	<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			AND (tipNum &gt; #{tipNum})
+		</where>
+		ORDER BY tipNum ASC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+
+	<select id="nextReadTip" parameterType="map" resultType="com.catDog.tip.Tip">
+		SELECT tipNum, subject
+		FROM tip t
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			AND (tipNum &lt; #{tipNum})
+		</where>
+		ORDER BY tipNum DESC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+	
+	<update id="updateTip" parameterType="com.catDog.tip.Tip">
+		UPDATE tip SET subject=#{subject}, content=#{content}
+		WHERE tipNum=#{tipNum}
+	</update>
+
+	<delete id="deleteTip" parameterType="Integer">
+		DELETE FROM tip WHERE tipNum=#{tipNum}
+	</delete>
+	
+		
+	<insert id="insertTipReport" parameterType="map">
+		INSERT INTO report(reportNum, boardSort, reportedPostNum, reporterNum, reportedNum, reasonSortNum)
+		VALUES (report_seq.NEXTVAL, 1, #{reportedPostNum}, #{reporterNum}, #{reportedNum}, #{reasonSortNum})
+	</insert>
+      
+	<select id="petReportCount" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM report WHERE reportNum=#{reportNum}
+	</select>
+	
+		
+		<insert id="insertTipLike" parameterType="map">
+		INSERT INTO tipLike(tipNum, num) VALUES (#{tipNum}, #{num})
+	</insert>
+      
+	<select id="tipLikeCount" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM tipLike WHERE tipNum=#{tipNum}
+	</select>
+	
+
+	
+	
+</mapper>

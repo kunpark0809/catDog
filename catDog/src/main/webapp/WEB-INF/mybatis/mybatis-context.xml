@@ -16,6 +16,7 @@
 		</property>
 	</bean>
 
+
 	<!-- DBCP 2.x(JDK 7)를 위한 DataSource 객체 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="${jdbc.driverClass}"/>

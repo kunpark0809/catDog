@@ -99,8 +99,8 @@
 	</select>
 	
 	<insert id="insertPetReport" parameterType="map">
-		INSERT INTO report(reportNum, boardSort, reportedPostNum, reportNum, reportenNum, reasonSortNum)
-		VALUES (report.NEXTVAL, #{boardSort}, #{reportedPostNum}, #{reportNum}, #{reportenNum}, #{reasonSortNum})
+		INSERT INTO report(reportNum, boardSort, reportedPostNum, reporterNum, reportedNum, reasonSortNum)
+		VALUES (report_seq.NEXTVAL, 2, #{reportedPostNum}, #{reporterNum}, #{reportedNum}, #{reasonSortNum})
 	</insert>
       
 	<select id="petReportCount" parameterType="Integer" resultType="Integer">

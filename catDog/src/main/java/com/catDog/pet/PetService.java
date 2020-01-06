@@ -24,5 +24,5 @@ public interface PetService {
 	public int petLikeCount(int myPetNum);
 	
 	public void insertPetReport(Map<String, Object> map) throws Exception;
-	public int petReportCount(int reportNum);
+	public int petReportCount(int myPetNum);
 }

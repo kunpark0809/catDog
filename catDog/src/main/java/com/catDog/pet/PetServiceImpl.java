@@ -182,12 +182,11 @@ public class PetServiceImpl implements PetService {
 		}
 	}
 
-
 	@Override
-	public int petReportCount(int reportNum) {
+	public int petReportCount(int myPetNum) {
 		int result=0;
 		try {
-			result=dao.selectOne("pet.petReportCount", reportNum);
+			result=dao.selectOne("pet.petReportCount", myPetNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

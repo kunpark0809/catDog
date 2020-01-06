@@ -40,10 +40,10 @@ function login() {
 	location.href="<%=cp%>/member/login";
 }
 
-function deletePet(myPetNum) {
+function deleteTip(tipNum) {
 	<c:if test="${sessionScope.member.userId=='userId' || sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">
-	var q = "myPetNum="+myPetNum+"&${query}";
-    var url = "<%=cp%>/pet/delete?" + q;
+	var q = "tipNum="+tipNum+"&${query}";
+    var url = "<%=cp%>/tip/delete?" + q;
 
     if(confirm("위 게시물을 삭제 하시겠습니까 ? "))
   	  location.href=url;
@@ -53,10 +53,10 @@ function deletePet(myPetNum) {
 </c:if>
 }
 
-function updatePet(myPetNum) {
+function updateTip(tipNum) {
 	<c:if test="${sessionScope.member.userId==dto.userId}">
-		var q = "myPetNum=${dto.myPetNum}&page=${page}";
-	    var url = "<%=cp%>/pet/update?" + q;
+		var q = "tipNum=${dto.tipNum}&page=${page}";
+	    var url = "<%=cp%>/tip/update?" + q;
 
 	    location.href=url;
 	</c:if>
@@ -114,20 +114,20 @@ function ajaxHTML(url, type, query, selector) {
 
 // 게시글 좋아요 여부
 $(function(){
-	$(".btnSendPetLike").click(function(){
+	$(".btnSendTipLike").click(function(){
 		if(! confirm("게시물에 좋아요를 누르시겠습니까?")) {
 			return false;
 		}
 		
-		var url="<%=cp%>/pet/insertPetLike";
-		var myPetNum="${dto.myPetNum}";
-		var query = {myPetNum:myPetNum};
+		var url="<%=cp%>/tip/insertTipLike";
+		var tipNum="${dto.tipNum}";
+		var query = {tipNum:tipNum};
 		
 		var fn = function(data){
 			var state=data.state;
 			if(state=="true") {
-				var count = data.petLikeCount;
-				$("#petLikeCount").text(count);
+				var count = data.tipLikeCount;
+				$("#tipLikeCount").text(count);
 			} else if(state=="false") {
 				alert("좋아요는 한번만 가능합니다.");
 			}
@@ -157,14 +157,14 @@ $(function(){
 			return false;
 		}
 		
-		var url="<%=cp%>/pet/insertPetReport";
+		var url="<%=cp%>/tip/insertTipReport";
 		var query=$("form[name=reportForm]").serialize();
 		
 		var fn = function(data){
 			var state=data.state;
 			if(state=="true") {
-				var count = data.petReportCount;
-				$("#petReportCount").text(count);
+				var count = data.tipReportCount;
+				$("#tipReportCount").text(count);
 			} else if(state=="false") {
 				alert("신고는 한번만 가능합니다.");
 			}
@@ -189,7 +189,7 @@ $(function(){
 
 <div class="body-container" style="width: 700px; margin: 20px auto 10px; text-align: center;">
 	<div class="body-title">
-		<h3>내새끼자랑</h3>
+		<h3>꿀팁</h3>
 	</div>
 	
 	<div>
@@ -210,15 +210,18 @@ $(function(){
 				</td>
 			</tr>
 			
-			<tr>
-				<td colspan="2" align="center" style="padding: 10px 5px;">
-					<img src="<%=cp%>/uploads/pet/${dto.imageFileName}" style="max-width:100%; height:auto; resize:both;">
+
+			
+			<tr height="35">
+				<td width="50%" align="left" style="padding-left: 5px;">
+			 ${dto.content}
 				</td>
 			</tr>
 			
+			
 			<tr>
 				<td colspan="2" height="40" style="padding-bottom: 15px;" align="center">
-					<button type="button" class="btn btnSendPetLike" title="좋아요"><i class="fas fa-hand-point-up"></i>&nbsp;&nbsp;<span id="petLikeCount">${dto.petLikeCount}</span></button>
+					<button type="button" class="btn btnSendTipLike" title="좋아요"><i class="fas fa-hand-point-up"></i>&nbsp;&nbsp;<span id="tipLikeCount">${dto.tipLikeCount}</span></button>
 				</td>
 			</tr>
 			
@@ -231,8 +234,8 @@ $(function(){
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
 				<td colspan="2" align="left" style="padding-left: 5px;">
 				이전글 :
-					<c:if test="${not empty preReadPet}">
-						<a href="<%=cp%>/pet/article?${query}&myPetNum=${preReadPet.myPetNum}">${preReadPet.subject}</a>
+					<c:if test="${not empty preReadTip}">
+						<a href="<%=cp%>/tip/article?${query}&tipNum=${preReadTip.tipNum}">${preReadTip.subject}</a>
 					</c:if>
 				</td>
 			</tr>
@@ -241,7 +244,7 @@ $(function(){
 				<td colspan="2" align="left" style="padding-left: 5px;">
 				다음글 :
 					<c:if test="${not empty nextReadPet}">
-						<a href="<%=cp%>/pet/article?${query}&myPetNum=${nextReadPet.myPetNum}">${nextReadPet.subject}</a>
+						<a href="<%=cp%>/tip/article?${query}&tipNum=${nextReadTip.tipNum}">${nextReadTip.subject}</a>
 					</c:if>
 				</td>
 			</tr>
@@ -251,15 +254,15 @@ $(function(){
 			<tr height="45">
 				<td  width="300" align="left">
 					<c:if test="${sessionScope.member.userId==dto.userId}">
-						<button type="button" class="btn" onclick="updatePet('${dto.myPetNum}');">수정</button>
+						<button type="button" class="btn" onclick="updateTip('${dto.tipNum}');">수정</button>
 					</c:if>
 					<c:if test="${sessionScope.member.userId==dto.userId || sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">
-						<button type="button" class="btn" onclick="deletePet('${dto.myPetNum}');">삭제</button>
+						<button type="button" class="btn" onclick="deleteTip('${dto.tipNum}');">삭제</button>
 					</c:if>
 				</td>
 				
 				<td align="right">
-					<button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/pet/list?${query}';">리스트</button>
+					<button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/tip/list?${query}';">리스트</button>
 				</td>
 			</tr>
 		</table>
@@ -270,7 +273,7 @@ $(function(){
 			<strong>신고사유 : 대표적인 사유 1개를 선택해 주세요</strong>
 			<br><br>
 		<form name="reportForm">
-			<input type="hidden" name="reportedPostNum" value="${dto.myPetNum}">
+			<input type="hidden" name="reportedPostNum" value="${dto.tipNum}">
 			<input type="hidden" name="reporterNum" value="${sessionScope.member.memberIdx}">
 			<input type="hidden" name="reportedNum" value="${dto.num}">
 				
