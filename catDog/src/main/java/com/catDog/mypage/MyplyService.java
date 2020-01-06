@@ -14,13 +14,13 @@ public interface MyplyService {
 	
 	public List<Myply> listMpTip(Map<String, Object> map);
 	public List<Myply> readMpTip(long num);
-	public int dataCountMpTip(Map<String, Object> map);
+	public int dataCountMpTip(Map<String, Object> map);*/
 	
 	public List<Myply> listMpMyPet(Map<String, Object> map);
 	public List<Myply> readMpMyPet(long num);
 	public int dataCountMpMyPet(Map<String, Object> map);
 	
-	public List<Myply> listMpBbs(Map<String, Object> map);
+	/*public List<Myply> listMpBbs(Map<String, Object> map);
 	public List<Myply> readMpBbs(long num);
 	public int dataCountMpBbs(Map<String, Object> map);*/
 	

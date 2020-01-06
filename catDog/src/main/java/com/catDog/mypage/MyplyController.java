@@ -207,13 +207,15 @@ public class MyplyController {
 		model.addAttribute("keyword", keyword);
 		 
 		return ".mypage.myply";
-	}
+	}*/
 	
-	@RequestMapping(value="/mypage/myply")
+	@RequestMapping(value="/mypage/myply1")
 	public String listMpMyPet(@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
-			HttpServletRequest req, Model model) throws Exception {
+			HttpServletRequest req, Model model, HttpSession session) throws Exception {
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
 		String cp = req.getContextPath();
 		
@@ -227,6 +229,7 @@ public class MyplyController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);
+		map.put("num", info.getMemberIdx());
 		
 		dataCountMpMyPet = service.dataCountMpMyPet(map);
 		if(dataCountMpMyPet != 0)
@@ -241,6 +244,13 @@ public class MyplyController {
 		
 		List<Myply> listMpMyPet = service.listMpMyPet(map);
 		
+		int petListNum , n = 0;
+		for(Myply dto : listMpMyPet) {
+			petListNum = dataCountMpMyPet - (offset + n);
+			dto.setQnaListNum(petListNum);
+			n++;
+		}
+		
 		String query = "";
 		String listUrl;
 		String articleUrl;
@@ -248,8 +258,8 @@ public class MyplyController {
 			query = "condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "utf-8");
 		}
 		
-		listUrl = cp+"/mypage/myply";
-		articleUrl = cp+"/pet/article?page="+current_page;
+		listUrl = cp+"/mypage/myply1";
+		articleUrl = cp+"/pet/article?pageNo="+current_page;
 		if(query.length()!=0) {
 			listUrl = listUrl + "?" + query;
 			articleUrl = articleUrl + "&" + query;
@@ -267,9 +277,9 @@ public class MyplyController {
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
 		 
-		return ".mypage.myply";
+		return ".mypage.myply1";
 	}
-	
+/*	
 	@RequestMapping(value="/mypage/myply")
 	public String listMpBbs(@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="all") String condition,
