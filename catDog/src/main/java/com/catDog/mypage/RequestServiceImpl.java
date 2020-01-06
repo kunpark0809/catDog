@@ -89,4 +89,14 @@ public class RequestServiceImpl implements RequestService {
 		}
 		return list;
 	}
+
+	@Override
+	public void requestCancle(String requestNum) throws Exception {
+		try {
+			dao.updateData("request.requestCancle", requestNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
 }

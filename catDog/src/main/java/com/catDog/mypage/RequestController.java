@@ -94,4 +94,16 @@ public class RequestController {
 		
 		return ".mypage.requestDetailCheck";
 	}
+	
+	@RequestMapping(value="/mypage/requestCancle")
+	public String requestCancle(
+			@RequestParam String requestNum) throws Exception {
+		
+		try {
+			service.requestCancle(requestNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/mypage/requestCheck";
+	}
 }

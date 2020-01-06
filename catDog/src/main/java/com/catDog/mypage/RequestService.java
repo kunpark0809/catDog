@@ -11,4 +11,5 @@ public interface RequestService {
 	public int dataCount(Map<String, Object> map);
 	public Pay readCustomer(long num);
 	public List<Pay> readRequestNum(Map<String, Object> map);
+	public void requestCancle(String requestNum) throws Exception;
 }
