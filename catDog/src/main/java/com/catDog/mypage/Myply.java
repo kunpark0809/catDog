@@ -22,6 +22,7 @@ public class Myply {
 	private String tipCreated;
 	private int tipHitCount;
 	
+	private int petListNum;
 	private int myPetNum;
 	private String myPetSubject;
 	private String myPetCreated;
@@ -238,6 +239,12 @@ public class Myply {
 	}
 	public void setQnaListNum(int qnaListNum) {
 		this.qnaListNum = qnaListNum;
+	}
+	public int getPetListNum() {
+		return petListNum;
+	}
+	public void setPetListNum(int petListNum) {
+		this.petListNum = petListNum;
 	}
 	
 }

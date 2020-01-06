@@ -24,19 +24,6 @@
 		</choose>
 	</sql>
 	
-	<select id="dataCountMpQna" parameterType="map" resultType="Integer">
-		SELECT NVL(COUNT(*), 0) 
-		FROM qna q
-		JOIN memberDetail md ON q.num=md.num
-		<where>
-			<if test="keyword!=null and keyword != '' ">
-				<include refid="where-list"/>
-			</if>
-			AND q.parent IS NULL
-			AND q.num=#{num}
-		</where>
-	</select>
-	
 	<select id="listMpQna" parameterType="map" resultType="com.catDog.mypage.Myply">
 		SELECT q.qnaNum qnaNum, md.userId, nickName, q.num, q.subject qnaSubject,
 		       q.parent, NVL2(q2.parent, 1, 0) qnaIsAnswer,
@@ -55,6 +42,45 @@
 		</where>
 		ORDER BY qnaNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="dataCountMpQna" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) 
+		FROM qna q
+		JOIN memberDetail md ON q.num=md.num
+		<where>
+			<if test="keyword!=null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			AND q.parent IS NULL
+			AND q.num=#{num}
+		</where>
+	</select>
+	
+	<select id="listMpMyPet" parameterType="map" resultType="com.catDog.mypage.Myply">
+		SELECT mp.myPetNum, mp.subject myPetSubject, mp.num, md.nickName, 
+		mp.hitCount myPetHitCount, TO_CHAR(created, 'yyyy.mm.dd') myPetCreated
+		FROM myPet mp JOIN memberDetail md ON mp.num = md.num
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="where-list"/>
+			</if>
+			AND mp.num=#{num}
+		</where>
+		ORDER BY myPetNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="dataCountMpMyPet" parameterType="map" resultType="Integer">
+		SELECT NVL(count(*), 0)
+		FROM myPet mp
+		JOIN memberDetail md ON mp.num = md.num
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="where-list"/>
+			</if>
+			AND mp.num=#{num}
+		</where>
 	</select>
 	
 </mapper>

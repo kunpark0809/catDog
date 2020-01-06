@@ -113,7 +113,7 @@ public class MyplyServiceImpl implements MyplyService {
 			e.printStackTrace();
 		}
 		return result;
-	}
+	}*/
 
 	@Override
 	public List<Myply> listMpMyPet(Map<String, Object> map) {
@@ -148,7 +148,7 @@ public class MyplyServiceImpl implements MyplyService {
 		}
 		return result;
 	}
-
+/*
 	@Override
 	public List<Myply> listMpBbs(Map<String, Object> map) {
 		List<Myply> list = null;
@@ -181,8 +181,8 @@ public class MyplyServiceImpl implements MyplyService {
 			e.printStackTrace();
 		}
 		return result;
-	}
-*/
+	}*/
+
 	@Override
 	public List<Myply> listMpQna(Map<String, Object> map) {
 		List<Myply> list = null;
