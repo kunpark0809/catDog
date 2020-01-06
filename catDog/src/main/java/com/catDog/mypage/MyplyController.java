@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.catDog.common.MyUtil;
+import com.catDog.customer.SessionInfo;
 
 
 @Controller("mypage.myplyController")
@@ -333,7 +335,9 @@ public class MyplyController {
 	public String listMpQna(@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
-			HttpServletRequest req, Model model) throws Exception {
+			HttpServletRequest req, Model model, HttpSession session) throws Exception {
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
 		String cp = req.getContextPath();
 		
@@ -347,19 +351,27 @@ public class MyplyController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);
+		map.put("num", info.getMemberIdx());
 		
 		dataCountMpQna = service.dataCountMpQna(map);
 		if(dataCountMpQna != 0)
 			total_page = myUtil.pageCount(rows, dataCountMpQna);
 		if(total_page < current_page)
 			current_page = total_page;
-		
+
 		int offset = (current_page-1) * rows;
 		if(offset < 0) offset = 0;
 		map.put("offset", offset);
 		map.put("rows", rows);
 		
 		List<Myply> listMpQna = service.listMpQna(map);
+		
+		int qnaListNum , n = 0;
+		for(Myply dto : listMpQna) {
+			qnaListNum = dataCountMpQna - (offset + n);
+			dto.setQnaListNum(qnaListNum);
+			n++;
+		}
 		
 		String query = "";
 		String listUrl;
@@ -369,13 +381,13 @@ public class MyplyController {
 		}
 		
 		listUrl = cp+"/mypage/myply";
-		articleUrl = cp+"/qna/article?page="+current_page;
+		articleUrl = cp+"/qna/article?pageNo="+current_page;
 		if(query.length()!=0) {
 			listUrl = listUrl + "?" + query;
 			articleUrl = articleUrl + "&" + query;
 		}
 		
-		String paging = myUtil.paging(current_page, total_page, listUrl);
+		String paging = myUtil.pagingMethod(current_page, total_page, listUrl);
 		
 		model.addAttribute("listMpQna", listMpQna);
 		model.addAttribute("page", current_page);

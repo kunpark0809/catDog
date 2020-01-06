@@ -32,10 +32,12 @@ public class Myply {
 	private String bbsCreated;
 	private int bbsHitCount;
 	
+	private int qnaListNum;
 	private int qnaNum;
+	private int qnaCategoryNum;
+	private String qnaCategory;
 	private String qnaSubject;
 	private String qnaCreated;
-	private int qnaHitCount;
 	private int qnaIsAnswer;
 	private Integer qnaParent;
 	
@@ -219,11 +221,23 @@ public class Myply {
 	public void setQnaCreated(String noticeCreated) {
 		this.qnaCreated = noticeCreated;
 	}
-	public int getQnaHitCount() {
-		return qnaHitCount;
+	public int getQnaCategoryNum() {
+		return qnaCategoryNum;
 	}
-	public void setQnaHitCount(int noticeHitCount) {
-		this.qnaHitCount = noticeHitCount;
+	public void setQnaCategoryNum(int qnaCategoryNum) {
+		this.qnaCategoryNum = qnaCategoryNum;
+	}
+	public String getQnaCategory() {
+		return qnaCategory;
+	}
+	public void setQnaCategory(String qnaCategory) {
+		this.qnaCategory = qnaCategory;
+	}
+	public int getQnaListNum() {
+		return qnaListNum;
+	}
+	public void setQnaListNum(int qnaListNum) {
+		this.qnaListNum = qnaListNum;
 	}
 	
 }

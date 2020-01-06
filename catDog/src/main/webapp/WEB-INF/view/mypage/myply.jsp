@@ -34,16 +34,24 @@ function searchList() {
 		
 		<table style="width: 100%; border-spacing: 0px; border-collapse: collapse;">
 			<tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
-				<th width="100" style="color: #787878;">날짜</th>
-				<th style="color: #787878;">내용</th>
-				<th width="100" style="color: #787878;"> 포인트 </th>
+				<th width="60" style="color: #787878;">번호</th>
+      			<th width="100" style="color: #787878;">유형</th>
+      			<th style="color: #787878;">제목</th>
+      			<th width="100" style="color: #787878;">작성자</th>
+      			<th width="100" style="color: #787878;">문의일자</th>
+      			<th width="80" style="color: #787878;">처리결과</th>
 			</tr>
 		 
-		<c:forEach var="dto" items="${list}">
+		<c:forEach var="dto" items="${listMpQna}">
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
-				<td align="left" style="padding-left: 10px;">${dto.created}</td>
-				<td>${dto.content}</td>
-				<td>${dto.checked!=0?'+':'-'}${dto.point}</td>
+				<td>${dto.qnaListNum}</td>
+				<td>${dto.qnaCategory}</td>
+				<td align="left" style="padding-left: 10px;">
+					<a href="${articleUrl}&qnaNum=${dto.qnaNum}">${dto.qnaSubject}</a>
+      			</td>
+				<td>${dto.nickName}</td>
+				<td>${dto.qnaCreated}</td>
+				<td>${dto.qnaIsAnswer==1?"답변완료":"답변대기"}</td>
 			</tr>
 		</c:forEach>
 
@@ -62,19 +70,18 @@ function searchList() {
 				<td align="left" width="100">
 					<button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/mypage/myply';">새로고침</button>
 				</td>
-				<%-- <td align="center">
-					<form name="searchForm" action="<%=cp%>/notice/list" method="post">
+				<td align="center">
+					<form name="searchForm" action="<%=cp%>/mypage/myply" method="post">
 						<select name="condition" class="selectField">
-							<option value="all" ${condition=="all"?"selected='selected'":""}>제목+내용</option>
 							<option value="subject" ${condition=="subject"?"selected='selected'":""}>제목</option>
 							<option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
 							<option value="nickName" ${condition=="nickName"?"selected='selected'":""}>작성자</option>
 							<option value="created" ${condition=="created"?"selected='selected'":""}>등록일</option>
 						</select>
-						<input type="text" name="keyword" value="${keyword}" class="boxTF">
-						<button type="button" class="btn" onclick="searchList()">검색</button>
-					</form>
-				</td> --%>
+					    <input type="text" id="keyword" name="keyword" class="boxTF" value="${keyword}">
+            			<button type="button" class="btn" onclick="searchList();">검색</button>
+        			</form>
+				</td>
 			</tr>
 		</table>
 	</div>
