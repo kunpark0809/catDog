@@ -64,11 +64,45 @@
 		</choose>
 	</sql>
 
+<!-- 하루 매출. 소계 -->
+<select id="daySales" parameterType="String" resultType="Integer">
+	SELECT NVL(SUM(purchase),0) yearSales 
+	FROM request r
+	JOIN payment p ON r.requestNum =  p.requestNum
+		WHERE TO_CHAR(requestDate, 'YYYYMMDD') = #{day}
+</select>
+
+<!-- 하루 주문건수. 소계 -->
+<select id="daySalesVolume" parameterType="String" resultType="Integer">
+	SELECT COUNT(requestNum) FROM request
+	WHERE TO_CHAR(requestDate,'YYYYMMDD') = #{day}
+</select>
+
+<!-- 한 주 매출. 소계 -->
+<select id="weekSales" parameterType="Map" resultType="Integer">
+	SELECT NVL(SUM(purchase),0) yearSales 
+	FROM request r
+	JOIN payment p ON r.requestNum =  p.requestNum
+	<![CDATA[
+	WHERE TO_CHAR(requestDate,'YYYYMMDD') >= #{sunday}
+	AND TO_CHAR(requestDate,'YYYYMMDD') <= #{saturday}
+	]]>
+</select>
+
+<!-- 한 주 주문건수. 소계 -->
+<select id="weekSalesVolume" parameterType="Map" resultType="Integer">
+	SELECT COUNT(requestNum) FROM request
+	<![CDATA[
+	WHERE TO_CHAR(requestDate,'YYYYMMDD') >= #{sunday}
+	AND TO_CHAR(requestDate,'YYYYMMDD') <= #{saturday}
+	]]>
+</select>
+
 
 
 <!--모든 품목의 월별 매출(금액). 년도와 월을 YYYYMM 꼴로 결합해야 함. 연도별 -->
 <select id="monthSalesByCategory" parameterType="Map" resultType="com.catDog.admin.Money">
-SELECT p.smallSortNum, ss.sortName smallSortName, TO_CHAR(requestDate,'YYYYMM') requestDate, SUM(NVL(productSum,0)) productSum FROM request r
+SELECT p.smallSortNum, ss.sortName smallSortName, TO_CHAR(requestDate,'YYYYMM') requestDate, NVL(SUM(productSum),0) productSum FROM request r
 JOIN requestDetail rd ON r.requestNum = rd.requestNum 
 JOIN product p ON rd.productNum = p.productNum
 JOIN smallSort ss ON p.smallSortNum = ss.smallSortNum
@@ -86,21 +120,46 @@ ORDER BY requestDate ASC
 	SELECT sortName FROM smallSort WHERE smallSortNum = #{smallSortNum}	
 </select>
 
+<!-- 월별 매출. 소계 -->
+<select id="monthSales" parameterType="String" resultType="Integer">
+	SELECT NVL(SUM(purchase),0) yearSales 
+	FROM request r
+	JOIN payment p ON r.requestNum =  p.requestNum
+		WHERE TO_CHAR(requestDate, 'YYYYMM') = #{yearMonth}
+</select>
 
-<!--모든 품목의 분기별 매출(금액). 년도와 월을 YYYYMM 꼴로 결합해야 함. 가져온 후에 결과값을 Controller에서 1~3/4~6/7~9/10~12끼리 합쳐야 함. 분기 -->
-<select id="quarterSalesByCategory" parameterType="Map" resultType="com.catDog.admin.Money">
-SELECT p.smallSortNum, ss.sortName smallSortName, TO_CHAR(requestDate,'YYYYMM') requestDate, SUM(NVL(productSum,0)) productSum FROM request r
+
+<!-- 월별 주문건수. 소계 -->
+<select id="monthSalesVolume" parameterType="String" resultType="Integer">
+	SELECT COUNT(requestNum) FROM request
+	WHERE TO_CHAR(requestDate,'YYYYMM') = #{yearMonth}
+</select>
+
+
+<!--분기별 매출(금액). 년도와 월을 첫째 월 기준으로 YYYYMM 꼴로 결합해야 함. 소계 -->
+<select id="quarterSales" parameterType="Integer" resultType="Integer">
+SELECT NVL(SUM(productSum),0) productSum FROM request r
 JOIN requestDetail rd ON r.requestNum = rd.requestNum 
 JOIN product p ON rd.productNum = p.productNum
 JOIN smallSort ss ON p.smallSortNum = ss.smallSortNum
-WHERE p.smallSortNum = #{smallSortNum}
 <![CDATA[
-		AND TO_CHAR(requestDate, 'YYYY') >= #{year} AND
-		TO_CHAR(requestDate, 'YYYY') <= #{year}+3
+		WHERE TO_CHAR(requestDate, 'YYYYMM') >= #{yearMonth} AND
+		TO_CHAR(requestDate, 'YYYYMM') <= #{yearMonth}+2
 	]]>
-GROUP BY p.smallSortNum, ss.sortName, TO_CHAR(requestDate,'YYYYMM')
-ORDER BY requestDate ASC
 </select>
+
+
+<select id="quarterSalesToToday" parameterType="Map" resultType="Integer">
+SELECT NVL(SUM(productSum),0) productSum FROM request r
+JOIN requestDetail rd ON r.requestNum = rd.requestNum 
+JOIN product p ON rd.productNum = p.productNum
+JOIN smallSort ss ON p.smallSortNum = ss.smallSortNum
+<![CDATA[
+		WHERE TO_CHAR(requestDate, 'YYYYMMDD') >= #{startDate} AND
+		TO_CHAR(requestDate, 'YYYYMMDD') <= #{todayDate}
+	]]>
+</select>
+
 
 <!-- 연도별 매출. 이번 년도의 매출 출력에도 사용. 소계에 사용 -->
 <select id="yearSales" parameterType="String" resultType="Integer">
@@ -113,11 +172,24 @@ ORDER BY requestDate ASC
 	]]>
 </select>
 
-<!-- 전체 기간동안의 매출. 소계에 사용 -->
+<!-- 연도별 판매건수. 소계 -->
+<select id="yearSalesVolume" parameterType="String" resultType="Integer">
+	SELECT COUNT(requestNum) FROM request
+	WHERE TO_CHAR(requestDate,'YYYY') = #{year}
+</select>
+
+
+
+<!-- 전체  매출. 소계에 사용 -->
 <select id="totalSales" resultType="Integer">
 	SELECT NVL(SUM(purchase),0) sales 
 	FROM request r
 	JOIN payment p ON r.requestNum =  p.requestNum
+</select>
+
+<!-- 전체 판매건수. 소계 -->
+<select id="totalSalesVolume" resultType="Integer">
+	SELECT COUNT(requestNum) FROM request
 </select>
 
 

@@ -15,16 +15,36 @@ public interface AdminService {
 
 	public int reportCount(Map<String, Object> map);
 
-	public int quarterSales(String yearMonth);
-
 	public int yearSales(String year);
-
-	public List<Money> monthSales(Map<String, Object> map);
 
 	public String getCategory(int smallSortNum);
 
-	Money categorySalesVolume(Map<String, Object> map);
+	public Money categorySalesVolume(Map<String, Object> map);
 
-	Money categorySales(Map<String, Object> map);
+	public Money categorySales(Map<String, Object> map);
+
+	public int quarterSales(int yearMonth);
+
+	int quarterSalesToToday(Map<String, Object> map);
+
+	public List<Money> monthSalesByCategory(Map<String, Object> map);
+
+	public int totalSales();
+
+	public int totalSalesVolume();
+
+	public int yearSalesVolume(String year);
+
+	public int monthSales(String yearMonth);
+
+	public int monthSalesVolume(String yearMonth);
+
+	public int daySalesVolume(String day);
+
+	public int daySales(String day);
+
+	public int weekSales(Map<String, Object> map);
+
+	public int weekSalesVolume(Map<String, Object> map);
 
 }

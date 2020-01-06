@@ -30,6 +30,7 @@
         join customer c on c.num=r.num
         join requestDetail rd on r.requestNum = rd.requestNum
         where c.num=#{num}
+		order by requestDate desc
 	</select>
 	
 	<select id="readCumstomer" parameterType="Long" resultType="com.catDog.pay.Pay">
@@ -42,4 +43,17 @@
 	<select id="dataCount" parameterType="map" resultType="Integer">
 		select nvl(count(*), 0) from request r join customer c on c.num=r.num join requestDetail rd on r.requestNum=rd.requestNum where c.num=#{num}
 	</select>
+	
+	<update id="requestCancle" parameterType="com.catDog.pay.Pay">
+		update request set status=5 where requestNum=#{requestNum}
+	</update>
+	
+	<insert id="refundRequest" parameterType="com.catDog.pay.Pay">
+		insert into refund(requestNum, refundAccount, bank, name, refundReason) values(#{requestNum}, #{refundAccount}, #{bank}, #{name}, #{refundReason})
+	</insert>
+	
+	<update id="requestRefund" parameterType="com.catDog.pay.Pay">
+		update request set status=6 where requestNum=#{requestNum}
+	</update>
+	
 </mapper>

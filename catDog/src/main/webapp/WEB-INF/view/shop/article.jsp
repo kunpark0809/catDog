@@ -166,9 +166,55 @@ function deleteProduct(){
 			</div>
 		</div>
 		<div class="product-main" style="clear: both;">
+			<h4>상세설명</h4>
 			${dto.content}
 		</div>
 		
+		<div>
+			<h4>상품 후기</h4>
+				<div class="review" style="float: left;">
+					<c:forEach begin="1" end="5">
+						<img src="<%=cp%>/resource/img/starred.png" width="20">
+					</c:forEach>	
+					<p>2019.01.01</p>
+					<p>shin****</p>
+				</div>
+				<div class="reviewContent" style="float: left;">
+					사료 냄새도 적고 넘 좋아요~
+				</div>
+		<div style="clear: both;">
+			<h4>배송 안내</h4>
+			<p>배송 방법 : 택배</p>
+			<p>배송 지역 : 전국지역</p>
+			<p>배송 비용 : 2,500원</p>
+			<p>배송 기간 : 2일 ~ 7일</p>
+			<p>배송 안내 :</p>
+			<p>- 3만원이상 무료 배송!</p>
+			
+			  <p>( 고객변심으로 인한 주문 취소 후 3만원 미만일 경우 배송비는 추가 됩니다. )</p>
+			
+			<p>- 기본 배송료는 2,500원입니다.</p>
+			
+			<p>- 오후 3시 이전에 결제 완료된 주문 건은 당일 출고 됩니다!</p>
+			
+			 <p> ( 주문 취소는 오후 3시 이전에 가능합니다. )</p>
+			
+			<p>- 평균 배송일은 출고일 기준 1~3일입니다.</p>
+			
+			<p>  ( 단, 업체 배송 상품은 업체에서 출고가 되며, 당일 출고가 되지 않을 수 있습니다. )</p>
+		</div>
+		<div>
+			<h4>교환/반품</h4>
+			<p>- 상품 수령 후 7일 이내 개봉 전 상품이라면 교환/반품이 가능합니다.</p>
+			
+			<p>- 상품에 하자가 있을 경우 교환/반품의 택배비는 쇼핑몰에서 부담합니다.</p>
+			
+			<p>- 고객 변심으로 교환/반품을 원할 경우, 무료배송으로 상품을 받아 보셨다면 왕복 택배비 6,000원,</p>
+			
+			  <p>그러지 않은 경우에는 3,000원을 고객님께서 부담하셔야 합니다.</p>
+			
+			  <p>( 색상이나 디자인, 사이즈 등이 다를 경우에도 고객변심으로 해당 되오니 꼼꼼히 살펴보시고 구입 부탁드립니다. )</p>
+		</div>
 		<div id="cart_dialog" style="display: none; text-align: center;">
 			<strong>상품이 장바구니에 담겼습니다.</strong>
 			<br>

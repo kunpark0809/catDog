@@ -38,7 +38,7 @@ public class UpdateServiceImpl implements UpdateService {
 		Customer dto=null;
 		
 		try {
-			dto=dao.selectOne("customer.readCustomer", userId);
+			dto=dao.selectOne("mypage.readCustomer", userId);
 			
 			if(dto!=null) {
 				if(dto.getEmail()!=null) {

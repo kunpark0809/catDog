@@ -5,6 +5,17 @@
 <%
 	String cp=request.getContextPath();
 %>
+
+<script type="text/javascript">
+function requestCancle(requestNum) {
+	var q = "requestNum="+requestNum;
+	var url = "<%=cp%>/mypage/requestCancle?"+q;
+	if(confirm("주문을 취소하시겠습니까 ?")) {
+		location.href=url;
+	}
+}
+</script>
+
 <div class="body-container" style="width: 1200px; margin: 20px auto 0px; border-spacing: 0px;">
 	<div class="body-title">
 		<h3><span style="font-family: Webdings"></span> 주문 상세 조회 </h3>
@@ -38,7 +49,42 @@
 			</tr>
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;">
 				<td style="width: 200px; text-align: left;">&nbsp;&nbsp;주문처리상태</td>
-				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).status}</td>
+				<c:choose>
+				<c:when test="${detailList.get(0).status==0}">
+					<td style="text-align: left;">&nbsp;&nbsp;&nbsp;입금대기</td>
+				</c:when>
+				<c:when test="${detailList.get(0).status==1}">
+					<td style="text-align: left;">&nbsp;&nbsp;&nbsp;결제완료</td>
+				</c:when>
+				<c:when test="${detailList.get(0).status==2}">
+					<td style="text-align: left;">&nbsp;&nbsp;&nbsp;배송준비중</td>
+				</c:when>
+				<c:when test="${detailList.get(0).status==3}">
+					<td style="text-align: left;">&nbsp;&nbsp;&nbsp;배송중</td>
+				</c:when>
+				<c:when test="${detailList.get(0).status==4}">
+					<td style="text-align: left;">&nbsp;&nbsp;&nbsp;배송완료
+						<br><button type="button" class="btn" onclick="#">후기등록</button> 
+					</td>
+				</c:when>
+				<c:when test="${detailList.get(0).status==5}">
+					<td style="text-align: left;">&nbsp;&nbsp;&nbsp;취소완료</td>
+				</c:when>
+				<c:when test="${detailList.get(0).status==6}">
+					<td style="text-align: left;">&nbsp;&nbsp;&nbsp;환불진행중</td>
+				</c:when>
+				<c:when test="${detailList.get(0).status==7}">
+					<td style="text-align: left;">&nbsp;&nbsp;&nbsp;환불완료</td>
+				</c:when>
+				<c:when test="${detailList.get(0).status==8}">
+					<td style="text-align: left;">&nbsp;&nbsp;&nbsp;교환진행중</td>
+				</c:when>
+				<c:when test="${detailList.get(0).status==9}">
+					<td style="text-align: left;">&nbsp;&nbsp;&nbsp;교환완료
+					<br><button type="button" class="btn" onclick="#">후기등록</button>
+					</td>
+				</c:when>
+				</c:choose>
 			</tr>
 		</table>
 		<br>
@@ -103,10 +149,72 @@
 				</td>
 				<td>${dto.productCount}</td>
 				<td>${dto.productSum}</td>
-				<td>${dto.status}</td>
-				<td>
-					-
-				</td>
+				<c:choose>
+				<c:when test="${dto.status==0}">
+					<td>입금대기</td>
+				</c:when>
+				<c:when test="${dto.status==1}">
+					<td>결제완료</td>
+				</c:when>
+				<c:when test="${dto.status==2}">
+					<td>배송준비중</td>
+				</c:when>
+				<c:when test="${dto.status==3}">
+					<td>배송중</td>
+				</c:when>
+				<c:when test="${dto.status==4}">
+					<td>배송완료
+						<br><button type="button" class="btn" onclick="#">후기등록</button> 
+					</td>
+				</c:when>
+				<c:when test="${dto.status==5}">
+					<td>취소완료</td>
+				</c:when>
+				<c:when test="${dto.status==6}">
+					<td>환불진행중</td>
+				</c:when>
+				<c:when test="${dto.status==7}">
+					<td>환불완료</td>
+				</c:when>
+				<c:when test="${dto.status==8}">
+					<td>교환진행중</td>
+				</c:when>
+				<c:when test="${dto.status==9}">
+					<td>교환완료
+						<br><button type="button" class="btn" onclick="#">후기등록</button>
+					</td>
+				</c:when>
+				</c:choose>
+				<c:choose>
+				<c:when test="${dto.status==0}">
+					<td>
+						<button type="button" class="btn" onclick="requestCancle(${dto.requestNum});">주문취소</button> 
+					</td>
+				</c:when>
+				<c:when test="${dto.status==1}">
+					<td>
+						<button type="button" class="btn" onclick="#">결제취소</button> 
+					</td>
+				</c:when>
+				<c:when test="${dto.status==4}">
+					<td><button type="button" class="btn" onclick="#">환불신청</button>
+						<br><button type="button" class="btn" onclick="#">교환신청</button>
+					</td>
+				</c:when>
+				<c:when test="${dto.status==6}">
+					<td>환불진행중</td>
+				</c:when>
+				<c:when test="${dto.status==7}">
+					<td>환불완료</td>
+				</c:when>
+				<c:when test="${dto.status==8}">
+					<td>교환진행중</td>
+				</c:when>
+				<c:when test="${dto.status==9}">
+					<td>교환 완료</td>
+				</c:when>
+				<c:otherwise><td>-</td></c:otherwise>
+				</c:choose>
 			</tr>
 			</c:forEach>
 		</table>
