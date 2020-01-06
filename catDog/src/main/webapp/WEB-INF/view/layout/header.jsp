@@ -52,7 +52,7 @@
 					</ul></li>
 				<li class="nav-item"><a class="nav-link js-scroll-trigger">수다방</a>
 					<ul class="nav-sub-menu">
-						<li><a class="nav-sub-link" href="<%=cp%>/honeyTip/list">꿀팁</a></li>
+						<li><a class="nav-sub-link" href="<%=cp%>/tip/list">꿀팁</a></li>
 						<li><a class="nav-sub-link" href="<%=cp%>/pet/list">내새끼
 								자랑</a></li>
 						<li><a class="nav-sub-link" href="<%=cp%>/freeBoard/list">자유게시판</a></li>
