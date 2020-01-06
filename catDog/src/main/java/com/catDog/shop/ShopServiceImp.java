@@ -1,4 +1,4 @@
-package com.catDog.dogShop;
+package com.catDog.shop;
 
 import java.util.List;
 import java.util.Map;
@@ -10,8 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.catDog.common.FileManager;
 import com.catDog.common.dao.CommonDAO;
 
-@Service("dogShop.dogShopService")
-public class DogShopServiceImp implements DogShopService{
+@Service("shop.shopService")
+public class ShopServiceImp implements ShopService{
 	
 	@Autowired
 	private CommonDAO dao;
@@ -20,11 +20,11 @@ public class DogShopServiceImp implements DogShopService{
 	private FileManager fileManager;
 	
 	@Override
-	public List<DogShop> bigSortList() {
-		List<DogShop> list = null;
+	public List<Shop> bigSortList() {
+		List<Shop> list = null;
 		
 		try {
-			list = dao.selectList("dogshop.bigSortList");
+			list = dao.selectList("shop.bigSortList");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -33,10 +33,10 @@ public class DogShopServiceImp implements DogShopService{
 	}
 
 	@Override
-	public List<DogShop> smallSortList() {
-		List<DogShop> list = null;
+	public List<Shop> smallSortList(String bigSortNum) {
+		List<Shop> list = null;
 		try {
-			list = dao.selectList("dogshop.smallSortList");
+			list = dao.selectList("shop.smallSortList",bigSortNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -44,9 +44,9 @@ public class DogShopServiceImp implements DogShopService{
 	}
 
 	@Override
-	public void insertProduct(DogShop dto, String pathname) throws Exception {
+	public void insertProduct(Shop dto, String pathname) throws Exception {
 		try {
-			dto.setProductNum(dao.selectOne("dogshop.productSeq"));
+			dto.setProductNum(dao.selectOne("shop.productSeq"));
 			
 			
 			if(!dto.getMain().isEmpty()) {
@@ -56,7 +56,7 @@ public class DogShopServiceImp implements DogShopService{
 				}
 			}
 			
-			dao.insertData("dogshop.insertDogProduct",dto);
+			dao.insertData("shop.insertProduct",dto);
 			
 			if(! dto.getUpload().isEmpty()) {
 				for(MultipartFile mf : dto.getUpload()) {
@@ -75,9 +75,9 @@ public class DogShopServiceImp implements DogShopService{
 	}
 	
 	@Override
-	public void insertImgFile(DogShop dto) throws Exception{
+	public void insertImgFile(Shop dto) throws Exception{
 		try {
-			dao.insertData("dogshop.insertImgFile",dto);
+			dao.insertData("shop.insertImgFile",dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -86,10 +86,10 @@ public class DogShopServiceImp implements DogShopService{
 	}
 
 	@Override
-	public List<DogShop> listDogProduct(Map<String, Object> map) {
-		List<DogShop> list = null;
+	public List<Shop> listDogProduct(Map<String, Object> map) {
+		List<Shop> list = null;
 		try {
-			list = dao.selectList("dogshop.listDogProduct", map);
+			list = dao.selectList("shop.listProduct", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -101,7 +101,7 @@ public class DogShopServiceImp implements DogShopService{
 		int result = 0;
 		
 		try {
-			result = dao.selectOne("dogshop.dataCount", map);
+			result = dao.selectOne("shop.dataCount", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -110,10 +110,10 @@ public class DogShopServiceImp implements DogShopService{
 	}
 
 	@Override
-	public List<DogShop> readProductPic(int productNum) {
-		List<DogShop> list = null;
+	public List<Shop> readProductPic(int productNum) {
+		List<Shop> list = null;
 		try {
-			list = dao.selectList("dogshop.readProductPic",productNum);
+			list = dao.selectList("shop.readProductPic",productNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -122,10 +122,10 @@ public class DogShopServiceImp implements DogShopService{
 	}
 	
 	@Override
-	public DogShop readProduct(int productNum) {
-		DogShop dto = null;
+	public Shop readProduct(int productNum) {
+		Shop dto = null;
 		try {
-			dto = dao.selectOne("dogshop.readProduct",productNum);
+			dto = dao.selectOne("shop.readProduct",productNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -136,26 +136,12 @@ public class DogShopServiceImp implements DogShopService{
 	@Override
 	public void deleteProduct(int productNum, String pathname, String userId) throws Exception {
 		try {
-			DogShop dto = readProduct(productNum);
+			Shop dto = readProduct(productNum);
 			if(dto==null || ( userId.indexOf("admin") < 0)) {
 				return;
 			}
 			
-			List<DogShop> picList = readProductPic(productNum);
-			if(!picList.isEmpty()) {
-				for(DogShop pic : picList) {
-					fileManager.doFileDelete(pic.getImageFileName(),pathname);
-				}
-
-				
-			}
-			
-			dao.deleteData("dogshop.deleteProductPic",productNum);
-			if(dto.getImageFileName()!=null) {
-				fileManager.doFileDelete(dto.getImageFileName(),pathname);
-			}
-			
-			dao.deleteData("dogshop.deleteProduct",productNum);
+			dao.updateData("shop.deleteProduct",productNum);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -167,7 +153,7 @@ public class DogShopServiceImp implements DogShopService{
 	@Override
 	public void deleteImgFile(String productPicNum, String pathname, String userId) throws Exception {
 		try {
-			DogShop dto = dao.selectOne("dogshop.readPicNum", productPicNum);
+			Shop dto = dao.selectOne("shop.readPicNum", productPicNum);
 			
 			if(dto==null || ( userId.indexOf("admin") < 0)) {
 				return;
@@ -177,7 +163,7 @@ public class DogShopServiceImp implements DogShopService{
 				fileManager.doFileDelete(dto.getImageFileName(),pathname);
 			}
 			
-			dao.deleteData("dogshop.deletePic", productPicNum);
+			dao.deleteData("shop.deletePic", productPicNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -185,7 +171,7 @@ public class DogShopServiceImp implements DogShopService{
 	}
 
 	@Override
-	public void updateproduct(DogShop dto, String pathname) throws Exception {
+	public void updateproduct(Shop dto, String pathname) throws Exception {
 		
 		try {
 			if(dto.getMain()!=null) {
@@ -199,7 +185,7 @@ public class DogShopServiceImp implements DogShopService{
 			}
 			
 			
-			dao.updateData("dogshop.updateProduct",dto);
+			dao.updateData("shop.updateProduct",dto);
 			
 			if(!dto.getUpload().isEmpty()) {
 				for(MultipartFile mf : dto.getUpload()) {

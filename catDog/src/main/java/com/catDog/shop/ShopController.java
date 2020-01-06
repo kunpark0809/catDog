@@ -1,4 +1,4 @@
-package com.catDog.dogShop;
+package com.catDog.shop;
 
 import java.io.File;
 import java.util.HashMap;
@@ -19,16 +19,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.catDog.common.MyUtil;
 import com.catDog.customer.SessionInfo;
 
-@Controller("dogShop.dogShopController")
-public class DogShopController {
+@Controller("shop.shopController")
+public class ShopController {
 	@Autowired
-	private DogShopService service;
+	private ShopService service;
 	
 	@Autowired
 	private MyUtil myUtil;
 	
-	@RequestMapping(value="/dogshop/list")
+	@RequestMapping(value="/shop/list")
 	public String list(
+			@RequestParam(defaultValue="1") String bigSortNum,
 			@RequestParam(defaultValue="0") int smallSortNum,
 			@RequestParam(defaultValue="1", name="page") int current_page,
 			HttpServletRequest req,
@@ -36,8 +37,10 @@ public class DogShopController {
 			) throws Exception{
 		String cp = req.getContextPath();
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("bigSortNum", bigSortNum);
 		map.put("smallSortNum", smallSortNum);
-		List<DogShop> smallSortList = service.smallSortList();
+		
+		List<Shop> smallSortList = service.smallSortList(bigSortNum);
 		
 		int dataCount = service.dataCount(map);
 		
@@ -51,10 +54,11 @@ public class DogShopController {
 		map.put("rows", rows);
 		map.put("offset", offset);
 		
-		List<DogShop> list = service.listDogProduct(map);
+		List<Shop> list = service.listDogProduct(map);
 		
-		String listUrl = cp+"/dogshop/list?"+"smallSortNum="+smallSortNum;
-		String articleUrl = cp+"/dogshop/article?page="+current_page+"&smallSortNum="+smallSortNum;
+		String query = "bigSortNum="+bigSortNum+"&smallSortNum="+smallSortNum;
+		String listUrl = cp+"/shop/list?"+query;
+		String articleUrl = cp+"/shop/article?page="+current_page+"&"+query;
 		
 		String paging = myUtil.paging(current_page, total_page, listUrl);
 		
@@ -66,123 +70,136 @@ public class DogShopController {
 		model.addAttribute("articleUrl",articleUrl);
 		model.addAttribute("paging",paging);
 		model.addAttribute("smallSortNum",smallSortNum);
+		model.addAttribute("bigSortNum",bigSortNum);
 		model.addAttribute("page",current_page);
-		return ".dogshop.list";
+		return ".shop.list";
 	}
 	
-	@RequestMapping(value="/dogshop/created", method=RequestMethod.GET)
+	@RequestMapping(value="/shop/smallSort", method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> smallSortList(
+			@RequestParam String bigSortNum
+			) throws Exception{
+		
+		List<Shop> smallSortList = service.smallSortList(bigSortNum);
+		
+		Map<String,Object> model = new HashMap<>();
+		model.put("smallSortList", smallSortList);
+		return model;
+	}
+	
+	@RequestMapping(value="/shop/created", method=RequestMethod.GET)
 	public String createdForm(
-			@RequestParam(defaultValue="0") int smallSortNum,
-			@RequestParam(defaultValue="1") String page,
 			Model model
 			) throws Exception{
-		List<DogShop> bigSortList = service.bigSortList();
-		List<DogShop> smallSortList = service.smallSortList();
+		List<Shop> bigSortList = service.bigSortList();
 		
 		model.addAttribute("bigSortList",bigSortList);
-		model.addAttribute("smallSortList",smallSortList);
-		model.addAttribute("smallSortNum",smallSortNum);
-		model.addAttribute("page",page);
 		model.addAttribute("mode","created");
-		return ".dogshop.created";
+		return ".shop.created";
 	}
 	
-	@RequestMapping(value="/dogshop/created", method=RequestMethod.POST)
+	@RequestMapping(value="/shop/created", method=RequestMethod.POST)
 	public String createdSubmit(
-			DogShop dto,
+			Shop dto,
 			HttpSession session
 			) throws Exception{
 		
 		String root = session.getServletContext().getRealPath("/");
-		String pathname = root+"uploads"+File.separator+"dogshop";
+		String pathname = root+"uploads"+File.separator+"shop";
 		try {
 			service.insertProduct(dto, pathname);
 		} catch (Exception e) {
 		}
-		return "redirect:/dogshop/list";
+		return "redirect:/shop/list?bigSortNum="+dto.getBigSortNum();
 	}
 	
-	@RequestMapping(value="/dogshop/article")
+	@RequestMapping(value="/shop/article")
 	public String article(
+			@RequestParam(defaultValue="1") String bigSortNum,
 			@RequestParam(defaultValue="0") int smallSortNum,
 			@RequestParam int productNum,
 			@RequestParam(defaultValue="1") String page,
 			Model model
 			) throws Exception{
-		List<DogShop> smallSortList = service.smallSortList();
 		
-		DogShop dto = service.readProduct(productNum);
-		String query = "smallSortNum="+smallSortNum+"&page="+page;
+		
+		Shop dto = service.readProduct(productNum);
+		
+		String query = "bigSortNum="+bigSortNum+"&smallSortNum="+smallSortNum+"&page="+page;
 		if(dto==null) {
-			return "redirect:/dogshop/list?"+query;
+			return "redirect:/shop/list?"+query;
 		}
 
-		List<DogShop> picList = service.readProductPic(productNum);
+		List<Shop> smallSortList = service.smallSortList(dto.getBigSortNum());
+		List<Shop> picList = service.readProductPic(productNum);
+		model.addAttribute("bigSortNum",bigSortNum);
 		model.addAttribute("smallSortNum",smallSortNum);
 		model.addAttribute("page",page);
 		model.addAttribute("query",query);
 		model.addAttribute("picList", picList);
 		model.addAttribute("dto", dto);
 		model.addAttribute("smallSortList",smallSortList);
-		return ".dogshop.article";
+		return ".shop.article";
 	}
 	
-	@RequestMapping(value="/dogshop/update", method=RequestMethod.GET)
+	@RequestMapping(value="/shop/update", method=RequestMethod.GET)
 	public String updateForm(
+			@RequestParam(defaultValue="1") String bigSortNum,
 			@RequestParam(defaultValue="0") String smallSortNum,
 			@RequestParam int productNum,
 			@RequestParam(defaultValue="1") String page,
 			Model model
 			) throws Exception{
 		
-		DogShop dto = service.readProduct(productNum);
-		List<DogShop> picList = service.readProductPic(productNum);
-		List<DogShop> bigSortList = service.bigSortList();
-		List<DogShop> smallSortList = service.smallSortList();
+		Shop dto = service.readProduct(productNum);
+		List<Shop> picList = service.readProductPic(productNum);
+		List<Shop> bigSortList = service.bigSortList();
+		List<Shop> smallSortList = service.smallSortList(dto.getBigSortNum());
 		
 		model.addAttribute("bigSortList",bigSortList);
+		model.addAttribute("bigSortNum",bigSortNum);
 		model.addAttribute("smallSortList",smallSortList);
 		model.addAttribute("smallSortNum",smallSortNum);
 		model.addAttribute("picList", picList);
 		model.addAttribute("dto", dto);
 		model.addAttribute("mode","update");
 		model.addAttribute("page",page);
-		return ".dogshop.created";
+		return ".shop.created";
 	}
 	
-	@RequestMapping(value="/dogshop/update", method=RequestMethod.POST)
+	@RequestMapping(value="/shop/update", method=RequestMethod.POST)
 	public String updateSubmit(
-			@RequestParam(defaultValue="0") String smallSortNum,
-			DogShop dto,
+			@RequestParam(defaultValue="1") String bigSortNum,
+			Shop dto,
 			HttpSession session
 			) throws Exception{
 		String root = session.getServletContext().getRealPath("/");
-		String pathname = root+"uploads"+File.separator+"dogshop";
+		String pathname = root+"uploads"+File.separator+"shop";
 		
 		service.updateproduct(dto, pathname);
 
-		return "redirect:/dogshop/list?smallSortNum="+smallSortNum;
+		return "redirect:/shop/list?bigSortNum="+bigSortNum;
 	}
 	
-	@RequestMapping(value="/dogshop/delete", method=RequestMethod.GET)
+	@RequestMapping(value="/shop/delete", method=RequestMethod.GET)
 	public String delete(
-			@RequestParam(defaultValue="0") String smallSortNum,
+			@RequestParam(defaultValue="1") String bigSortNum,
 			@RequestParam int productNum,
-			@RequestParam(defaultValue="1") String page,
 			HttpSession session,
 			Model model
 			) throws Exception{
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
 		String root = session.getServletContext().getRealPath("/");
-		String pathname = root+"uploads"+File.separator+"dogshop";
+		String pathname = root+"uploads"+File.separator+"shop";
 		
 		service.deleteProduct(productNum, pathname, info.getUserId());
 		
-		return "redirect:/dogshop/list?"+"smallSortNum="+smallSortNum+"&page="+page;
+		return "redirect:/shop/list?bigSortNum="+bigSortNum;
 	}
 	
-	@RequestMapping(value="/dogshop/deleteFile", method=RequestMethod.POST)
+	@RequestMapping(value="/shop/deleteFile", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String,Object> deleteFile(
 			@RequestParam String picNum,
@@ -191,7 +208,7 @@ public class DogShopController {
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
 		String root = session.getServletContext().getRealPath("/");
-		String pathname = root+"uploads"+File.separator+"dogshop";
+		String pathname = root+"uploads"+File.separator+"shop";
 		String state = "false";
 		
 		try {
@@ -205,12 +222,5 @@ public class DogShopController {
 		
 		return model;
 	}
-	
-	@RequestMapping(value="/dogshop/pay")
-	public String pay(
-			@RequestParam String productNum
-			) throws Exception{
-		
-		return ".dogshop.pay";
-	}
+
 }

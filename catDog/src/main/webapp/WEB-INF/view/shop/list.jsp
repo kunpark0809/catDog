@@ -21,14 +21,14 @@ $(function(){
 		
 		var smallSortNum = $(this).attr("data-num");
 		$("#sort-"+smallSortNum).addClass("sortActive");
-		location.href="<%=cp%>/dogshop/list?smallSortNum="+smallSortNum;
+		location.href="<%=cp%>/shop/list?smallSortNum="+smallSortNum+"&bigSortNum=${bigSortNum}";
 	})
 });
 </script>
 	<div class="shin_body">
-		<h3 style="display: inline;">DogShop</h3>
+		<h3 style="display: inline;">Shop</h3>
 		<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
-			<span><button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/dogshop/created?smallSortNum=${smallSortNum}'">글올리기</button></span>
+			<span><button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/shop/created'">글올리기</button></span>
 		</c:if>
 		
 		<div class="bestProduct">
@@ -55,7 +55,7 @@ $(function(){
 								<div class="productLink" onclick="javascript:location.href='${articleUrl}&productNum=${dto.productNum}'">
 									<input type="hidden" value="${dto.productNum}">
 									<input type="hidden" value="${dto.price}">
-										<img alt="" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}" width="200" height="200">
+										<img alt="" src="<%=cp%>/uploads/shop/${dto.imageFileName}" width="200" height="200">
 									<p style="margin: 0px;">${dto.name}</p>
 								</div>
 							</td>

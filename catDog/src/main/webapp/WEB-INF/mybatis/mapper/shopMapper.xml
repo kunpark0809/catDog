@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="dogshop">
-	<select id="bigSortList" resultType="com.catDog.dogShop.DogShop">
+<mapper namespace="shop">
+	<select id="bigSortList" resultType="com.catDog.shop.Shop">
 		SELECT bigSortNum, sortName
 		FROM bigSort
 	</select>
 
-	<select id="smallSortList" resultType="com.catDog.dogShop.DogShop">
+	<select id="smallSortList" parameterType="String" resultType="com.catDog.shop.Shop">
 		SELECT smallSortNum, sortName, bigSortNum
 		FROM smallSort
-		WHERE bigSortNum = 1
+		WHERE bigSortNum =#{bigSortNum}
 	</select>
 	
 	<select id="productSeq" resultType="Integer">
@@ -18,13 +18,17 @@
 	</select>
 
 	
-	<select id="listDogProduct" parameterType="map" resultType="com.catDog.dogShop.DogShop">
-		SELECT productNum, name, price, imageFileName, smallSortNum
+	<select id="listProduct" parameterType="map" resultType="com.catDog.shop.Shop">
+		SELECT productNum, p.name, price, imageFileName, p.smallSortNum
 		FROM product p
+		JOIN smallSort s ON p.smallSortNum = s.smallSortNum
+        JOIN bigSort b ON s.bigSortNum = b.bigSortNum
 		<where>
 			<if test="smallSortNum!=0">
-				smallSortNum=#{smallSortNum}
+				p.smallSortNum=#{smallSortNum}
 			</if>
+			AND b.bigSortNum=#{bigSortNum}
+			AND p.enabled=1
 		</where>
 		
 		 ORDER BY p.productNum DESC
@@ -38,42 +42,44 @@
 		</if>
 	</select>
 
-	<insert id="insertDogProduct" parameterType="com.catDog.dogShop.DogShop">
+	<insert id="insertProduct" parameterType="com.catDog.shop.Shop">
 		INSERT INTO product(PRODUCTNUM, NAME, PRICE, CONTENT, SMALLSORTNUM,IMAGEFILENAME) 
 		VALUES(#{productNum}, #{name}, #{price}, #{content}, #{smallSortNum},#{imageFileName})
 	</insert>
 	
-	<insert id="insertImgFile" parameterType="com.catDog.dogShop.DogShop">
+	<insert id="insertImgFile" parameterType="com.catDog.shop.Shop">
 		INSERT INTO productPic(productPicNum, imageFileName, productNum) 
 		VALUES(PRODUCTPIC_SEQ.NEXTVAL, #{imageFileName}, #{productNum})
 	</insert>
 	
-	<select id="readProduct" parameterType="Integer" resultType="com.catDog.dogShop.DogShop">
-		SELECT productNum,name, price, content, smallSortNum, imageFileName, created
-		FROM product
+	<select id="readProduct" parameterType="Integer" resultType="com.catDog.shop.Shop">
+		SELECT productNum,p.name, price, content, p.smallSortNum,s.bigSortNum, imageFileName, created
+		FROM product p
+        JOIN smallSort s ON p.smallSortNum = s.smallSortNum
+        JOIN bigSort b ON s.bigSortNum = b.bigSortNum
 		WHERE productNum = #{productNum}
 	</select>
 	
-	<select id="readProductPic" parameterType="Integer" resultType="com.catDog.dogShop.DogShop">
+	<select id="readProductPic" parameterType="Integer" resultType="com.catDog.shop.Shop">
 		SELECT productNum, productPicNum,imageFileName 
 		FROM productPic
 		WHERE productNum = #{productNum}
 	</select>
 	
-	<select id="readPicNum" parameterType="String" resultType="com.catDog.dogShop.DogShop">
+	<select id="readPicNum" parameterType="String" resultType="com.catDog.shop.Shop">
 		SELECT productNum, productPicNum,imageFileName 
 		FROM productPic
 		WHERE productPicNum = #{productPicNum}
 	</select>
 	
-	<update id="updateProduct" parameterType="com.catDog.dogShop.DogShop">
+	<update id="updateProduct" parameterType="com.catDog.shop.Shop">
 		UPDATE product SET name=#{name}, price=#{price}, content=#{content}, smallSortNum=#{smallSortNum}, imageFileName=#{imageFileName} 
 		WHERE productNum=#{productNum}
 	</update>
 	
-	<delete id="deleteProduct" parameterType="Integer">
-		DELETE FROM product WHERE productNum=#{productNum} 
-	</delete>
+	<update id="deleteProduct" parameterType="Integer">
+		UPDATE product SET enabled=0 WHERE productNum=#{productNum} 
+	</update>
 	
 	<delete id="deleteProductPic" parameterType="Integer">
 		DELETE FROM productPic WHERE productNum=#{productNum}

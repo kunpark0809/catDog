@@ -41,8 +41,8 @@
 
 				<li class="nav-item"><a class="nav-link js-scroll-trigger">반려용품</a>
 					<ul class="nav-sub-menu">
-						<li><a class="nav-sub-link" href="<%=cp%>/dogshop/list">강아지</a></li>
-						<li><a class="nav-sub-link" href="<%=cp%>/catshop/list">고양이</a></li>
+						<li><a class="nav-sub-link" href="<%=cp%>/shop/list?bigSortNum=1">강아지</a></li>
+						<li><a class="nav-sub-link" href="<%=cp%>/shop/list?bigSortNum=0">고양이</a></li>
 					</ul></li>
 				<li class="nav-item"><a class="nav-link js-scroll-trigger">놀이터</a>
 					<ul class="nav-sub-menu">

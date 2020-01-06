@@ -45,14 +45,14 @@ $(function(){
 		
 		var smallSortNum = $(this).attr("data-num");
 		$("#sort-"+smallSortNum).addClass("sortActive");
-		location.href="<%=cp%>/dogshop/list?smallSortNum="+smallSortNum;
+		location.href="<%=cp%>/shop/list?smallSortNum="+smallSortNum+"&bigSortNum=${bigSortNum}";
 	})
 });
 
 $(function(){
 	$("body").on("click",".sub-img",function(){
 		var imgName = $(this).attr("data-img");
-		$(".main-img img").attr("src","<%=cp%>/uploads/dogshop/"+imgName);
+		$(".main-img img").attr("src","<%=cp%>/uploads/shop/"+imgName);
 	});
 });
 
@@ -102,7 +102,7 @@ function changePrice(){
 
 function deleteProduct(){
 	if(confirm("위 자료를 삭제 하시겠습니까?")){
-		location.href="<%=cp%>/dogshop/delete?${query}&productNum=${dto.productNum}";
+		location.href="<%=cp%>/shop/delete?${query}&productNum=${dto.productNum}";
 	}
 }
 </script>
@@ -117,12 +117,12 @@ function deleteProduct(){
 		<div class="product-info">
 			<div class="product-img">
 				<div class="main-img">
-					<img alt="" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}">
+					<img alt="" src="<%=cp%>/uploads/shop/${dto.imageFileName}">
 				</div>
 				<div class="imgList">
 					<c:forEach var="dto" items="${picList}">
 						<div class="sub-img" data-img="${dto.imageFileName}">
-							<img alt="" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}">
+							<img alt="" src="<%=cp%>/uploads/shop/${dto.imageFileName}">
 						</div>
 					</c:forEach>
 				</div>
@@ -159,7 +159,7 @@ function deleteProduct(){
 				</div>
 				<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
 					<div class="admin_btn">
-						<button type="button" onclick="javascript:location.href='<%=cp%>/dogshop/update?${query}&productNum=${dto.productNum}';">수정</button>
+						<button type="button" onclick="javascript:location.href='<%=cp%>/shop/update?${query}&productNum=${dto.productNum}';">수정</button>
 						<button type="button" onclick="deleteProduct();">삭제</button>
 					</div>
 				</c:if>

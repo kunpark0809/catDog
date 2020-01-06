@@ -7,9 +7,37 @@
 %>
 	<script type="text/javascript" src="<%=cp%>/resource/se/js/HuskyEZCreator.js" charset="utf-8"></script>
 	<script type="text/javascript">
+	function ajaxJSON(url, type, query, fn){
+		$.ajax({
+			type:type
+			,url:url
+			,data:query
+			,dataType:"json"
+			,success:function(data){
+				fn(data);
+			}
+		, beforeSend:function(jqXHR){
+			jqXHR.setRequestHeader("AJAX",true);
+		}
+		,error:function(jqXHR){
+			if(jqXHR.status==403){
+				login();
+				return false;
+			}
+			console.log(jqXHR.resqonseText);
+		}
+		});
+	}
+	
 	   function check() {
-	        var f = document.dogshopForm;
+	        var f = document.shopForm;
 			
+	        if(f.bigSortNum.value == "all"){
+	        	alert("애견동물을 선택하세요. ");
+	            f.bigSortNum.focus();
+	            return false;
+	        }
+	        
 	        if(f.smallSortNum.value == "0"){
 	        	alert("용품분류를 선택하세요. ");
 	            f.smallSortNum.focus();
@@ -47,7 +75,7 @@
 	    		}
 	    	}
 	    
-	   		f.action="<%=cp%>/dogshop/${mode}";
+	   		f.action="<%=cp%>/shop/${mode}";
 	   		f.submit();
 
 	        return true;
@@ -79,16 +107,39 @@
 		  	      $td.append($input);
 		  	      $tr.append($td);
 		  	    
-		  	      $("#dogshopb").append($tr);
+		  	      $("#shopb").append($tr);
 		  	  });
 		  });
+	   
+	   function changeBigSort(){
+		   var bigSortNum = $("select[name=bigSortNum]").val();
+		   $("select[name=smallSortNum] option").remove();
+		   $("select[name=smallSortNum]").append("<option value='0'>::용품 선택::</option>");
+		
+		   if(bigSortNum=="all"){
+			   return;
+		   }
+		   
+		   var url = "<%=cp%>/shop/smallSort";
+		   var query = "bigSortNum="+bigSortNum;
+		   var fn = function(data){
+			   $.each(data.smallSortList,function(idx, item){
+				   $("select[name=smallSortNum]").append("<option value="+item.smallSortNum+">"+item.sortName+"</option>");
+			   });
+		   };
+		   ajaxJSON(url,"get",query,fn);
+	   };
+	   
+	   
 	   <c:if test="${mode=='update'}">
 		   	function deleteFile(picNum){
 		   		if(confirm("삭제 후 복구 불가합니다. 정말 삭제 하시겠습니까?")){
-			   		var url="<%=cp%>/dogshop/deleteFile";
-			   		$.post(url,{picNum:picNum},function(data){
+		   			var query = "picNum="+picNum;
+			   		var url="<%=cp%>/shop/deleteFile";
+			   		var fn = function(data){
 			   			$("#fileTr"+picNum).remove();
-			   		},"json");
+			   		}
+			   		ajaxJSON(url, "post", query, fn);
 		   		}
 		   	};
 	   </c:if>
@@ -98,19 +149,19 @@
 	<link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
 	<div class="shin_body">
 	<div class="body-title">
-		<h3><i class="fas fa-chalkboard-teacher"></i> DogShop 용품등록 </h3>
+		<h3><i class="fas fa-chalkboard-teacher"></i> 용품등록 </h3>
 	</div>
 
 	<div>
 
-		<form name="dogshopForm" method="post" enctype="multipart/form-data" onsubmit="return submitContents(this);">
+		<form name="shopForm" method="post" enctype="multipart/form-data" onsubmit="return submitContents(this);">
 			<table style="width: 100%; border-collapse: collapse; border-spacing: 0">
-			<tbody id="dogshopb">
+			<tbody id="shopb">
 					<tr>
 						<td>분&nbsp;&nbsp;류</td>
 						<td>
-							<select name="bigSortNum">
-								<option>::애견동물 선택::</option>
+							<select name="bigSortNum" onchange="changeBigSort();">
+								<option value="all">::애견동물 선택::</option>
 								<c:forEach var="sort" items="${bigSortList}">
 									<option value="${sort.bigSortNum}" ${dto.bigSortNum==sort.bigSortNum?"selected='selected'":""}>${sort.sortName}</option>
 								</c:forEach>
@@ -179,7 +230,7 @@
 					<td>
 						<button type="submit">${mode=="update"?"수정하기":"등록하기"}</button>
 						<button type="reset">다시입력</button>
-						<button type="button" onclick="javascript:location.href='<%=cp%>/dogshop/list?smallSortNum=${smallSortNum}&page=${page}';">${mode=="update"?"수정취소":"등록취소"}</button>
+						<button type="button" onclick="javascript:location.href='<%=cp%>/shop/list?bigSortNum=${bigSortNum}&smallSortNum=${smallSortNum}&page=${page}';">${mode=="update"?"수정취소":"등록취소"}</button>
 					</td>
 				</tr>
 			</table>

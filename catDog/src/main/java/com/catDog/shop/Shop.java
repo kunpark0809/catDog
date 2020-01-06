@@ -1,10 +1,10 @@
-package com.catDog.dogShop;
+package com.catDog.shop;
 
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class DogShop {
+public class Shop {
 	private String smallSortNum;
 	private String sortName;
 	private String bigSortNum;
