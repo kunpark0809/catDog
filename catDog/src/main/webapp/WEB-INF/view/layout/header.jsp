@@ -37,7 +37,7 @@
 					<ul class="nav-sub-menu">
 						<li><a class="nav-sub-link" href="<%=cp%>/adopt/list">입양</a></li>
 						<li><a class="nav-sub-link" href="<%=cp%>/abandoned/list">유기동물</a></li>
-					</ul></li>
+					</ul></li> 
 
 				<li class="nav-item"><a class="nav-link js-scroll-trigger">반려용품</a>
 					<ul class="nav-sub-menu">
