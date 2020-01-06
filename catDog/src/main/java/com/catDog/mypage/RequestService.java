@@ -12,4 +12,6 @@ public interface RequestService {
 	public Pay readCustomer(long num);
 	public List<Pay> readRequestNum(Map<String, Object> map);
 	public void requestCancle(String requestNum) throws Exception;
+	public void refundRequest(Pay pay) throws Exception;
+	public void requestRefund(String requestNum) throws Exception;
 }

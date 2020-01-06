@@ -49,7 +49,11 @@
 	</update>
 	
 	<insert id="refundRequest" parameterType="com.catDog.pay.Pay">
-	
+		insert into refund(requestNum, refundAccount, bank, name, refundReason) values(#{requestNum}, #{refundAccount}, #{bank}, #{name}, #{refundReason})
 	</insert>
+	
+	<update id="requestRefund" parameterType="com.catDog.pay.Pay">
+		update request set status=6 where requestNum=#{requestNum}
+	</update>
 	
 </mapper>

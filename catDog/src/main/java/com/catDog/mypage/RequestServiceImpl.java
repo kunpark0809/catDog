@@ -99,4 +99,26 @@ public class RequestServiceImpl implements RequestService {
 			throw e;
 		}
 	}
+
+	@Override
+	public void refundRequest(Pay pay) throws Exception {
+		try {
+			dao.insertData("request.refundRequest", pay);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
+	@Override
+	public void requestRefund(String requestNum) throws Exception {
+		try {
+			dao.updateData("request.requestRefund", requestNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
 }

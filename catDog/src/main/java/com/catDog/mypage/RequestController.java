@@ -106,4 +106,6 @@ public class RequestController {
 		}
 		return "redirect:/mypage/requestCheck";
 	}
+	
+	
 }
