@@ -133,6 +133,7 @@ public class ShopController {
 
 		List<Shop> smallSortList = service.smallSortList(dto.getBigSortNum());
 		List<Shop> picList = service.readProductPic(productNum);
+		
 		model.addAttribute("bigSortNum",bigSortNum);
 		model.addAttribute("smallSortNum",smallSortNum);
 		model.addAttribute("page",page);

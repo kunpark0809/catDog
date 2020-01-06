@@ -15,10 +15,9 @@
 	</select>
 	
 	<select id="readProduct" parameterType="Integer" resultType="com.catDog.pay.Pay">
-		SELECT p.productNum, p.name productName, price, pp.imageFileName 
+		SELECT p.productNum, p.name productName, price, p.imageFileName 
 		FROM product p 
-		JOIN productPic pp ON p.productNum = pp.productNum
-		WHERE p.productNum=#{productNum} AND INSTR(pp.imageFileName,'main') &gt; 0
+		WHERE p.productNum=#{productNum}
 	</select>
 	
 	<insert id="insertCart" parameterType="com.catDog.pay.Pay">
@@ -34,19 +33,18 @@
 	</select>
 	
 	<select id="cartList" parameterType="Long" resultType="com.catDog.pay.Pay">
-		SELECT cartNum, num, c.productNum, productCount, productSum, pp.imageFileName, p.name productName
+		SELECT cartNum, num, c.productNum, productCount, productSum, p.imageFileName, p.name productName, s.bigSortNum
 		FROM cart c 
 		JOIN product p ON c.productNum = p.productNum 
-		JOIN productpic pp ON p.productNum = pp.productNum  
-		WHERE num=#{num} and INSTR(pp.imagefilename,'main')>0
+		JOIN smallSort s ON p.smallSortNum = s.smallSortNum
+		WHERE num=#{num} 
 	</select>
 	
 	<select id="cartPayList" parameterType="map" resultType="com.catDog.pay.Pay">
-		SELECT cartNum, num, c.productNum, productCount, productSum, pp.imageFileName, p.name productName
+		SELECT cartNum, num, c.productNum, productCount, productSum, p.imageFileName, p.name productName
 		FROM cart c 
 		JOIN product p ON c.productNum = p.productNum 
-		JOIN productpic pp ON p.productNum = pp.productNum 
-		WHERE num=#{num} AND INSTR(pp.imagefilename,'main')>0 AND cartNum IN
+		WHERE num=#{num} AND cartNum IN
 		<foreach item="cart" collection="list" open="(" close=")" separator=",">
 			#{cart}
 		</foreach> 
@@ -79,8 +77,8 @@
 	</insert>
 	
 	<insert id="insertRequest" parameterType="com.catDog.pay.Pay">
-		INSERT INTO request(requestNum, num, total, addr1, addr2, zip, tel, name, memo)
-		VALUES(#{requestNum}, #{num}, #{total},#{deliverAddr1}, #{deliverAddr2}, #{deliverZip}, #{deliverTel}, #{deliverName}, #{memo})
+		INSERT INTO request(requestNum, num, total, addr1, addr2, zip, tel, name, memo,status)
+		VALUES(#{requestNum}, #{num}, #{total},#{deliverAddr1}, #{deliverAddr2}, #{deliverZip}, #{deliverTel}, #{deliverName}, #{memo}, #{status})
 	</insert>
 	
 	<insert id="insertRequestDetail" parameterType="com.catDog.pay.Pay">
@@ -102,6 +100,10 @@
 	<update id="updatePoint" parameterType="com.catDog.pay.Pay">
 		UPDATE memberdetail SET mileage=#{mileage}+#{point} WHERE userid=#{userId}
 	</update>
+	
+	<insert id="insertPointDetail" parameterType="map">
+		INSERT INTO pointDetail(num, point, content, checked) VALUES(#{num}, #{point}, #{content}, #{checked})
+	</insert>
 	
 	<select id="readRequest" parameterType="String" resultType="com.catDog.pay.Pay">
 	select pr.productNum, requestDate ,pr.name productName,r.requestNum, c.num,c.name, r.total, r.addr1 deliverAddr1, r.addr2 deliverAddr2, r.zip deliverZip, r.tel deliverTel, r.name deliverName, r.memo, r.status, p.payMethod, p.point usePoint, p.purchase,p.stackPoint point, 

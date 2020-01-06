@@ -8,6 +8,7 @@ public class Pay {
 	private String addr, addr1, addr2;
 	private String zip;
 	private int mileage; // 보유 포인트
+	private String bigSortNum;
 	
 	private String deliverAddr1;
 	private String deliverAddr2;
@@ -28,7 +29,7 @@ public class Pay {
 	private int productCount; // 주문수량
 	private int productSum; // 단일품목총액 (가격*주문수량)
 	
-	private String payMethod; // 결제수단
+	private int payMethod; // 결제수단
 	private int usePoint; // 사용 포인트
 	private int point; // 적립 포인트
 	private int purchase; // 결제금액
@@ -192,10 +193,10 @@ public class Pay {
 	public void setProductSum(int productSum) {
 		this.productSum = productSum;
 	}
-	public String getPayMethod() {
+	public int getPayMethod() {
 		return payMethod;
 	}
-	public void setPayMethod(String payMethod) {
+	public void setPayMethod(int payMethod) {
 		this.payMethod = payMethod;
 	}
 	public int getPoint() {
@@ -295,6 +296,12 @@ public class Pay {
 	}
 	public void setCartNum(String cartNum) {
 		this.cartNum = cartNum;
+	}
+	public String getBigSortNum() {
+		return bigSortNum;
+	}
+	public void setBigSortNum(String bigSortNum) {
+		this.bigSortNum = bigSortNum;
 	}
 
 

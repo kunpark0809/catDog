@@ -34,7 +34,7 @@
 						
 						<td>
 						<input type="hidden" name="requestDetailNum" value="${dto.requestDetailNum}">
-						<img alt="" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}" width="50">
+						<img alt="" src="<%=cp%>/uploads/shop/${dto.imageFileName}" width="50">
 						</td>
 						<td>${dto.productName}</td>
 						<td>${dto.productSum}</td>

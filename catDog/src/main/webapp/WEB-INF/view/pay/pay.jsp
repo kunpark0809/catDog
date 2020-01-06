@@ -180,7 +180,7 @@
 							<td>
 							<input type="hidden" name="productNum" value="${product.productNum}">
 							<img alt=""
-								src="<%=cp%>/uploads/dogshop/${product.imageFileName}"
+								src="<%=cp%>/uploads/shop/${product.imageFileName}"
 								width="50"></td>
 							<td>${product.productName}</td>
 							<td>${product.productSum}</td>
@@ -195,7 +195,7 @@
 							<tr>
 								<td>
 								<input type="hidden" name="payCartNum" value="${dto.cartNum}">
-								<img alt="" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}" width="50"></td>
+								<img alt="" src="<%=cp%>/uploads/shop/${dto.imageFileName}" width="50"></td>
 								<td>${dto.productName}</td>
 								<td>${dto.productSum}</td>
 								<td>${dto.productCount}</td>
