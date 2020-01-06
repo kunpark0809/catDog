@@ -26,15 +26,19 @@ $(function(){
 });
 
 $(function(){
-	// $("#tab-${group}").addClass("active");
 	$("#tab-0").addClass("active");
-
+	$("#subtotal").show();
+	
+	var url = "<%=cp%>/admin/money/subtotalChart";
+	
+	subtotalChart(url);
 	
 	$("ul.tabs li").click(function(){
 		$("#yearSalesSelect").hide();
 		$("#yearSales").hide();
 		$("#categorySalesSelect").hide();
 		$("#categorySales").hide();
+		$("#subtotal").hide();
 		
 		tab = $(this).attr("data-tab");
 		
@@ -45,7 +49,12 @@ $(function(){
 		$("#tab-"+tab).addClass("active");
 		
 		if(tab=="0"){
-			$("#yearSales").html("test");
+			$("#subtotal").show();
+			
+			var url = "<%=cp%>/admin/money/subtotalChart";
+			
+			subtotalChart(url);
+			
 		}else if(tab=="1"){
 			$("#yearSalesSelect").show();
 			$("#yearSales").show();
@@ -56,9 +65,6 @@ $(function(){
 			yearSalesChart(url);
 	
 		}else if(tab=="2"){
-			$("#yearSales").html("test2");
-	
-		}else if(tab=="3"){
 			$("#categorySalesSelect").show();
 			$("#categorySales").show();
 			
@@ -200,6 +206,94 @@ function categorySalesChart(url){
 	
 }
 
+function subtotalChart(url){
+	$.getJSON(url,function(data){
+		$("#subtotalChart").highcharts({
+			chart: {
+		        zoomType: 'xy'
+		    },
+		    title: {
+		        text: '분기별 매출과 변화율'
+		    },
+		    subtitle: {
+		        text: ''
+		    },
+		    xAxis: [{
+		        categories: data.categories,
+		        crosshair: true
+		    }],
+		    yAxis: [{ // Primary yAxis
+		        labels: {
+		            format: '{value}%',
+		            style: {
+		                color: Highcharts.getOptions().colors[1]
+		            }
+		        },
+		        title: {
+		            text: '매출 변화율',
+		            style: {
+		                color: Highcharts.getOptions().colors[1]
+		            }
+		        }
+		    }, { // Secondary yAxis
+		        title: {
+		            text: '분기별 매출',
+		            style: {
+		                color: Highcharts.getOptions().colors[0]
+		            }
+		        },
+		        labels: {
+		            format: '{value} 원',
+		            style: {
+		                color: Highcharts.getOptions().colors[0]
+		            }
+		        },
+		        opposite: true
+		    }],
+		    tooltip: {
+		        shared: true
+		    },
+		    legend: {
+		        layout: 'vertical',
+		        align: 'left',
+		        x: 120,
+		        verticalAlign: 'top',
+		        y: 100,
+		        floating: true,
+		        backgroundColor:
+		            Highcharts.defaultOptions.legend.backgroundColor || // theme
+		            'rgba(255,255,255,0.25)'
+		    },
+		    series: [{
+		        name: '분기별 매출',
+		        type: 'column',
+		        yAxis: 1,
+		        data: data.sales,
+		        tooltip: {
+		            valueSuffix: ' 원'
+		        }
+
+		    }, {
+		        name: '매출 변화율',
+		        type: 'spline',
+		        data: data.rates,
+		        tooltip: {
+		            valueSuffix: '%'
+		        }
+		    }]
+			
+			
+			
+			
+			
+			
+		});
+		
+	});
+}
+
+
+
 function selectYearSales(){
 	if(!$("#yearSalesSelect option:selected").val()) {
 		return;
@@ -223,35 +317,6 @@ function selectCategorySales(){
 
 
 
-
-<%-- $(function(){
-	var url = "<%=cp%>/admin/money/productSalesChart";
-		
-			$.getJSON(url, function(data) {
-			// console.log(data);
-
-			$("#monthContainer").highcharts({
-				chart : {
-					type : 'pie',
-					options3d : {
-						enabled : true,
-						alpha : 45
-					}
-				},
-				title : {
-					text : '시간대별 접속자 수'
-				},
-				plotOptions : {
-					pie : {
-						innerSize : 100,
-						depth : 45
-					}
-				},
-				series : data
-			});
-		});
-	}) --%>
-
 	
 </script>
 
@@ -268,27 +333,66 @@ function selectCategorySales(){
 				<li id="tab-1" data-tab="1">
 					연매출</li>
 				<li id="tab-2" data-tab="2">
-					분기별 매출</li>
-				<li id="tab-3" data-tab="3">
 					품목별 매출</li>
 			</ul>
 	</div>
 	<br>
 	<br>
 	
-	
-	
-	<%-- <select id="month">
-		<option>월</option>
-		<c:forEach begin="1" end="12" var="x">
-			<option><c:out value="${x}월" /></option>
-		</c:forEach>
-	</select> --%>
-	
-
-
-
+	<div id="subtotal" style="margin: 0px auto;">
+		<br>
+		<div style="text-align: center;"><h4>주식회사 멍냥개냥</h4></div>
+		<br><br>
 		
+		<table border="1" style=" text-align: center;">
+			<tr>
+				<td style="width: 160px;">오늘의 주문 수</td>
+				<td style="width: 160px;">오늘의 매출</td>
+				<td style="width: 160px;">이번 주의 주문 수</td>
+				<td style="width: 160px;">이번 주의 매출</td>
+				
+			</tr>
+			<tr>
+				<td>${daySalesVolume}건</td>
+				<td>${daySales}원</td>
+				<td>${weekSalesVolume}건</td>
+				<td>${weekSales}원</td>
+				
+		</tr>
+		
+		
+		</table>
+		
+		<br>
+		
+		<table border="1" style="text-align: center;">
+			<tr>
+				<td style="width: 160px;">이번 달의 주문 수</td>
+				<td style="width: 160px;">이번 달의  매출</td>
+				<td style="width: 160px;">올해의 주문 수</td>
+				<td style="width: 160px;">올해의 매출</td>
+				<td style="width: 160px;">총 주문 수</td>
+				<td style="width: 160px;">총 매출</td>
+			</tr>
+			<tr>
+				<td>${monthSalesVolume}건</td>
+				<td>${monthSales}원</td>
+				<td>${yearSalesVolume}건</td>
+				<td>${yearSales}원</td>
+				<td>${totalSalesVolume}건</td>
+				<td>${totalSales}원</td>
+			</tr>
+		
+		
+		</table>
+		
+	
+	
+		<br><br><br><br><br>
+		<div id="subtotalChart" style="width: 1000px; height: 400px; margin: 0px auto;">
+		</div>
+	</div>
+
 			<select id="yearSalesSelect" onchange="selectYearSales()" style="float: right; margin: 0% 5.5% 0% 0%; display: none;">
 				<option value="">년도</option>
 				<option value="2020">2020년</option>

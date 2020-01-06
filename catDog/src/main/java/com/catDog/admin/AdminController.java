@@ -6,14 +6,13 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,9 +23,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.catDog.common.MyUtil;
 import com.catDog.customer.Customer;
 import com.catDog.customer.CustomerService;
-
-import oracle.net.aso.h;
-import oracle.security.o3logon.a;
 
 @Controller("admin.adminController")
 public class AdminController {
@@ -221,6 +217,47 @@ public class AdminController {
 	public String moneyManage(@RequestParam(defaultValue = "0") int group, Model model) throws Exception {
 		model.addAttribute("group", group);
 
+		Calendar cal = Calendar.getInstance();
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd"); // 오늘 날짜를 담을 포멧
+		String today = sdf.format(cal.getTime()); // 오늘 날짜를 yyyyMMdd 꼴로 가져옴
+
+		cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+		String sunday = sdf.format(cal.getTime()); // 이번 주의 월요일 날짜를 yyyyMMdd 꼴로 가져옴
+
+		cal.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+		String saturday = sdf.format(cal.getTime()); // 이번 주의 토요일 날짜를 yyyyMMdd 꼴로 가져옴
+
+		Map<String, Object> map = new HashMap<>();
+
+		map.put("sunday", sunday);
+		map.put("saturday", saturday);
+
+		String year = today.substring(0, 4);
+		String yearMonth = today.substring(0, 6);
+
+		int daySales = service.daySales(today);
+		int daySalesVolume = service.daySalesVolume(today);
+		int weekSales = service.weekSales(map);
+		int weekSalesVolume = service.weekSalesVolume(map);
+		int monthSales = service.monthSales(yearMonth);
+		int monthSalesVolume = service.monthSalesVolume(yearMonth);
+		int yearSales = service.yearSales(year);
+		int yearSalesVolume = service.yearSalesVolume(year);
+		int totalSales = service.totalSales();
+		int totalSalesVolume = service.totalSalesVolume();
+
+		model.addAttribute("daySales", String.format("%,d", daySales));
+		model.addAttribute("daySalesVolume", daySalesVolume);
+		model.addAttribute("weekSales", String.format("%,d", weekSales));
+		model.addAttribute("weekSalesVolume", weekSalesVolume);
+		model.addAttribute("monthSales", String.format("%,d", monthSales));
+		model.addAttribute("monthSalesVolume", monthSalesVolume);
+		model.addAttribute("yearSales", String.format("%,d", yearSales));
+		model.addAttribute("yearSalesVolume", yearSalesVolume);
+		model.addAttribute("totalSales", String.format("%,d", totalSales));
+		model.addAttribute("totalSalesVolume", totalSalesVolume);
+
 		return ".admin.money";
 	}
 
@@ -257,7 +294,7 @@ public class AdminController {
 			map.put("year", year);
 			map.put("smallSortNum", i);
 
-			moneyList = service.monthSales(map);// moneyList에 한 소분류의 연간 총매출정보가 담겨짐. 월별로 산출되고 없으면 0
+			moneyList = service.monthSalesByCategory(map);// moneyList에 한 소분류의 연간 총매출정보가 담겨짐. 월별로 산출되고 없으면 0
 
 			data = new int[12];
 
@@ -319,7 +356,7 @@ public class AdminController {
 			smallSortName = null;
 			sales = 0;
 			salesVolume = 0;
-			
+
 			map = new HashMap<>();
 			map.put("smallSortNum", i);
 			map.put("year", year);
@@ -338,7 +375,6 @@ public class AdminController {
 			if (dto != null)
 				salesVolume = dto.getSalesVolume();
 
-			
 			// 이름 처리하기
 			smallSortName = service.getCategory(i);
 
@@ -358,95 +394,141 @@ public class AdminController {
 
 			}
 		}
-	
+
 		result.put("year", year);
 		result.put("series", series);
 
 		return result;
 	}
 
-	// 3년 매출을 분기별, 품목별로
-	@RequestMapping(value = "/admin/money/quarterSalesChart")
+	// 소계에 쓸 분기별 매출
+	@RequestMapping(value = "/admin/money/subtotalChart")
 	@ResponseBody
-	public Map<String, Object> quarteSalesChart(@RequestParam(defaultValue = "2019") int year) throws Exception {
-		Map<String, Object> result = new HashMap<>();
+	public Map<String, Object> subtotalChart() throws Exception {
+		Map<String, Object> result = new HashMap<>();// 최종적으로 데이터를 보낼 맵
 
-		Map<String, Object> map = null; // service.quarterSales에 넣을때 쓸 map
+		int quarterSales = 0;
 
-		Map<String, Object> map2 = null; // JSONObject 형식으로 담을 map
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd"); // 오늘 날짜를 담을 포멧
+		Date date = new Date();
+		String today = sdf.format(date); // 오늘 날짜를 yyyyMMdd 꼴로 가져옴
+		int thisYear = Integer.parseInt(today.substring(0, 4));
+		int thisMonth = Integer.parseInt(today.substring(4, 6));
 
-		List<Money> moneyList = null;// quarterSales를 return하여 받을 map
+		// 그래프의 컬럼 개수 구하기
+		int quarterNumber = (thisYear - 2017) * 4;
+		if (thisMonth <= 3)
+			quarterNumber += 1;
+		else if (thisMonth <= 6)
+			quarterNumber += 2;
+		else if (thisMonth <= 9)
+			quarterNumber += 3;
+		else if (thisMonth <= 12)
+			quarterNumber += 4;
 
-		int[] data = null; // 각 월의 정보를 담을 배열.
+		String[] categories = new String[quarterNumber];
 
-		List<Map<String, Object>> productList = new ArrayList<>(); // 보낼 list
+		int[] sales = new int[quarterNumber];
 
-		for (int i = 1; i <= 16; i++) {
-			map = new HashMap<>();
-			map2 = new HashMap<>();
-			moneyList = new ArrayList<>();
+		double[] rates = new double[quarterNumber];
 
-			String name = service.getCategory(i);
-			if (i <= 8) {
-				name = "고양이)" + name;
-			} else if (i >= 9) {
-				name = "개)" + name;
+		// 분기별로 매출액 계산하기
+		for (int i = 1; i <= quarterNumber; i++) {
+			int yearMonth = (2017 + i / 4);// yearMonth에서 year 설정
+
+			// categories 채워넣기
+			switch (i % 4) {
+			case 1:
+				categories[i - 1] = Integer.toString(yearMonth) + ".1Q";
+				yearMonth = (yearMonth * 100) + 1;
+				break;
+			case 2:
+				categories[i - 1] = Integer.toString(yearMonth) + ".2Q";
+				yearMonth = (yearMonth * 100) + 4;
+				break;
+			case 3:
+				categories[i - 1] = Integer.toString(yearMonth) + ".3Q";
+				yearMonth = (yearMonth * 100) + 7;
+				break;
+			case 0:
+				categories[i - 1] = Integer.toString(yearMonth) + ".4Q";
+				yearMonth = (yearMonth * 100) + 10;
 			}
 
-			// 여기부터 다시 만들기
-			map.put("year", year);
-			map.put("smallSortNum", i);
+			// 마지막 컬럼의 값 정리해서 넣기
+			if (i == quarterNumber) {
+				categories[i - 1] += "(추정)";
 
-			moneyList = service.monthSales(map);// moneyList에 한 소분류의 연간 총매출정보가 담겨짐. 월별로 산출되고 없으면 0
+				// 날짜 차이 계산하기
+				String start = Integer.toString(2017 + i / 4);// 분기 시작의 년 가져옴
+				String end = Integer.toString(2017 + i / 4);// 분기 끝의 년 가져옴
 
-			data = new int[12];
-
-			if (moneyList != null) {
-				for (Money monthlySale : moneyList) {
-					int month = Integer.parseInt(monthlySale.getRequestDate().substring(4));// 월을 가져옴(없는지 있는지 판별해야함)
-					data[month - 1] = monthlySale.getProductSum();
+				switch (i % 4) {
+				case 1:
+					start = start + "0101";
+					end = end + "0331";
+					break;
+				case 2:
+					start = start + "0401";
+					end = end + "0630";
+					break;
+				case 3:
+					start = start + "0701";
+					end = end + "0930";
+					break;
+				case 4:
+					start = start + "1001";
+					end = end + "1231";
 				}
+
+				Date startDate = sdf.parse(start);
+				Date endDate = sdf.parse(end);
+
+				Date todayDate = sdf.parse(today);
+
+				long dateFromNow = (todayDate.getTime() - startDate.getTime()) / 24 / 60 / 60 / 1000; // 분기 시작일부터 오늘까지의
+																										// 일수
+				long dateToEnd = (endDate.getTime() - startDate.getTime()) / 24 / 60 / 60 / 1000; // 분기 시작일부터 말일까지의 일수
+
+				// 오늘까지의 분기매출 계산하기
+				Map<String, Object> map2 = new HashMap<>();
+				map2.put("startDate", start);
+				map2.put("todayDate", today);
+
+				quarterSales = (int) (service.quarterSalesToToday(map2) * (dateToEnd / dateFromNow));
+
+				sales[i - 1] = quarterSales;
+
+			} else if (i != quarterNumber) {
+				quarterSales = service.quarterSales(yearMonth);
+
+				sales[i - 1] = quarterSales;
 			}
-
-			// data에 담아진 소품목 연간 총매출을 map에 담기
-			map2.put("name", name);
-			map2.put("data", data);
-
-			productList.add(map2);
-
 		}
 
-		// productList에 모든 품목의 정보가 담김
+		// quarterSales, categories 넣고 quarterSales 변화율 계산하기
+		result.put("categories", categories);
+		result.put("sales", sales);
 
-		result.put("productList", productList);
-		result.put("year", year);
+		for (int i = 1; i < quarterNumber; i++) {
 
-		// DecimalFormat df = new DecimalFormat("#,###");
+			double rate = 0;
 
-		// result.put("totalYearSales", df.format(totalYearSales));
+			if (sales[i - 1] != 0) {
+				rate = (sales[i] - sales[i - 1]) * 100 / sales[i - 1];
+			} else {
+				if (sales[i] == 0)
+					rate = 0;
+				else if (sales[i] > 0)
+					rate = Double.MAX_VALUE;
+			}
+
+			rates[i] = rate;
+		}
+
+		result.put("rates", rates);
+
 		return result;
-	}
-
-	// produces 속성 : response의 Content-Type
-	@RequestMapping(value = "/hchart/pie3d", produces = "application/json;charset=utf-8")
-	@ResponseBody
-	public String pie3d() throws Exception {
-		JSONArray arr = new JSONArray();
-		JSONObject ob = new JSONObject();
-		ob.put("name", "접속자");
-
-		JSONArray ja = new JSONArray();
-		ja.put(new JSONArray("['07-10시',10]"));
-		ja.put(new JSONArray("['10-13시',30]"));
-		ja.put(new JSONArray("['13-16시',33]"));
-		ja.put(new JSONArray("['16-19시',20]"));
-		ja.put(new JSONArray("['기타',15]"));
-
-		ob.put("data", ja);
-
-		arr.put(ob);
-
-		return arr.toString();
 	}
 
 }
