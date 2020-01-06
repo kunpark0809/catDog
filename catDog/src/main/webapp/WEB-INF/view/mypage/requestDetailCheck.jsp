@@ -5,6 +5,17 @@
 <%
 	String cp=request.getContextPath();
 %>
+
+<script type="text/javascript">
+function requestCancle(requestNum) {
+	var q = "requestNum="+requestNum;
+	var url = "<%=cp%>/mypage/requestCancle?"+q;
+	if(confirm("주문을 취소하시겠습니까 ?")) {
+		location.href=url;
+	}
+}
+</script>
+
 <div class="body-container" style="width: 1200px; margin: 20px auto 0px; border-spacing: 0px;">
 	<div class="body-title">
 		<h3><span style="font-family: Webdings"></span> 주문 상세 조회 </h3>
@@ -177,7 +188,7 @@
 				<c:choose>
 				<c:when test="${dto.status==0}">
 					<td>
-						<button type="button" class="btn" onclick="#">주문취소</button> 
+						<button type="button" class="btn" onclick="requestCancle(${dto.requestNum});">주문취소</button> 
 					</td>
 				</c:when>
 				<c:when test="${dto.status==1}">

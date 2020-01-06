@@ -48,4 +48,8 @@
 		update request set status=5 where requestNum=#{requestNum}
 	</update>
 	
+	<insert id="refundRequest" parameterType="com.catDog.pay.Pay">
+	
+	</insert>
+	
 </mapper>

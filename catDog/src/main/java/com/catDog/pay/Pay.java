@@ -39,6 +39,7 @@ public class Pay {
 	private String productNum; // 용품번호
 	private String refundAccount; // 환불계좌
 	private String bank; // 환불은행
+	private String refundReason; // 환불사유
 	private int price; // 용품 단품 가격
 	private String imageFileName;
 	
@@ -302,6 +303,12 @@ public class Pay {
 	}
 	public void setBigSortNum(String bigSortNum) {
 		this.bigSortNum = bigSortNum;
+	}
+	public String getRefundReason() {
+		return refundReason;
+	}
+	public void setRefundReason(String refundReason) {
+		this.refundReason = refundReason;
 	}
 
 
