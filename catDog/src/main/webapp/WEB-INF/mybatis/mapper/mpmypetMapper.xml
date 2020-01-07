@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mpmypet">
+	<select id="seq" resultType="Integer">
+		select mypet_seq.nextval from dual
+	</select>
+	
+	<sql id="where-list">
+		<choose>
+			<when test="condition == 'subject'">
+				(INSTR(q.subject, #{keyword}) &gt; 0)
+			</when>
+			<when test="condition == 'content'">
+				DBMS_LOB.instr(q.content, #{keyword}) &gt; 0
+			</when>
+			<when test="condition=='created'">
+				(to_char(q.created, 'yyyy-mm-dd') = #{keyword}
+				 or to_char(q.created, 'yyyymmdd') = #{keyword})
+			</when>
+			<when test="condition=='nickName'">
+				instr(nickName, #{keyword}) &gt; 0
+			</when>
+		</choose>
+	</sql>
+	
+	<select id="listMpMyPet" parameterType="map" resultType="com.catDog.mpmypet.Mpmypet">
+		SELECT mp.myPetNum, mp.subject myPetSubject, mp.num, md.nickName, 
+		mp.hitCount myPetHitCount, TO_CHAR(created, 'yyyy.mm.dd') myPetCreated
+		FROM myPet mp JOIN memberDetail md ON mp.num = md.num
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="where-list"/>
+			</if>
+			AND mp.num=#{num}
+		</where>
+		ORDER BY myPetNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="dataCountMpMyPet" parameterType="map" resultType="Integer">
+		SELECT NVL(count(*), 0)
+		FROM myPet mp
+		JOIN memberDetail md ON mp.num = md.num
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="where-list"/>
+			</if>
+			AND mp.num=#{num}
+		</where>
+	</select>
+	
+</mapper>

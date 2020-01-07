@@ -67,7 +67,7 @@
 					<li class="nav-item"><a class="nav-link js-scroll-trigger">마이페이지</a>
 						<ul class="nav-sub-menu">
 							<li><a class="nav-sub-link" href="<%=cp%>/mypage/pwd">회원정보수정</a></li>
-							<li><a class="nav-sub-link" href="<%=cp%>/mypage/myply">내가 쓴 글</a></li>
+							<li><a class="nav-sub-link" href="<%=cp%>/mypage/main">내가 쓴 글</a></li>
 							<li><a class="nav-sub-link" href="<%=cp%>/mypage/requestCheck">주문조회</a></li>
 							<li><a class="nav-sub-link" href="<%=cp%>/mypage/point">포인트조회</a></li>
 							<li><a class="nav-sub-link" href="<%=cp%>/mypage/donation">기부</a></li>
