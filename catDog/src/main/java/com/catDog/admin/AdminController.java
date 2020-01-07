@@ -51,7 +51,7 @@ public class AdminController {
 		map.put("condition", condition);
 		map.put("keyword", keyword);
 
-		int dataCount = service.memberCount(map);
+		int dataCount = service.requestCount(map);
 		int total_page = myUtil.pageCount(rows, dataCount);
 
 		if (total_page < current_page)
@@ -64,7 +64,7 @@ public class AdminController {
 		map.put("rows", rows);
 
 		// 여기 고쳐야함
-		List<Member> list = service.memberList(map);
+		List<Shop> list = service.requestList(map);
 
 		String cp = req.getContextPath();
 		String query = "rows=" + rows;

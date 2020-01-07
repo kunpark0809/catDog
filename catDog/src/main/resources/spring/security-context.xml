@@ -39,8 +39,8 @@
     
       <intercept-url pattern="/company/**" access="permitAll"/>
       
-      <intercept-url pattern="/dogshop/list" access="permitAll"/>
-      <intercept-url pattern="/dogshop/article" access="permitAll"/>
+      <intercept-url pattern="/shop/list" access="permitAll"/>
+      <intercept-url pattern="/shop/article" access="permitAll"/>
       
       <intercept-url pattern="/park/**" access="permitAll"/>
       <intercept-url pattern="/cafe/**" access="permitAll"/>

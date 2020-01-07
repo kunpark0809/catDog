@@ -1,5 +1,6 @@
 package com.catDog.admin;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -40,7 +41,6 @@ public class AdminServiceImpl implements AdminService {
 		return result;
 	}
 
-	
 	@Override
 	public int weekSales(Map<String, Object> map) {
 		int result = 0;
@@ -66,10 +66,7 @@ public class AdminServiceImpl implements AdminService {
 
 		return result;
 	}
-	
-	
-	
-	
+
 	@Override
 	public int monthSales(String yearMonth) {
 		int result = 0;
@@ -280,7 +277,7 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public int reportCount(Map<String, Object> map) {
-		int result = -1;
+		int result = 0;
 
 		try {
 			result = dao.selectOne("admin.reportCount", map);
@@ -289,6 +286,32 @@ public class AdminServiceImpl implements AdminService {
 		}
 
 		return result;
+	}
+
+	@Override
+	public int requestCount(Map<String, Object> map) {
+		int result = 0;
+
+		try {
+			result = dao.selectOne("admin.requestCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	@Override
+	public List<Shop> requestList(Map<String, Object> map) {
+		List<Shop> list = null;
+
+		try {
+			list = dao.selectList("admin.requestList", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 
 }

@@ -7,8 +7,10 @@
 	<sql id="member-where-list">
 		<if test="condition=='all' ">
 			(INSTR(LOWER(userId), LOWER(#{keyword})) &gt; 0
-			OR INSTR(LOWER(nickName), LOWER(#{keyword})) &gt; 0
-			OR INSTR(reportCount, #{keyword}) &gt; 0)
+			OR
+			INSTR(LOWER(nickName), LOWER(#{keyword})) &gt; 0
+			OR INSTR(reportCount,
+			#{keyword}) &gt; 0)
 		</if>
 		<if test="condition=='userId' ">
 			INSTR(LOWER(userId), LOWER(#{keyword})) &gt; 0
@@ -24,8 +26,10 @@
 	<sql id="report-where-list">
 		<if test="condition=='all' ">
 			(INSTR(LOWER(userId), LOWER(#{keyword})) &gt; 0
-			OR INSTR(LOWER(nickName), LOWER(#{keyword})) &gt; 0
-			OR INSTR(reasonName, #{keyword}) &gt; 0)
+			OR
+			INSTR(LOWER(nickName), LOWER(#{keyword})) &gt; 0
+			OR INSTR(reasonName,
+			#{keyword}) &gt; 0)
 		</if>
 		<if test="condition=='userId' ">
 			INSTR(LOWER(userId), LOWER(#{keyword})) &gt; 0
@@ -39,269 +43,365 @@
 	</sql>
 
 	<sql id="report-group-list">
-			<choose>
-				<when test="group==1">
-					boardSort==1
-				</when>		
-				<when test="group==2">
-					boardSort==2
-				</when>		
-				<when test="group==3">
-					boardSort==3
-				</when>		
-			</choose>
-	</sql>
-
-
-
-<!-- 주문정보 리스트에서 검색 기능을 넣을거면 사용할 sql -->
-	<sql id="order-where-list">
 		<choose>
-			<when test="condition == 'created' ">
-			   ( TO_CHAR(created, 'YYYYMMDD') = #{keyword}
-		          OR TO_CHAR(created, 'YYYY-MM-DD') = #{keyword} )
+			<when test="group==1">
+				boardSort==1
+			</when>
+			<when test="group==2">
+				boardSort==2
+			</when>
+			<when test="group==3">
+				boardSort==3
 			</when>
 		</choose>
 	</sql>
 
-<!-- 하루 매출. 소계 -->
-<select id="daySales" parameterType="String" resultType="Integer">
-	SELECT NVL(SUM(purchase),0) yearSales 
-	FROM request r
-	JOIN payment p ON r.requestNum =  p.requestNum
-		WHERE TO_CHAR(requestDate, 'YYYYMMDD') = #{day}
-</select>
 
-<!-- 하루 주문건수. 소계 -->
-<select id="daySalesVolume" parameterType="String" resultType="Integer">
-	SELECT COUNT(requestNum) FROM request
-	WHERE TO_CHAR(requestDate,'YYYYMMDD') = #{day}
-</select>
 
-<!-- 한 주 매출. 소계 -->
-<select id="weekSales" parameterType="Map" resultType="Integer">
-	SELECT NVL(SUM(purchase),0) yearSales 
-	FROM request r
-	JOIN payment p ON r.requestNum =  p.requestNum
+	<!-- 주문정보 리스트에서 검색 기능을 넣을거면 사용할 sql -->
+	<sql id="order-where-list">
+		<choose>
+			<when test="condition == 'created' ">
+				( TO_CHAR(created, 'YYYYMMDD') = #{keyword}
+				OR TO_CHAR(created, 'YYYY-MM-DD') = #{keyword} )
+			</when>
+		</choose>
+	</sql>
+
+	<!-- 하루 매출. 소계 -->
+	<select id="daySales" parameterType="String"
+		resultType="Integer">
+		SELECT NVL(SUM(purchase),0) yearSales
+		FROM request r
+		JOIN payment p ON r.requestNum = p.requestNum
+		WHERE TO_CHAR(requestDate,
+		'YYYYMMDD') = #{day}
+	</select>
+
+	<!-- 하루 주문건수. 소계 -->
+	<select id="daySalesVolume" parameterType="String"
+		resultType="Integer">
+		SELECT COUNT(requestNum) FROM request
+		WHERE TO_CHAR(requestDate,'YYYYMMDD') = #{day}
+	</select>
+
+	<!-- 한 주 매출. 소계 -->
+	<select id="weekSales" parameterType="Map" resultType="Integer">
+		SELECT NVL(SUM(purchase),0) yearSales
+		FROM request r
+		JOIN payment p ON r.requestNum = p.requestNum
 	<![CDATA[
 	WHERE TO_CHAR(requestDate,'YYYYMMDD') >= #{sunday}
 	AND TO_CHAR(requestDate,'YYYYMMDD') <= #{saturday}
 	]]>
-</select>
+	</select>
 
-<!-- 한 주 주문건수. 소계 -->
-<select id="weekSalesVolume" parameterType="Map" resultType="Integer">
-	SELECT COUNT(requestNum) FROM request
+	<!-- 한 주 주문건수. 소계 -->
+	<select id="weekSalesVolume" parameterType="Map"
+		resultType="Integer">
+		SELECT COUNT(requestNum) FROM request
 	<![CDATA[
 	WHERE TO_CHAR(requestDate,'YYYYMMDD') >= #{sunday}
 	AND TO_CHAR(requestDate,'YYYYMMDD') <= #{saturday}
 	]]>
-</select>
+	</select>
 
 
 
-<!--모든 품목의 월별 매출(금액). 년도와 월을 YYYYMM 꼴로 결합해야 함. 연도별 -->
-<select id="monthSalesByCategory" parameterType="Map" resultType="com.catDog.admin.Money">
-SELECT p.smallSortNum, ss.sortName smallSortName, TO_CHAR(requestDate,'YYYYMM') requestDate, NVL(SUM(productSum),0) productSum FROM request r
-JOIN requestDetail rd ON r.requestNum = rd.requestNum 
-JOIN product p ON rd.productNum = p.productNum
-JOIN smallSort ss ON p.smallSortNum = ss.smallSortNum
-WHERE p.smallSortNum = #{smallSortNum}
+	<!--모든 품목의 월별 매출(금액). 년도와 월을 YYYYMM 꼴로 결합해야 함. 연도별 -->
+	<select id="monthSalesByCategory" parameterType="Map"
+		resultType="com.catDog.admin.Money">
+		SELECT p.smallSortNum, ss.sortName smallSortName,
+		TO_CHAR(requestDate,'YYYYMM') requestDate, NVL(SUM(productSum),0)
+		productSum FROM request r
+		JOIN requestDetail rd ON r.requestNum = rd.requestNum
+		JOIN product p ON rd.productNum = p.productNum
+		JOIN smallSort ss ON p.smallSortNum = ss.smallSortNum
+		WHERE p.smallSortNum = #{smallSortNum}
 <![CDATA[
 		AND TO_CHAR(requestDate, 'YYYY') >= #{year} AND
 		TO_CHAR(requestDate, 'YYYY') < #{year}+1
 	]]>
-GROUP BY p.smallSortNum, ss.sortName, TO_CHAR(requestDate,'YYYYMM')
-ORDER BY requestDate ASC
-</select>
+		GROUP BY p.smallSortNum, ss.sortName, TO_CHAR(requestDate,'YYYYMM')
+		ORDER BY requestDate ASC
+	</select>
 
-<!-- 해당 smallSortNum의 sortName을 가져오는 쿼리. 연도별 -->
-<select id="getCategory" parameterType="Integer" resultType="String">
-	SELECT sortName FROM smallSort WHERE smallSortNum = #{smallSortNum}	
-</select>
+	<!-- 해당 smallSortNum의 sortName을 가져오는 쿼리. 연도별 -->
+	<select id="getCategory" parameterType="Integer"
+		resultType="String">
+		SELECT sortName FROM smallSort WHERE smallSortNum = #{smallSortNum}
+	</select>
 
-<!-- 월별 매출. 소계 -->
-<select id="monthSales" parameterType="String" resultType="Integer">
-	SELECT NVL(SUM(purchase),0) yearSales 
-	FROM request r
-	JOIN payment p ON r.requestNum =  p.requestNum
-		WHERE TO_CHAR(requestDate, 'YYYYMM') = #{yearMonth}
-</select>
-
-
-<!-- 월별 주문건수. 소계 -->
-<select id="monthSalesVolume" parameterType="String" resultType="Integer">
-	SELECT COUNT(requestNum) FROM request
-	WHERE TO_CHAR(requestDate,'YYYYMM') = #{yearMonth}
-</select>
+	<!-- 월별 매출. 소계 -->
+	<select id="monthSales" parameterType="String"
+		resultType="Integer">
+		SELECT NVL(SUM(purchase),0) yearSales
+		FROM request r
+		JOIN payment p ON r.requestNum = p.requestNum
+		WHERE TO_CHAR(requestDate,
+		'YYYYMM') = #{yearMonth}
+	</select>
 
 
-<!--분기별 매출(금액). 년도와 월을 첫째 월 기준으로 YYYYMM 꼴로 결합해야 함. 소계 -->
-<select id="quarterSales" parameterType="Integer" resultType="Integer">
-SELECT NVL(SUM(productSum),0) productSum FROM request r
-JOIN requestDetail rd ON r.requestNum = rd.requestNum 
-JOIN product p ON rd.productNum = p.productNum
-JOIN smallSort ss ON p.smallSortNum = ss.smallSortNum
+	<!-- 월별 주문건수. 소계 -->
+	<select id="monthSalesVolume" parameterType="String"
+		resultType="Integer">
+		SELECT COUNT(requestNum) FROM request
+		WHERE TO_CHAR(requestDate,'YYYYMM') = #{yearMonth}
+	</select>
+
+
+	<!--분기별 매출(금액). 년도와 월을 첫째 월 기준으로 YYYYMM 꼴로 결합해야 함. 소계 -->
+	<select id="quarterSales" parameterType="Integer"
+		resultType="Integer">
+		SELECT NVL(SUM(productSum),0) productSum FROM request r
+		JOIN requestDetail rd ON r.requestNum = rd.requestNum
+		JOIN product p ON rd.productNum = p.productNum
+		JOIN smallSort ss ON p.smallSortNum = ss.smallSortNum
 <![CDATA[
 		WHERE TO_CHAR(requestDate, 'YYYYMM') >= #{yearMonth} AND
 		TO_CHAR(requestDate, 'YYYYMM') <= #{yearMonth}+2
 	]]>
-</select>
+	</select>
 
 
-<select id="quarterSalesToToday" parameterType="Map" resultType="Integer">
-SELECT NVL(SUM(productSum),0) productSum FROM request r
-JOIN requestDetail rd ON r.requestNum = rd.requestNum 
-JOIN product p ON rd.productNum = p.productNum
-JOIN smallSort ss ON p.smallSortNum = ss.smallSortNum
+	<select id="quarterSalesToToday" parameterType="Map"
+		resultType="Integer">
+		SELECT NVL(SUM(productSum),0) productSum FROM request r
+		JOIN requestDetail rd ON r.requestNum = rd.requestNum
+		JOIN product p ON rd.productNum = p.productNum
+		JOIN smallSort ss ON p.smallSortNum = ss.smallSortNum
 <![CDATA[
 		WHERE TO_CHAR(requestDate, 'YYYYMMDD') >= #{startDate} AND
 		TO_CHAR(requestDate, 'YYYYMMDD') <= #{todayDate}
 	]]>
-</select>
+	</select>
 
 
-<!-- 연도별 매출. 이번 년도의 매출 출력에도 사용. 소계에 사용 -->
-<select id="yearSales" parameterType="String" resultType="Integer">
-	SELECT NVL(SUM(purchase),0) yearSales 
-	FROM request r
-	JOIN payment p ON r.requestNum =  p.requestNum
+	<!-- 연도별 매출. 이번 년도의 매출 출력에도 사용. 소계에 사용 -->
+	<select id="yearSales" parameterType="String"
+		resultType="Integer">
+		SELECT NVL(SUM(purchase),0) yearSales
+		FROM request r
+		JOIN payment p ON r.requestNum = p.requestNum
 	<![CDATA[
 		WHERE TO_CHAR(requestDate, 'YYYY') >= #{year} AND
 		TO_CHAR(requestDate, 'YYYY') < #{year}+1
 	]]>
-</select>
+	</select>
 
-<!-- 연도별 판매건수. 소계 -->
-<select id="yearSalesVolume" parameterType="String" resultType="Integer">
-	SELECT COUNT(requestNum) FROM request
-	WHERE TO_CHAR(requestDate,'YYYY') = #{year}
-</select>
-
-
-
-<!-- 전체  매출. 소계에 사용 -->
-<select id="totalSales" resultType="Integer">
-	SELECT NVL(SUM(purchase),0) sales 
-	FROM request r
-	JOIN payment p ON r.requestNum =  p.requestNum
-</select>
-
-<!-- 전체 판매건수. 소계 -->
-<select id="totalSalesVolume" resultType="Integer">
-	SELECT COUNT(requestNum) FROM request
-</select>
+	<!-- 연도별 판매건수. 소계 -->
+	<select id="yearSalesVolume" parameterType="String"
+		resultType="Integer">
+		SELECT COUNT(requestNum) FROM request
+		WHERE TO_CHAR(requestDate,'YYYY') = #{year}
+	</select>
 
 
-<!-- year와 smallSortNum 입력해서 해당 카테고리의 해당 년도의 총매출을 출력. 품목별 -->
-<select id="categorySales" parameterType="Map" resultType="com.catDog.admin.Money">
-	SELECT bs.bigSortNum, bs.sortName bigSortName, p.smallSortNum, ss.sortName smallSortName, SUM(productSum) sales FROM requestDetail rd
-		JOIN product p ON rd.productNum = p.productNum
-		JOIN smallSort ss ON p.smallSortNum = ss.smallSortNum
+
+	<!-- 전체 매출. 소계에 사용 -->
+	<select id="totalSales" resultType="Integer">
+		SELECT NVL(SUM(purchase),0) sales
+		FROM request r
+		JOIN payment p ON r.requestNum = p.requestNum
+	</select>
+
+	<!-- 전체 판매건수. 소계 -->
+	<select id="totalSalesVolume" resultType="Integer">
+		SELECT COUNT(requestNum) FROM request
+	</select>
+
+
+	<!-- year와 smallSortNum 입력해서 해당 카테고리의 해당 년도의 총매출을 출력. 품목별 -->
+	<select id="categorySales" parameterType="Map"
+		resultType="com.catDog.admin.Money">
+		SELECT bs.bigSortNum, bs.sortName bigSortName, p.smallSortNum, ss.sortName
+		smallSortName, SUM(productSum) sales FROM requestDetail rd
+		JOIN product
+		p ON rd.productNum = p.productNum
+		JOIN smallSort ss ON p.smallSortNum =
+		ss.smallSortNum
 		JOIN bigSort bs ON ss.bigSortNum = bs.bigSortNum
-		JOIN request r ON rd.requestNum = r.requestNum
-	WHERE p.smallSortNum = #{smallSortNum}
-		AND TO_CHAR(requestDate, 'YYYY') = #{year}
-	GROUP BY bs.bigSortNum, bs.sortName, p.smallSortNum, ss.sortName
-</select>
+		JOIN
+		request r ON rd.requestNum = r.requestNum
+		WHERE p.smallSortNum = #{smallSortNum}
+		AND TO_CHAR(requestDate, 'YYYY') =
+		#{year}
+		GROUP BY bs.bigSortNum, bs.sortName, p.smallSortNum, ss.sortName
+	</select>
 
-<!-- year와 smallSortNum 입력해서 해당 카테고리의 해당 년도의 총 판매개수를 출력. 품목별 -->
-<select id="categorySalesVolume" parameterType="Map" resultType="com.catDog.admin.Money">
-	SELECT bs.bigSortNum, bs.sortName bigSortName, p.smallSortNum, ss.sortName smallSortName, SUM(productCount) salesVolume FROM requestDetail rd
+	<!-- year와 smallSortNum 입력해서 해당 카테고리의 해당 년도의 총 판매개수를 출력. 품목별 -->
+	<select id="categorySalesVolume" parameterType="Map"
+		resultType="com.catDog.admin.Money">
+		SELECT bs.bigSortNum, bs.sortName bigSortName, p.smallSortNum, ss.sortName
+		smallSortName, SUM(productCount) salesVolume FROM requestDetail rd
 		JOIN product p ON rd.productNum = p.productNum
-		JOIN smallSort ss ON p.smallSortNum = ss.smallSortNum
-		JOIN bigSort bs ON ss.bigSortNum = bs.bigSortNum
+		JOIN smallSort ss ON
+		p.smallSortNum = ss.smallSortNum
+		JOIN bigSort bs ON ss.bigSortNum =
+		bs.bigSortNum
 		JOIN request r ON rd.requestNum = r.requestNum
-	WHERE p.smallSortNum = #{smallSortNum}
-		AND TO_CHAR(requestDate, 'YYYY') = #{year}
-	GROUP BY bs.bigSortNum, bs.sortName, p.smallSortNum, ss.sortName
-</select>
+		WHERE p.smallSortNum = #{smallSortNum}
+		AND TO_CHAR(requestDate, 'YYYY') =
+		#{year}
+		GROUP BY bs.bigSortNum, bs.sortName, p.smallSortNum, ss.sortName
+	</select>
 
-<!-- 회원 리스트 -->
-<!-- 회원의 정보를 memberDetail에서 가져오면서 request에서 번호로 GROUP BY하여 COUNT한 테이블(주문횟수)과도 JOIN -->
-<select id="memberList" parameterType="Map" resultType="com.catDog.admin.Member">
-	SELECT md.num, md.userId, name, nickName, mileage, NVL(count, 0) requestCount,
-		reportCount, failure_cnt, lastLogin, NVL(stateCode, 0) stateCode
-	FROM memberDetail md
-	LEFT OUTER JOIN (
-		SELECT num, NVL(COUNT(*), 0) count FROM request GROUP BY num
-	) rc ON md.num = rc.num
-	LEFT OUTER JOIN customerDetail cd ON md.num = cd.num
-	LEFT OUTER JOIN (
+	<!-- 회원 리스트 -->
+	<!-- 회원의 정보를 memberDetail에서 가져오면서 request에서 번호로 GROUP BY하여 COUNT한 테이블(주문횟수)과도 
+		JOIN -->
+	<select id="memberList" parameterType="Map"
+		resultType="com.catDog.admin.Member">
+		SELECT md.num, md.userId, name, nickName, mileage, NVL(count, 0)
+		requestCount,
+		reportCount, failure_cnt, lastLogin, NVL(stateCode, 0)
+		stateCode
+		FROM memberDetail md
+		LEFT OUTER JOIN (
+		SELECT num, NVL(COUNT(*), 0) count FROM request GROUP BY
+		num
+		) rc ON md.num = rc.num
+		LEFT OUTER JOIN customerDetail cd ON md.num = cd.num
+		LEFT OUTER JOIN (
 		SELECT * FROM
-    		(SELECT RANK() OVER (PARTITION BY userId ORDER BY memberStateNum DESC) rn,
-    		memberStateNum, userId, stateCode
-			FROM memberState)
-        WHERE rn = 1) ms
-	ON md.userId = ms.userId
-	<where>
-		INSTR(md.userId, 'admin') = 0
-		<if test="keyword != null and keyword != ''">
-			 AND <include refid="member-where-list"/>
-		</if>
-	</where>
-	ORDER BY md.num DESC
-	OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
-</select>
+		(SELECT RANK() OVER (PARTITION BY userId ORDER BY memberStateNum DESC) rn,
+		memberStateNum, userId, stateCode
+		FROM memberState)
+		WHERE rn = 1) ms
+		ON md.userId = ms.userId
+		<where>
+			INSTR(md.userId, 'admin') = 0
+			<if test="keyword != null and keyword != ''">
+				AND
+				<include refid="member-where-list" />
+			</if>
+		</where>
+		ORDER BY md.num DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
 
-<!-- 전체 주문내역 리스트(회원 + 비회원) -->
-<!-- 주문번호, 포인트사용 및 실 결제액, 주문날짜, 진행상태, 회원이라면 아이디 아니면 '비회원' 가져오기 -->
-<select id="orderList" parameterType="Map" resultType="com.catDog.admin.Member">
-	SELECT requestNum, point, purchase, TO_CHAR(requestDate, 'YYYY-MM-DD HH24:MI:SS') requestDate,
-	status, NVL(userId, '비회원') FROM request r
-	JOIN payment p ON r.requestNum = p.requestNum
-	LEFT OUTER JOIN memberDetail md ON md.num = r.num
-	ORDER BY num DESC
-	OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
-</select>
+	<!-- 전체 주문내역 리스트(회원 + 비회원) -->
+	<!-- 주문번호, 포인트사용 및 실 결제액, 주문날짜, 진행상태, 회원이라면 아이디 아니면 '비회원' 가져오기 -->
+	<select id="orderList" parameterType="Map"
+		resultType="com.catDog.admin.Member">
+		SELECT requestNum, point, purchase, TO_CHAR(requestDate, 'YYYY-MM-DD
+		HH24:MI:SS') requestDate,
+		status, NVL(userId, '비회원') FROM request r
+		JOIN payment p ON r.requestNum = p.requestNum
+		LEFT OUTER JOIN memberDetail md ON md.num = r.num
+		ORDER BY num DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
 
-<!-- 회원 수 세기 -->
-<select id="memberCount" parameterType="Map" resultType="Integer">
+	<!-- 회원 수 세기 -->
+	<select id="memberCount" parameterType="Map"
+		resultType="Integer">
 		SELECT NVL(COUNT(*), 0)
 		FROM memberDetail md
-	<where>
-		INSTR(userId, 'admin') = 0
-		<if test="keyword!=null and keyword!='' ">
-			 AND <include refid="member-where-list"/>
+		<where>
+			INSTR(userId, 'admin') = 0
+			<if test="keyword!=null and keyword!='' ">
+				AND
+				<include refid="member-where-list" />
+			</if>
+		</where>
+	</select>
+
+	<!-- 신고된 글들 가져오기. 조인해서 reasonName, reporterId, reporterNickName, reportedId, 
+		reportedNickName 가져옴 -->
+	<select id="reportList" parameterType="Map"
+		resultType="com.catDog.admin.Report">
+		SELECT reportNum, boardSort, reportedPostNum, reportDate,
+		r.reasonSortNum, reasonName,
+		reporterNum, md1.userId reporterId, md1.nickName reporterNickName,
+		reportedNum, md2.userId reportedId, md2.nickName reportedNickName
+		FROM report r
+		JOIN reasonSort rs
+		ON r.reasonSortNum = rs.reasonSortNum
+		JOIN memberDetail md1 ON r.reporterNum = md1.num
+		JOIN memberDetail md2 ON r.reportedNum = md2.num
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="report-where-list" />
+				AND
+			</if>
+			<include refid="report-group-list" />
+		</where>
+		ORDER BY reportNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+
+	<select id="reportCount" parameterType="Map"
+		resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM report
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="report-where-list" />
+				AND
+			</if>
+			<include refid="report-group-list" />
+		</where>
+	</select>
+
+	<!-- 쇼핑몰 관리 관련 쿼리 -->
+	
+	<!-- 검색 -->
+	<sql id="request-where-list">
+		<if test="condition=='orderer' ">
+			(INSTR(LOWER(md.userId), LOWER(#{keyword})) &gt; 0 <!-- 아디검색 -->
+			OR INSTR(LOWER(cd.name), LOWER(#{keyword})) &gt; 0 <!-- 이름(영어) -->
+			OR INSTR(cd.name, #{keyword}) &gt; 0) <!-- 이름(한글) -->
 		</if>
-	</where>   
-</select>
-
-<!-- 신고된 글들 가져오기. 조인해서 reasonName, reporterId, reporterNickName, 
-	reportedId, reportedNickName 가져옴  -->
-<select id="reportList" parameterType="Map" resultType="com.catDog.admin.Report">
-	SELECT reportNum, boardSort, reportedPostNum, reportDate,  
-		r.reasonSortNum, reasonName,	 
-		reporterNum, md1.userId reporterId, md1.nickName reporterNickName, 
-		reportedNum, md2.userId reportedId, md2.nickName reportedNickName 
-	FROM report r 
-	JOIN reasonSort rs  
-		ON r.reasonSortNum = rs.reasonSortNum 
-	JOIN memberDetail md1 ON r.reporterNum = md1.num 
-	JOIN memberDetail md2 ON r.reportedNum = md2.num 
-	<where>
-		<if test="keyword!=null and keyword!=''">
-			<include refid="report-where-list"/>
-			AND 
+		<if test="condition=='email' ">
+			INSTR(LOWER(cd.email), LOWER(#{keyword})) &gt; 0
 		</if>
-		<include refid="report-group-list"/> 
-	</where>
-	ORDER BY reportNum DESC 
-	OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
-</select>
-
-<select id="reportCount" parameterType="Map" resultType="Integer">
-	SELECT NVL(COUNT(*), 0) FROM report
-	<where>
-		<if test="keyword!=null and keyword!=''">
-			<include refid="report-where-list"/>		
-			AND
+		<if test="condition=='tel' ">
+			INSTR(LOWER(cd.tel), LOWER(#{keyword})) &gt; 0
 		</if>
-		<include refid="report-group-list"/>
-	</where>
-</select>
+		<if test="condition=='requestDate' ">
+			(INSTR(TO_CHAR(requestDate,'YYYYMMDD'), #{keyword}) &gt; 0
+			OR INSTR(TO_CHAR(requestDate,'YYYY-MM-DD'), #{keyword}) &gt; 0)
+		</if>
+		<if test="condition=='productName' ">
+			(INSTR(LOWER(p.name), LOWER(#{keyword})) &gt; 0
+			OR
+			INSTR(p.name, #{keyword}) &gt; 0)
+		</if>
+		<if test="condition=='status ' ">
+			INSTR(status, #{keyword}) &gt; 0 <!-- 바꿔서 보내야 함 -->
+		</if>
+	</sql>
 
-
-
+	<!-- 전체 주문 수 세기 -->
+	<select id="requestCount" parameterType="Map"
+		resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM request
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="report-where-list" />
+			</if>
+		</where>
+	</select>
+	
+	<!-- 전체 주문 리스트 출력 -->
+	<select id="requestList" parameterType="Map"
+		resultType="com.catDog.admin.Shop">
+		SELECT rq.requestNum, cd.name customerName, userId, cd.email, cd.tel, rq.num, membership,
+		requestDate, total,
+		memo, status, refundReason, refundAccount, bank, re.name refundName
+		FROM request rq
+		LEFT OUTER JOIN customer c ON rq.num = c.num
+		LEFT OUTER JOIN customerDetail cd ON cd.num = c.num
+		LEFT OUTER JOIN memberDetail md ON md.num = c.num
+		LEFT OUTER JOIN requestDetail rd ON rd.requestNum = rq.requestNum
+		LEFT OUTER JOIN product p ON p.productNum = rd.productNum
+		LEFT OUTER JOIN refund re ON re.requestNum = rq.requestNum
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="report-where-list" />
+			</if>
+		</where>
+		ORDER BY requestNum DESC
+	</select>
 
 </mapper>

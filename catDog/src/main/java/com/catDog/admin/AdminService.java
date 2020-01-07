@@ -47,4 +47,8 @@ public interface AdminService {
 
 	public int weekSalesVolume(Map<String, Object> map);
 
+	public int requestCount(Map<String, Object> map);
+
+	public List<Shop> requestList(Map<String, Object> map);
+
 }
