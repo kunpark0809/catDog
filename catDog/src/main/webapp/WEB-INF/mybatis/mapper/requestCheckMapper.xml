@@ -4,7 +4,7 @@
 <mapper namespace="request">
 	
 	<select id="readRequestDetail" parameterType="String" resultType="com.catDog.pay.Pay">
-		select pr.productNum, requestDate ,pr.name productName,r.requestNum, c.num,c.name, r.total, r.addr1 deliverAddr1, r.addr2 deliverAddr2, r.zip deliverZip, r.tel deliverTel, r.name deliverName, r.memo, r.status, p.payMethod, p.point usePoint, p.purchase,p.stackPoint point, 
+		select pr.productNum, requestDate ,pr.name productName,r.requestNum, c.num,c.name, r.total, r.addr1 deliverAddr1, r.addr2 deliverAddr2, r.zip deliverZip, r.tel deliverTel, r.name deliverName, r.memo, rd.status, p.payMethod, p.point usePoint, p.purchase,p.stackPoint point, 
 		rd.requestDetailNum, rd.productCount, rd.productNum, rd.productSum, pr.imageFileName
 		FROM request r
 		JOIN customerdetail c ON r.num = c.num
@@ -15,7 +15,7 @@
 	</select>
 	
 	<select id="readRequest" parameterType="map" resultType="com.catDog.pay.Pay">
-		select pr.productNum, requestDate, pr.name productName, r.requestNum, c.num,c.name, rd.productSum, r.status, rd.productCount, pr.imageFileName, rd.requestDetailNum
+		select pr.productNum, requestDate, pr.name productName, r.requestNum, c.num,c.name, rd.productSum, rd.status, rd.productCount, pr.imageFileName, rd.requestDetailNum
 		from request r
 		JOIN customerdetail c ON r.num = c.num
 		JOIN requestDetail rd ON r.requestNum = rd.requestNum
@@ -45,7 +45,7 @@
 	</select>
 	
 	<update id="requestCancle" parameterType="com.catDog.pay.Pay">
-		update request set status=5 where requestNum=#{requestNum}
+		update requestDetail set status=5 where requestNum=#{requestNum}
 	</update>
 	
 	<insert id="refundRequest" parameterType="com.catDog.pay.Pay">
@@ -53,7 +53,7 @@
 	</insert>
 	
 	<update id="requestRefund" parameterType="com.catDog.pay.Pay">
-		update request set status=6 where requestNum=#{requestNum}
+		update requestDetail set status=6 where requestDetailNum=#{requestDetailNum}
 	</update>
 	
 </mapper>

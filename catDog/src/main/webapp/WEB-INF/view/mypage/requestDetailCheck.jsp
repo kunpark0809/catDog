@@ -15,7 +15,7 @@ function requestCancle(requestNum) {
 	}
 }
 
-$(document).ready(function(){
+$(function(){
 	var myKey="SSnicrqY2jJjrBR4d6eIfw";
 	// 배송정보와 배송추적 tracking-api
     $("#myButton1").click(function() {
@@ -78,7 +78,7 @@ $(document).ready(function(){
             }
         });
     });
-}
+})
 </script>
 
 <div class="body-container" style="width: 1200px; margin: 20px auto 0px; border-spacing: 0px;">
@@ -321,19 +321,22 @@ $(document).ready(function(){
 		
 		<form action="http://info.sweettracker.co.kr/tracking/1" method="post">
             <div class="form-group">
-              <label for="t_key">API key</label>
-              <input type="text" class="form-control" id="t_key" name="t_key" placeholder="제공받은 APIKEY">
-            </div>
-            <div class="form-group">
               <label for="t_code">택배사 코드</label>
-              <input type="text" class="form-control" name="t_code" id="t_code" placeholder="택배사 코드">
+              <input type="text" id="tekbeCompnayText" placeholder="택배사 코드">
             </div>
             <div class="form-group">
               <label for="t_invoice">운송장 번호</label>
-              <input type="text" class="form-control" name="t_invoice" id="t_invoice" placeholder="운송장 번호">
+              <input type="text" id="invoiceNumberText" placeholder="운송장 번호">
             </div>
-            <button type="submit" class="btn btn-default">조회하기</button>
+            <button type="button" id="myButton1">조회하기</button>
         </form>
+        
+        <div id="myPtag">
+        	
+        </div>
+        
+        <div id="myPtag2">
+        </div>
 	</div>
 
 
