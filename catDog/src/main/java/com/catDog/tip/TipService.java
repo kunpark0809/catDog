@@ -17,19 +17,16 @@ public interface TipService {
 	public Tip preReadTip(Map<String, Object> map);
 	public Tip nextReadTip(Map<String, Object> map);
 
-	public void updateTip(Tip dto, String pathname) throws Exception;
-	public void deleteTip(int tipNum, String pathname, String userId) throws Exception;
+	public void updateTip(Tip dto) throws Exception;
+	public void deleteTip(int tipNum, String userId) throws Exception;
 	
-	
-	/*
 	public List<Reply> listReply(Map<String, Object> map);
 	public int replyCount(Map<String, Object> map);
 	public void insertReply(Reply dto) throws Exception;
-
 	public void deleteReply(Map<String, Object> map) throws Exception;
 	public List<Reply> listReplyParent(int parent);
 	public int replyParentCount(int parent);
-		*/
+	
 	public void insertTipLike(Map<String, Object> map) throws Exception;
 	public int tipLikeCount(int tipNum);
 	

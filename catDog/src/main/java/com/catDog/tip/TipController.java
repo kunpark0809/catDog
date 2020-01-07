@@ -1,6 +1,5 @@
 package com.catDog.tip;
 
-import java.io.File;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -150,6 +149,7 @@ public String list(
 		}
 		
 		service.updateHitCount(tipNum);
+		dto.setTipLikeCount(service.tipLikeCount(tipNum));
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("condition", condition);
@@ -185,13 +185,10 @@ public String list(
 			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
 		}
 		
-		String root=session.getServletContext().getRealPath("/");
-		String pathname=root+"uploads"+File.separator+"tip";
-		
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
 		try {
-			service.deleteTip(tipNum, pathname, info.getUserId());
+			service.deleteTip(tipNum, info.getUserId());
 		} catch (Exception e) {
 		}
 		
@@ -225,18 +222,15 @@ public String list(
 			HttpSession session
 			) throws Exception {
 		
-		String root=session.getServletContext().getRealPath("/");
-		String pathname=root+"uploads"+File.separator+"tip";
-		
 		try {
-			service.updateTip(dto, pathname);
+			service.updateTip(dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		return "redirect:/tip/article?tipNum="+dto.getTipNum()+"&page="+page;
 	}
-	/*
+	
 	@RequestMapping(value="/tip/listReply")
 	public String listReply(@RequestParam int tipNum, Model model,
 							@RequestParam(value="pageNo", defaultValue="1") int current_page) throws Exception {
@@ -274,9 +268,13 @@ public String list(
 		return "tip/listReply";
 	}
 
+	
 	@RequestMapping(value="/tip/insertReply", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> insertReply(Reply dto, HttpSession session) {
+	public Map<String, Object> insertReply(
+			Reply dto,
+			HttpSession session
+			) {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 				String state="true";
 		
@@ -290,11 +288,14 @@ public String list(
 		Map<String, Object> model = new HashMap<>();
 		model.put("state", state);
 		return model;
-	}*/
-	/*	
+	}
+	
+
 	@RequestMapping(value="/tip/deleteReply", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> deleteReply(@RequestParam Map<String, Object> paramMap) {
+	public Map<String, Object> deleteReply(
+			@RequestParam Map<String, Object> paramMap
+			) {
 		String state="true";
 		
 		try {
@@ -309,9 +310,13 @@ public String list(
 	}
 	
 	@RequestMapping(value="/tip/listReplyParent")
-	public String listReplyParent(@RequestParam int parent, Model model) throws Exception {
+	public String listReplyParent(
+			@RequestParam int parent,
+			Model model
+			) throws Exception {
 		
 		List<Reply> listReplyParent=service.listReplyParent(parent);
+		
 		for(Reply dto : listReplyParent) {
 			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
 		}
@@ -323,8 +328,11 @@ public String list(
 	
 	@RequestMapping(value="/tip/countReplyParent")
 	@ResponseBody
-	public Map<String, Object> countReplyParent(@RequestParam(value="parent") int parent) {
+	public Map<String, Object> countReplyParent(
+			@RequestParam(value="parent") int parent
+			) {
 		int count=service.replyParentCount(parent);
+		
 		Map<String, Object> model=new HashMap<>();
 		
 		model.put("count", count);
@@ -332,7 +340,7 @@ public String list(
 		return model;
 	}
 	
-	*/
+
 	// 게시글 좋아요 추가 :  : AJAX-JSON
 	@RequestMapping(value="/tip/insertTipLike", method=RequestMethod.POST)
 	@ResponseBody

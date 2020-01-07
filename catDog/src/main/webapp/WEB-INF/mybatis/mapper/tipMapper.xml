@@ -3,9 +3,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="tip">
 
-<!--
+
 	<select id="listReply" parameterType="map" resultType="com.catDog.tip.Reply">
-		SELECT tr.tipReplyNum, tr.tipNum, md.userId, tr.content, tr.created, NVL(parentCount, 0) parentCount
+		SELECT tr.tipReplyNum, tr.tipNum, md.userId, md.nickName, tr.content, TO_CHAR(tr.created, 'yyyy-mm-dd') created, NVL(parentCount, 0) parentCount
 		FROM tipReply tr JOIN memberDetail md ON tr.num = md.num
 		LEFT OUTER JOIN (
 			SELECT parent, COUNT(*) parentCount
@@ -20,6 +20,7 @@
 		SELECT NVL(COUNT(*), 0) FROM tipReply
 		WHERE tipNum=#{tipNum} AND parent=0
 	</select>
+	
 	<insert id="insertReply" parameterType="com.catDog.tip.Reply">
 		INSERT INTO tipReply(tipReplyNum, tipNum, num, content, parent)
 		VALUES (tipReply_seq.NEXTVAL, #{tipNum}, #{num}, #{content}, #{parent})
@@ -40,8 +41,9 @@
 	</delete>
 	
 	<select id="listReplyParent" parameterType="Integer" resultType="com.catDog.tip.Reply">
-		SELECT tipReplyNum, tr.num,  md.nickName, tr.content, tr.created, parent
-		FROM tipReply tr JOIN memberDetail md ON md.num = tr.num
+		SELECT tipReplyNum, tr.num, md.nickName, tr.content, TO_CHAR(tr.created, 'yyyy-mm-dd') created, parent
+		FROM tipReply tr
+		JOIN memberDetail md ON md.num = tr.num
 		WHERE parent = #{parent}
 		ORDER BY tipReplyNum DESC
 	</select>
@@ -51,8 +53,6 @@
 		FROM tipReply WHERE parent = #{parent}
 	</select>
 
-
--->	
 	<sql id="where-list">
 		<if test="condition=='all'">
 			( INSTR(subject, #{keyword}) &gt; 0
@@ -149,8 +149,7 @@
 	<delete id="deleteTip" parameterType="Integer">
 		DELETE FROM tip WHERE tipNum=#{tipNum}
 	</delete>
-	
-		
+
 	<insert id="insertTipReport" parameterType="map">
 		INSERT INTO report(reportNum, boardSort, reportedPostNum, reporterNum, reportedNum, reasonSortNum)
 		VALUES (report_seq.NEXTVAL, 1, #{reportedPostNum}, #{reporterNum}, #{reportedNum}, #{reasonSortNum})
@@ -160,16 +159,12 @@
 		SELECT COUNT(*) FROM report WHERE reportNum=#{reportNum}
 	</select>
 	
-		
-		<insert id="insertTipLike" parameterType="map">
+	<insert id="insertTipLike" parameterType="map">
 		INSERT INTO tipLike(tipNum, num) VALUES (#{tipNum}, #{num})
 	</insert>
       
 	<select id="tipLikeCount" parameterType="Integer" resultType="Integer">
 		SELECT COUNT(*) FROM tipLike WHERE tipNum=#{tipNum}
 	</select>
-	
-
-	
 	
 </mapper>

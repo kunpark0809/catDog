@@ -1,22 +1,12 @@
 package com.catDog.tip;
 
-import java.io.File;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.catDog.common.FileManager;
 import com.catDog.common.dao.CommonDAO;
-import com.catDog.customer.SessionInfo;
 
 
 @Service("tip.TipServiceImpl")
@@ -25,13 +15,6 @@ public class TipServiceImpl implements TipService {
 	@Autowired
 	private CommonDAO dao;
 	
-	@Autowired
-	private FileManager fileManager;
-	
-	@Autowired
-	private TipService service;
-	
-
 	@Override
 	public void insertTip(Tip dto) throws Exception {
 		try {
@@ -135,7 +118,7 @@ public class TipServiceImpl implements TipService {
 	
 
 	@Override
-	public void updateTip(Tip dto, String pathname) throws Exception {
+	public void updateTip(Tip dto) throws Exception {
 		try {
 			dao.updateData("tip.updateTip", dto);
 		} catch (Exception e) {
@@ -146,18 +129,15 @@ public class TipServiceImpl implements TipService {
 	}
 
 
-	
-
-
 	@Override
-	public void deleteTip(int tipNum, String pathname, String userId) throws Exception {
+	public void deleteTip(int tipNum, String userId) throws Exception {
 		try {
 			Tip dto = readTip(tipNum);
 	
 			if(dto==null || (! userId.equals("admin") && ! userId.equals(dto.getUserId())))
 				return;
 	
-			fileManager.doFileDelete(dto.getImageFileName(), pathname);
+			
 			
 			dao.deleteData("tip.deleteTip", tipNum);
 		} catch (Exception e) {
@@ -167,8 +147,6 @@ public class TipServiceImpl implements TipService {
 		
 	}
 	
-
-/*
 	@Override
 	public void insertReply(Reply dto) throws Exception {
 		try {
@@ -179,7 +157,6 @@ public class TipServiceImpl implements TipService {
 		}
 		
 	}
-
 
 	@Override
 	public List<Reply> listReply(Map<String, Object> map) {
@@ -221,7 +198,7 @@ public class TipServiceImpl implements TipService {
 	public List<Reply> listReplyParent(int parent) {
 		List<Reply> list = null;
 		try {
-			list=dao.selectList("tip.listReplyAnswer", parent);
+			list=dao.selectList("tip.listReplyParent", parent);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -232,13 +209,13 @@ public class TipServiceImpl implements TipService {
 	public int replyParentCount(int parent) {
 		int result=0;
 		try {
-			result = dao.selectOne("tip.replyAnswerCount", parent);
+			result = dao.selectOne("tip.replyParentCount", parent);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;
 	}
-*/
+
 
 	@Override
 	public void insertTipLike(Map<String, Object> map) throws Exception {

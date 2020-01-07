@@ -7,10 +7,10 @@ public class Reply {
 	private int parent;
 	private long num;
 	private int tipNum;
-	
+
 	private String userId;
 	private String nickName;
-	
+
 	private int parentCount;
 
 	public int getTipReplyNum() {

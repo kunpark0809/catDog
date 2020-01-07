@@ -182,6 +182,156 @@ $(function(){
 });
 
 
+//댓글 관련 여부
+$(function(){
+	listPage(1);
+});
+
+function listPage(page) {
+	var url = "<%=cp%>/tip/listReply";
+	var query = "tipNum=${dto.tipNum}&pageNo="+page;
+	var selector = "#listReply";
+	
+	ajaxHTML(url, "get", query, selector);
+}
+
+
+$(function(){
+	$(".btnSendReply").click(function(){
+		var tipNum="${dto.tipNum}";
+		var $tb = $(this).closest("table");
+		var content=$tb.find("textarea").val().trim();
+		if(! content) {
+			$tb.find("textarea").focus();
+			return false;
+		}
+		content = encodeURIComponent(content);
+		
+		var url="<%=cp%>/tip/insertReply";
+		var query="tipNum="+tipNum+"&content="+content+"&parent=0";
+		
+		var fn = function(data) {
+			$tb.find("textarea").val("");
+			
+			var state=data.state;
+			if(state=="true") {
+				listPage(1);
+			} else if(state=="false") {
+				alert("로그인 후 댓글등록이 가능합니다.");
+			}
+		};
+			
+		ajaxJSON(url, "post", query, fn);
+	});
+});
+
+$(function(){
+	$("body").on("click", ".deleteReply", function(){
+		if(! confirm("댓글을 삭제하시겠습니까 ? ")) {
+		    return false;
+		}
+		
+		var tipReplyNum=$(this).attr("data-tipReplyNum");
+		var page=$(this).attr("data-pageNo");
+		
+		var url="<%=cp%>/tip/deleteReply";
+		var query="tipReplyNum="+tipReplyNum+"&mode=reply";
+		
+		var fn = function(data) {
+			listPage(page);
+		};
+		
+		ajaxJSON(url, "post", query, fn);
+	});
+});
+
+function listReplyParent(parent) {
+	var url="<%=cp%>/tip/listReplyParent";
+	var query = {parent:parent};
+	var selector = "#listReplyParent"+parent;
+	
+	ajaxHTML(url, "get", query, selector);
+}
+
+function countReplyParent(parent) {
+	var url = "<%=cp%>/tip/countReplyParent";
+	var query = {parent:parent};
+	
+	var fn = function(data) {
+		var count=data.count;
+		var vid="#parentCount"+parent;
+		$(vid).html(count);
+	};
+	
+	ajaxJSON(url, "post", query, fn);
+}
+
+$(function(){
+	$("body").on("click", ".btnReplyParentLayout", function(){
+		var $trReplyParent = $(this).closest("tr").next();
+		
+		var isVisible = $trReplyParent.is(':visible');
+		var tipReplyNum = $(this).attr("data-tipReplyNum");
+		
+		if(isVisible) {
+			$trReplyParent.hide();
+		} else {
+			$trReplyParent.show();
+			
+			listReplyParent(tipReplyNum);
+			
+			countReplyParent(tipReplyNum);
+		}
+	});
+});
+
+$(function(){
+	$("body").on("click", ".btnSendReplyParent", function(){
+		var tipNum="${dto.tipNum}";
+		var tipReplyNum = $(this).attr("data-tipReplyNum");
+		var $td = $(this).closest("td");
+		var content=$td.find("textarea").val().trim();
+		console.log(tipReplyNum);
+		if(! content) {
+			$td.find("textarea").focus();
+			return false;
+		}
+		content = encodeURIComponent(content);
+		
+		var url="<%=cp%>/tip/insertReply";
+		var query="tipNum="+tipNum+"&content="+content+"&parent="+tipReplyNum;
+		
+		var fn = function(data) {
+			$td.find("textarea").val("");
+			
+			var state=data.state;
+			if(state=="true") {
+				listReplyParent(tipReplyNum);
+				countReplyParent(tipReplyNum);
+			}
+		};
+		ajaxJSON(url, "post", query, fn);
+	});
+});
+
+$(function(){
+	$("body").on("click", ".deleteReplyParent", function(){
+		if(! confirm("답글을 삭제하시겠습니까 ? "))
+			return;
+		var tipReplyNum=$(this).attr("data-tipReplyNum");
+		var parent=$(this).attr("data-parent");
+		
+		var url="<%=cp%>/tip/deleteReply";
+		var query="tipReplyNum="+tipReplyNum+"&mode=parent";
+		
+		var fn = function(data) {
+			listReplyParent(parent);
+			countReplyParent(parent);
+		};
+		
+		ajaxJSON(url, "post", query, fn);
+	});
+});
 
 
 </script>
@@ -206,18 +356,15 @@ $(function(){
 			
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
 				<td width="50%" align="left" style="padding-left: 5px;">
-				이름 : ${dto.nickName}
+				작성자 : ${dto.nickName}
 				</td>
 			</tr>
-			
-
 			
 			<tr height="35">
 				<td width="50%" align="left" style="padding-left: 5px;">
-			 ${dto.content}
+			 	${dto.content}
 				</td>
 			</tr>
-			
 			
 			<tr>
 				<td colspan="2" height="40" style="padding-bottom: 15px;" align="center">
@@ -243,7 +390,7 @@ $(function(){
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
 				<td colspan="2" align="left" style="padding-left: 5px;">
 				다음글 :
-					<c:if test="${not empty nextReadPet}">
+					<c:if test="${not empty nextReadTip}">
 						<a href="<%=cp%>/tip/article?${query}&tipNum=${nextReadTip.tipNum}">${nextReadTip.subject}</a>
 					</c:if>
 				</td>
@@ -267,6 +414,28 @@ $(function(){
 			</tr>
 		</table>
 	</div>
+	
+	<div>
+		<table style='width: 100%; margin: 15px quto 0px; border-spacing:0px;' >
+			<tr height='30'>
+				<td align='left'>
+					<span style='font-weight: bold;' > 댓글쓰기 </span><span> - 타인을 비방하거나 개인정보를 유출하는 글의 게시를 삼가 주세요.</span>
+				</td>
+			</tr>
+			<tr>
+				<td style='padding: 5px 5px 0px;'>
+					<textarea class='boxTA' style='width:99%; height: 70px; '></textarea>
+				</td>
+			</tr>
+			<tr>
+				<td align="right">
+					<button type='button' class='btn btnSendReply' data-tipNum='10'> 댓글 등록 </button>
+				</td>
+			</tr>
+		</table>
+		<div id="listReply"></div>
+	</div>
+	
 	
 		
 	<div id="report_dialog" style="display: none; text-align: left;">

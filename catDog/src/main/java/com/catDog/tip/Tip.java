@@ -1,7 +1,5 @@
 package com.catDog.tip;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class Tip {
 	private int listNum;
 	
@@ -11,10 +9,6 @@ public class Tip {
 	private String created;
 	private int hitCount;
 	private long num;
-	
-	private int tipPicNum;
-	private String imageFileName;
-	private MultipartFile upload;
 	
 	private String userId;
 	private String nickName;
@@ -84,24 +78,6 @@ public class Tip {
 	}
 	public void setNum(long num) {
 		this.num = num;
-	}
-	public int getTipPicNum() {
-		return tipPicNum;
-	}
-	public void setTipPicNum(int tipPicNum) {
-		this.tipPicNum = tipPicNum;
-	}
-	public String getImageFileName() {
-		return imageFileName;
-	}
-	public void setImageFileName(String imageFileName) {
-		this.imageFileName = imageFileName;
-	}
-	public MultipartFile getUpload() {
-		return upload;
-	}
-	public void setUpload(MultipartFile upload) {
-		this.upload = upload;
 	}
 	public int getTipLikeCount() {
 		return tipLikeCount;
