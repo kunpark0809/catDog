@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.catDog.common.MyUtil;
@@ -105,6 +106,17 @@ public class RequestController {
 			e.printStackTrace();
 		}
 		return "redirect:/mypage/requestCheck";
+	}
+	
+	@RequestMapping(value="/mypage/refundRequest", method=RequestMethod.GET)
+	public String refundRequestForm(
+			@RequestParam String requestNum,
+			Model model) throws Exception {
+		List<Pay> detailList = service.requestDetailList(requestNum);
+		
+		model.addAttribute("detailList", detailList);
+		
+		return ".mypage.refundRequest";
 	}
 	
 	

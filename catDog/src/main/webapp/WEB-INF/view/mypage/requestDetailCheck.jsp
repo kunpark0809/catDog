@@ -14,6 +14,71 @@ function requestCancle(requestNum) {
 		location.href=url;
 	}
 }
+
+$(document).ready(function(){
+	var myKey="SSnicrqY2jJjrBR4d6eIfw";
+	// 배송정보와 배송추적 tracking-api
+    $("#myButton1").click(function() {
+        var t_code = $('#tekbeCompnayText').val();
+        var t_invoice = $('#invoiceNumberText').val();
+        $.ajax({
+            type:"GET",
+            dataType : "json",
+            url:"http://info.sweettracker.co.kr/api/v1/trackingInfo?t_key="+myKey+"&t_code="+t_code+"&t_invoice="+t_invoice,
+            success:function(data){
+                console.log(data);
+                var myInvoiceData = "";
+                if(data.status == false){
+                    myInvoiceData += ('<p>'+data.msg+'<p>');
+                }else{
+                    myInvoiceData += ('<tr>');                
+                    myInvoiceData += ('<th>'+"보내는사람"+'</td>');                     
+                    myInvoiceData += ('<th>'+data.senderName+'</td>');                     
+                    myInvoiceData += ('</tr>');     
+                    myInvoiceData += ('<tr>');                
+                    myInvoiceData += ('<th>'+"제품정보"+'</td>');                     
+                    myInvoiceData += ('<th>'+data.itemName+'</td>');                     
+                    myInvoiceData += ('</tr>');     
+                    myInvoiceData += ('<tr>');                
+                    myInvoiceData += ('<th>'+"송장번호"+'</td>');                     
+                    myInvoiceData += ('<th>'+data.invoiceNo+'</td>');                     
+                    myInvoiceData += ('</tr>');     
+                    myInvoiceData += ('<tr>');                
+                    myInvoiceData += ('<th>'+"송장번호"+'</td>');                     
+                    myInvoiceData += ('<th>'+data.receiverAddr+'</td>');                     
+                    myInvoiceData += ('</tr>');                                       
+                }
+                
+                
+                $("#myPtag").html(myInvoiceData)
+                
+                var trackingDetails = data.trackingDetails;
+                
+                
+                var myTracking="";
+                var header ="";
+                header += ('<tr>');                
+                header += ('<th>'+"시간"+'</th>');
+                header += ('<th>'+"장소"+'</th>');
+                header += ('<th>'+"유형"+'</th>');
+                header += ('<th>'+"전화번호"+'</th>');                     
+                header += ('</tr>');     
+                
+                $.each(trackingDetails,function(key,value) {
+                    myTracking += ('<tr>');                
+                    myTracking += ('<td>'+value.timeString+'</td>');
+                    myTracking += ('<td>'+value.where+'</td>');
+                    myTracking += ('<td>'+value.kind+'</td>');
+                    myTracking += ('<td>'+value.telno+'</td>');                     
+                    myTracking += ('</tr>');                                    
+                });
+                
+                $("#myPtag2").html(header+myTracking);
+                
+            }
+        });
+    });
+}
 </script>
 
 <div class="body-container" style="width: 1200px; margin: 20px auto 0px; border-spacing: 0px;">
@@ -253,6 +318,22 @@ function requestCancle(requestNum) {
 			</tr>
 		</table>
 		<br>
+		
+		<form action="http://info.sweettracker.co.kr/tracking/1" method="post">
+            <div class="form-group">
+              <label for="t_key">API key</label>
+              <input type="text" class="form-control" id="t_key" name="t_key" placeholder="제공받은 APIKEY">
+            </div>
+            <div class="form-group">
+              <label for="t_code">택배사 코드</label>
+              <input type="text" class="form-control" name="t_code" id="t_code" placeholder="택배사 코드">
+            </div>
+            <div class="form-group">
+              <label for="t_invoice">운송장 번호</label>
+              <input type="text" class="form-control" name="t_invoice" id="t_invoice" placeholder="운송장 번호">
+            </div>
+            <button type="submit" class="btn btn-default">조회하기</button>
+        </form>
 	</div>
 
 
