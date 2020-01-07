@@ -128,7 +128,7 @@ public class MpController {
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
 		
-		return ".mypage.qna.qna";
+		return "/mypage/qna/qna";
 		
 	}
 	@RequestMapping("/mypage/tip")
@@ -199,7 +199,7 @@ public class MpController {
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
 		
-		return ".mypage.tip.tip";
+		return "/mypage/tip/tip";
 		
 	}
 	@RequestMapping("/mypage/bbs")
@@ -269,7 +269,7 @@ public class MpController {
 		
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
-		return ".mypage.bbs.bbs";
+		return "/mypage/bbs/bbs";
 	}
 	
 	@RequestMapping("/mypage/mypet")
@@ -340,7 +340,7 @@ public class MpController {
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
 		
-		return ".mypage.mypet.mypet";
+		return "/mypage/mypet/mypet";
 		
 	}
 
@@ -412,7 +412,7 @@ public class MpController {
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
 		
-		return ".mypage.lostpet.lostpet";
+		return "/mypage/lostpet/lostpet";
 		
 	}
 	
@@ -484,7 +484,7 @@ public class MpController {
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
 		
-		return ".mypage.adoption.adoption";
+		return "/mypage/adoption/adoption";
 	}
 	
 }
