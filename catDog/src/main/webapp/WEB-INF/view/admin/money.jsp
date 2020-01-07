@@ -344,62 +344,54 @@ function selectCategorySales(){
 		<div style="text-align: center;"><h4>주식회사 멍냥개냥</h4></div>
 		<br><br>
 		
-		<table border="1" style=" text-align: center;">
+		<table border="1" style=" text-align: center; margin: 0px auto;">
 			<tr>
 				<td style="width: 160px;">오늘의 주문 수</td>
-				<td style="width: 160px;">오늘의 매출</td>
 				<td style="width: 160px;">이번 주의 주문 수</td>
-				<td style="width: 160px;">이번 주의 매출</td>
-				
+				<td style="width: 160px;">이번 달의 주문 수</td>
+				<td style="width: 160px;">올해의 주문 수</td>
+				<td style="width: 160px;">총 주문 수</td>
 			</tr>
 			<tr>
 				<td>${daySalesVolume}건</td>
-				<td>${daySales}원</td>
 				<td>${weekSalesVolume}건</td>
-				<td>${weekSales}원</td>
-				
-		</tr>
+				<td>${monthSalesVolume}건</td>
+				<td>${yearSalesVolume}건</td>
+				<td>${totalSalesVolume}건</td>
+			</tr>
 		
 		
 		</table>
 		
 		<br>
 		
-		<table border="1" style="text-align: center;">
+		<table border="1" style="text-align: center; margin: 0px auto;">
 			<tr>
-				<td style="width: 160px;">이번 달의 주문 수</td>
+				<td style="width: 160px;">오늘의 매출</td>
+				<td style="width: 160px;">이번 주의 매출</td>
 				<td style="width: 160px;">이번 달의  매출</td>
-				<td style="width: 160px;">올해의 주문 수</td>
 				<td style="width: 160px;">올해의 매출</td>
-				<td style="width: 160px;">총 주문 수</td>
 				<td style="width: 160px;">총 매출</td>
 			</tr>
 			<tr>
-				<td>${monthSalesVolume}건</td>
+				<td>${daySales}원</td>
+				<td>${weekSales}원</td>
 				<td>${monthSales}원</td>
-				<td>${yearSalesVolume}건</td>
 				<td>${yearSales}원</td>
-				<td>${totalSalesVolume}건</td>
 				<td>${totalSales}원</td>
 			</tr>
-		
-		
 		</table>
-		
-	
-	
 		<br><br><br><br><br>
 		<div id="subtotalChart" style="width: 1000px; height: 400px; margin: 0px auto;">
 		</div>
 	</div>
-
-			<select id="yearSalesSelect" onchange="selectYearSales()" style="float: right; margin: 0% 5.5% 0% 0%; display: none;">
+		<select id="yearSalesSelect" onchange="selectYearSales()" style="float: right; margin: 0% 5.5% 0% 0%; display: none;">
 				<option value="">년도</option>
 				<option value="2020">2020년</option>
 				<option value="2019">2019년</option>
 				<option value="2018">2018년</option>
 				<option value="2017">2017년</option>
-			</select>
+		</select>
 			<div id="yearSales"
 				style="width : 1000px; height: 600px; margin: 0px auto;">
 			</div>

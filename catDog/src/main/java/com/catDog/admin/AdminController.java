@@ -36,6 +36,62 @@ public class AdminController {
 	@Autowired
 	private CustomerService service2;
 
+	@RequestMapping(value = "/admin/shop")
+	public String shopManage(@RequestParam(value = "page", defaultValue = "1") int current_page,
+			@RequestParam(defaultValue = "all") String condition, @RequestParam(defaultValue = "") String keyword,
+			HttpServletRequest req, Model model) throws Exception {
+
+		if (req.getMethod().equalsIgnoreCase("GET")) {
+			keyword = URLDecoder.decode(keyword, "UTF-8");
+		}
+
+		int rows = 50;
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+
+		int dataCount = service.memberCount(map);
+		int total_page = myUtil.pageCount(rows, dataCount);
+
+		if (total_page < current_page)
+			current_page = total_page;
+
+		int offset = (current_page - 1) * rows;
+		if (offset < 0)
+			offset = 0;
+		map.put("offset", offset);
+		map.put("rows", rows);
+
+		// 여기 고쳐야함
+		List<Member> list = service.memberList(map);
+
+		String cp = req.getContextPath();
+		String query = "rows=" + rows;
+		String listUrl = cp + "/admin/shop";
+
+		if (keyword.length() != 0) {
+			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
+		}
+		listUrl += "?" + query;
+
+		String paging = myUtil.paging(current_page, total_page, listUrl);
+
+		model.addAttribute("list", list);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("page", current_page);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);
+
+		model.addAttribute("rows", rows);
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+
+		return ".admin.shop";
+	}
+	
+	
+	
 	@RequestMapping(value = "/admin/member")
 	public String memberManage(@RequestParam(value = "page", defaultValue = "1") int current_page,
 			@RequestParam(defaultValue = "all") String condition, @RequestParam(defaultValue = "") String keyword,

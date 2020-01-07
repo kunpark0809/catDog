@@ -148,6 +148,17 @@ public class CustomerController {
 		return "redirect:/";
 	}
 
+	@RequestMapping(value="/customer/idFind", method=RequestMethod.GET)
+	public String idFindForm(HttpSession session) throws Exception {
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		if(info!=null) {
+			return "redirect:/";
+		}
+		
+		return ".customer.idFind";
+	}
+	
+	
 	@RequestMapping(value="/customer/pwdFind", method=RequestMethod.GET)
 	public String pwdFindForm(HttpSession session) throws Exception {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
