@@ -223,5 +223,53 @@ public class ShopController {
 		
 		return model;
 	}
-
+	
+	@RequestMapping(value="/shop/insertReview", method=RequestMethod.POST)
+	public String insertReview(
+			Shop dto,
+			HttpSession session
+			)throws Exception {
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		dto.setNum(info.getMemberIdx());
+		try {
+			service.insertReview(dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/mypage/requestCheck";
+	}
+	
+	@RequestMapping(value="/shop/listRate")
+	public String listRate(	
+			@RequestParam int productNum,
+			@RequestParam(value="pageNo", defaultValue="1") int current_page,
+			Model model
+			)throws Exception{
+		
+		
+		Map<String,Object> map = new HashMap<>();
+		map.put("productNum", productNum);
+		int reivewCount = service.reviewCount(map);
+		int rows = 10;
+		int total_page=myUtil.pageCount(rows, reivewCount);
+		int offset = (current_page-1)*rows;
+		if(offset<0) offset=0;
+		
+		map.put("rows", rows);
+		map.put("offset", offset );
+		List<Shop> reviewList = service.reviewList(map);
+		
+		for(Shop dto : reviewList) {
+			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+		}
+		
+		String paging = myUtil.pagingMethod(current_page, total_page, "listReview");
+		
+		model.addAttribute("reivewCount",reivewCount);
+		model.addAttribute("total_page",total_page);
+		model.addAttribute("reviewList",reviewList);
+		model.addAttribute("paging",paging);
+		
+		return "/shop/review";
+	}
 }

@@ -32,6 +32,26 @@ function ajaxJSON(url, type, query, fn) {
 	});
 }
 
+function ajaxHTML(url, type, query, selector) {
+	$.ajax({
+		type:type
+		,url:url
+		,data:query
+		,success:function(data) {
+			$(selector).html(data);
+		}
+		,beforeSend:function(jqXHR) {
+	        jqXHR.setRequestHeader("AJAX", true);
+	    }
+	    ,error:function(jqXHR) {
+	    	if(jqXHR.status==403) {
+	    		login();
+	    		return false;
+	    	}
+	    	console.log(jqXHR.responseText);
+	    }
+	});
+}
 
 $(function(){
 	$("#sort-${smallSortNum}").addClass("sortActive");
@@ -105,6 +125,19 @@ function deleteProduct(){
 		location.href="<%=cp%>/shop/delete?${query}&productNum=${dto.productNum}";
 	}
 }
+
+$(function(){
+	listReview(1);
+});
+
+function listReview(page){
+	var url= "<%=cp%>/shop/listRate";
+	var query ="productNum=${dto.productNum}&pageNo="+page;
+	var selector ="#review";
+	
+	ajaxHTML(url, "get", query, selector);
+}
+
 </script>
 	<div class="shin_body"> 
 		<div class="sortList">
@@ -172,15 +205,8 @@ function deleteProduct(){
 		
 		<div>
 			<h4>상품 후기</h4>
-				<div class="review" style="float: left;">
-					<c:forEach begin="1" end="5">
-						<img src="<%=cp%>/resource/img/starred.png" width="20">
-					</c:forEach>	
-					<p>2019.01.01</p>
-					<p>shin****</p>
-				</div>
-				<div class="reviewContent" style="float: left;">
-					사료 냄새도 적고 넘 좋아요~
+			
+				<div id="review"  class="review" style="float: left;">
 				</div>
 		<div style="clear: both;">
 			<h4>배송 안내</h4>
@@ -224,4 +250,5 @@ function deleteProduct(){
 				<button type="button" class="dialog_submit" onclick="javascript:location.href='<%=cp%>/pay/cart';">확인</button>
 			</div>
 		</div>
+	</div>
 	</div>

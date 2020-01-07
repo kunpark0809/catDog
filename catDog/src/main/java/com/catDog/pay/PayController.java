@@ -176,7 +176,7 @@ public class PayController {
 		return ".pay.complete";
 	}
 	
-	@RequestMapping(value="/pay/changeCount", method=RequestMethod.GET)
+	@RequestMapping(value= {"/pay/changeCount","/mypage/readProduct"}, method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> changeCountForm(
 			@RequestParam int productNum

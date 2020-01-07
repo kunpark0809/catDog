@@ -16,4 +16,8 @@ public interface ShopService {
 	public int dataCount(Map<String, Object> map);
 	public List<Shop> readProductPic(int productNum);
 	public Shop readProduct(int productNum);
+	
+	public void insertReview(Shop dto) throws Exception;
+	public int reviewCount(Map<String, Object> map);
+	public List<Shop> reviewList(Map<String, Object> map);
 }

@@ -21,6 +21,12 @@ public class Shop {
 	private MultipartFile main;
 	private List<MultipartFile> upload;
 	
+	private long num;
+	private String productReviewNum;
+	private String productDetailNum;
+	private int rate;
+	private String nickName;
+	
 	public String getSmallSortNum() {
 		return smallSortNum;
 	}
@@ -94,6 +100,36 @@ public class Shop {
 	}
 	public void setMain(MultipartFile main) {
 		this.main = main;
+	}
+	public String getProductReviewNum() {
+		return productReviewNum;
+	}
+	public void setProductReviewNum(String productReviewNum) {
+		this.productReviewNum = productReviewNum;
+	}
+	public int getRate() {
+		return rate;
+	}
+	public void setRate(int rate) {
+		this.rate = rate;
+	}
+	public long getNum() {
+		return num;
+	}
+	public void setNum(long num) {
+		this.num = num;
+	}
+	public String getProductDetailNum() {
+		return productDetailNum;
+	}
+	public void setProductDetailNum(String productDetailNum) {
+		this.productDetailNum = productDetailNum;
+	}
+	public String getNickName() {
+		return nickName;
+	}
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 	
 }

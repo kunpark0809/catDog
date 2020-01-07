@@ -77,8 +77,8 @@
 	</insert>
 	
 	<insert id="insertRequest" parameterType="com.catDog.pay.Pay">
-		INSERT INTO request(requestNum, num, total, addr1, addr2, zip, tel, name, memo,status)
-		VALUES(#{requestNum}, #{num}, #{total},#{deliverAddr1}, #{deliverAddr2}, #{deliverZip}, #{deliverTel}, #{deliverName}, #{memo}, #{status})
+		INSERT INTO request(requestNum, num, total, addr1, addr2, zip, tel, name, memo)
+		VALUES(#{requestNum}, #{num}, #{total},#{deliverAddr1}, #{deliverAddr2}, #{deliverZip}, #{deliverTel}, #{deliverName}, #{memo})
 	</insert>
 	
 	<insert id="insertRequestDetail" parameterType="com.catDog.pay.Pay">
