@@ -40,7 +40,6 @@
 				<th width="150" style="color: #787878;">주문일</th>
 				<th width="90" style="color: #787878;">총주문액수</th>
 				<th width="90" style="color: #787878;">진행상태</th>
-				<th width="90" style="color: #787878;">환불</th>
 				<th width="90" style="color: #787878;">상세정보</th>
 			</tr>
 
@@ -48,14 +47,13 @@
 			 <c:forEach var="dto" items="${list}"> 
 				<tr align="center" bgcolor="#eeeeee" height="35"
 				style="border-top: 2px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td>${dto.num }</td>
+				<td>${dto.requestNum }</td>
 				<td>${dto.customerName}(${dto.userId})</td>
 				<td>${dto.email }</td>
 				<td>${dto.tel }</td>
 				<td>${dto.requestDate}</td>
-				<td>${dto.total }원</td>
-				<td>${dto.status}</td>
-				<td>(알림)</td>
+				<td align="right">${dto.totalWithComma }원</td>
+				<td>${dto.statusToString}</td>
 				<td>(버튼)</td>
 			</tr>
 			</c:forEach>

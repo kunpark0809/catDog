@@ -386,22 +386,27 @@
 	<!-- 전체 주문 리스트 출력 -->
 	<select id="requestList" parameterType="Map"
 		resultType="com.catDog.admin.Shop">
-		SELECT rq.requestNum, cd.name customerName, userId, cd.email, cd.tel, rq.num, membership,
-		requestDate, total,
-		memo, status, refundReason, refundAccount, bank, re.name refundName
+		SELECT rq.requestNum, cd.name customerName, userId,
+			TO_CHAR(requestDate,'YYYY-MM-DD HH24:MI:SS') requestDate, cd.email, cd.tel, SUM(total) total
 		FROM request rq
-		LEFT OUTER JOIN customer c ON rq.num = c.num
-		LEFT OUTER JOIN customerDetail cd ON cd.num = c.num
-		LEFT OUTER JOIN memberDetail md ON md.num = c.num
-		LEFT OUTER JOIN requestDetail rd ON rd.requestNum = rq.requestNum
-		LEFT OUTER JOIN product p ON p.productNum = rd.productNum
-		LEFT OUTER JOIN refund re ON re.requestNum = rq.requestNum
+		LEFT OUTER JOIN customerDetail cd ON cd.num = rq.num
+		LEFT OUTER JOIN memberDetail md ON md.num = rq.num
 		<where>
 			<if test="keyword!=null and keyword!=''">
 				<include refid="report-where-list" />
 			</if>
 		</where>
+		GROUP BY rq.requestNum, cd.name, userId, cd.email, cd.tel, requestDate
 		ORDER BY requestNum DESC
 	</select>
+
+<!-- 해당 requestNum을 가진 requestDetail의 리스트를 출력 -->
+	<select id="requestDetailList" parameterType="Integer" resultType="com.catDog.admin.Shop">
+		SELECT requestDetailNum, requestNum, productNum, productCount, productSum, status 
+		FROM requestDetail WHERE requestNum = #{requestNum}
+		ORDER BY requestNum ASC
+	</select>
+
+	<select id="requestDetailStatus" parameterType="Integer"></select>
 
 </mapper>

@@ -25,6 +25,7 @@ public class Shop {
 //		8: 교환진행중
 //		9: 교환완료
 //		10: 리뷰완료
+	private String totalWithComma;
 	private String statusToString;
 
 	// request 테이블
@@ -153,6 +154,14 @@ public class Shop {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public String getTotalWithComma() {
+		return totalWithComma;
+	}
+
+	public void setTotalWithComma(String totalWithComma) {
+		this.totalWithComma = totalWithComma;
 	}
 
 	public String getStatusToString() {
