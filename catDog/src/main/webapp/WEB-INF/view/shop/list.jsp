@@ -34,7 +34,7 @@ $(function(){
 		<div class="bestProduct">
 		<h3 class="text-muted">BEST</h3>
 		</div>
-		<div class=" ">
+		<div class=" " >
 		
 			<a class="sortName" data-num="0" id="sort-0">전체</a>
 			<c:forEach var="sort" items="${smallSortList}">

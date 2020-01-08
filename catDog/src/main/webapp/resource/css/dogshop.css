@@ -22,13 +22,21 @@ a.sortName{
 }
 
 .productLink{
-cursor: pointer;
+	cursor: pointer;
     text-align: center;
     border: 1px solid #e4e4e4;
     border-radius: 5px;
     margin: 5px;
     padding: 5px 0px;
     height: 250px;
+}
+.link{
+	cursor: pointer;
+    text-align: center;
+    border: 1px solid #e4e4e4;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px 0px;
 }
 .sortList{
 	width: 100%;

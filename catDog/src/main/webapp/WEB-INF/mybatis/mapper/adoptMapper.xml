@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adopt">
+	<sql id="where-list">
+		<if test="condition=='all' ">
+			( INSTR(subject, #{keyword}) &gt; 0
+				OR DBMS_LOB.INSTR(content, #{keyword}) &gt; 0 )
+		</if>
+		<if test="condition=='subject' ">
+			INSTR(subject, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='content' ">
+			DBMS_LOB.INSTR(content, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='nickName' ">
+			nickName=#{keyword}
+		</if>
+		<if test="condition=='created' ">
+			( TO_CHAR(b.created, 'YYYY-MM-DD') = #{keyword}
+				OR TO_CHAR(b.created, 'YYYYMMDD') = #{keyword} )
+		</if>
+	</sql>
+	<insert id="insertAdopt" parameterType="com.catDog.adopt.Adopt">
+		INSERT INTO adoption(adoptionNum, speciesSort, subject, num, nickName, content, imageFileName, status)
+		VALUES(ADOPTION_SEQ.NEXTVAL,#{speciesSort}, #{subject}, #{num}, #{nickName},#{content},#{imageFileName},1)
+	</insert>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(count(*),0) FROM adoption
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<select id="listAdopt" parameterType="map" resultType="com.catDog.adopt.Adopt">
+		SELECT adoptionNum,speciesSort,status,created,subject,hitCount,nickName,imageFileName
+		FROM adoption
+		
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY adoptionNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE adoption SET hitCount = hitCount+1
+		WHERE  adoptionNum=#{adoptionNum}
+	</update>
+	
+	<select id="readAdopt" parameterType="Integer" resultType="com.catDog.adopt.Adopt">
+		SELECT adoptionNum,speciesSort,status,created,subject,hitCount,num,nickName,imageFileName,content
+		FROM adoption
+		WHERE  adoptionNum=#{adoptionNum}
+	</select>
+	
+	<select id="preReadAdopt" parameterType="map" resultType="com.catDog.adopt.Adopt">
+		SELECT adoptionNum,subject
+		FROM adoption
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			AND (adoptionNum &gt; #{adoptionNum})
+		</where>
+		
+		ORDER BY adoptionNum ASC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+	
+	<select id="nextReadAdopt" parameterType="map" resultType="com.catDog.adopt.Adopt">
+		SELECT adoptionNum,subject
+		FROM adoption
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			AND (adoptionNum &lt; #{adoptionNum})
+		</where>
+		ORDER BY adoptionNum DESC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+	
+	<update id="updateAdopt" parameterType="com.catDog.adopt.Adopt">
+		UPDATE adoption SET speciesSort=#{speciesSort},subject=#{subject}, imageFileName=#{imageFileName}, content=#{content}
+		WHERE adoptionNum=#{adoptionNum} 
+	</update>
+	
+	<delete id="deleteAdopt" parameterType="Integer">
+		DELETE FROM adoption WHERE adoptionNum=#{adoptionNum}
+	</delete>
+	
+	
+</mapper>
