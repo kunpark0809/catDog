@@ -49,11 +49,14 @@
 	</update>
 	
 	<insert id="refundRequest" parameterType="com.catDog.pay.Pay">
-		insert into refund(requestNum, refundAccount, bank, name, refundReason) values(#{requestNum}, #{refundAccount}, #{bank}, #{name}, #{refundReason})
+		insert into refund(requestDetailNum, refundAccount, bank, name, refundReason) values(#{requestDetailNum}, #{refundAccount}, #{bank}, #{name}, #{refundReason})
 	</insert>
 	
-	<update id="requestRefund" parameterType="com.catDog.pay.Pay">
-		update requestDetail set status=6 where requestDetailNum=#{requestDetailNum}
+	<update id="requestRefund" parameterType="map">
+		update requestDetail set status=6 where requestDetailNum IN
+		<foreach item="requestDetailNum" collection="list" open="(" close=")" separator=",">
+			#{requestDetailNum} 
+		</foreach> 
 	</update>
 	
 	<select id="readExpress" parameterType="String" resultType="com.catDog.pay.Pay">
@@ -61,7 +64,11 @@
 	</select>
 	
 	<insert id="swapRequest" parameterType="com.catDog.pay.Pay">
-		
+		insert into swap(requestDetailNum, swapReason) values(#{requestDetailNum}, #{swapReason})
 	</insert>
+	
+	<update id="requestSwap" parameterType="com.catDog.pay.Pay">
+		update requestDetail set status=8 where requestDetailNum=#{requestDetailNum}
+	</update>
 	
 </mapper>

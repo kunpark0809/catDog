@@ -112,9 +112,9 @@ public class RequestServiceImpl implements RequestService {
 	}
 
 	@Override
-	public void requestRefund(String requestNum) throws Exception {
+	public void requestRefund(Map<String, Object> map) throws Exception {
 		try {
-			dao.updateData("request.requestRefund", requestNum);
+			dao.updateData("request.requestRefund", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

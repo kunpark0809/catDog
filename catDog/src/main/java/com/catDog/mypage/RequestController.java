@@ -118,8 +118,23 @@ public class RequestController {
 		List<Pay> detailList = service.requestDetailList(requestNum);
 		
 		model.addAttribute("detailList", detailList);
+		model.addAttribute("mode", "refund");
 		
 		return ".mypage.refundRequest";
+	}
+	
+	@RequestMapping(value="/mypage/refundRequest", method=RequestMethod.POST)
+	public String refundRequestSubmit(
+			Pay pay,
+			@RequestParam List<String> requestDetailNum) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("list", requestDetailNum);
+		try {
+			service.refundRequest(pay);
+			service.requestRefund(map);
+		} catch (Exception e) {			
+		}
+		return "redirect:/mypage/requestCheck";
 	}
 	
 	
