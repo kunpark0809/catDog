@@ -7,19 +7,9 @@
 	String cp=request.getContextPath();
 %>
 <link rel="stylesheet" href="<%=cp%>/resource/css/cs.css">
-<script type="text/javascript">
-function searchList() {
-	var f=document.searchForm;
-	f.submit();
-}
 </script>
 
 <div class="body-container" style="width: 830px; margin: 20px auto 0px; border-spacing: 0px;">
-
-	<div class="body-title">
-		<h3><span style="font-family: Webdings"></span> 내가 쓴 글 </h3>
-	</div>
-	
 	<div>
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
 			<tr height="35">
@@ -34,24 +24,22 @@ function searchList() {
 		
 		<table style="width: 100%; border-spacing: 0px; border-collapse: collapse;">
 			<tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
-				<th width="60" style="color: #787878;">번호</th>
-      			<th width="100" style="color: #787878;">유형</th>
-      			<th style="color: #787878;">제목</th>
-      			<th width="100" style="color: #787878;">작성자</th>
-      			<th width="100" style="color: #787878;">문의일자</th>
-      			<th width="80" style="color: #787878;">처리결과</th>
+				<th width="60" style="color: #787878;">&nbsp;번호&nbsp;</th>
+      			<th style="color: #787878;">&nbsp;제목&nbsp;</th>
+      			<th width="100" style="color: #787878;">&nbsp;작성자&nbsp;</th>
+      			<th width="100" style="color: #787878;">&nbsp;작성일&nbsp;</th>
+      			<th width="80" style="color: #787878;">&nbsp;조회수&nbsp;</th>
 			</tr>
 		 
 		<c:forEach var="dto" items="${listMpMyPet}">
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
-				<td>${dto.qnaListNum}</td>
-				<td>${dto.qnaCategory}</td>
+				<td>${dto.petListNum}</td>
 				<td align="left" style="padding-left: 10px;">
-					<a href="${articleUrl}&qnaNum=${dto.qnaNum}">${dto.qnaSubject}</a>
+					<a href="${articleUrl}&myPetNum=${dto.myPetNum}">${dto.myPetSubject}</a>
       			</td>
 				<td>${dto.nickName}</td>
-				<td>${dto.qnaCreated}</td>
-				<td>${dto.qnaIsAnswer==1?"답변완료":"답변대기"}</td>
+				<td>${dto.myPetCreated}</td>
+				<td>${dto.myPetHitCount}</td>
 			</tr>
 		</c:forEach>
 
@@ -68,13 +56,12 @@ function searchList() {
 		<table style="width: 100%; margin: 10px auto; border-spacing: 0px;">
 			<tr height="40">
 				<td align="left" width="100">
-					<button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/mypage/myply';">새로고침</button>
+					<button type="button" class="btn" onclick="reloadBoard();">새로고침</button>
 				</td>
 				<td align="center">
-					<form name="searchForm" action="<%=cp%>/mypage/myply" method="post">
-						<select name="condition" class="selectField">
+					<form name="searchForm" action="" method="post">
+						<select id="condition" name="condition" class="selectField">
 							<option value="subject" ${condition=="subject"?"selected='selected'":""}>제목</option>
-							<option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
 							<option value="nickName" ${condition=="nickName"?"selected='selected'":""}>작성자</option>
 							<option value="created" ${condition=="created"?"selected='selected'":""}>등록일</option>
 						</select>

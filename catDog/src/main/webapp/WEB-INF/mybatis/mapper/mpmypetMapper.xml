@@ -9,14 +9,11 @@
 	<sql id="where-list">
 		<choose>
 			<when test="condition == 'subject'">
-				(INSTR(q.subject, #{keyword}) &gt; 0)
-			</when>
-			<when test="condition == 'content'">
-				DBMS_LOB.instr(q.content, #{keyword}) &gt; 0
+				(INSTR(mp.subject, #{keyword}) &gt; 0)
 			</when>
 			<when test="condition=='created'">
-				(to_char(q.created, 'yyyy-mm-dd') = #{keyword}
-				 or to_char(q.created, 'yyyymmdd') = #{keyword})
+				(to_char(mp.created, 'yyyy-mm-dd') = #{keyword}
+				 or to_char(mp.created, 'yyyymmdd') = #{keyword})
 			</when>
 			<when test="condition=='nickName'">
 				instr(nickName, #{keyword}) &gt; 0
@@ -25,7 +22,7 @@
 	</sql>
 	
 	<select id="listMpMyPet" parameterType="map" resultType="com.catDog.mpmypet.Mpmypet">
-		SELECT mp.myPetNum, mp.subject myPetSubject, mp.num, md.nickName, 
+		SELECT mp.myPetNum, mp.subject myPetSubject, mp.num, md.nickName,
 		mp.hitCount myPetHitCount, TO_CHAR(created, 'yyyy.mm.dd') myPetCreated
 		FROM myPet mp JOIN memberDetail md ON mp.num = md.num
 		<where>

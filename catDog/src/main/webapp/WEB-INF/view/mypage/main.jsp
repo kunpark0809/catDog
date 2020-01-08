@@ -22,7 +22,7 @@
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
 <script type="text/javascript">
 $(function(){
-	$("#tab-notice").addClass("active");
+	$("#tab-qna").addClass("active");
 	listPage(1);
 
 	$("ul.tabs li").click(function() {
