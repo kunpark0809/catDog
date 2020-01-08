@@ -273,12 +273,13 @@ public class AdminController {
 		int rows = 50;
 
 		Map<String, Object> map = new HashMap<>();
-
+		
 		if (keyword != null && keyword != "") {
 			map.put("condition", condition);
 			map.put("keyword", keyword);
 		}
-
+		map.put("group", group);
+		
 		int dataCount = service.reportCount(map);
 		int total_page = myUtil.pageCount(rows, dataCount);
 		if (current_page > total_page)
@@ -289,9 +290,15 @@ public class AdminController {
 			offset = 0;
 
 		map = new HashMap<>();
+		
+		if (keyword != null && keyword != "") {
+			map.put("condition", condition);
+			map.put("keyword", keyword);
+		}
 		map.put("offset", offset);
 		map.put("rows", rows);
-
+		map.put("group", group);
+		
 		List<Report> list = service.reportList(map);
 
 		String cp = req.getContextPath();

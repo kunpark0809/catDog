@@ -14,7 +14,7 @@ public class Report {
 
 	private int reportedNum;
 	private String reportedId;
-	private String reporterNickname;
+	private String reportedNickName;
 
 	public int getReportNum() {
 		return reportNum;
@@ -112,12 +112,12 @@ public class Report {
 		this.reportedId = reportedId;
 	}
 
-	public String getReporterNickname() {
-		return reporterNickname;
+	public String getReportedNickName() {
+		return reportedNickName;
 	}
 
-	public void setReporterNickname(String reporterNickname) {
-		this.reporterNickname = reporterNickname;
+	public void setReportedNickName(String reportedNickName) {
+		this.reportedNickName = reportedNickName;
 	}
 
 }
