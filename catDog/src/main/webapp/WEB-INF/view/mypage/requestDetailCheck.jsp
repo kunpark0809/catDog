@@ -19,8 +19,8 @@ $(function(){
 	var myKey="SSnicrqY2jJjrBR4d6eIfw";
 	// 배송정보와 배송추적 tracking-api
     $("#myButton1").click(function() {
-        var t_code = $('#tekbeCompnayText').val();
-        var t_invoice = $('#invoiceNumberText').val();
+        var t_code = "${express.expressNum}";
+        var t_invoice = "${express.invoice}";
         $.ajax({
             type:"GET",
             dataType : "json",
@@ -34,7 +34,11 @@ $(function(){
                     myInvoiceData += ('<tr>');                
                     myInvoiceData += ('<th>'+"보내는사람"+'</td>');                     
                     myInvoiceData += ('<th>'+data.senderName+'</td>');                     
-                    myInvoiceData += ('</tr>');     
+                    myInvoiceData += ('</tr>'); 
+                    myInvoiceData += ('<tr>');                
+                    myInvoiceData += ('<th>'+"받는사람"+'</td>');                     
+                    myInvoiceData += ('<th>'+data.receiverName+'</td>');                     
+                    myInvoiceData += ('</tr>'); 
                     myInvoiceData += ('<tr>');                
                     myInvoiceData += ('<th>'+"제품정보"+'</td>');                     
                     myInvoiceData += ('<th>'+data.itemName+'</td>');                     
@@ -42,11 +46,7 @@ $(function(){
                     myInvoiceData += ('<tr>');                
                     myInvoiceData += ('<th>'+"송장번호"+'</td>');                     
                     myInvoiceData += ('<th>'+data.invoiceNo+'</td>');                     
-                    myInvoiceData += ('</tr>');     
-                    myInvoiceData += ('<tr>');                
-                    myInvoiceData += ('<th>'+"송장번호"+'</td>');                     
-                    myInvoiceData += ('<th>'+data.receiverAddr+'</td>');                     
-                    myInvoiceData += ('</tr>');                                       
+                    myInvoiceData += ('</tr>');                                     
                 }
                 
                 
@@ -58,18 +58,18 @@ $(function(){
                 var myTracking="";
                 var header ="";
                 header += ('<tr>');                
-                header += ('<th>'+"시간"+'</th>');
-                header += ('<th>'+"장소"+'</th>');
-                header += ('<th>'+"유형"+'</th>');
+                header += ('<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+"시간"+'</th>');
+                header += ('<th>&nbsp;&nbsp;&nbsp;&nbsp;'+"장소"+'</th>');
+                header += ('<th>&nbsp;&nbsp;&nbsp;&nbsp;'+"유형"+'</th>');
                 header += ('<th>'+"전화번호"+'</th>');                     
                 header += ('</tr>');     
                 
                 $.each(trackingDetails,function(key,value) {
                     myTracking += ('<tr>');                
                     myTracking += ('<td>'+value.timeString+'</td>');
-                    myTracking += ('<td>'+value.where+'</td>');
-                    myTracking += ('<td>'+value.kind+'</td>');
-                    myTracking += ('<td>'+value.telno+'</td>');                     
+                    myTracking += ('<td>&nbsp;&nbsp;'+value.where+'</td>');
+                    myTracking += ('<td>&nbsp;&nbsp;'+value.kind+'</td>');
+                    myTracking += ('<td>&nbsp;&nbsp;'+value.telno+'</td>');                     
                     myTracking += ('</tr>');                                    
                 });
                 
@@ -319,17 +319,9 @@ $(function(){
 		</table>
 		<br>
 		
-		<form action="http://info.sweettracker.co.kr/tracking/1" method="post">
-            <div class="form-group">
-              <label for="t_code">택배사 코드</label>
-              <input type="text" id="tekbeCompnayText" placeholder="택배사 코드">
-            </div>
-            <div class="form-group">
-              <label for="t_invoice">운송장 번호</label>
-              <input type="text" id="invoiceNumberText" placeholder="운송장 번호">
-            </div>
-            <button type="button" id="myButton1">조회하기</button>
-        </form>
+		
+            <button type="button" id="myButton1">배송조회</button>
+     	<br>
         
         <div id="myPtag">
         	

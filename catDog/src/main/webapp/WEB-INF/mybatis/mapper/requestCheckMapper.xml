@@ -56,4 +56,12 @@
 		update requestDetail set status=6 where requestDetailNum=#{requestDetailNum}
 	</update>
 	
+	<select id="readExpress" parameterType="String" resultType="com.catDog.pay.Pay">
+		select requestNum, invoice, expressNum from deliver where requestNum=#{requestNum}
+	</select>
+	
+	<insert id="swapRequest" parameterType="com.catDog.pay.Pay">
+		
+	</insert>
+	
 </mapper>

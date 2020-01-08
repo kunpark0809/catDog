@@ -121,4 +121,15 @@ public class RequestServiceImpl implements RequestService {
 		}
 		
 	}
+
+	@Override
+	public Pay readExpress(String requestNum) {
+		Pay dto = null;
+		try {
+			dto = dao.selectOne("request.readExpress", requestNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
 }

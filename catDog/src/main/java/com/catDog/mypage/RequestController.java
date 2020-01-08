@@ -84,11 +84,14 @@ public class RequestController {
 		Pay customer = null;
 		customer = service.readCustomer(info.getMemberIdx());
 		
+		Pay express = null;
+		express = service.readExpress(requestNum);
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("num", info.getMemberIdx());
 		List<Pay> listRequestNum = service.readRequestNum(map);
 		
-		
+		model.addAttribute("express", express);
 		model.addAttribute("customer", customer);
 		model.addAttribute("detailList", detailList);
 		model.addAttribute("listRequestNum", listRequestNum);
@@ -118,6 +121,7 @@ public class RequestController {
 		
 		return ".mypage.refundRequest";
 	}
+	
 	
 	
 }

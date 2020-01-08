@@ -42,6 +42,7 @@ public class Pay {
 	private String refundReason; // 환불사유
 	private int price; // 용품 단품 가격
 	private String imageFileName;
+	private String swapReason; // 교환사유
 	
 	private String invoice; // 송장번호
 	private String expressNum; // 택배업체코드
@@ -324,6 +325,12 @@ public class Pay {
 	}
 	public void setInvoice(String invoice) {
 		this.invoice = invoice;
+	}
+	public String getSwapReason() {
+		return swapReason;
+	}
+	public void setSwapReason(String swapReason) {
+		this.swapReason = swapReason;
 	}
 
 

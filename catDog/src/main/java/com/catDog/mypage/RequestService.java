@@ -14,4 +14,5 @@ public interface RequestService {
 	public void requestCancle(String requestNum) throws Exception;
 	public void refundRequest(Pay pay) throws Exception;
 	public void requestRefund(String requestNum) throws Exception;
+	public Pay readExpress(String requestNum);
 }
