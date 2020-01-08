@@ -84,11 +84,14 @@ public class RequestController {
 		Pay customer = null;
 		customer = service.readCustomer(info.getMemberIdx());
 		
+		Pay express = null;
+		express = service.readExpress(requestNum);
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("num", info.getMemberIdx());
 		List<Pay> listRequestNum = service.readRequestNum(map);
 		
-		
+		model.addAttribute("express", express);
 		model.addAttribute("customer", customer);
 		model.addAttribute("detailList", detailList);
 		model.addAttribute("listRequestNum", listRequestNum);
@@ -115,9 +118,25 @@ public class RequestController {
 		List<Pay> detailList = service.requestDetailList(requestNum);
 		
 		model.addAttribute("detailList", detailList);
+		model.addAttribute("mode", "refund");
 		
 		return ".mypage.refundRequest";
 	}
+	
+	@RequestMapping(value="/mypage/refundRequest", method=RequestMethod.POST)
+	public String refundRequestSubmit(
+			Pay pay,
+			@RequestParam List<String> requestDetailNum) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("list", requestDetailNum);
+		try {
+			service.refundRequest(pay);
+			service.requestRefund(map);
+		} catch (Exception e) {			
+		}
+		return "redirect:/mypage/requestCheck";
+	}
+	
 	
 	
 }

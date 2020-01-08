@@ -1,6 +1,5 @@
 package com.catDog.admin;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -310,7 +309,20 @@ public class AdminServiceImpl implements AdminService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
+		return list;
+	}
+
+	@Override
+	public List<Shop> requestDetailList(int requestNum) {
+		List<Shop> list = null;
+
+		try {
+			list = dao.selectList("admin.requestDetailList", requestNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return list;
 	}
 

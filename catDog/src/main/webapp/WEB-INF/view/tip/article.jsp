@@ -36,33 +36,30 @@
 </style>
 
 <script type="text/javascript">
-function login() {
-	location.href="<%=cp%>/member/login";
-}
-
 function deleteTip(tipNum) {
-	<c:if test="${sessionScope.member.userId=='userId' || sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">
-	var q = "tipNum="+tipNum+"&${query}";
-    var url = "<%=cp%>/tip/delete?" + q;
-
-    if(confirm("위 게시물을 삭제 하시겠습니까 ? "))
-  	  location.href=url;
-</c:if>    
-<c:if test="${sessionScope.member.userId!='userId' && sessionScope.member.userId!='admin' && sessionScope.member.userId!='admin2' && sessionScope.member.userId!='admin3'}">
-  alert("게시물을 삭제할 수 없습니다.");
-</c:if>
+	<c:if test="${sessionScope.member.userId==dto.userId || fn:indexOf(sessionScope.member.userId,'admin') == 0}">
+	var q = "tipNum=${dto.tipNum}&${query}";
+	var url = "<%=cp%>/tip/delete?"+q;
+	
+	if(confirm("게시글을 삭제 하시겠습니까 ?")) {
+		location.href=url;
+	}
+	</c:if>
+	<c:if test="${sessionScope.member.userId!=dto.userId && fn:indexOf(sessionScope.member.userId,'admin') != 0}">
+		alert("게시물을 삭제할 수 없습니다.");
+	</c:if>
 }
 
 function updateTip(tipNum) {
 	<c:if test="${sessionScope.member.userId==dto.userId}">
-		var q = "tipNum=${dto.tipNum}&page=${page}";
-	    var url = "<%=cp%>/tip/update?" + q;
-
-	    location.href=url;
+	var q = "tipNum=${dto.tipNum}&page=${page}";
+	var url = "<%=cp%>/tip/update?"+q;
+	
+	location.href=url;
 	</c:if>
-
-	<c:if test="${sessionScope.member.userId!=dto.userId }">
-	   alert("게시물을 수정할 수 없습니다.");
+	
+	<c:if test="${sessionScope.member.userId!=dto.userId}">
+		alert("게시글을 수정할 수 없습니다.");
 	</c:if>
 }
 
@@ -401,10 +398,10 @@ $(function(){
 			<tr height="45">
 				<td  width="300" align="left">
 					<c:if test="${sessionScope.member.userId==dto.userId}">
-						<button type="button" class="btn" onclick="updateTip('${dto.tipNum}');">수정</button>
+						<button type="button" class="btn" onclick="updateTip();">수정</button>
 					</c:if>
-					<c:if test="${sessionScope.member.userId==dto.userId || sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">
-						<button type="button" class="btn" onclick="deleteTip('${dto.tipNum}');">삭제</button>
+					  <c:if test="${sessionScope.member.userId==dto.userId || fn:indexOf(sessionScope.member.userId,'admin') == 0}">
+						<button type="button" class="btn" onclick="deleteTip();">삭제</button>
 					</c:if>
 				</td>
 				

@@ -112,13 +112,24 @@ public class RequestServiceImpl implements RequestService {
 	}
 
 	@Override
-	public void requestRefund(String requestNum) throws Exception {
+	public void requestRefund(Map<String, Object> map) throws Exception {
 		try {
-			dao.updateData("request.requestRefund", requestNum);
+			dao.updateData("request.requestRefund", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
 		
+	}
+
+	@Override
+	public Pay readExpress(String requestNum) {
+		Pay dto = null;
+		try {
+			dto = dao.selectOne("request.readExpress", requestNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
 	}
 }

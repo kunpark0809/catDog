@@ -41,8 +41,8 @@
 				</td>
 				<td width='50%' style='padding:5px 5px; border:1px solid #cccccc; border-left:none;' align='right'>
 					<span>${vo.created}</span> |
-					<c:if test="${vo.userId == sessionScope.member.userId ||  sessionScope.member.userId == 'admin' }">
-						<span class="deleteReply" style="cursor: pointer;" data-tipReplyNum='${vo.tipReplyNum}' data-pageNo='${pageNo}'>삭제</span>
+					<c:if test="${vo.userId == sessionScope.member.userId || sessionScope.member.userId == 'admin' }">
+						<span class="deleteReply" style="cursor: pointer;" data-bbsReplyNum='${vo.bbsReplyNum}' data-pageNo='${pageNo}'>삭제</span>
 					</c:if>
 					<c:if test="${vo.userId != sessionScope.member.userId && sessionScope.member.userId != 'admin' }">
 						<span class="notifyReply">삭제</span>
@@ -57,12 +57,12 @@
 			
 			<tr>
 				<td style='padding:7px 5px;' align="left">
-					<button type='button' class='btn2 btnReplyParentLayout' data-tipReplyNum='${vo.tipReplyNum}'>답글 <span id="parentCount${vo.tipReplyNum}">${vo.parentCount}</span></button>
+					<button type='button' class='btn2 btnReplyParentLayout' data-bbsReplyNum='${vo.bbsReplyNum}'>답글 <span id="parentCount${vo.bbsReplyNum}">${vo.parentCount}</span></button>
 				</td>
 			</tr>
 			<tr class='replyParent' style='display: none;'>
 				<td colspan='2'>
-					<div id='listReplyParent${vo.tipReplyNum}' class='parentList' style='border-top: 1px solid #cccccc;'></div>
+					<div id='listReplyParent${vo.bbsReplyNum}' class='parentList' style='border-top: 1px solid #cccccc;'></div>
 					<div style='clear: both; padding: 10px 10px;'>
 						<div style='float: left; width: 5%;'>└</div>
 						<div style='float: left; width:95%'>
@@ -70,11 +70,10 @@
 						</div>
 					</div>
 					<div style='padding: 0px 13px 10px 10px; text-align: right; font-weight: bold;'>
-						<button type='button' class='btn2 btnSendReplyParent' data-tipReplyNum='${vo.tipReplyNum}'>답글 등록</button>
+						<button type='button' class='btn2 btnSendReplyParent' data-bbsReplyNum='${vo.bbsReplyNum}'>답글 등록</button>
 					</div>
 				</td>
 			</tr>
-			
 		</c:forEach>
 	</tbody>
 	<tfoot id='listReplyFooter'>

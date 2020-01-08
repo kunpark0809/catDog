@@ -155,7 +155,7 @@
 		VALUES (report_seq.NEXTVAL, 1, #{reportedPostNum}, #{reporterNum}, #{reportedNum}, #{reasonSortNum})
 	</insert>
       
-	<select id="petReportCount" parameterType="Integer" resultType="Integer">
+	<select id="tipReportCount" parameterType="Integer" resultType="Integer">
 		SELECT COUNT(*) FROM report WHERE reportNum=#{reportNum}
 	</select>
 	

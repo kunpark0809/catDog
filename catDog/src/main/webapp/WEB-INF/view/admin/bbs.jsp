@@ -9,6 +9,11 @@
 
 <script type="text/javascript">
 
+function searchList() {
+	var f = document.searchForm;
+	f.submit();
+}
+
 $(function(){
 	
 	$("#tab-${group}").addClass("active");
@@ -33,7 +38,7 @@ $(function(){
 
 <div class="body-container" style="width: 1100px; margin: 0px auto;">
 	<div class="body-title">
-		<h3><i class="fas fa-comments"></i> 수다방 관리</h3>
+		<h3><i class="fas fa-comments"></i> 신고 관리</h3>
 	</div>
 
 	<div>
@@ -65,12 +70,12 @@ $(function(){
 		
 		<table style="width: 100%; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
 		  <tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 2px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
-		      <th width="90" style="color: #787878;">신고번호</th>
-		      <th width="150" style="color: #787878;">게시판</th>
-		      <th style="color: #787878;">신고분류</th>
+		      <th width="50" style="color: #787878;">신고번호</th>
+		      <th width="100" style="color: #787878;">게시판</th>
+		      <th width="200" style="color: #787878;">신고분류</th>
 		      <th width="190" style="color: #787878;">신고자</th>
 		      <th width="190" style="color: #787878;">피신고자</th>
-		      <th width="120" style="color: #787878;">신고일</th>
+		      <th width="190" style="color: #787878;">신고일</th>
 		  </tr>
 		 
 		<c:forEach var="dto" items="${list}">
@@ -105,13 +110,15 @@ $(function(){
 		          <form name="searchForm" action="<%=cp%>/admin/bbs" method="post">
 		              <select name="condition" class="selectField">
 		                  <option value="all" ${condition=="all"?"selected='selected'":""}>모두</option>
-		                  <option value="subject" ${condition=="subject"?"selected='selected'":""}>제목</option>
-		                  <option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
-		                  <option value="userName" ${condition=="userName"?"selected='selected'":""}>작성자</option>
-		                  <option value="created" ${condition=="created"?"selected='selected'":""}>등록일</option>
+		                  <option value="userId" ${condition=="userId"?"selected='selected'":""}>ID</option>
+		                  <option value="nickName" ${condition=="nickName"?"selected='selected'":""}>닉네임</option>
+		                  <option value="reasonName" ${condition=="reasonName"?"selected='selected'":""}>신고분류</option>
 		            </select>
 		            <input type="text" name="keyword" value="${keyword}" class="boxTF">
 		            <button type="button" class="btnconFirm" onclick="searchList()">검색</button>
+		        	<input type="hidden" name="group" value="${group }">
+		        	<input type="hidden" name="page" value="${page }">
+		        	
 		        </form>
 		      </td>
 		      

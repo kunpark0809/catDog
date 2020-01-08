@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="freeBoard">
+
+	<sql id="where-list">
+		<if test="condition=='all'">
+			( INSTR(subject, #{keyword}) &gt; 0
+				OR INSTR(content, #{keyword}) &gt; 0
+					OR INSTR(created, #{keyword}) &gt; 0 )
+		</if>
+		<if test="condition=='subject'">
+			INSTR(subject, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='content'">
+			INSTR(content, #{keyword}) &gt; 0 
+		</if>
+		<if test="condition=='created'">
+				(to_char(created, 'yyyy-mm-dd') = #{keyword}
+				 or to_char(created, 'yyyymmdd') = #{keyword})
+		</if>
+	</sql>
+	
+	<select id="listFreeBoard" parameterType="map" resultType="com.catDog.freeBoard.FreeBoard">
+		SELECT b.bbsNum, b.subject, b.content, created, b.hitCount, md.nickName
+		FROM bbs b
+		JOIN memberDetail md ON b.num = md.num
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY b.bbsNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(count(*), 0)
+		FROM bbs b
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<select id="seq" resultType="Integer">
+		SELECT bbs_seq.NEXTVAL FROM dual
+	</select>
+
+	<insert id="insertFreeBoard" parameterType="com.catDog.freeBoard.FreeBoard">
+		INSERT INTO bbs(bbsNum, subject, content, num) 
+		VALUES(bbs_seq.NEXTVAL, #{subject}, #{content}, #{num})
+	</insert>
+	
+	<select id="readFreeBoard" parameterType="Integer" resultType="com.catDog.freeBoard.FreeBoard">
+		SELECT b.bbsNum, b.num, md.userId, md.nickName, b.subject, b.content, b.hitCount, TO_CHAR(b.created, 'yyyy.mm.dd') created
+		FROM bbs b
+		JOIN memberDetail md ON b.num = md.num
+		WHERE b.bbsNum=#{bbsNum}
+	</select>
+
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE bbs t SET hitCount=hitCount+1 WHERE bbsNum = #{bbsNum}
+	</update>
+	
+	<select id="preReadFreeBoard" parameterType="map" resultType="com.catDog.freeBoard.FreeBoard">
+		SELECT bbsNum, subject
+		FROM bbs b
+	<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			AND (bbsNum &gt; #{bbsNum})
+		</where>
+		ORDER BY bbsNum ASC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+
+	<select id="nextReadFreeBoard" parameterType="map" resultType="com.catDog.freeBoard.FreeBoard">
+		SELECT bbsNum, subject
+		FROM bbs b
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			AND (bbsNum &lt; #{bbsNum})
+		</where>
+		ORDER BY bbsNum DESC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+	
+	<update id="updateFreeBoard" parameterType="com.catDog.freeBoard.FreeBoard">
+		UPDATE bbs SET subject=#{subject}, content=#{content}
+		WHERE bbsNum=#{bbsNum}
+	</update>
+
+	<delete id="deleteFreeBoard" parameterType="Integer">
+		DELETE FROM bbs WHERE bbsNum=#{bbsNum}
+	</delete>
+
+	<insert id="insertFreeBoardReport" parameterType="map">
+		INSERT INTO report(reportNum, boardSort, reportedPostNum, reporterNum, reportedNum, reasonSortNum)
+		VALUES (report_seq.NEXTVAL, 3, #{reportedPostNum}, #{reporterNum}, #{reportedNum}, #{reasonSortNum})
+	</insert>
+      
+	<select id="freeBoardReportCount" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM report WHERE reportNum=#{reportNum}
+	</select>
+	
+	<select id="listReply" parameterType="map" resultType="com.catDog.freeBoard.Reply">
+		SELECT br.bbsReplyNum, br.bbsNum, md.userId, md.nickName, br.content, TO_CHAR(br.created, 'yyyy-mm-dd') created, NVL(parentCount, 0) parentCount
+		FROM bbsReply br JOIN memberDetail md ON br.num = md.num
+		LEFT OUTER JOIN (
+			SELECT parent, COUNT(*) parentCount
+			FROM bbsReply WHERE parent !=0 GROUP BY parent
+		) a ON br.bbsReplyNum = a.parent
+		WHERE bbsNum=#{bbsNum} AND br.parent=0
+		ORDER BY br.bbsReplyNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+
+	<select id="replyCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM bbsReply
+		WHERE bbsNum=#{bbsNum} AND parent=0
+	</select>
+	
+	<insert id="insertReply" parameterType="com.catDog.freeBoard.Reply">
+		INSERT INTO bbsReply(bbsReplyNum, bbsNum, num, content, parent)
+		VALUES (bbsReply_seq.NEXTVAL, #{bbsNum}, #{num}, #{content}, #{parent})
+	</insert>
+	
+	<delete id="deleteReply" parameterType="map">
+		DELETE FROM bbsReply WHERE
+		<if test="mode=='reply' ">
+			bbsReplyNum IN (
+				SELECT bbsReplyNum FROM bbsReply
+					START WITH bbsReplyNum=#{bbsReplyNum}
+					CONNECT BY PRIOR bbsReplyNum = parent
+			)
+		</if>
+		<if test="mode=='parent' ">
+			bbsReplyNum = #{bbsReplyNum}
+		</if>
+	</delete>
+	
+	<select id="listReplyParent" parameterType="Integer" resultType="com.catDog.freeBoard.Reply">
+		SELECT bbsReplyNum, br.num, md.nickName, br.content, TO_CHAR(br.created, 'yyyy-mm-dd') created, parent
+		FROM bbsReply br
+		JOIN memberDetail md ON md.num = br.num
+		WHERE parent = #{parent}
+		ORDER BY bbsReplyNum DESC
+	</select>
+	
+	<select id="replyParentCount" parameterType="Integer" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM bbsReply WHERE parent = #{parent}
+	</select>
+	
+</mapper>

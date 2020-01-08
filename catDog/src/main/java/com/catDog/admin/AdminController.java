@@ -3,6 +3,7 @@ package com.catDog.admin;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -63,8 +64,71 @@ public class AdminController {
 		map.put("offset", offset);
 		map.put("rows", rows);
 
-		// 여기 고쳐야함
 		List<Shop> list = service.requestList(map);
+
+		String[] statusesToString = { "입금대기", "결제완료", "배송준비중", "배송중", "배송완료", "취소완료", "환불진행중", "환불완료", "교환진행중", "교환완료",
+				"리뷰완료" };
+
+		for (Shop dto : list) {
+			dto.setTotalWithComma(NumberFormat.getInstance().format(dto.getTotal()));
+
+			// 같은 주문번호를 가진 requestDetail의 진행상태가 둘 다 같다면 그걸로 표기, 그렇지 않다면 둘 다 표기
+			List<Shop> list2 = service.requestDetailList(dto.getRequestNum());
+
+			int[] statuses = new int[list2.size()];
+
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < list2.size(); i++) {
+				statuses[i] = list2.get(i).getStatus();
+
+				switch (statuses[i]) {
+				case 0:
+					sb.append(statusesToString[0]);
+					break;
+				case 1:
+					sb.append(statusesToString[1]);
+					break;
+				case 2:
+					sb.append(statusesToString[2]);
+					break;
+				case 3:
+					sb.append(statusesToString[3]);
+					break;
+				case 4:
+					sb.append(statusesToString[4]);
+					break;
+				case 5:
+					sb.append(statusesToString[5]);
+					break;
+				case 6:
+					sb.append(statusesToString[6]);
+					break;
+				case 7:
+					sb.append(statusesToString[7]);
+					break;
+				case 8:
+					sb.append(statusesToString[8]);
+					break;
+				case 9:
+					sb.append(statusesToString[9]);
+					break;
+				case 10:
+					sb.append(statusesToString[10]);
+				}
+			}
+			// statuses[]에 그 requestNum에 맞는 모든 status가 모임
+			// sb에 그 번호의 statusToString이 모두 붙음. 쉼표로 구분됨
+			StringBuilder sb2 = new StringBuilder();
+			for (int i = 0; i <= 10; i++) {
+				if (sb.toString().contains(statusesToString[i]))
+					sb2.append(statusesToString[i] + "<br>");
+			}
+			// 입금완료<br>입금준비중 이런식으로 만들기
+
+			if (sb2 != null)
+				sb2.replace(sb2.length()-4, sb2.length(), "");// 마지막 <br> 자르기
+			dto.setStatusToString(sb2.toString());
+		}
 
 		String cp = req.getContextPath();
 		String query = "rows=" + rows;
@@ -89,9 +153,7 @@ public class AdminController {
 
 		return ".admin.shop";
 	}
-	
-	
-	
+
 	@RequestMapping(value = "/admin/member")
 	public String memberManage(@RequestParam(value = "page", defaultValue = "1") int current_page,
 			@RequestParam(defaultValue = "all") String condition, @RequestParam(defaultValue = "") String keyword,
@@ -211,12 +273,13 @@ public class AdminController {
 		int rows = 50;
 
 		Map<String, Object> map = new HashMap<>();
-
+		
 		if (keyword != null && keyword != "") {
 			map.put("condition", condition);
 			map.put("keyword", keyword);
 		}
-
+		map.put("group", group);
+		
 		int dataCount = service.reportCount(map);
 		int total_page = myUtil.pageCount(rows, dataCount);
 		if (current_page > total_page)
@@ -227,9 +290,15 @@ public class AdminController {
 			offset = 0;
 
 		map = new HashMap<>();
+		
+		if (keyword != null && keyword != "") {
+			map.put("condition", condition);
+			map.put("keyword", keyword);
+		}
 		map.put("offset", offset);
 		map.put("rows", rows);
-
+		map.put("group", group);
+		
 		List<Report> list = service.reportList(map);
 
 		String cp = req.getContextPath();

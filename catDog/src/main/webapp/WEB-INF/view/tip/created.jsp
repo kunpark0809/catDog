@@ -41,18 +41,9 @@
          return false;
      }
      
-     var mode="${mode}";
-     if(mode=="created"||mode=="update" && $f.main.value!="") {
- 		if(! /(\.gif|\.jpg|\.png|\.jpeg)$/i.test(f.main.value)) {
- 			alert('이미지 파일만 업로드 가능합니다.');
- 			f.main.focus();
- 			return false;
- 		}
- 	}
-     
-   
- 	f.action="<%=cp%>/tip/created";
- 	return true;
+    f.action="<%=cp%>/tip/${mode}";
+  	
+  	f.submit();
  }
 
 </script>
@@ -107,7 +98,6 @@
 			        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/tip/list';">${mode=='update'?'수정취소':'등록취소'}</button>
 			        	<c:if test="${mode=='update'}">
 								<input type="hidden" name="tipNum" value="${dto.tipNum}">
-								<input type="hidden" name="imageFilename" value="${dto.imageFileName}">
 								<input type="hidden" name="page" value="${page}">
 						</c:if>
 			      </td>

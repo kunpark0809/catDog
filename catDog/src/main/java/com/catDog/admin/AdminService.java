@@ -51,4 +51,6 @@ public interface AdminService {
 
 	public List<Shop> requestList(Map<String, Object> map);
 
+	public List<Shop> requestDetailList(int requestNum);
+
 }
