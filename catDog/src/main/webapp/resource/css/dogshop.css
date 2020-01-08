@@ -188,9 +188,9 @@ cursor: pointer;
 }
 
 .dialog_submit{
-	background: black;
+	background: #D96262;
 	color: white;
-	border: 1px solid black;
+	border: 1px solid #D96262;
 	width: 30%;
 }
 

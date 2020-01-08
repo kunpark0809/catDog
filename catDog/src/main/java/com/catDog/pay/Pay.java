@@ -43,6 +43,9 @@ public class Pay {
 	private int price; // 용품 단품 가격
 	private String imageFileName;
 	
+	private String invoice; // 송장번호
+	private String expressNum; // 택배업체코드
+	
 	public long getNum() {
 		return num;
 	}
@@ -309,6 +312,18 @@ public class Pay {
 	}
 	public void setRefundReason(String refundReason) {
 		this.refundReason = refundReason;
+	}
+	public String getExpressNum() {
+		return expressNum;
+	}
+	public void setExpressNum(String expressNum) {
+		this.expressNum = expressNum;
+	}
+	public String getInvoice() {
+		return invoice;
+	}
+	public void setInvoice(String invoice) {
+		this.invoice = invoice;
 	}
 
 
