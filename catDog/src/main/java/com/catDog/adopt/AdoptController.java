@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.catDog.common.MyUtil;
 import com.catDog.customer.SessionInfo;
-
+ 
 @Controller("adopt.adoptController")
 public class AdoptController {
 	@Autowired

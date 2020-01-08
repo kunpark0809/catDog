@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%
+<% 
    String cp = request.getContextPath();
 %>
 <link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
@@ -15,7 +15,7 @@ function deleteBoard() {
     if(confirm("위 게시물을 삭제 하시겠습니까 ? "))
   	  location.href=url;  
 }
-
+ 
 function updateBoard(){
 	var q = "adoptionNum=${dto.adoptionNum}&page=${page}";
     var url = "<%=cp%>/adopt/update?" + q;

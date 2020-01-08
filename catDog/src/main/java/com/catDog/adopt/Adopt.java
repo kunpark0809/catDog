@@ -1,7 +1,7 @@
 package com.catDog.adopt;
 
 import org.springframework.web.multipart.MultipartFile;
-
+ 
 public class Adopt {
 	private long num; // 고객번호
 	private String nickName;
