@@ -65,6 +65,8 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 				dto = service.readMemberState(userId);
 				if (dto.getStateCode() == 2) {
 					errorMsg = "사이트 규정 위배로 추방당한 계정입니다.";
+				}else if (dto.getStateCode() == 3) {
+					errorMsg = "신고 3회 누적으로 추방당한 계정입니다.";
 				} else {
 					errorMsg = "계정이 비활성화되었습니다. 관리자에게 문의하세요.";
 				}

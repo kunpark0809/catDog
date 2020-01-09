@@ -16,6 +16,8 @@ public class Report {
 	private String reportedId;
 	private String reportedNickName;
 
+	private int judgement;
+
 	public int getReportNum() {
 		return reportNum;
 	}
@@ -118,6 +120,14 @@ public class Report {
 
 	public void setReportedNickName(String reportedNickName) {
 		this.reportedNickName = reportedNickName;
+	}
+
+	public int getJudgement() {
+		return judgement;
+	}
+
+	public void setJudgement(int judgement) {
+		this.judgement = judgement;
 	}
 
 }

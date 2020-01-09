@@ -126,7 +126,7 @@ public class AdminController {
 			// 입금완료<br>입금준비중 이런식으로 만들기
 
 			if (sb2 != null)
-				sb2.replace(sb2.length()-4, sb2.length(), "");// 마지막 <br> 자르기
+				sb2.replace(sb2.length() - 4, sb2.length(), "");// 마지막 <br> 자르기
 			dto.setStatusToString(sb2.toString());
 		}
 
@@ -269,18 +269,44 @@ public class AdminController {
 		if (req.getMethod().equalsIgnoreCase("GET")) {
 			keyword = URLDecoder.decode(keyword, "UTF-8");
 		}
-
-		int rows = 50;
-
 		Map<String, Object> map = new HashMap<>();
-		
+
 		if (keyword != null && keyword != "") {
 			map.put("condition", condition);
 			map.put("keyword", keyword);
 		}
 		map.put("group", group);
-		
+
+		// 신고리스트에서 삭제당한 글의 신고목록이 남아있으면 지우기
+		// 신고글 전체 리스트 불러오고 거기서 boardSort로 구분하고 reportedPostNum 가져와서
+		// 원본글 체크해보고 없으면 신고내역도 삭제하기
+		List<Report> tempList = new ArrayList<>();
+		tempList = service.totalReportList(map);
+
+		for (Report dto : tempList) {
+			// 꿀팁(tip) 1, 자랑(myPet) 2, 자게(bbs) 3
+			switch (dto.getBoardSort()) {
+			case 1:
+				if (service.selectTip(dto.getReportedPostNum()) == 0) { // 원본글이 존재하지 않으면
+					service.deleteTip(dto.getReportedPostNum());
+				}
+				break;
+			case 2:
+				if (service.selectMyPet(dto.getReportedPostNum()) == 0) {
+					service.deleteMyPet(dto.getReportedPostNum());
+				}
+				break;
+			case 3:
+				if (service.selectBbs(dto.getReportedPostNum()) == 0) {
+					service.deleteBbs(dto.getReportedPostNum());
+				}
+			}
+		}
+
+		int rows = 50;
+
 		int dataCount = service.reportCount(map);
+
 		int total_page = myUtil.pageCount(rows, dataCount);
 		if (current_page > total_page)
 			current_page = total_page;
@@ -290,7 +316,7 @@ public class AdminController {
 			offset = 0;
 
 		map = new HashMap<>();
-		
+
 		if (keyword != null && keyword != "") {
 			map.put("condition", condition);
 			map.put("keyword", keyword);
@@ -298,7 +324,7 @@ public class AdminController {
 		map.put("offset", offset);
 		map.put("rows", rows);
 		map.put("group", group);
-		
+
 		List<Report> list = service.reportList(map);
 
 		String cp = req.getContextPath();
@@ -324,6 +350,46 @@ public class AdminController {
 		model.addAttribute("keyword", keyword);
 
 		return ".admin.bbs";
+	}
+
+	@RequestMapping(value = "/admin/bbs/judgement")
+	public String bbsJudgement(@RequestParam int reportNum, @RequestParam String judgement,
+			@RequestParam String reportedId) throws Exception {
+		// 판결과 번호 받아옴
+		// 판결에 따라 report 테이블에 그에 맞는 판결을 집어넣음
+		Map<String, Object> map = new HashMap<>();
+
+		map.put("reportNum", reportNum);
+
+		if (judgement.equals("innocent")) {
+			map.put("judgement", 1);
+		} else if (judgement.equals("guilty")) {
+			map.put("judgement", 2);
+			service.updateWarn(reportedId);
+		}
+		service.updateReport(map);
+		// guilty면 memberDetail의 reportCount++, warn에 1을 넣고
+		// 최초 로그인 시에 경고문을 띄우고 warn을 0으로 바꿈
+
+		//여기에 memberDetail의 reportCount가 3이 되었으면 enabled를 0으로 바꾸는 쿼리 쓰기
+		if(service.checkReportCount(reportedId)>=3) {
+			map = new HashMap<>();
+			map.put("userId", reportedId);
+			map.put("enabled", 0);
+
+			service2.updateEnabled(map);
+
+			Customer customer = new Customer();
+			customer.setUserId(reportedId);
+			customer.setStateCode(3);
+			customer.setMemo("신고 3회 누적으로 추방");
+			service2.insertMemberState(customer);
+
+		}
+		
+		
+		
+		return "redirect:/admin/bbs";
 	}
 
 	@RequestMapping(value = "/admin/cs/list")

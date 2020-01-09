@@ -16,6 +16,8 @@ public class Customer {
 	private String lastLogin;
 	private int failure_cnt;
 
+	private int reportCount, warn;
+
 	// memberState 관련 필드
 	private int memberStateNum, stateCode;
 	private String memo, registration_date;
@@ -247,6 +249,22 @@ public class Customer {
 
 	public void setModify_date(String modify_date) {
 		this.modify_date = modify_date;
+	}
+
+	public int getReportCount() {
+		return reportCount;
+	}
+
+	public void setReportCount(int reportCount) {
+		this.reportCount = reportCount;
+	}
+
+	public int getWarn() {
+		return warn;
+	}
+
+	public void setWarn(int warn) {
+		this.warn = warn;
 	}
 
 }

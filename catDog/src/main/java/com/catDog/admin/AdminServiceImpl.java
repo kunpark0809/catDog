@@ -275,6 +275,70 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
+	public List<Report> totalReportList(Map<String, Object> map) {
+		List<Report> list = null;
+
+		try {
+			list = dao.selectList("admin.totalReportList", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
+	@Override
+	public void updateReport(Map<String, Object> map) throws Exception {
+
+		try {
+			dao.updateData("admin.updateReport", map);
+		} catch (Exception e) {
+			throw e;
+		}
+
+	}
+
+	@Override
+	public void updateWarn(String reportedId) throws Exception {
+
+		try {
+			dao.updateData("admin.updateWarn", reportedId);
+		} catch (Exception e) {
+			throw e;
+		}
+
+	}
+	
+	@Override
+	public void deactivateWarn(String reportedId) throws Exception {
+
+		try {
+			dao.updateData("admin.deactivateWarn", reportedId);
+		} catch (Exception e) {
+			throw e;
+		}
+
+	}
+	
+	
+	
+	
+
+	@Override
+	public int checkReportCount(String reportedId) {
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("admin.checkReportCount", reportedId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	
+	
+	@Override
 	public int reportCount(Map<String, Object> map) {
 		int result = 0;
 
@@ -314,6 +378,45 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
+	public int selectTip(int tipNum) {
+		int result = 0;
+
+		try {
+			result = dao.selectOne("admin.selectTip", tipNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	@Override
+	public int selectMyPet(int myPetNum) {
+		int result = 0;
+
+		try {
+			result = dao.selectOne("admin.selectMyPet", myPetNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	@Override
+	public int selectBbs(int bbsNum) {
+		int result = 0;
+
+		try {
+			result = dao.selectOne("admin.selectBbs", bbsNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	@Override
 	public List<Shop> requestDetailList(int requestNum) {
 		List<Shop> list = null;
 
@@ -324,6 +427,33 @@ public class AdminServiceImpl implements AdminService {
 		}
 
 		return list;
+	}
+
+	@Override
+	public void deleteTip(int reportedPostNum) throws Exception {
+		try {
+			dao.deleteData("admin.deleteTip", reportedPostNum);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	@Override
+	public void deleteMyPet(int reportedPostNum) throws Exception {
+		try {
+			dao.deleteData("admin.deleteMyPet", reportedPostNum);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	@Override
+	public void deleteBbs(int reportedPostNum) throws Exception {
+		try {
+			dao.deleteData("admin.deleteBbs", reportedPostNum);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
 }

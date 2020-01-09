@@ -18,6 +18,7 @@ import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 
+import com.catDog.admin.AdminService;
 import com.catDog.customer.Customer;
 import com.catDog.customer.CustomerService;
 import com.catDog.customer.SessionInfo;
@@ -31,6 +32,12 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
 	@Autowired
 	private CustomerService service;
+	
+	@Autowired
+	private AdminService service2;
+	
+	
+	
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -59,6 +66,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 			info.setName(member.getName());
 			info.setMemberIdx(member.getNum());
 			info.setNickName(member.getNickName());
+			info.setReportCount(member.getReportCount());
 			session.setAttribute("member", info);
 
 			Date endDate = new Date();
@@ -74,6 +82,16 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 				redirectStrategy.sendRedirect(request, response, targetUrl);
 				return;
 			}
+			
+			// 모달 창 띄우고 마지막에 warn 0으로 돌리기
+//			if(member.getWarn()==1) {
+//				
+//				service2.deactivateWarn(member.getUserId());
+//			}
+			
+			
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -313,7 +313,7 @@
 	<select id="reportList" parameterType="Map"
 		resultType="com.catDog.admin.Report">
 		SELECT reportNum, boardSort, reportedPostNum, TO_CHAR(reportDate,'YYYY-MM-DD HH24:MI:SS') reportDate,
-		r.reasonSortNum, reasonName,
+		r.reasonSortNum, reasonName, judgement,
 		reporterNum, md1.userId reporterId, md1.nickName reporterNickName,
 		reportedNum, md2.userId reportedId, md2.nickName reportedNickName
 		FROM report r
@@ -350,6 +350,78 @@
 			</if>
 		</where>
 	</select>
+
+	<!-- 페이지 상관없이 신고 리스트를 가져오는 쿼리. 삭제된 글 판별에 사용 -->
+	<select id="totalReportList" parameterType="Map"
+		resultType="com.catDog.admin.Report">
+		SELECT reportNum, boardSort, reportedPostNum, TO_CHAR(reportDate,'YYYY-MM-DD HH24:MI:SS') reportDate,
+		r.reasonSortNum, reasonName,
+		reporterNum, md1.userId reporterId, md1.nickName reporterNickName,
+		reportedNum, md2.userId reportedId, md2.nickName reportedNickName
+		FROM report r
+		JOIN reasonSort rs ON r.reasonSortNum = rs.reasonSortNum
+		JOIN memberDetail md1 ON r.reporterNum = md1.num
+		JOIN memberDetail md2 ON r.reportedNum = md2.num
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<include refid="report-where-list" />
+			</if>
+			
+			<if test="group!=0">
+			AND
+			<include refid="report-group-list" />
+			</if>
+		</where>
+	</select>
+
+
+	<!-- 해당 신고내역의 원본글이 존재하는지를 판별하는 쿼리들 -->
+	<!-- 0이면 원본글 존재안함, 1 이상이면 존재 -->
+	
+	<select id="selectTip" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM tip WHERE tipNum = #{tipNum}
+	</select>
+	
+	<select id="selectMyPet" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM myPet WHERE myPetNum = #{myPetNum}
+	</select>
+
+	<select id="selectBbs" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM bbs WHERE bbsNum = #{bbsNum}
+	</select>
+
+	<!-- 원본글 존재여부 판별 이후 원본글 없으면 해당 신고글을 삭제할 쿼리들 -->
+	<delete id="deleteTip" parameterType="Integer">
+		DELETE FROM report WHERE boardSort = 1 AND reportedPostNum = #{reportedPostNum}
+	</delete>
+
+	<delete id="deleteMyPet" parameterType="Integer">
+		DELETE FROM report WHERE boardSort = 2 AND reportedPostNum = #{reportedPostNum}
+	</delete>
+		
+	<delete id="deleteBbs" parameterType="Integer">
+		DELETE FROM report WHERE boardSort = 3 AND reportedPostNum = #{reportedPostNum}
+	</delete>
+
+
+	<!-- 제재 관련 쿼리들 -->
+	<update id="updateReport" parameterType="map">
+		UPDATE report SET judgement=#{judgement} WHERE reportNum = #{reportNum}
+	</update>
+		
+	<update id="updateWarn" parameterType="String">
+		UPDATE memberDetail SET warn = 1, reportCount = reportCount+1 WHERE userId = #{reportedId}
+	</update>
+	
+	<update id="deactivateWarn" parameterType="String">
+		UPDATE memberDetail SET warn = 0 WHERE userId = #{reportedId}
+	</update>
+
+	<select id="checkReportCount" parameterType="String" resultType="Integer">
+		SELECT reportCount FROM memberDetail WHERE userId = #{reportedId}
+	</select>
+
+
 
 	<!-- 쇼핑몰 관리 관련 쿼리 -->
 	

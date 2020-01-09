@@ -53,4 +53,26 @@ public interface AdminService {
 
 	public List<Shop> requestDetailList(int requestNum);
 
+	public int selectBbs(int bbsNum);
+
+	public int selectMyPet(int myPetNum);
+
+	public int selectTip(int tipNum);
+
+	public List<Report> totalReportList(Map<String, Object> map);
+
+	public void deleteTip(int reportedPostNum) throws Exception;
+
+	public void deleteMyPet(int reportedPostNum) throws Exception;
+
+	public void deleteBbs(int reportedPostNum) throws Exception;
+
+	public void updateReport(Map<String, Object> map) throws Exception;
+
+	public void updateWarn(String reportedId) throws Exception;
+
+	public int checkReportCount(String reportedId);
+
+	public void deactivateWarn(String reportedId) throws Exception;
+
 }

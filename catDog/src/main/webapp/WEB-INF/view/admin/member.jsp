@@ -94,6 +94,9 @@
 							<c:when test="${dto.stateCode==2}">
 								강퇴됨
 							</c:when>
+							<c:when test="${dto.stateCode==3}">
+								강퇴됨(신고누적)
+							</c:when>
 							<c:otherwise>
 								<button type="button" onclick='ban("${dto.userId}")'>강퇴</button>
 							</c:otherwise>
