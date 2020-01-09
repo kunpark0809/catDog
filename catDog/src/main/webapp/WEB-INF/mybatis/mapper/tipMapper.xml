@@ -72,9 +72,10 @@
 	</sql>
 	
 	<select id="listTip" parameterType="map" resultType="com.catDog.tip.Tip">
-		SELECT t.tipNum, t.subject, t.content, created, t.hitCount, md.nickName
+		SELECT t.tipNum, t.subject, t.content, created, t.hitCount, md.nickName, t.tipCategoryNum, tipCategory
 		FROM tip t
 		JOIN memberDetail md ON t.num = md.num
+		JOIN tipCategory tc ON t.tipCategoryNum=tc.tipCategoryNum
 		<where>
 			<if test="keyword!=null and keyword!=''">
 				<include refid="where-list"/>
@@ -100,13 +101,15 @@
 	</select>
 
 	<insert id="insertTip" parameterType="com.catDog.tip.Tip">
-		INSERT INTO tip(tipNum, subject, content, num) 
-		VALUES(tip_seq.NEXTVAL, #{subject}, #{content}, #{num})
+		INSERT INTO tip(tipNum, subject, content, num, tipCategoryNum) 
+		VALUES(tip_seq.NEXTVAL, #{subject}, #{content}, #{num}, #{tipCategoryNum})
 	</insert>
+	
 	<select id="readTip" parameterType="Integer" resultType="com.catDog.tip.Tip">
-		SELECT t.tipNum, t.num, md.userId, md.nickName, t.subject, t.content, t.hitCount, TO_CHAR(t.created, 'yyyy.mm.dd') created
+		SELECT t.tipNum, t.num, md.userId, md.nickName, t.subject, t.content, t.hitCount, TO_CHAR(t.created, 'yyyy.mm.dd') created, t.tipCategoryNum, tipCategory
 		FROM tip t
 		JOIN memberDetail md ON t.num = md.num
+		JOIN tipCategory tc ON t.tipCategoryNum=tc.tipCategoryNum
 		WHERE t.tipNum=#{tipNum}
 	</select>
 
@@ -142,14 +145,32 @@
 	</select>
 	
 	<update id="updateTip" parameterType="com.catDog.tip.Tip">
-		UPDATE tip SET subject=#{subject}, content=#{content}
+		UPDATE tip SET subject=#{subject}, content=#{content}, tipCategoryNum=#{tipCategoryNum}
 		WHERE tipNum=#{tipNum}
 	</update>
 
 	<delete id="deleteTip" parameterType="Integer">
 		DELETE FROM tip WHERE tipNum=#{tipNum}
 	</delete>
-
+	
+	<insert id="insertTipCategory" parameterType="com.catDog.tip.Tip">
+		INSERT INTO tipCategory(tipCategoryNum, tipCategory)
+			VALUES (#{tipCategoryNum}, #{tipCategory}) 
+	</insert>
+	
+	<update id="updateTipCategory" parameterType="com.catDog.tip.Tip">
+		UPDATE tipCategory SET tipCategory=#{tipCategory}
+		WHERE tipCategoryNum=#{tipCategoryNum}
+	</update>
+	
+	<select id="listTipCategory" resultType="com.catDog.tip.Tip">
+		SELECT tipCategoryNum, tipCategory FROM tipCategory
+	</select>
+	
+	<delete id="deleteTipCategory" parameterType="Integer">
+		DELETE FROM tipCategory WHERE tipCategoryNum=#{tipCategoryNum}
+	</delete>
+	
 	<insert id="insertTipReport" parameterType="map">
 		INSERT INTO report(reportNum, boardSort, reportedPostNum, reporterNum, reportedNum, reasonSortNum)
 		VALUES (report_seq.NEXTVAL, 1, #{reportedPostNum}, #{reporterNum}, #{reportedNum}, #{reasonSortNum})

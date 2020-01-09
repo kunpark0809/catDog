@@ -23,6 +23,17 @@ public class Tip {
 	private int reporterNum;
 	private int reportedNum;
 	private int reasonSortNum;
+	
+	private int tipCategoryNum;
+	private String tipCategory;
+	
+
+	public int getTipCategoryNum() {
+		return tipCategoryNum;
+	}
+	public void setTipCategoryNum(int tipCategoryNum) {
+		this.tipCategoryNum = tipCategoryNum;
+	}
 
 	public String getUserId() {
 		return userId;
@@ -132,6 +143,12 @@ public class Tip {
 	}
 	public void setReasonSortNum(int reasonSortNum) {
 		this.reasonSortNum = reasonSortNum;
+	}
+	public String getTipCategory() {
+		return tipCategory;
+	}
+	public void setTipCategory(String tipCategory) {
+		this.tipCategory = tipCategory;
 	}
 	
 }

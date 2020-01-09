@@ -3,6 +3,8 @@ package com.catDog.tip;
 import java.util.List;
 import java.util.Map;
 
+import com.catDog.cs.Qna;
+
 public interface TipService {
 	public void insertTip(Tip dto) throws Exception;
 
@@ -19,6 +21,11 @@ public interface TipService {
 
 	public void updateTip(Tip dto) throws Exception;
 	public void deleteTip(int tipNum, String userId) throws Exception;
+	
+	public void insertTipCategory(Tip dto) throws Exception;
+	public void updateTipCategory(Tip dto) throws Exception;
+	public void deleteTipCategory(int tipCategoryNum) throws Exception;
+	public List<Tip> listTipCategory();
 	
 	public List<Reply> listReply(Map<String, Object> map);
 	public int replyCount(Map<String, Object> map);

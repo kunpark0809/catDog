@@ -22,7 +22,7 @@
 	</sql>
 	
 	<select id="listFreeBoard" parameterType="map" resultType="com.catDog.freeBoard.FreeBoard">
-		SELECT b.bbsNum, b.subject, b.content, created, b.hitCount, md.nickName
+		SELECT b.bbsNum, b.subject, b.content, created, b.hitCount, md.nickName, b.notice
 		FROM bbs b
 		JOIN memberDetail md ON b.num = md.num
 		<where>
@@ -32,6 +32,14 @@
 		</where>
 		ORDER BY b.bbsNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="listFreeBoardTop" resultType="com.catDog.freeBoard.FreeBoard">
+		SELECT b.bbsNum, b.subject, b.content, created, b.hitCount, md.nickName, b.notice
+		FROM bbs b
+		JOIN memberDetail md ON b.num = md.num
+		where b.notice = 1
+		order by b.bbsNum desc
 	</select>
 
 	<select id="dataCount" parameterType="map" resultType="Integer">

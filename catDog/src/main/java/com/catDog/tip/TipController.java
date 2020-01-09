@@ -110,7 +110,9 @@ public String list(
 	public String createdForm(
 			HttpSession session,
 			Model model) throws Exception {
+		List<Tip> listCategory = service.listTipCategory();
 		
+		model.addAttribute("listCategory", listCategory);
 		model.addAttribute("mode", "created");
 		return ".tip.created";
 	}
@@ -208,9 +210,12 @@ public String list(
 		if(dto == null)
 			return "redirect:/tip/list?page="+page;
 		
+		List<Tip> listCategoty = service.listTipCategory();
+		
 		model.addAttribute("page", page);
 		model.addAttribute("mode", "update");
 		model.addAttribute("dto", dto);
+		model.addAttribute("listCategory", listCategoty);
 		
 		return ".tip.created";
 	}

@@ -60,6 +60,10 @@ private MyUtil myUtil;
 		if(total_page < current_page)
 			current_page = total_page;
 
+		List<FreeBoard> listFreeBoardTop = null;
+		if(current_page==1) {
+			listFreeBoardTop = service.listFreeBoardTop();
+		}
 		
 		int offset = (current_page-1) * rows;
 		if(offset < 0) offset = 0;
@@ -94,6 +98,7 @@ private MyUtil myUtil;
 		
 		String paging = myUtil.paging(current_page, total_page, listUrl);
 
+		model.addAttribute("listFreeBoardTop", listFreeBoardTop);
 		model.addAttribute("list", list);
 		model.addAttribute("page", current_page);
 		model.addAttribute("total_page", total_page);
