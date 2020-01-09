@@ -233,14 +233,14 @@ $(function(){
 
 <div class="box-roulette">
    <div class="markers"></div>
-   <button type="button" id="btn-start">
+   <button type="button" id="btn-start" onclick="report()">
       돌려 돌려<br>돌림판
    </button>
    <div class="roulette" id="roulette"></div>
 </div>
 
-<div id="report_dialog" style="display: none; text-align: left;">
-			<strong>서비스 진행 준비중 입니다.<br> 이용에 불편을 드려 죄송합니당.</strong>
+<div id="report_dialog" style="display: none; text-align: center;">
+			<strong><br><br>서비스 진행 준비중 입니다.<br> 이용에 불편을 드려 죄송합니당.</strong>
 			<br><br>
 	<div class="btn_box" align="center">
 				<button type="button" class="btnDialogCancel">확인</button>
