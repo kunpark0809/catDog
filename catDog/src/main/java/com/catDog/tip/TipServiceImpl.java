@@ -263,4 +263,48 @@ public class TipServiceImpl implements TipService {
 	}
 
 
+	@Override
+	public void insertTipCategory(Tip dto) throws Exception {
+		try {
+			dao.insertData("tip.insertTipCategory", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public void updateTipCategory(Tip dto) throws Exception {
+		try {
+			dao.updateData("tip.updateTipCategory", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+
+	@Override
+	public void deleteTipCategory(int tipCategoryNum) throws Exception {
+		try {
+			dao.deleteData("tip.deleteTipCategory", tipCategoryNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+
+	@Override
+	public List<Tip> listTipCategory() {
+		List<Tip> list = null;
+		try {
+			list=dao.selectList("tip.listTipCategory");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+
 }

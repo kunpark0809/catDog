@@ -15,7 +15,7 @@
 				<div style='float: right;'>
 					<span>${vo.created}</span> |
 					<c:if test="${sessionScope.member.userId==vo.userId || sessionScope.member.userId=='admin'}">
-						<span class='deleteReplyParent' style='cursor: pointer;' data-data-bbsReplyNum='${vo.bbsReplyNum}' data-parent='${vo.parent}'>삭제</span>
+						<span class='deleteReplyParent' style='cursor: pointer;' data-bbsReplyNum='${vo.bbsReplyNum}' data-parent='${vo.parent}'>삭제</span>
 					</c:if>
 					<c:if test="${sessionScope.member.userId!=vo.userId && sessionScope.member.userId!='admin'}">
 						<span class="notifyReply">삭제</span>

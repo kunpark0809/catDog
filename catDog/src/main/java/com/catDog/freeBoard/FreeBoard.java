@@ -22,6 +22,8 @@ public class FreeBoard {
 	private int reportedNum;
 	private int reasonSortNum;
 	
+	private int notice;
+	
 	public int getListNum() {
 		return listNum;
 	}
@@ -123,6 +125,12 @@ public class FreeBoard {
 	}
 	public void setReasonSortNum(int reasonSortNum) {
 		this.reasonSortNum = reasonSortNum;
+	}
+	public int getNotice() {
+		return notice;
+	}
+	public void setNotice(int notice) {
+		this.notice = notice;
 	}
 	
 	

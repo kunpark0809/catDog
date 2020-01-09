@@ -66,6 +66,21 @@
 			  <table style="width: 100%; margin: 20px auto 10px; border-spacing: 0px; border-collapse: collapse;">
 			  <tbody id="tipb">
 			  
+	<tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
+      <td width="100" bgcolor="#262626" style="text-align: center; font-weight: bold;">말&nbsp;&nbsp;머&nbsp;&nbsp;리</td>
+      <td style="padding-left:10px;"> 
+	        <select name="tipCategoryNum" class="selectField" ${(mode!='created') ? "disabled='disabled'":""}>
+	        	<c:forEach var="vo" items="${listCategory}">
+	        		<option value="${vo.tipCategoryNum}" ${vo.tipCategoryNum==dto.tipCategoryNum?"selected='selected'":""}>${vo.tipCategory}</option>
+	        	</c:forEach>
+	        </select>
+        
+	        <c:if test="${mode!='created'}">
+	        	<input type="hidden" name="tipCategoryNum" value="${dto.tipCategoryNum}">
+	        </c:if>
+      </td>
+ 	</tr>
+			  
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#262626" style="text-align: center; font-weight: bold;">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</td>
 			      <td style="padding-left:10px;"> 

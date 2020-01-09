@@ -35,6 +35,11 @@ function searchList() {
 		<h3><span style="font-family: Webdings"></span>자유게시판</h3>
 	</div>
 	
+	<div class="alert-info">
+	  <i class="fas fa-info-circle"></i>
+	    멍냥개냥 회원님들의 자유로운 소통을 위한 게시판입니다.
+	</div>	
+	
 	<div>
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
 			<tr height="35">
@@ -57,6 +62,17 @@ function searchList() {
 	
 			</tr>
 
+			<c:forEach var="vo" items="${listFreeBoardTop}">
+			<tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
+				<td><span style="display: inline-block;padding: 1px 3px; background: #ED4C00; color: #FFFFFF">공지</span></td>
+				<td align="left" style="padding-left: 10px;">
+					<a href="${articleUrl}&bbsNum=${vo.bbsNum}">${vo.subject}</a>
+				</td>
+				<td>${vo.nickName}</td>
+				<td>${vo.created}</td>
+				<td>${vo.hitCount}</td>
+			</tr>
+			</c:forEach>
 			
 			<c:forEach var="dto" items="${list}">
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 

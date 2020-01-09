@@ -35,6 +35,11 @@ function searchList() {
 		<h3><span style="font-family: Webdings"></span>꿀팁</h3>
 	</div>
 	
+	<div class="alert-info">
+	  <i class="fas fa-info-circle"></i>
+	    강아지와 고양이에 대한 다양한 정보를 나누는 게시판입니다.
+	</div>
+	
 	<div>
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
 			<tr height="35">
@@ -50,6 +55,7 @@ function searchList() {
 		<table style="width: 100%; border-spacing: 0px; border-collapse: collapse;">
 			<tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 				<th width="60" style="color: #787878;">번호</th>
+				<th width="100" style="color: #787878;">말머리</th>
 				<th style="color: #787878;">제목</th>
 				<th width="100" style="color: #787878;">작성자</th>
 				<th width="100" style="color: #787878;">작성일</th>
@@ -61,6 +67,7 @@ function searchList() {
 			<c:forEach var="dto" items="${list}">
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
 				<td>${dto.listNum}</td>
+				<td>${dto.tipCategory}</td>
 				<td align="left" style="padding-left: 10px;">
 					<a href="${articleUrl}&tipNum=${dto.tipNum}">${dto.subject}</a>
 				</td>

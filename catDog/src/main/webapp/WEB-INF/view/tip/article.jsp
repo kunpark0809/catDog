@@ -343,7 +343,7 @@ $(function(){
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
 			<tr height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 				<td width="50%" align="left" style="padding-left: 5px; font-size: 20px;">
-					${dto.subject}
+					[${dto.tipCategory}] ${dto.subject}
 				</td>
 				
 				<td width="50%" align="right" style="font-size: 15px; font-weight: bold;">
