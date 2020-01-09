@@ -5,7 +5,7 @@
 	<select id="seq" resultType="Integer">
 		select adoption_seq.nextval from dual
 	</select>
-	
+	                          
 	<sql id="where-list">
 		<choose>
 			<when test="condition == 'subject'">

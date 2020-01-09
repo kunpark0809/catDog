@@ -75,7 +75,7 @@
                text: '작두'
              }
            ];
-
+    
            var $wrap = $(this);
            var $btnStart = $wrap.find("#btn-start");
            var $roulette = $wrap.find(".roulette");
