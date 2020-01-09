@@ -15,4 +15,6 @@ public interface RequestService {
 	public void refundRequest(Pay pay) throws Exception;
 	public void requestRefund(Map<String, Object> map) throws Exception;
 	public Pay readExpress(String requestNum);
+	public void swapRequest(Pay pay) throws Exception;
+	public void requestSwap(Map<String, Object> map) throws Exception;
 }

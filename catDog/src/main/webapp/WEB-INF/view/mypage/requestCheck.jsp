@@ -60,6 +60,22 @@ function requestCancle(requestNum) {
 	}
 }
 
+function requestRefund(requestNum) {
+	var q = "requestNum="+requestNum;
+	var url = "<%=cp%>/mypage/refundRequest?"+q;
+	if(confirm("상품을 환불하시겠습니까 ?")) {
+		location.href=url;
+	}
+}
+
+function requestSwap(requestNum) {
+	var q = "requestNum="+requestNum;
+	var url = "<%=cp%>/mypage/swapRequest?"+q;
+	if(confirm("상품을 교환하시겠습니까 ?")) {
+		location.href=url;
+	}
+}
+
 function reviewDialog(productNum,requestDetailNum){
 	var url ="<%=cp%>/mypage/readProduct";
 	var query = "productNum="+productNum
@@ -218,8 +234,8 @@ function submitReview(){
 					</td>
 				</c:when>
 				<c:when test="${dto.status==4}">
-					<td><button type="button" class="btn" onclick="">환불신청</button>
-						<br><button type="button" class="btn" onclick="">교환신청</button>
+					<td><button type="button" class="btn" onclick="requestRefund(${dto.requestNum});">환불신청</button>
+						<br><button type="button" class="btn" onclick="requestSwap(${dto.requestNum});">교환신청</button>
 					</td>
 				</c:when>
 				<c:when test="${dto.status==6}">

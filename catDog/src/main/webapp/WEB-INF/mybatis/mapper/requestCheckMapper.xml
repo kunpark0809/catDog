@@ -67,8 +67,11 @@
 		insert into swap(requestDetailNum, swapReason) values(#{requestDetailNum}, #{swapReason})
 	</insert>
 	
-	<update id="requestSwap" parameterType="com.catDog.pay.Pay">
-		update requestDetail set status=8 where requestDetailNum=#{requestDetailNum}
+	<update id="requestSwap" parameterType="map">
+		update requestDetail set status=8 where requestDetailNum IN
+		<foreach item="requestDetailNum" collection="list" open="(" close=")" separator=",">
+			#{requestDetailNum} 
+		</foreach> 
 	</update>
 	
 </mapper>

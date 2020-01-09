@@ -132,4 +132,25 @@ public class RequestServiceImpl implements RequestService {
 		}
 		return dto;
 	}
+
+	@Override
+	public void swapRequest(Pay pay) throws Exception {
+		try {
+			dao.insertData("request.swapRequest", pay);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public void requestSwap(Map<String, Object> map) throws Exception {
+		try {
+			dao.updateData("request.requestSwap", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
 }

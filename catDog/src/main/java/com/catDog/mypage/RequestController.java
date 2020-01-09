@@ -130,13 +130,47 @@ public class RequestController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("list", requestDetailNum);
 		try {
-			service.refundRequest(pay);
+			
+			for(String ss : requestDetailNum) {
+				pay.setRequestDetailNum(ss);
+				service.refundRequest(pay);
+			}
+			
 			service.requestRefund(map);
 		} catch (Exception e) {			
 		}
 		return "redirect:/mypage/requestCheck";
 	}
 	
+	@RequestMapping(value="/mypage/swapRequest", method=RequestMethod.GET)
+	public String swapRequestForm(
+			@RequestParam String requestNum,
+			Model model) throws Exception {
+		List<Pay> detailList = service.requestDetailList(requestNum);
+		
+		model.addAttribute("detailList", detailList);
+		model.addAttribute("mode", "swap");
+		
+		return ".mypage.refundRequest";
+	}
 	
+	@RequestMapping(value="/mypage/swapRequest", method=RequestMethod.POST)
+	public String swapRequestSubmit(
+			Pay pay,
+			@RequestParam List<String> requestDetailNum) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("list", requestDetailNum);
+		try {
+			
+			for(String ss : requestDetailNum) {
+				pay.setRequestDetailNum(ss);
+				service.swapRequest(pay);
+			}
+			
+			service.requestSwap(map);
+		} catch (Exception e) {			
+		}
+		return "redirect:/mypage/requestCheck";
+	}
 	
 }

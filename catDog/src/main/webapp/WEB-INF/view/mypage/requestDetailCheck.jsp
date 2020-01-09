@@ -18,7 +18,15 @@ function requestCancle(requestNum) {
 function requestRefund(requestNum) {
 	var q = "requestNum="+requestNum;
 	var url = "<%=cp%>/mypage/refundRequest?"+q;
-	if(confirm("주문을 환불하시겠습니까 ?")) {
+	if(confirm("상품을 환불하시겠습니까 ?")) {
+		location.href=url;
+	}
+}
+
+function requestSwap(requestNum) {
+	var q = "requestNum="+requestNum;
+	var url = "<%=cp%>/mypage/swapRequest?"+q;
+	if(confirm("상품을 교환하시겠습니까 ?")) {
 		location.href=url;
 	}
 }
@@ -62,7 +70,7 @@ $(function(){
                 
                 var trackingDetails = data.trackingDetails;
                 
-                
+                if(trackingDetails != null) {
                 var myTracking="";
                 var header ="";
                 header += ('<tr>');                
@@ -80,7 +88,7 @@ $(function(){
                     myTracking += ('<td>&nbsp;&nbsp;'+value.telno+'</td>');                     
                     myTracking += ('</tr>');                                    
                 });
-                
+                }
                 $("#myPtag2").html(header+myTracking);
                 
             }
@@ -243,20 +251,9 @@ $(function(){
 				<c:when test="${dto.status==5}">
 					<td>취소완료</td>
 				</c:when>
-				<c:when test="${dto.status==6}">
-					<td>환불진행중</td>
-				</c:when>
-				<c:when test="${dto.status==7}">
-					<td>환불완료</td>
-				</c:when>
-				<c:when test="${dto.status==8}">
-					<td>교환진행중</td>
-				</c:when>
-				<c:when test="${dto.status==9}">
-					<td>교환완료
-						<br><button type="button" class="btn" onclick="#">후기등록</button>
-					</td>
-				</c:when>
+				<c:otherwise>
+					<td>-</td>
+				</c:otherwise>
 				</c:choose>
 				<c:choose>
 				<c:when test="${dto.status==0}">
@@ -271,7 +268,7 @@ $(function(){
 				</c:when>
 				<c:when test="${dto.status==4}">
 					<td><button type="button" class="btn" onclick="requestRefund(${dto.requestNum});">환불신청</button>
-						<br><button type="button" class="btn" onclick="#">교환신청</button>
+						<br><button type="button" class="btn" onclick="requestSwap(${dto.requestNum});">교환신청</button>
 					</td>
 				</c:when>
 				<c:when test="${dto.status==6}">
