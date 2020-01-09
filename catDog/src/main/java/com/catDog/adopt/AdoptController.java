@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.catDog.common.MyUtil;
 import com.catDog.customer.SessionInfo;
@@ -207,5 +208,152 @@ public class AdoptController {
 		
 		
 		return "redirect:/adopt/list?"+query;
+	}
+	
+	@RequestMapping(value="/adopt/updateStatue")
+	public String updateStatus(
+			@RequestParam int adoptionNum,
+			@RequestParam(defaultValue="1") int page,
+			@RequestParam(defaultValue="all") String condition,
+			@RequestParam(defaultValue="") String keyword,
+			@RequestParam int status,
+			HttpSession session
+			) throws Exception{
+		keyword = URLDecoder.decode(keyword, "utf-8");
+		String query="page="+page;
+		
+		if(keyword.length()!=0) {
+			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
+		}
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("num", info.getMemberIdx());
+		map.put("adoptionNum", adoptionNum);
+		map.put("status", status);
+		
+		try {
+			service.updateStatus(map);
+		} catch (Exception e) {
+		}
+		
+		
+		return "redirect:/adopt/list?"+query;
+	}
+	
+	@RequestMapping(value="/adopt/insertReply")
+	@ResponseBody
+	public Map<String,Object> insertReply(
+				@RequestParam int adoptionNum,
+				@RequestParam String content,
+				@RequestParam (defaultValue="0")String parent,
+				HttpSession session
+			) throws Exception{
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		Map<String,Object> map = new HashMap<>();
+		map.put("num", info.getMemberIdx());
+		map.put("nickName", info.getNickName());
+		map.put("adoptionNum",adoptionNum);
+		map.put("content", content);
+		map.put("parent", parent);
+		String state="false";
+		
+		try {
+			
+			service.insertReply(map);
+			state="true";
+		} catch (Exception e) {
+		}
+		
+		Map<String,Object> model = new HashMap<>();
+		model.put("state", state);
+		return model;
+	}
+	
+	@RequestMapping(value="/adopt/listReply")
+	public String listReply(
+				@RequestParam int adoptionNum,
+				@RequestParam(value="pageNo",defaultValue="1") int current_page,
+				Model model
+			) throws Exception{
+		
+		Map<String,Object> map = new HashMap<>();
+
+		int rows=15;
+		int offset = (current_page-1)*rows;
+		if(offset < 0) offset = 0;
+		
+		map.put("rows", rows);
+		map.put("offset",offset);
+		map.put("adoptionNum", adoptionNum);
+		
+		List<Reply> replyList = service.listReply(map);
+		int replyCount = service.replyCount(map);
+		
+		int total_page=myUtil.pageCount(rows, replyCount);
+		if(total_page < current_page)
+			total_page=current_page;
+		
+		for(Reply dto : replyList) {
+			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+			dto.setAnswerCount(service.replyAnswerCount(dto.getAdoptionReplyNum()));
+		}
+		
+		String paging = myUtil.pagingMethod(current_page, total_page, "listPage");
+		
+		model.addAttribute("replyList", replyList);
+		model.addAttribute("pageNo", current_page);
+		model.addAttribute("replyCount", replyCount);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);
+		
+		return "/adopt/listReply";
+	}
+	
+	@RequestMapping(value="/adopt/countReplyAnswer")
+	@ResponseBody
+	public Map<String, Object> countReplyAnswer(
+				@RequestParam int parent
+			) throws Exception{
+		int count=service.replyAnswerCount(parent);
+		
+		Map<String, Object> model=new HashMap<>();
+		model.put("count", count);
+		return model;
+	}
+	
+	@RequestMapping(value="/adopt/listReplyAnswer")
+	public String listReplyAnswer(
+			@RequestParam int parent,
+			Model model
+			) throws Exception {
+		
+		List<Reply> listReplyAnswer=service.listReplyAnswer(parent);
+		for(Reply dto : listReplyAnswer) {
+			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+		}
+		
+		model.addAttribute("listReplyAnswer", listReplyAnswer);
+		return "adopt/listReplyAnswer";
+	}
+
+	// 댓글 및 댓글의 답글 삭제 : AJAX-JSON
+	@RequestMapping(value="/adopt/deleteReply", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteReply(
+			@RequestParam Map<String, Object> paramMap
+			) {
+		
+		String state="true";
+		try {
+			service.deleteReply(paramMap);
+		} catch (Exception e) {
+			state="false";
+		}
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("state", state);
+		return map;
 	}
 }

@@ -160,11 +160,11 @@ a.sortName{
 }
 
 .product_btn > .payBtn {
-	background: black;
-	color: white;
-	border: 1px solid black;
-	width: 49.6%;
-	height: 50px;
+	background: #d96363;
+    color: white;
+    border: 1px solid #d96363;
+    width: 49.6%;
+    height: 50px;
 }
 
 .product_btn > .cartBtn {

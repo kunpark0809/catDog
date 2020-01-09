@@ -34,7 +34,13 @@
 						<td width="20%" style="text-align: center;">
 							<div class="link" onclick="javascript:location.href='${articleUrl}&adoptionNum=${dto.adoptionNum}'">
 									<img alt="" src="<%=cp%>/uploads/adopt/${dto.imageFileName}" width="200" height="200">
-								<p style="margin: 0px;">${dto.subject}</p>
+									
+								<p>
+									<c:if test="${dto.status=='0'}">
+										<span style="display: inline-block;padding: 2px 8px;background: #d96262;border-radius: 3px; color: #FFFFFF;">입양완료</span>
+									</c:if>
+									&nbsp;<span style="margin: 0px;">${dto.subject}</span>
+								</p>
 							</div>
 						</td>
 			</c:forEach>

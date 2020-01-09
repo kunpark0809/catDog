@@ -143,6 +143,84 @@ public class AdoptServiceImpl implements AdoptService{
 		
 	}
 
+	@Override
+	public void updateStatus(Map<String, Object> map) throws Exception {
+		try {
+			
+			dao.updateData("adopt.updateStatus",map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
+	@Override
+	public void insertReply(Map<String, Object> map) throws Exception {
+		try {
+			dao.insertData("adopt.insertReply",map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
+	@Override
+	public List<Reply> listReply(Map<String, Object> map) {
+		List<Reply> list = null;
+		try {
+			list = dao.selectList("adopt.listReply",map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public int replyCount(Map<String, Object> map) {
+		int result = 0;
+		try {
+			result = dao.selectOne("adopt.replyCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<Reply> listReplyAnswer(int parent) {
+		List<Reply> list = null;
+			try {
+				list = dao.selectList("adopt.listAnswerReply", parent);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		return list;
+	}
+
+	@Override
+	public int replyAnswerCount(int parent) {
+		int result = 0;
+		try {
+			result = dao.selectOne("adopt.replyAnswerCount",parent);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public void deleteReply(Map<String, Object> map) throws Exception {
+		try {
+			dao.deleteData("adopt.deleteReply", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
 
 
 }

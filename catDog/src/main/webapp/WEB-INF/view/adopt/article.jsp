@@ -21,6 +21,15 @@ function updateBoard(){
     var url = "<%=cp%>/adopt/update?" + q;
   	location.href=url;  
 }
+
+function updateStatus(){
+	var q = "adoptionNum=${dto.adoptionNum}&${query}";
+	var url = "<%=cp%>/adopt/updateStatue?"+q;
+
+	if(confirm("해당 게시물을 ${dto.status=='1'?'입양완료':'재입양'}로 변경하시겠습니까?"))
+		location.href=url+"&status=${dto.status=='1'?'0':'1'}";
+}
+
 </script>
 
 <script type="text/javascript">
@@ -79,8 +88,8 @@ $(function(){
 });
 
 function listPage(page) {
-	var url = "<%=cp%>/bbs/listReply";
-	var query = "num=${dto.num}&pageNo="+page;
+	var url = "<%=cp%>/adopt/listReply";
+	var query = "adoptionNum=${dto.adoptionNum}&pageNo="+page;
 	var selector = "#listReply";
 	
 	ajaxHTML(url, "get", query, selector);
@@ -89,7 +98,7 @@ function listPage(page) {
 // 리플 등록
 $(function(){
 	$(".btnSendReply").click(function(){
-		var num="${dto.num}";
+		var adoptionNum="${dto.adoptionNum}";
 		var $tb = $(this).closest("table");
 		var content=$tb.find("textarea").val().trim();
 		if(! content) {
@@ -98,8 +107,8 @@ $(function(){
 		}
 		content = encodeURIComponent(content);
 		
-		var url="<%=cp%>/bbs/insertReply";
-		var query="num="+num+"&content="+content+"&answer=0";
+		var url="<%=cp%>/adopt/insertReply";
+		var query="adoptionNum="+adoptionNum+"&content="+content;
 		
 		var fn = function(data){
 			$tb.find("textarea").val("");
@@ -124,14 +133,14 @@ $(function(){
 		    return false;
 		}
 		
-		var replyNum=$(this).attr("data-replyNum");
+		var adoptionReplyNum=$(this).attr("data-replyNum");
 		var page=$(this).attr("data-pageNo");
 		
-		var url="<%=cp%>/bbs/deleteReply";
-		var query="replyNum="+replyNum+"&mode=reply";
+		var url="<%=cp%>/adopt/deleteReply";
+		var query="adoptionReplyNum="+adoptionReplyNum+"&mode=reply";
 		
 		var fn = function(data){
-			// var state=data.state;
+			var state=data.state;
 			listPage(page);
 		};
 		
@@ -139,6 +148,104 @@ $(function(){
 	});
 });
 
+//댓글별 답글 리스트
+function listReplyAnswer(parent) {
+	var url="<%=cp%>/adopt/listReplyAnswer";
+	var query = {parent:parent};
+	var selector = "#listReplyAnswer"+parent;
+	
+	ajaxHTML(url, "get", query, selector);
+}
+
+// 댓글별 답글 개수
+function countReplyAnswer(parent) {
+	var url = "<%=cp%>/adopt/countReplyAnswer";
+	var query = {parent:parent};
+	
+	var fn = function(data){
+		var count=data.count;
+		var vid="#answerCount"+parent;
+		$(vid).html(count);
+	};
+	
+	ajaxJSON(url, "post", query, fn);
+}
+
+//답글 버튼(댓글별 답글 등록폼 및 답글리스트)
+$(function(){
+	$("body").on("click", ".btnReplyAnswerLayout", function(){
+		var $trReplyAnswer = $(this).closest("tr").next();
+		// var $trReplyAnswer = $(this).parent().parent().next();
+		// var $answerList = $trReplyAnswer.children().children().eq(0);
+		
+		var isVisible = $trReplyAnswer.is(':visible');
+		var replyNum = $(this).attr("data-replyNum");
+			
+		if(isVisible) {
+			$trReplyAnswer.hide();
+		} else {
+			$trReplyAnswer.show();
+            
+			// 답글 리스트
+			listReplyAnswer(replyNum);
+			
+			// 답글 개수
+			countReplyAnswer(replyNum);
+		}
+	});
+	
+});
+//댓글별 답글 등록
+$(function(){
+	$("body").on("click", ".btnSendReplyAnswer", function(){
+		var adoptionNum="${dto.adoptionNum}";
+		var replyNum = $(this).attr("data-replyNum");
+		var $td = $(this).closest("td");
+		var content=$td.find("textarea").val().trim();
+		if(! content) {
+			$td.find("textarea").focus();
+			return false;
+		}
+		content = encodeURIComponent(content);
+		
+		var url="<%=cp%>/adopt/insertReply";
+		var query="adoptionNum="+adoptionNum+"&content="+content+"&parent="+replyNum;
+		
+		var fn = function(data){
+			$td.find("textarea").val("");
+			
+			var state=data.state;
+			if(state=="true") {
+				listReplyAnswer(replyNum);
+				countReplyAnswer(replyNum);
+			}
+		};
+		
+		ajaxJSON(url, "post", query, fn);
+		
+	});
+});
+
+// 댓글별 답글 삭제
+$(function(){
+	$("body").on("click", ".deleteReplyAnswer", function(){
+		if(! confirm("게시물을 삭제하시겠습니까 ? "))
+		    return;
+		
+		var adoptionReplyNum=$(this).attr("data-replyNum");
+		var answer=$(this).attr("data-answer");
+		
+		var url="<%=cp%>/adopt/deleteReply";
+		var query="adoptionReplyNum="+adoptionReplyNum+"&mode=answer";
+		
+		var fn = function(data){
+			listReplyAnswer(answer);
+			countReplyAnswer(answer);
+		};
+		
+		ajaxJSON(url, "post", query, fn);
+	});
+});
 
 </script>
 
@@ -195,7 +302,9 @@ $(function(){
 			    <td width="300" align="left">
 			       <c:if test="${sessionScope.member.nickName==dto.nickName}">				    
 			          <button type="button" class="btn" onclick="updateBoard();">수정</button>
+			          <button type="button" class="btn" onclick="updateStatus();">${dto.status=="1"?"입양완료":"재입양"}</button>
 			       </c:if>
+			       
 			       <c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">				    
 			          <button type="button" class="btn" onclick="deleteBoard();">삭제</button>
 			       </c:if>
@@ -208,7 +317,7 @@ $(function(){
 			</table>
     </div>
     
-    <div>
+ <div>
 		<table style='width: 100%; margin: 15px auto 0px; border-spacing: 0px;'>
 			<tr height='30'> 
 				 <td align='left' >

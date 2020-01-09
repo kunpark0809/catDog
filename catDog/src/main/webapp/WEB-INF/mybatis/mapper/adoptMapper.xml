@@ -95,5 +95,51 @@
 		DELETE FROM adoption WHERE adoptionNum=#{adoptionNum}
 	</delete>
 	
+	<update id="updateStatus" parameterType="map">
+		UPDATE adoption SET status=#{status}
+		WHERE adoptionNum=#{adoptionNum} AND num=#{num}
+	</update>
 	
+	<insert id="insertReply" parameterType="map">
+		INSERT INTO adoptionReply(adoptionReplyNum, content, parent, adoptionNum, num, nickName)
+		VALUES(adoptionReply_seq.NEXTVAL,#{content},#{parent},#{adoptionNum},#{num},#{nickName})
+	</insert>
+	
+	<select id="replyCount" parameterType="map" resultType="Integer">
+		SELECT NVL(count(*),0) FROM adoptionReply WHERE adoptionNum=#{adoptionNum} AND parent=0
+	</select>
+	
+	<select id="listReply" parameterType="map" resultType="com.catDog.adopt.Reply">
+		SELECT adoptionReplyNum, content, parent, adoptionNum, num, nickName, created 
+		FROM adoptionReply
+		WHERE adoptionNum=#{adoptionNum} AND parent=0
+		ORDER BY adoptionReplyNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="replyAnswerCount" parameterType="Integer" resultType="Integer">
+		SELECT NVL(count(*),0) FROM adoptionReply WHERE parent=#{parent}
+	</select>
+	
+	
+	<select id="listAnswerReply" parameterType="Integer" resultType="com.catDog.adopt.Reply">
+		SELECT adoptionReplyNum, content, parent, adoptionNum, num, nickName, created 
+		FROM adoptionReply
+		WHERE parent=#{parent}
+		ORDER BY adoptionReplyNum DESC
+	</select>
+	
+	<delete id="deleteReply" parameterType="map">
+		DELETE FROM adoptionReply WHERE
+		<if test="mode=='reply' ">
+			adoptionReplyNum IN (
+				SELECT adoptionReplyNum FROM adoptionReply
+					START WITH adoptionReplyNum=#{adoptionReplyNum}
+					CONNECT BY PRIOR adoptionReplyNum = parent
+			)
+		</if>
+		<if test="mode=='answer' ">
+			adoptionReplyNum = #{adoptionReplyNum}
+		</if>
+	</delete>
 </mapper>
