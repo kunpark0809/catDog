@@ -466,7 +466,7 @@ public class MpController {
 		}
 		
 		listUrl = cp+"/mypage/adoption/adoption";
-		articleUrl = cp+"/abandoned/article?page="+current_page;
+		articleUrl = cp+"/adopt/article?page="+current_page;
 		if(query.length()!=0) {
 			listUrl = listUrl + "?" + query;
 			articleUrl = articleUrl + "&" + query;
