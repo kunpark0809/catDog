@@ -29,6 +29,7 @@ public class AbandController {
 	@RequestMapping(value= {"/abandoned/list","/aband/list"})
 	public String list(
 			@RequestParam(value="page", defaultValue="1") int current_page,
+			@RequestParam(value="sort", defaultValue="0") int sort,
 			HttpServletRequest req,
 			Model model
 			) throws Exception {
@@ -37,7 +38,7 @@ public class AbandController {
 		Map<String, Object> map = new HashMap<String, Object>();
 	
 		String query="page="+current_page;
-		
+		map.put("sort", sort);
 		int dataCount = service.dataCount(map);
 		
 		int rows = 12;

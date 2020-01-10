@@ -25,8 +25,8 @@
 			
 			$("#tab-"+tab).addClass("active");
 			
-			// listPage(1);
-			//reloadBoard();
+			var url = "<%=cp%>/aband/list?sort="+tab;
+			location.href=url;
 		});
 	});
 </script>
@@ -74,8 +74,8 @@
 			<div>
 		            <div style="clear: both;">
 			           <ul class="tabs">
-					       <li id="tab-lose"  data-tab="lose">잃어버렸어요</li>
-					       <li id="tab-protect" data-tab="protect"> 보호하고있어요 </li>
+					       <li id="tab-lose"  data-tab="0">잃어버렸어요</li>
+					       <li id="tab-protect" data-tab="1"> 보호하고있어요 </li>
 					   </ul>
 				   </div>
 		    </div>

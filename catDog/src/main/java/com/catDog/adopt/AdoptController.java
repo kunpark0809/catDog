@@ -32,8 +32,8 @@ public class AdoptController {
 	@RequestMapping(value="/adopt/list")
 	public String list(
 			@RequestParam(value="page", defaultValue="1") int current_page,
-			@RequestParam(defaultValue="all") String condition,
-			@RequestParam(defaultValue="") String keyword,
+			@RequestParam(defaultValue="all") String species,
+			@RequestParam(defaultValue="all") String area,
 			HttpServletRequest req,
 			Model model
 			) throws Exception{
@@ -41,14 +41,14 @@ public class AdoptController {
 		String cp = req.getContextPath();
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		keyword = URLDecoder.decode(keyword, "utf-8");
+		area = URLDecoder.decode(area, "utf-8");
 		String query="page="+current_page;
 		
-		if(keyword.length()!=0) {
-			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
+		if(area.length()!=0) {
+			query+="&species="+species+"&area="+URLEncoder.encode(area, "UTF-8");
 		}
-		map.put("keyword", keyword);
-		map.put("condition", condition);
+		map.put("area", area);
+		map.put("species", species);
 		int dataCount = service.dataCount(map);
 		
 		
@@ -68,8 +68,8 @@ public class AdoptController {
 		
 		String paging = myUtil.paging(current_page, total_page, listUrl);
 		
-		model.addAttribute("condition",condition);
-		model.addAttribute("keyword",keyword);
+		model.addAttribute("species",species);
+		model.addAttribute("area",area);
 		model.addAttribute("list",list);
 		model.addAttribute("dataCount",dataCount);
 		model.addAttribute("total_page",total_page);

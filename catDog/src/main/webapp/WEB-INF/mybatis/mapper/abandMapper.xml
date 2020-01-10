@@ -2,6 +2,12 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="aband">
+<!-- 	<sql id="where-list">
+		<if test="">
+			
+		</if>
+	</sql> -->
+
 	<insert id="insertAband" parameterType="com.catDog.aband.Aband">
 		INSERT INTO lostPet(lostPetNum, sort, subject, content, lostDate, addr, num, nickName, imageFileName, speciesSort)
 		VALUES(LOSTPET_SEQ.NEXTVAL, #{sort}, #{subject}, #{content}, #{lostDate}, #{addr},#{num}, #{nickName}, #{imageFileName}, #{speciesSort})
@@ -10,11 +16,13 @@
 	<select id="listAband" parameterType="map" resultType="com.catDog.aband.Aband">
 		SELECT lostPetNum, sort, subject, addr, imageFileName  
 		FROM lostPet
+		WHERE sort=#{sort}
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 	
 	<select id="dataCount" parameterType="map" resultType="Integer">
-		SELECT NVL(count(*),0) FROM lostPet
+		SELECT NVL(count(*),0) FROM lostPet 
+		WHERE sort=#{sort}
 	</select>
 	
 </mapper>
