@@ -72,7 +72,7 @@
 	</sql>
 	
 	<select id="listTip" parameterType="map" resultType="com.catDog.tip.Tip">
-		SELECT t.tipNum, t.subject, t.content, created, t.hitCount, md.nickName, t.tipCategoryNum, tipCategory
+		SELECT t.tipNum, t.subject, t.content, created, t.hitCount, md.nickName, t.tipCategoryNum, tipCategory, t.notice
 		FROM tip t
 		JOIN memberDetail md ON t.num = md.num
 		JOIN tipCategory tc ON t.tipCategoryNum=tc.tipCategoryNum
@@ -84,7 +84,15 @@
 		ORDER BY t.tipNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
-
+	
+	<select id="listTipTop" resultType="com.catDog.tip.Tip">
+		SELECT t.tipNum, t.subject, t.content, TO_CHAR(t.created, 'yyyy-mm-dd') created, t.hitCount, md.nickName, tipCategory, t.notice
+		FROM tip t
+		JOIN memberDetail md ON t.num = md.num
+		JOIN tipCategory tc ON t.tipCategoryNum=tc.tipCategoryNum
+		where t.notice = 1
+		order by t.tipNum desc
+	</select>
 	
 	<select id="dataCount" parameterType="map" resultType="Integer">
 		SELECT NVL(count(*), 0)
@@ -101,8 +109,8 @@
 	</select>
 
 	<insert id="insertTip" parameterType="com.catDog.tip.Tip">
-		INSERT INTO tip(tipNum, subject, content, num, tipCategoryNum) 
-		VALUES(tip_seq.NEXTVAL, #{subject}, #{content}, #{num}, #{tipCategoryNum})
+		INSERT INTO tip(tipNum, subject, content, num, tipCategoryNum, notice) 
+		VALUES(tip_seq.NEXTVAL, #{subject}, #{content}, #{num}, #{tipCategoryNum}, #{notice, jdbcType=INTEGER})
 	</insert>
 	
 	<select id="readTip" parameterType="Integer" resultType="com.catDog.tip.Tip">

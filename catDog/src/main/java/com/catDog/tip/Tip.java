@@ -27,6 +27,7 @@ public class Tip {
 	private int tipCategoryNum;
 	private String tipCategory;
 	
+	private int notice;
 
 	public int getTipCategoryNum() {
 		return tipCategoryNum;
@@ -149,6 +150,12 @@ public class Tip {
 	}
 	public void setTipCategory(String tipCategory) {
 		this.tipCategory = tipCategory;
+	}
+	public int getNotice() {
+		return notice;
+	}
+	public void setNotice(int notice) {
+		this.notice = notice;
 	}
 	
 }

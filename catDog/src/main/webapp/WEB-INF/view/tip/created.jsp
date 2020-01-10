@@ -88,6 +88,13 @@
 			      </td>
 			  </tr>
 			
+			<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;"> 
+					<td width="100" bgcolor="#262626" style="text-align: center; font-weight: bold;">공지여부</td>
+					<td style="padding-left:10px;">
+						<input type="checkbox" name="notice" value="1" ${dto.notice==1?"checked='checked'":""}> <label>공지</label>
+					</td>
+			  </tr>
+			
 			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#262626" style="text-align: center; font-weight: bold;">작&nbsp;&nbsp;성&nbsp;&nbsp;자</td>
 			      <td style="padding-left:10px; color: #262626">

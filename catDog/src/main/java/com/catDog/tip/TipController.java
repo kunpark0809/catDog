@@ -59,6 +59,10 @@ public String list(
 	if(total_page < current_page)
 		current_page = total_page;
 
+	List<Tip> listTipTop = null;
+	if(current_page==1) {
+		listTipTop = service.listTipTop();
+	}
 	
 	int offset = (current_page-1) * rows;
 	if(offset < 0) offset = 0;
@@ -93,6 +97,7 @@ public String list(
 	
 	String paging = myUtil.paging(current_page, total_page, listUrl);
 
+	model.addAttribute("listTipTop", listTipTop);
 	model.addAttribute("list", list);
 	model.addAttribute("page", current_page);
 	model.addAttribute("total_page", total_page);

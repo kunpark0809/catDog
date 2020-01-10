@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.catDog.common.dao.CommonDAO;
+import com.catDog.freeBoard.FreeBoard;
 
 
 @Service("tip.TipServiceImpl")
@@ -66,6 +67,7 @@ public class TipServiceImpl implements TipService {
 		return listTipTop;
 	}
 
+	
 	@Override
 	public Tip readTip(int tipNum) {
 		Tip dto = null;

@@ -35,7 +35,7 @@
 	</select>
 	
 	<select id="listFreeBoardTop" resultType="com.catDog.freeBoard.FreeBoard">
-		SELECT b.bbsNum, b.subject, b.content, created, b.hitCount, md.nickName, b.notice
+		SELECT b.bbsNum, b.subject, b.content, TO_CHAR(b.created, 'yyyy-mm-dd') created, b.hitCount, md.nickName, b.notice
 		FROM bbs b
 		JOIN memberDetail md ON b.num = md.num
 		where b.notice = 1
@@ -57,8 +57,8 @@
 	</select>
 
 	<insert id="insertFreeBoard" parameterType="com.catDog.freeBoard.FreeBoard">
-		INSERT INTO bbs(bbsNum, subject, content, num) 
-		VALUES(bbs_seq.NEXTVAL, #{subject}, #{content}, #{num})
+		INSERT INTO bbs(bbsNum, subject, content, num, notice) 
+		VALUES(bbs_seq.NEXTVAL, #{subject}, #{content}, #{num}, #{notice, jdbcType=INTEGER})
 	</insert>
 	
 	<select id="readFreeBoard" parameterType="Integer" resultType="com.catDog.freeBoard.FreeBoard">

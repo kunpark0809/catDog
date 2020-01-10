@@ -62,15 +62,15 @@ function searchList() {
 	
 			</tr>
 
-			<c:forEach var="vo" items="${listFreeBoardTop}">
+		 <c:forEach var="dto" items="${listFreeBoardTop}">
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
 				<td><span style="display: inline-block;padding: 1px 3px; background: #ED4C00; color: #FFFFFF">공지</span></td>
 				<td align="left" style="padding-left: 10px;">
-					<a href="${articleUrl}&bbsNum=${vo.bbsNum}">${vo.subject}</a>
+					<a href="${articleUrl}&bbsNum=${dto.bbsNum}">${dto.subject}</a>
 				</td>
-				<td>${vo.nickName}</td>
-				<td>${vo.created}</td>
-				<td>${vo.hitCount}</td>
+				<td>${dto.nickName}</td>
+				<td>${dto.created}</td>
+				<td>${dto.hitCount}</td>
 			</tr>
 			</c:forEach>
 			
