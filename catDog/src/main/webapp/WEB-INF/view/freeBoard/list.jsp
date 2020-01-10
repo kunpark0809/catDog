@@ -29,16 +29,11 @@ function searchList() {
 }
 </script>
 
-<div class="body-container" style="width: 830px; margin: 20px auto 0px; border-spacing: 0px;">
+<div class="body-container" style="width: 60%; margin: 20px auto 0px; border-spacing: 0px;">
 
 	<div class="body-title">
 		<h3><span style="font-family: Webdings"></span>자유게시판</h3>
 	</div>
-	
-	<div class="alert-info">
-	  <i class="fas fa-info-circle"></i>
-	    멍냥개냥 회원님들의 자유로운 소통을 위한 게시판입니다.
-	</div>	
 	
 	<div>
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">

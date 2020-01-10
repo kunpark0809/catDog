@@ -54,14 +54,9 @@ function article(myPetNum) {
 }
 </script>
 
-<div class="body-container" style="width: 630px; margin: 20px auto 10px; text-align: center;">
+<div class="body-container" style="width: 60%; margin: 20px auto 10px; text-align: center;">
 	<div class="body-title">
 		<h3>내새끼자랑</h3>
-	</div>
-	
-	<div class="alert-info">
-	  <i class="fas fa-info-circle"></i>
-	   멍냥개냥 집사님들의 멍냥이를 자랑해주세요.<br>(좋아요가 가장 많은 사진은 매월 멍냥어워드 선정)
 	</div>
 	
 	<div>
