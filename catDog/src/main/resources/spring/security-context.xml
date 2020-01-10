@@ -48,6 +48,8 @@
       <intercept-url pattern="/training/**" access="permitAll"/>
       <intercept-url pattern="/funeral/**" access="permitAll"/>
       
+      <intercept-url pattern="/event/**" access="permitAll"/>
+      <intercept-url pattern="/festival/**" access="permitAll"/>
       
       <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
       <intercept-url pattern="/**" access="hasAnyRole('ROLE_USER')"/>

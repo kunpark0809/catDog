@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.catDog.admin.AdminService;
+import com.catDog.admin.Report;
+
 @Controller("customer.customerController")
 public class CustomerController {
 	@Autowired
 	private CustomerService service;
+	
+	@Autowired
+	private AdminService service2;
 
 	@Autowired
 	private BCryptPasswordEncoder bcryptEncoder;
@@ -196,6 +203,35 @@ public class CustomerController {
 		reAttr.addFlashAttribute("message", sb.toString());
 		
 		return "redirect:/customer/complete";
+	}
+	
+	@RequestMapping("/customer/recentReport")
+	@ResponseBody
+	public Map<String, Object> recentReport(
+			HttpSession session, HttpServletRequest req
+			) throws Exception{
+		Map<String, Object> model=new HashMap<>();
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		String userId = info.getUserId();
+		String url = req.getContextPath();
+		
+		Report report = service2.recentReport(userId);
+		
+		if (report.getBoardSort()==1) {
+			url+="/tip/article?tipNum="+report.getReportedPostNum();
+		} else if (report.getBoardSort()==2) {
+			url+="/pet/article?myPetNum="+report.getReportedPostNum();
+		} else if (report.getBoardSort()==3) {
+			url+="/freeBoard/article?bbsNum="+report.getReportedPostNum();
+		}
+		
+		model.put("url", url);
+		model.put("reportDate", report.getReportDate());
+		model.put("reasonName", report.getReasonName());
+		model.put("reportCount", info.getReportCount());
+		
+		return model;
 	}
 	
 	

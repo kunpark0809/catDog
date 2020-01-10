@@ -413,10 +413,26 @@
 		UPDATE memberDetail SET warn = 1, reportCount = reportCount+1 WHERE userId = #{reportedId}
 	</update>
 	
+	<!-- 가장 최근 제재내역 가져오는 쿼리 -->
+ 	<select id="recentReport" parameterType="String" resultType="com.catDog.admin.Report">
+ 		SELECT  userId, boardSort, reportedPostNum, TO_CHAR(reportDate, 'YYYY-MM-DD HH24:MI:SS') reportDate, reasonName
+ 		FROM report r
+ 		JOIN memberDetail md ON r.reportedNum = md.num
+        JOIN reasonSort rs ON r.reasonSortNum = rs.reasonSortNum
+ 		WHERE judgement = 2 AND userId = #{userId}
+ 		ORDER BY reportDate
+ 		FETCH FIRST 1 ROWS ONLY
+ 	</select>
+
+	<!-- 제재내역 확인 후 warn 0으로 바꾸는 용도 -->
 	<update id="deactivateWarn" parameterType="String">
 		UPDATE memberDetail SET warn = 0 WHERE userId = #{reportedId}
 	</update>
 
+
+
+
+	
 	<select id="checkReportCount" parameterType="String" resultType="Integer">
 		SELECT reportCount FROM memberDetail WHERE userId = #{reportedId}
 	</select>

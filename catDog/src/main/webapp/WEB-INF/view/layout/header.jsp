@@ -8,6 +8,88 @@
 	String cp = request.getContextPath();
 %>
 
+<script>
+function ajaxJSON(url, type, query, fn) {
+	$.ajax({
+		type:type
+		,url:url
+		,data:query
+		,dataType:"json"
+		,success:function(data) {
+			fn(data);
+		}
+		,beforeSend:function(jqXHR) {
+	        jqXHR.setRequestHeader("AJAX", true);
+	    }
+	    ,error:function(jqXHR) {
+	    	if(jqXHR.status==403) {
+	    		login();
+	    		return false;
+	    	}
+	    	console.log(jqXHR.responseText);
+	    }
+	});
+}
+
+function ajaxHTML(url, type, query, selector) {
+	$.ajax({
+		type:type
+		,url:url
+		,data:query
+		,success:function(data) {
+			$(selector).html(data);
+		}
+		,beforeSend:function(jqXHR) {
+	        jqXHR.setRequestHeader("AJAX", true);
+	    }
+	    ,error:function(jqXHR) {
+	    	if(jqXHR.status==403) {
+	    		login();
+	    		return false;
+	    	}
+	    	console.log(jqXHR.responseText);
+	    }
+	});
+}
+
+
+
+$(function(){
+	$("#warningModal_open_btn").click(function(){
+		
+		var url="<%=cp%>/customer/recentReport";
+		var query = {};
+		
+		var fn = function(data){
+			var url2 = data.url;
+			var reportDate = data.reportDate;
+			var reasonName = data.reasonName;
+			var reasonCount = data.reasonCount;
+			
+			var warning = "<a href = '"+url2+"'>회원님이 작성한 글</a>이"+ reportDate+"에"+reasonName+"라서 경고" 
+			+reasonCount+"경고 받음";
+			
+			$("#warningModal").text(warning);
+		};
+		
+		ajaxJSON(url, "post", query, fn);
+		
+		
+		
+		
+		
+		
+		$('#warningModal').dialog({
+			  modal: true,
+			  height: 650,
+			  width: 600,
+			  title: '경고',
+			  close: function(event, ui) {
+			  }
+		});
+	});
+});	
+</script>
 
 <!-- 헤더(카테고리) -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
@@ -87,11 +169,18 @@
 				
 			</ul>
 		</div>
-		<div style="width: 215px; margin: 20px auto; float: right;">
+		<div style="width: 245px; margin: 20px auto; float: right;">
 			<c:if test="${not empty sessionScope.member}">
 			<div style="margin: 12px 10px 0px 0px; float: left;">${sessionScope.member.nickName}님</div>
 			</c:if>
+			
 			<ul>
+			<c:if test="${sessionScope.member.warn == 1}">
+			<li class="nav-icon">
+			
+			<img id="warningModal_open_btn" width="25" height="25" src="<%=cp%>/resource/img/warning.gif"></li>
+		
+			</c:if>
 				<c:if test="${empty sessionScope.member}">
 					<li class="nav-icon"><a class="nav-link js-scroll-trigger"
 						href="<%=cp%>/customer/login"><i class="fas fa-key"
@@ -105,7 +194,16 @@
 						class="fas fa-cart-plus" style="color: #d96262"></i></a></li>
 			</ul>
 		</div>
+		
+		
+
 	</div>
+<!-- 모달 창 -->
+		<div id="warningModal" style="display: none;">
+	   
+	
+		</div>
+	
 </nav>
 
 

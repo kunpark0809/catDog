@@ -320,6 +320,18 @@ public class AdminServiceImpl implements AdminService {
 
 	}
 	
+	@Override
+	public Report recentReport(String userId) throws Exception{
+		Report result = null;
+		
+		try {
+			result = dao.selectOne("admin.recentReport", userId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 	
 	
 	

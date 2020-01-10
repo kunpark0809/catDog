@@ -75,4 +75,6 @@ public interface AdminService {
 
 	public void deactivateWarn(String reportedId) throws Exception;
 
+	public Report recentReport(String userId) throws Exception;
+
 }
