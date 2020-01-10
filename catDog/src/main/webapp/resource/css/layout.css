@@ -56,9 +56,20 @@ ul li {
 }
 
 .container-board{
-	min-height: 100px;
+	min-height: 490px;
+	width: 1000px;
     top: 97px;
     position: relative;
+    margin: 0px auto;
+}
+
+
+.wide-container{
+	min-height: 490px;
+	width: 1200px; 
+    top: 97px;
+    position: relative;
+    margin: 0px auto;
 }
 
 .footer-board{

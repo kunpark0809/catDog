@@ -93,7 +93,7 @@ $(function(){
 
 <!-- 헤더(카테고리) -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-	<div style="width: 1300px; margin: 0px 300px 0px 270px;">
+	<div style="width: 1300px; margin: 0px auto;">
 		<div style="float: left;">
 			<a class="navbar-brand js-scroll-trigger" href="<%=cp%>/"><img
 				alt="" width="200" src="<%=cp%>/resource/img/logos/dogcatdogcat.png">
@@ -118,7 +118,7 @@ $(function(){
 				<li class="nav-item"><a class="nav-link js-scroll-trigger">로스트펫</a>
 					<ul class="nav-sub-menu">
 						<li><a class="nav-sub-link" href="<%=cp%>/adopt/list">입양</a></li>
-						<li><a class="nav-sub-link" href="<%=cp%>/abandoned/list">유기동물</a></li>
+						<li><a class="nav-sub-link" href="<%=cp%>/aband/list">유기동물</a></li>
 					</ul></li> 
 
 				<li class="nav-item"><a class="nav-link js-scroll-trigger">반려용품</a>
@@ -145,7 +145,7 @@ $(function(){
 						<li><a class="nav-sub-link" href="<%=cp%>/qna/list">질문과답변</a></li>
 						<li><a class="nav-sub-link" href="<%=cp%>/faq/list">FAQ</a></li>
 					</ul></li>
-				<c:if test="${not empty sessionScope.member&&fn:indexOf(sessionScope.member.userId,'admin')!=0}">
+				<c:if test="${fn:indexOf(sessionScope.member.userId,'admin')!=0}">
 					<li class="nav-item"><a class="nav-link js-scroll-trigger">마이페이지</a>
 						<ul class="nav-sub-menu">
 							<li><a class="nav-sub-link" href="<%=cp%>/mypage/pwd">회원정보수정</a></li>
