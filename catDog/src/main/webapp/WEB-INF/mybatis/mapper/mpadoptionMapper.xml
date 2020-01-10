@@ -25,7 +25,7 @@
 	</sql>
 	
 	<select id="listMpAdoption" parameterType="map" resultType="com.catDog.mpadoption.Mpadoption">
-		SELECT adoptionNum, speciesSort, status,  TO_CHAR(created, 'yyyy.mm.dd') adoptionCreted,
+		SELECT adoptionNum, speciesSort, status, TO_CHAR(created, 'yyyy.mm.dd') adoptionCreted,
 		subject adoptionSubject, hitCount adoptionHitCount, nickName, num
 		FROM adoption
 		<where>

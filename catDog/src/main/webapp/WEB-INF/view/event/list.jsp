@@ -2,6 +2,7 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	String cp=request.getContextPath();
 %>
@@ -118,7 +119,9 @@ function article(eventNum) {
 					</form>
 				</td>
 				<td align="right" width="100">
+				<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
 					<button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/event/created';">등록하기</button>
+				</c:if>
 				</td>
 			</tr>
 		</table>

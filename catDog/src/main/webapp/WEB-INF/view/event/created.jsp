@@ -15,7 +15,8 @@
 	color: #333333;
 }
 </style>
-
+<link rel="stylesheet" href="/css/jquery.datetimepicker.css" type="text/css" />
+<script type="text/javascript" src="/js/jquery.datetimepicker.js"></script>
 <script type="text/javascript">
 
 function sendOk() {
@@ -102,10 +103,32 @@ function deleteFile(eventPicNum) {
 }
 </c:if>
 
-$(function() {
+/* $(function() {
 		$("form input[name=startDate]").datepicker({showMonthAfterYear:true});
 		$("form input[name=endDate]").datepicker({showMonthAfterYear:true});
+		
+		$
 });
+ */
+ $( function() {
+    $("input[name='startDate']").datepicker( {
+        onClose : function( selectedDate ) {  // 날짜를 설정 후 달력이 닫힐 때 실행
+                      if( selectedDate != "" ) {
+                          // yyy의 minDate를 xxx의 날짜로 설정
+                          $("input[name='endDate']").datepicker("option", "minDate", selectedDate);
+                      }
+                  }
+    } );
+
+    $("input[name='endDate']").datepicker( {
+        onClose : function( selectedDate ) {  // 날짜를 설정 후 달력이 닫힐 때 실행
+                      if( selectedDate != "" ) {
+                          // xxx의 maxDate를 yyy의 날짜로 설정
+                          $("input[name='startDate']").datepicker("option", "maxDate", selectedDate);
+                      }
+                  }
+    } );
+} );
 
 </script>
 
