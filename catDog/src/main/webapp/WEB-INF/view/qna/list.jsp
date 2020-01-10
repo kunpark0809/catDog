@@ -12,6 +12,26 @@ function searchList() {
 	var f=document.searchForm;
 	f.submit();
 }
+
+$(function(){
+	
+	$("#tab-${qnaCategoryNum}").addClass("active");
+	
+	$("ul.tabs li").click(function(){
+		tab = $(this).attr("data-tab");
+		
+		$("ul.tabs li").each(function(){
+			$(this).removeClass("active");
+		});
+	
+		$("#tab-"+tab).addClass("active");
+	
+		var url = "<%=cp%>/qna/list?qnaCategoryNum="+tab;
+		location.href=url
+		
+	});
+
+});
 </script>
 
 <div class="body-container" style="width: 830px; margin: 20px auto 0px; border-spacing: 0px;">
@@ -28,13 +48,23 @@ function searchList() {
 <table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
    <tr height="35">
       <td align="left" width="50%">
-          ${dataCount}개(${pageNo}/${total_page} 페이지)
+          ${dataCount}개(${page}/${total_page} 페이지)
       </td>
       <td align="right">
           &nbsp;
       </td>
    </tr>
 </table>
+
+<div style="clear: both;">
+			<ul class="tabs">
+				<li id="tab-0" data-tab="0">전체</li>
+				<c:forEach var="vo" items="${qnaCategoryNum}">
+					<li id="tab-${vo.qnaCategoryNum}" data-tab="${vo.qnaCategoryNum}">
+					${vo.qnaCategory}</li>
+				</c:forEach>
+			</ul>
+		</div>
 
 <table style="width: 100%; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
   <tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 2px solid #cccccc; border-bottom: 1px solid #cccccc;"> 

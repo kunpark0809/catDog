@@ -105,12 +105,12 @@
 	        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/qna/list';">${(mode=='updateQuestion' || mode=='updateAnswer')?'수정취소':'등록취소'}</button>
 	         <c:if test="${mode=='updateQuestion' || mode=='updateAnswer'}">
 	         	 <input type="hidden" name="qnaNum" value="${dto.qnaNum}">
-	        	 <input type="hidden" name="pageNo" value="${pageNo}">
+	        	 <input type="hidden" name="page" value="${page}">
 	        </c:if>
 	        <c:if test="${mode=='insertAnswer' || mode=='updateAnswer' || mode=='deleteAnswer'}">
 	        	<input type="hidden" name="qnaNum" value="${dto.qnaNum}">
 	        	<input type="hidden" name="parent" value="${dto.qnaNum}">
-	        	<input type="hidden" name="pageNo" value="${pageNo}">
+	        	<input type="hidden" name="page" value="${page}">
 	        </c:if>
       </td>
     </tr>

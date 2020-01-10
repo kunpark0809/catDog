@@ -353,7 +353,8 @@ public class CsController {
 	
 	@RequestMapping(value="/qna/list")
 	public String qnaList(
-			@RequestParam(value="pageNo", defaultValue="1") int current_page,
+			@RequestParam(value="page", defaultValue="1") int current_page,
+			@RequestParam(defaultValue="1") int qnaCategoryNum,
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
 			HttpServletRequest req,
@@ -370,8 +371,12 @@ public class CsController {
 		}
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("condition", condition);
-		map.put("keyword", keyword);
+		map.put("qnaCategoryNum", qnaCategoryNum);
+		
+		if (keyword != null && keyword != "") {
+			map.put("condition", condition);
+			map.put("keyword", keyword);
+		}
 
 		dataCount = service.qnaDataCount(map);
 		total_page = util.pageCount(rows, dataCount);
@@ -401,18 +406,19 @@ public class CsController {
        	         "&keyword=" + URLEncoder.encode(keyword, "utf-8");	
 		}
 		
-		listUrl = cp+"/qna/list";
-		articleUrl = cp + "/qna/article?pageNo="+current_page;
+		listUrl = cp+"/qna/list?qnaCategoryNum="+qnaCategoryNum;
+		articleUrl = cp + "/qna/article?qnaCategoryNum="+qnaCategoryNum+"&page="+current_page;
 		if(query.length()!=0) {
 			listUrl = listUrl + "?" + query;
 			articleUrl = articleUrl + "&" + query;
 		}
         
-        String paging = util.pagingMethod(current_page, total_page, listUrl);
+        String paging = util.paging(current_page, total_page, listUrl);
         
+        model.addAttribute("qnaCategoryNum", qnaCategoryNum);
         model.addAttribute("list", list);
 		model.addAttribute("dataCount", dataCount);
-		model.addAttribute("pageNo", current_page);
+		model.addAttribute("page", current_page);
 		model.addAttribute("paging", paging);
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("articleUrl", articleUrl);
@@ -427,7 +433,7 @@ public class CsController {
 	public String qnaCreatedForm(Model model) throws Exception {
 		List<Qna> listCategory = service.listQnaCategory();
 		
-		model.addAttribute("pageNo", "1");
+		model.addAttribute("page", "1");
 		model.addAttribute("listCategory", listCategory);
 		model.addAttribute("mode", "created");
 		return ".qna.created";
@@ -450,7 +456,8 @@ public class CsController {
 	@RequestMapping(value="/qna/article")
 	public String qnaArticle(
 			@RequestParam int qnaNum,
-			@RequestParam String pageNo,
+			@RequestParam int qnaCategoryNum,
+			@RequestParam String page,
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
 			HttpServletRequest req,
@@ -461,9 +468,14 @@ public class CsController {
 			keyword = URLDecoder.decode(keyword, "utf-8");
 		}
 		
+		String query = "page=" + page + "&qnaCategoryNum=" + qnaCategoryNum;
+		if (keyword.length() != 0) {
+			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
+		}
+		
 		Qna questionDto = service.readQnaQuestion(qnaNum);
 		if(questionDto==null) {
-			return ".qna.list";
+			return ".qna.list?"+query;
 		}
 		
 		questionDto.setContent(questionDto.getContent().replaceAll("\n", "<br>"));
@@ -474,6 +486,7 @@ public class CsController {
 		}
 		
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("qnaCategoryNum", qnaCategoryNum);
 		map.put("qnaNum", questionDto.getQnaNum());
 		map.put("condition", condition);
 		map.put("keyword", keyword);
@@ -485,7 +498,8 @@ public class CsController {
 		model.addAttribute("answerDto", answerDto);
 		model.addAttribute("preReadDto", preReadDto);
 		model.addAttribute("nextReadDto", nextReadDto);
-		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("page", page);
+		model.addAttribute("query", query);
 		
 		return ".qna.article";
 	}
@@ -493,7 +507,7 @@ public class CsController {
 	@RequestMapping(value="/qna/updateQuestion", method=RequestMethod.GET)
 	public String updateQnaForm(
 			@RequestParam int qnaNum,
-			@RequestParam String pageNo,
+			@RequestParam String page,
 			HttpSession session,
 			Model model) throws Exception {
 		
@@ -505,7 +519,7 @@ public class CsController {
 		List<Qna> listCategory = service.listQnaCategory();
 		
 		model.addAttribute("mode", "updateQuestion");
-		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("page", page);
 		model.addAttribute("dto", dto);		
 		model.addAttribute("listCategory", listCategory);
 		
@@ -514,7 +528,7 @@ public class CsController {
 	
 	@RequestMapping(value="/qna/updateQuestion", method=RequestMethod.POST)
 	public String updateQnaSubmit(
-			@RequestParam String pageNo,
+			@RequestParam String page,
 			Qna dto,
 			HttpSession session) throws Exception {
 		
@@ -524,13 +538,13 @@ public class CsController {
 			service.updateQna(dto);
 		} catch (Exception e) {
 		}
-		return "redirect:/qna/list?pageNo="+pageNo;
+		return "redirect:/qna/list?page="+page;
 	}
 	
 	@RequestMapping(value="/qna/insertAnswer", method=RequestMethod.GET)
 	public String qnaAnswerForm(
 			@RequestParam int qnaNum,
-			@RequestParam String pageNo,
+			@RequestParam String page,
 			HttpSession session,
 			Model model) throws Exception {
 		
@@ -544,7 +558,7 @@ public class CsController {
 		List<Qna> listCategory = service.listQnaCategory();
 		
 		model.addAttribute("mode", "insertAnswer");
-		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("page", page);
 		model.addAttribute("dto", dto);		
 		model.addAttribute("listCategory", listCategory);		
 
@@ -570,7 +584,7 @@ public class CsController {
 	@RequestMapping(value="/qna/updateAnswer", method=RequestMethod.GET)
 	public String qnaAnswerUpdateForm(
 			@RequestParam int qnaNum,
-			@RequestParam int pageNo,
+			@RequestParam int page,
 			HttpSession session,
 			Model model) throws Exception {
 		
@@ -587,7 +601,7 @@ public class CsController {
 		List<Qna> listCategory = service.listQnaCategory();
 		
 		model.addAttribute("mode", "updateAnswer");
-		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("page", page);
 		model.addAttribute("dto", dto);		
 		model.addAttribute("listCategory", listCategory);		
 

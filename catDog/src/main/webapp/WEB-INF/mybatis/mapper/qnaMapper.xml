@@ -34,7 +34,7 @@
 		FROM qna q
 		JOIN memberDetail md ON q.num=md.num
 		<where>
-			q.parent IS NULL
+			q.parent IS NULL and q.qnaCategorynum=#{qnaCategoryNum}
 			<if test="keyword!=null and keyword != '' ">
 				AND <include refid="where-list"/>
 			</if>
@@ -51,7 +51,7 @@
 		JOIN qnaCategory c ON q.qnaCategoryNum=c.qnaCategoryNum
 		JOIN memberDetail md ON q.num=md.num
 		<where>
-			q.parent IS NULL
+			q.parent IS NULL and q.qnaCategorynum=#{qnaCategoryNum}
 			<if test="keyword != null and keyword != ''">
 				AND <include refid="where-list"/>
 			</if>
@@ -66,7 +66,7 @@
 		FROM qna q
 		JOIN qnaCategory c ON q.qnaCategoryNum=c.qnaCategoryNum        
 		JOIN memberDetail md ON q.num = md.num
-		WHERE qnaNum=#{qnaNum}                   
+		WHERE qnaNum=#{qnaNum} and q.qnaCategorynum=#{qnaCategoryNum}                  
 	</select>
 	
 	<select id="readQnaAnswer" parameterType="Integer" resultType="com.catDog.cs.Qna">
@@ -75,7 +75,7 @@
 		FROM qna q
 		JOIN qnaCategory c ON q.qnaCategoryNum=c.qnaCategoryNum        
 		JOIN memberDetail md ON q.num = md.num
-		WHERE parent = #{qnaNum}                   
+		WHERE parent = #{qnaNum} and q.qnaCategorynum=#{qnaCategoryNum}                  
 	</select>
 	
 	<select id="preReadQnaQuestion" parameterType="map" resultType="com.catDog.cs.Qna">
@@ -83,7 +83,7 @@
 		FROM qna q
 		JOIN memberDetail md ON q.num=md.num
 		<where>
-			q.parent IS NULL
+			q.parent IS NULL and q.qnaCategorynum=#{qnaCategoryNum}
 			<if test="keyword != null and keyword != '' ">
 				AND <include refid="where-list"/>
 			</if>
@@ -98,7 +98,7 @@
 		FROM qna q
 		JOIN memberDetail md ON q.num=md.num
 		<where>
-			q.parent IS NULL
+			q.parent IS NULL and q.qnaCategorynum=#{qnaCategoryNum}
 			<if test="keyword != null and keyword != '' ">
 				AND <include refid="where-list"/>
 			</if>
@@ -147,5 +147,9 @@
 	<delete id="deleteQnaCategory" parameterType="Integer">
 		DELETE FROM qnaCategory WHERE qnaCategoryNum=#{qnaCategoryNum}
 	</delete>
+	
+	<select id="listCategory" parameterType="map" resultType="com.catDog.cs.Qna">
+		SELECT qnaCategoryNum, qnaCategory FROM qnaCategory where qnaCategoryNum=#{qnaCategoryNum} ORDER BY qnaCategoryNum
+	</select>
 	
 </mapper>

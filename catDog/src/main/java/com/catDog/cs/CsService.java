@@ -46,6 +46,7 @@ public interface CsService {
 	public void updateQnaCategory(Qna dto) throws Exception;
 	public void deleteQnaCategory(int qnaCategoryNum) throws Exception;
 	public List<Qna> listQnaCategory();
+	public List<Qna> listCategory(Map<String, Object> map);
 	
 	//Faq
 	public void insertFaq(Qna dto) throws Exception;
