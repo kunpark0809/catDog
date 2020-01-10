@@ -58,7 +58,7 @@ $(function(){
 	$("#warningModal_open_btn").click(function(){
 		
 		var url="<%=cp%>/customer/recentReport";
-		var query = {};
+		var query = {temp:new Date().getTime()};
 		
 		var fn = function(data){
 			var url2 = data.url;
@@ -67,17 +67,13 @@ $(function(){
 			var reasonCount = data.reasonCount;
 			
 			var warning = "<a href = '"+url2+"'>회원님이 작성한 글</a>이"+ reportDate+"에"+reasonName+"라서 경고" 
-			+reasonCount+"경고 받음";
+			+reportCount+"경고 받음";
 			
-			$("#warningModal").text(warning);
+			alert(warning);
+			//$("#warningModal").html(warning);
 		};
 		
 		ajaxJSON(url, "post", query, fn);
-		
-		
-		
-		
-		
 		
 		$('#warningModal').dialog({
 			  modal: true,
@@ -200,7 +196,7 @@ $(function(){
 	</div>
 <!-- 모달 창 -->
 		<div id="warningModal" style="display: none;">
-	   
+	       
 	
 		</div>
 	
