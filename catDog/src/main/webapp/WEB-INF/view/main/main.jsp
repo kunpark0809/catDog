@@ -44,7 +44,7 @@
 				<div class="col-md-4" style="max-width: 30%;">
 					<a onclick="javascript:location.href='${parkListUrl}&recommendNum=${dto.recommendNum}'" style="color: #262626;">
 					<input type="hidden" value="${dto.recommendNum}">
-					<img alt="" src="<%=cp%>/uploads/park/${dto.imageFileName}" width="400" style="padding-top: 15px;"><br>
+					<img alt="" src="<%=cp%>/uploads/park/${dto.imageFileName}" width="351px" height="263.250px" style="padding-top: 15px;"><br>
 					<span class="placeName" onclick="javascript:article('${dto.recommendNum}');" style="font-weight: bold; font-size: 24px;">${dto.placeName}</span><br>
 				</a>
 					<p><i class="fas fa-eye"></i>&nbsp;&nbsp;${dto.hitCount}</p>
