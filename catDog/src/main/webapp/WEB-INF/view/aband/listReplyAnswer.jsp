@@ -16,7 +16,7 @@
                 <div style='float: right;'>
                     <span>${vo.created}</span> |
                     <c:if test="${vo.num == sessionScope.member.memberIdx ||  fn:indexOf(sessionScope.member.userId,'admin') == 0 }">
-                    	<span class='deleteReplyAnswer' style='cursor: pointer;' data-replyNum='${vo.adoptionReplyNum}' data-answer='${vo.parent}'>삭제</span>
+                    	<span class='deleteReplyAnswer' style='cursor: pointer;' data-replyNum='${vo.lostPetReplyNum}' data-answer='${vo.parent}'>삭제</span>
                     </c:if>
                     <c:if test="${vo.num != sessionScope.member.memberIdx &&  fn:indexOf(sessionScope.member.userId,'admin') != 0}">
                     	<span class="notifyReply">신고</span>

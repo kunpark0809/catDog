@@ -12,7 +12,7 @@
 	}
 </script>
 <link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
-<div class="shin_body">
+<div class="wide-container">
     <div class="body-title">
         <h3><i class="fas fa-chalkboard"></i>입양 게시판 </h3>
         

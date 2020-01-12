@@ -2,11 +2,16 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="aband">
-<!-- 	<sql id="where-list">
-		<if test="">
-			
+	
+	<sql id="where-list">
+		<if test="species!='all'">
+			speciesSort=#{species}
 		</if>
-	</sql> -->
+		
+		<if test="area!='all'">
+			AND (INSTR(addr,#{area})=1)
+		</if>
+	</sql>
 
 	<insert id="insertAband" parameterType="com.catDog.aband.Aband">
 		INSERT INTO lostPet(lostPetNum, sort, subject, content, lostDate, addr, num, nickName, imageFileName, speciesSort)
@@ -14,15 +19,110 @@
 	</insert>
 	
 	<select id="listAband" parameterType="map" resultType="com.catDog.aband.Aband">
-		SELECT lostPetNum, sort, subject, addr, imageFileName  
+		SELECT lostPetNum, sort, subject, addr, imageFileName, status  
 		FROM lostPet
-		WHERE sort=#{sort}
+		<where>
+			<include refid="where-list"/>
+			AND (sort=#{sort})
+		</where>
+		
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+
 	</select>
 	
 	<select id="dataCount" parameterType="map" resultType="Integer">
 		SELECT NVL(count(*),0) FROM lostPet 
-		WHERE sort=#{sort}
+		<where>
+			<include refid="where-list"/>
+			AND (sort=#{sort})
+		</where>
 	</select>
 	
+	<select id="readAband" parameterType="Integer" resultType="com.catDog.aband.Aband">
+		SELECT lostPetNum, sort, subject, content, created, hitCount, lostDate, addr, num, nickName, imageFileName, speciesSort, status
+		FROM lostPet
+		WHERE lostPetNum = #{lostPetNum}
+	</select>
+	
+	<select id="preReadAband" parameterType="map" resultType="com.catDog.aband.Aband">
+		SELECT lostPetNum, sort, subject, content, created, hitCount, lostDate, addr, num, nickName, imageFileName, speciesSort
+		FROM lostPet
+		<where>
+			<include refid="where-list"/>
+			AND (lostPetNum &gt; #{lostPetNum})
+		</where>
+		ORDER BY lostPetNum ASC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+	
+	<select id="nextReadAband" parameterType="map" resultType="com.catDog.aband.Aband">
+		SELECT lostPetNum, sort, subject, content, created, hitCount, lostDate, addr, num, nickName, imageFileName, speciesSort
+		FROM lostPet
+		
+		<where>
+			<include refid="where-list"/>
+			AND (lostPetNum &lt; #{lostPetNum})
+		</where>
+		ORDER BY lostPetNum DESC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+	
+	
+	
+	<update id="updateAband" parameterType="com.catDog.aband.Aband">
+		UPDATE lostPet SET sort=#{sort},speciesSort=#{speciesSort},subject=#{subject}, imageFileName=#{imageFileName}, content=#{content}, addr=#{addr}, lostDate=#{lostDate}
+		WHERE lostPetionNum=#{lostPetNum} 
+	</update>
+	
+	<delete id="deleteAband" parameterType="Integer">
+		DELETE FROM lostPet WHERE lostPetNum=#{lostPetNum}
+	</delete>
+	
+	<update id="updateStatus" parameterType="map">
+		UPDATE lostPet SET status=#{status}
+		WHERE lostPetNum=#{lostPetNum} AND num=#{num}
+	</update>
+	
+	<insert id="insertReply" parameterType="map">
+		INSERT INTO lostPetReply(lostPetReplyNum, content, parent, lostPetNum, num, nickName)
+		VALUES(lostPetReply_seq.NEXTVAL,#{content},#{parent},#{lostPetNum},#{num},#{nickName})
+	</insert>
+	
+	<select id="replyCount" parameterType="map" resultType="Integer">
+		SELECT NVL(count(*),0) FROM lostPetReply WHERE lostPetNum=#{lostPetNum} AND parent=0
+	</select>
+	
+	<select id="listReply" parameterType="map" resultType="com.catDog.aband.Aband">
+		SELECT lostPetReplyNum, content, parent, lostPetNum, num, nickName, created 
+		FROM lostPetReply
+		WHERE lostPetNum=#{lostPetNum} AND parent=0
+		ORDER BY lostPetReplyNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="replyAnswerCount" parameterType="Integer" resultType="Integer">
+		SELECT NVL(count(*),0) FROM lostPetReply WHERE parent=#{parent}
+	</select>
+	
+	
+	<select id="listAnswerReply" parameterType="Integer" resultType="com.catDog.aband.Reply">
+		SELECT lostPetReplyNum, content, parent, lostPetNum, num, nickName, created 
+		FROM lostPetReply
+		WHERE parent=#{parent}
+		ORDER BY lostPetReplyNum DESC
+	</select>
+	
+	<delete id="deleteReply" parameterType="map">
+		DELETE FROM lostPetReply WHERE
+		<if test="mode=='reply' ">
+			lostPetReplyNum IN (
+				SELECT lostPetReplyNum FROM lostPetReply
+					START WITH lostPetReplyNum=#{lostPetReplyNum}
+					CONNECT BY PRIOR lostPetReplyNum = parent
+			)
+		</if>
+		<if test="mode=='answer' ">
+			lostPetReplyNum = #{lostPetReplyNum}
+		</if>
+	</delete>
 </mapper>

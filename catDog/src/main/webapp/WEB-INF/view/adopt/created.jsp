@@ -71,7 +71,7 @@
 
 	</script>
 	<link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
-	<div class="shin_body">
+	<div class="wide-container">
 	<div class="body-title">
 		<h3><i class="fas fa-chalkboard-teacher"></i> 입양 등록 </h3>
 	</div>

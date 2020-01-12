@@ -25,7 +25,7 @@ $(function(){
 	})
 });
 </script>
-	<div class="shin_body">
+	<div class="wide-container">
 		<h3 style="display: inline;">Shop</h3>
 		<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
 			<span><button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/shop/created'">글올리기</button></span>

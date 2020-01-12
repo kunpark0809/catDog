@@ -7,26 +7,74 @@
    String cp = request.getContextPath();
 %>
 <link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=60c1097ba8f6f767297a53630f9853eb&libraries=services"></script>
+<script>
+$(function(){
+	
+	var title="${sort==0?'실종장소':'발견장소'}";
+	var addr="${dto.addr}";
+	
+	var mapContainer = document.getElementById('abandMap'), // 지도를 표시할 div태그
+    mapOption = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+};  
+
+// 지도를 생성합니다    
+var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+// 주소-좌표 변환 객체를 생성합니다
+var geocoder = new kakao.maps.services.Geocoder();
+
+// 주소로 좌표를 검색합니다
+geocoder.addressSearch(addr, function(result, status) {
+
+    // 정상적으로 검색이 완료됐으면 
+     if (status === kakao.maps.services.Status.OK) {
+
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new kakao.maps.Marker({
+            map: map,
+            position: coords
+        });
+
+        // 인포윈도우로 장소에 대한 설명을 표시합니다
+        var infowindow = new kakao.maps.InfoWindow({
+            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+title+'</div>'
+        });
+        infowindow.open(map, marker);
+
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(coords);
+    } 
+});    
+	
+});
+</script>
+
 <script type="text/javascript">
 function deleteBoard() {
-	var q = "adoptionNum=${dto.adoptionNum}&${query}";
-    var url = "<%=cp%>/adopt/delete?" + q;
+	var q = "lostPetNum=${dto.lostPetNum}&${query}";
+    var url = "<%=cp%>/aband/delete?" + q;
 
     if(confirm("위 게시물을 삭제 하시겠습니까 ? "))
   	  location.href=url;  
 }
  
 function updateBoard(){
-	var q = "adoptionNum=${dto.adoptionNum}&page=${page}";
-    var url = "<%=cp%>/adopt/update?" + q;
+	var q = "lostPetNum=${dto.lostPetNum}&page=${page}";
+    var url = "<%=cp%>/aband/update?" + q;
   	location.href=url;  
 }
 
 function updateStatus(){
-	var q = "adoptionNum=${dto.adoptionNum}&${query}";
-	var url = "<%=cp%>/adopt/updateStatue?"+q;
+	var q = "lostPetNum=${dto.lostPetNum}&${query}";
+	var url = "<%=cp%>/aband/updateStatus?"+q;
 
-	if(confirm("해당 게시물을 ${dto.status=='1'?'입양완료':'재입양'}로 변경하시겠습니까?"))
+	if(confirm("해당 게시물을 ${dto.status=='1'?'해결':'미해결'}로 변경하시겠습니까?"))
 		location.href=url+"&status=${dto.status=='1'?'0':'1'}";
 }
 
@@ -84,12 +132,12 @@ function ajaxHTML(url, type, query, selector) {
 
 // 페이징 처리
 $(function(){
-	listPage(1);
+	//listPage(1);
 });
 
 function listPage(page) {
-	var url = "<%=cp%>/adopt/listReply";
-	var query = "adoptionNum=${dto.adoptionNum}&pageNo="+page;
+	var url = "<%=cp%>/aband/listReply";
+	var query = "lostPetNum=${dto.lostPetNum}&pageNo="+page;
 	var selector = "#listReply";
 	
 	ajaxHTML(url, "get", query, selector);
@@ -98,7 +146,7 @@ function listPage(page) {
 // 리플 등록
 $(function(){
 	$(".btnSendReply").click(function(){
-		var adoptionNum="${dto.adoptionNum}";
+		var lostPetNum="${dto.lostPetNum}";
 		var $tb = $(this).closest("table");
 		var content=$tb.find("textarea").val().trim();
 		if(! content) {
@@ -107,8 +155,8 @@ $(function(){
 		}
 		content = encodeURIComponent(content);
 		
-		var url="<%=cp%>/adopt/insertReply";
-		var query="adoptionNum="+adoptionNum+"&content="+content;
+		var url="<%=cp%>/aband/insertReply";
+		var query="lostPetNum="+lostPetNum+"&content="+content;
 		
 		var fn = function(data){
 			$tb.find("textarea").val("");
@@ -133,11 +181,11 @@ $(function(){
 		    return false;
 		}
 		
-		var adoptionReplyNum=$(this).attr("data-replyNum");
+		var lostPetReplyNum=$(this).attr("data-replyNum");
 		var page=$(this).attr("data-pageNo");
 		
-		var url="<%=cp%>/adopt/deleteReply";
-		var query="adoptionReplyNum="+adoptionReplyNum+"&mode=reply";
+		var url="<%=cp%>/aband/deleteReply";
+		var query="lostPetReplyNum="+lostPetReplyNum+"&mode=reply";
 		
 		var fn = function(data){
 			var state=data.state;
@@ -150,7 +198,7 @@ $(function(){
 
 //댓글별 답글 리스트
 function listReplyAnswer(parent) {
-	var url="<%=cp%>/adopt/listReplyAnswer";
+	var url="<%=cp%>/aband/listReplyAnswer";
 	var query = {parent:parent};
 	var selector = "#listReplyAnswer"+parent;
 	
@@ -159,7 +207,7 @@ function listReplyAnswer(parent) {
 
 // 댓글별 답글 개수
 function countReplyAnswer(parent) {
-	var url = "<%=cp%>/adopt/countReplyAnswer";
+	var url = "<%=cp%>/aband/countReplyAnswer";
 	var query = {parent:parent};
 	
 	var fn = function(data){
@@ -198,7 +246,7 @@ $(function(){
 //댓글별 답글 등록
 $(function(){
 	$("body").on("click", ".btnSendReplyAnswer", function(){
-		var adoptionNum="${dto.adoptionNum}";
+		var lostPetNum="${dto.lostPetNum}";
 		var replyNum = $(this).attr("data-replyNum");
 		var $td = $(this).closest("td");
 		var content=$td.find("textarea").val().trim();
@@ -208,8 +256,8 @@ $(function(){
 		}
 		content = encodeURIComponent(content);
 		
-		var url="<%=cp%>/adopt/insertReply";
-		var query="adoptionNum="+adoptionNum+"&content="+content+"&parent="+replyNum;
+		var url="<%=cp%>/aband/insertReply";
+		var query="lostPetNum="+lostPetNum+"&content="+content+"&parent="+replyNum;
 		
 		var fn = function(data){
 			$td.find("textarea").val("");
@@ -232,11 +280,11 @@ $(function(){
 		if(! confirm("게시물을 삭제하시겠습니까 ? "))
 		    return;
 		
-		var adoptionReplyNum=$(this).attr("data-replyNum");
+		var lostPetReplyNum=$(this).attr("data-replyNum");
 		var answer=$(this).attr("data-answer");
 		
-		var url="<%=cp%>/adopt/deleteReply";
-		var query="adoptionReplyNum="+adoptionReplyNum+"&mode=answer";
+		var url="<%=cp%>/aband/deleteReply";
+		var query="lostPetReplyNum="+lostPetReplyNum+"&mode=answer";
 		
 		var fn = function(data){
 			listReplyAnswer(answer);
@@ -249,7 +297,7 @@ $(function(){
 
 </script>
 
-<div class="shin_body" >
+<div class="wide-container" >
     <div class="body-title">
         <h3><i class="fas fa-chalkboard"></i> 게시판 </h3>
     </div>
@@ -277,12 +325,16 @@ $(function(){
 			   </td>
 			</tr>
 			
-			
+			<tr>
+				<td colspan="2" align="left" style="padding: 10px 5px;" valign="top" height="200">
+					<div id="abandMap"></div>
+				</td>
+			</tr>
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
 			    <td colspan="2" align="left" style="padding-left: 5px;">
 			       이전글 :
 			         <c:if test="${not empty preDto}">
-			              <a href="<%=cp%>/adopt/article?${query}&adoptionNum=${preDto.adoptionNum}">${preDto.subject}</a>
+			              <a href="<%=cp%>/aband/article?${query}&lostPetNum=${preDto.lostPetNum}">${preDto.subject}</a>
 			        </c:if>
 			    </td>
 			</tr>
@@ -291,7 +343,7 @@ $(function(){
 			    <td colspan="2" align="left" style="padding-left: 5px;">
 			       다음글 :
 			         <c:if test="${not empty nextDto}">
-			              <a href="<%=cp%>/adopt/article?${query}&adoptionNum=${nextDto.adoptionNum}">${nextDto.subject}</a>
+			              <a href="<%=cp%>/aband/article?${query}&lostPetNum=${nextDto.lostPetNum}">${nextDto.subject}</a>
 			        </c:if>
 			    </td>
 			</tr>
@@ -302,7 +354,7 @@ $(function(){
 			    <td width="300" align="left">
 			       <c:if test="${sessionScope.member.nickName==dto.nickName}">				    
 			          <button type="button" class="btn" onclick="updateBoard();">수정</button>
-			          <button type="button" class="btn" onclick="updateStatus();">${dto.status=="1"?"입양완료":"재입양"}</button>
+			          <button type="button" class="btn" onclick="updateStatus();">${dto.status=="1"?"해결":"미해결"}</button>
 			       </c:if>
 			       
 			       <c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">				    
@@ -311,7 +363,7 @@ $(function(){
 			    </td>
 			
 			    <td align="right">
-			        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/adopt/list?${query}';">리스트</button>
+			        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/aband/list?${query}';">리스트</button>
 			    </td>
 			</tr>
 			</table>

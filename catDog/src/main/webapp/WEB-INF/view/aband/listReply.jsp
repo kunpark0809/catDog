@@ -28,7 +28,7 @@
 	       <td width='50%' style='padding:5px 5px; border:1px solid #cccccc; border-left:none;' align='right'>
 	           <span>${vo.created}</span> |
 	           <c:if test="${vo.num == sessionScope.member.memberIdx ||  fn:indexOf(sessionScope.member.userId,'admin') == 0 }">
-	                <span class="deleteReply" style="cursor: pointer;" data-replyNum='${vo.adoptionReplyNum}' data-pageNo='${pageNo}'>삭제</span>
+	                <span class="deleteReply" style="cursor: pointer;" data-replyNum='${vo.lostPetReplyNum}' data-pageNo='${pageNo}'>삭제</span>
 	           	</c:if>
 	           <c:if test="${vo.num != sessionScope.member.memberIdx &&  fn:indexOf(sessionScope.member.userId,'admin') != 0}">
 	           		<span class="notifyReply">신고</span>
@@ -43,13 +43,13 @@
 	    
 	    <tr>
 	        <td style='padding:7px 5px;'>
-	            <button type='button' class='btn btnReplyAnswerLayout' data-replyNum='${vo.adoptionReplyNum}'>답글 <span id="answerCount${vo.adoptionReplyNum}">${vo.answerCount}</span></button>
+	            <button type='button' class='btn btnReplyAnswerLayout' data-replyNum='${vo.lostPetReplyNum}'>답글 <span id="answerCount${vo.lostPetReplyNum}">${vo.answerCount}</span></button>
 	        </td>
 	    </tr>
 	
 	    <tr class='replyAnswer' style='display: none;'>
 	        <td colspan='2'>
-	            <div id='listReplyAnswer${vo.adoptionReplyNum}' class='answerList' style='border-top: 1px solid #cccccc;'></div>
+	            <div id='listReplyAnswer${vo.lostPetReplyNum}' class='answerList' style='border-top: 1px solid #cccccc;'></div>
 	            <div style='clear: both; padding: 10px 10px;'>
 	                <div style='float: left; width: 5%;'>└</div>
 	                <div style='float: left; width:95%'>
@@ -57,7 +57,7 @@
 	                 </div>
 	            </div>
 	             <div style='padding: 0px 13px 10px 10px; text-align: right;'>
-	                <button type='button' class='btn btnSendReplyAnswer' data-replyNum='${vo.adoptionReplyNum}'>답글 등록</button>
+	                <button type='button' class='btn btnSendReplyAnswer' data-replyNum='${vo.lostPetReplyNum}'>답글 등록</button>
 	            </div>
 	        
 	        </td>
