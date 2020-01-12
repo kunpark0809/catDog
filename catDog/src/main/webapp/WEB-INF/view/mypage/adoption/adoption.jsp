@@ -8,7 +8,7 @@
 %>
 <link rel="stylesheet" href="<%=cp%>/resource/css/cs.css">
 
-<div class="body-container" style="width: 830px; margin: 20px auto 0px; border-spacing: 0px;">
+<div class="body-container" style="width: 1000px; margin: 20px auto 0px; border-spacing: 0px; min-height: 510px;">
 	<div>
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
 			<tr height="35">

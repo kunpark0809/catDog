@@ -26,9 +26,8 @@ public class FestivalController {
 	@RequestMapping(value="/festival/month")
 	public String month(@RequestParam(name="year", defaultValue="0") int year,
 						@RequestParam(name="month", defaultValue="0") int month,
-						HttpSession session, Model model) {
+						Model model) {
 		try {
-			SessionInfo info=(SessionInfo)session.getAttribute("member");
 			
 			Calendar cal=Calendar.getInstance();
 			int y=cal.get(Calendar.YEAR);
@@ -65,7 +64,7 @@ public class FestivalController {
 			Map<String, Object> map=new HashMap<>();
 			map.put("startDate", startDay);
 			map.put("endDate", endDay);
-			map.put("userId", info.getUserId());
+			
 			
 			List<Festival> list=service.listMonth(map);
 			
@@ -194,10 +193,9 @@ public class FestivalController {
 	@RequestMapping(value="/festival/day")
 	public String day(@RequestParam(name="festivalNum", defaultValue="0") int festivalNum, 
 					  @RequestParam(name="date", defaultValue="") String date,
-					  HttpSession session, Model model) {
+					  Model model) {
 		
 		try {
-			SessionInfo info=(SessionInfo)session.getAttribute("member");
 			
 			Calendar cal=Calendar.getInstance();
 			
@@ -219,7 +217,6 @@ public class FestivalController {
 			
 			date=String.format("%04d%02d%02d", year, month, day);
 			Map<String, Object> map=new HashMap<>();
-			map.put("userId", info.getUserId());
 			map.put("date", date);
 			List<Festival> list=service.listDay(map);
 			
