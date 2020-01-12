@@ -1,6 +1,5 @@
 package com.catDog.cs;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -454,7 +453,7 @@ public class CsServiceImpl implements CsService {
 
 	@Override
 	public List<Qna> listCategory(Map<String, Object> map) {
-		List<Qna> list = new ArrayList<Qna>();
+		List<Qna> list = null;
 
 		try {
 			list = dao.selectList("qna.listCategory", map);

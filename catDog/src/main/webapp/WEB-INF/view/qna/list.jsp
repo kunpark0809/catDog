@@ -7,6 +7,7 @@
 	String cp=request.getContextPath();
 %>
 <link rel="stylesheet" href="<%=cp%>/resource/css/cs.css">
+<link rel="stylesheet" href="<%=cp%>/resource/css/tabs.css" type="text/css">
 <script type="text/javascript">
 function searchList() {
 	var f=document.searchForm;
@@ -58,8 +59,7 @@ $(function(){
 
 <div style="clear: both;">
 			<ul class="tabs">
-				<li id="tab-0" data-tab="0">전체</li>
-				<c:forEach var="vo" items="${qnaCategoryNum}">
+				<c:forEach var="vo" items="${categoryList}">
 					<li id="tab-${vo.qnaCategoryNum}" data-tab="${vo.qnaCategoryNum}">
 					${vo.qnaCategory}</li>
 				</c:forEach>

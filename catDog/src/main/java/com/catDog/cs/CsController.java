@@ -372,6 +372,7 @@ public class CsController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("qnaCategoryNum", qnaCategoryNum);
+		List<Qna> categoryList = service.listCategory(map);
 		
 		if (keyword != null && keyword != "") {
 			map.put("condition", condition);
@@ -406,8 +407,8 @@ public class CsController {
        	         "&keyword=" + URLEncoder.encode(keyword, "utf-8");	
 		}
 		
-		listUrl = cp+"/qna/list?qnaCategoryNum="+qnaCategoryNum;
-		articleUrl = cp + "/qna/article?qnaCategoryNum="+qnaCategoryNum+"&page="+current_page;
+		listUrl = cp+"/qna/list?page="+current_page;
+		articleUrl = cp + "/qna/article?page="+current_page;
 		if(query.length()!=0) {
 			listUrl = listUrl + "?" + query;
 			articleUrl = articleUrl + "&" + query;
@@ -415,7 +416,7 @@ public class CsController {
         
         String paging = util.paging(current_page, total_page, listUrl);
         
-        model.addAttribute("qnaCategoryNum", qnaCategoryNum);
+        model.addAttribute("categoryList", categoryList);
         model.addAttribute("list", list);
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("page", current_page);

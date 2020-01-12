@@ -149,7 +149,7 @@
 	</delete>
 	
 	<select id="listCategory" parameterType="map" resultType="com.catDog.cs.Qna">
-		SELECT qnaCategoryNum, qnaCategory FROM qnaCategory where qnaCategoryNum=#{qnaCategoryNum} ORDER BY qnaCategoryNum
+		SELECT qnaCategoryNum, qnaCategory FROM qnaCategory ORDER BY qnaCategoryNum
 	</select>
 	
 </mapper>
