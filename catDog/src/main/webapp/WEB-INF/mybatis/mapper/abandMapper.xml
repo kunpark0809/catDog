@@ -71,7 +71,7 @@
 	
 	<update id="updateAband" parameterType="com.catDog.aband.Aband">
 		UPDATE lostPet SET sort=#{sort},speciesSort=#{speciesSort},subject=#{subject}, imageFileName=#{imageFileName}, content=#{content}, addr=#{addr}, lostDate=#{lostDate}
-		WHERE lostPetionNum=#{lostPetNum} 
+		WHERE lostPetNum=#{lostPetNum} 
 	</update>
 	
 	<delete id="deleteAband" parameterType="Integer">
@@ -92,7 +92,7 @@
 		SELECT NVL(count(*),0) FROM lostPetReply WHERE lostPetNum=#{lostPetNum} AND parent=0
 	</select>
 	
-	<select id="listReply" parameterType="map" resultType="com.catDog.aband.Aband">
+	<select id="listReply" parameterType="map" resultType="com.catDog.aband.Reply">
 		SELECT lostPetReplyNum, content, parent, lostPetNum, num, nickName, created 
 		FROM lostPetReply
 		WHERE lostPetNum=#{lostPetNum} AND parent=0
@@ -103,8 +103,7 @@
 	<select id="replyAnswerCount" parameterType="Integer" resultType="Integer">
 		SELECT NVL(count(*),0) FROM lostPetReply WHERE parent=#{parent}
 	</select>
-	
-	
+
 	<select id="listAnswerReply" parameterType="Integer" resultType="com.catDog.aband.Reply">
 		SELECT lostPetReplyNum, content, parent, lostPetNum, num, nickName, created 
 		FROM lostPetReply

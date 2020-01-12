@@ -55,11 +55,15 @@ ul li {
 	float: right;
 }
 
+.body-board{
+	clear:both;
+	top: 97px;
+    position: relative;
+}
+
 .container-board{
 	min-height: 490px;
 	width: 1000px;
-    top: 97px;
-    position: relative;
     margin: 0px auto;
 }
 
@@ -67,8 +71,6 @@ ul li {
 .wide-container{
 	min-height: 490px;
 	width: 1200px; 
-    top: 97px;
-    position: relative;
     margin: 0px auto;
 }
 

@@ -103,8 +103,8 @@
 						<td>
 							<select name="sort">
 								<option value="">::카테고리 선택::</option>
-								<option value="0" ${dto.sort==1?"selected='selected'":""}>잃어버렸어요</option>
-								<option value="1" ${dto.sort==0?"selected='selected'":""}>보호하고있어요</option>
+								<option value="0" ${dto.sort==0?"selected='selected'":""}>잃어버렸어요</option>
+								<option value="1" ${dto.sort==1?"selected='selected'":""}>보호하고있어요</option>
 							</select>
 							<select name="speciesSort">
 								<option value="">::애견동물 선택::</option>
@@ -123,7 +123,7 @@
 					<tr>
 						<td>장&nbsp;&nbsp;소</td>
 						<td>
-							<input type="text" name="addr" value="${dto.subject}">
+							<input type="text" name="addr" value="${dto.addr}">
 						</td>
 					</tr>
 					<tr>

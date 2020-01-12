@@ -13,19 +13,10 @@
 	}
 	
 	$(function(){
-		$("#tab-lose").addClass("active");
-		// listPage(1);
+		$("#tab-"+${sort}).addClass("active");
 
 		$("ul.tabs li").click(function() {
-			tab = $(this).attr("data-tab");
-			
-			$("ul.tabs li").each(function(){
-				$(this).removeClass("active");
-			});
-			
-			$("#tab-"+tab).addClass("active");
-			
-			var url = "<%=cp%>/aband/list?sort="+tab;
+			var url = "<%=cp%>/aband/list?sort="+$(this).val();
 			location.href=url;
 		});
 	});
@@ -71,14 +62,12 @@
     
     <div>
 
-			<div>
-		            <div style="clear: both;">
-			           <ul class="tabs">
-					       <li id="tab-lose"  data-tab="0">잃어버렸어요</li>
-					       <li id="tab-protect" data-tab="1"> 보호하고있어요 </li>
-					   </ul>
-				   </div>
-		    </div>
+	            <div style="clear: both;">
+		           <ul class="tabs">
+				       <li id="tab-0" value="0">잃어버렸어요</li>
+				       <li id="tab-1" value="1"> 보호하고있어요 </li>
+				   </ul>
+			   </div>
 		<table style="border-spacing: 0px; border-collapse: collapse; margin: 0px auto;">
 
 			<c:forEach var="dto" items="${list}" varStatus="status">
@@ -92,8 +81,12 @@
 						<td width="20%" style="text-align: center;">
 							<div class="link" onclick="javascript:location.href='${articleUrl}&lostPetNum=${dto.lostPetNum}'">
 									<img alt="" src="<%=cp%>/uploads/aband/${dto.imageFileName}" width="200" height="200">
-								
-								<p><b>${dto.subject}</b></p>	
+								<p>
+								<c:if test="${dto.status=='0'}">
+										<span style="display: inline-block;padding: 2px 8px;background: #f3a34e;border-radius: 3px; color: #FFFFFF;">해결</span>
+									</c:if>
+									<b>${dto.subject}</b>
+									</p>
 								<p>지역: ${dto.addr}</p>
 							</div>
 						</td>

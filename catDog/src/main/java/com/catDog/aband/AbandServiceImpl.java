@@ -119,7 +119,7 @@ public class AbandServiceImpl implements AbandService{
 				return;
 			}
 			
-			dao.deleteData("Aband.deleteAband",lostPetNum);
+			dao.deleteData("aband.deleteAband",lostPetNum);
 			fileManager.doFileDelete(dto.getImageFileName(), pathname);
 			
 		} catch (Exception e) {

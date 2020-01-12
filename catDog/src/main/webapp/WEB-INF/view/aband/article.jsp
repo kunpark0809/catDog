@@ -132,7 +132,7 @@ function ajaxHTML(url, type, query, selector) {
 
 // 페이징 처리
 $(function(){
-	//listPage(1);
+	listPage(1);
 });
 
 function listPage(page) {
@@ -146,6 +146,8 @@ function listPage(page) {
 // 리플 등록
 $(function(){
 	$(".btnSendReply").click(function(){
+		
+		
 		var lostPetNum="${dto.lostPetNum}";
 		var $tb = $(this).closest("table");
 		var content=$tb.find("textarea").val().trim();
@@ -223,8 +225,8 @@ function countReplyAnswer(parent) {
 $(function(){
 	$("body").on("click", ".btnReplyAnswerLayout", function(){
 		var $trReplyAnswer = $(this).closest("tr").next();
-		// var $trReplyAnswer = $(this).parent().parent().next();
-		// var $answerList = $trReplyAnswer.children().children().eq(0);
+		var $trReplyAnswer = $(this).parent().parent().next();
+		var $answerList = $trReplyAnswer.children().children().eq(0);
 		
 		var isVisible = $trReplyAnswer.is(':visible');
 		var replyNum = $(this).attr("data-replyNum");
