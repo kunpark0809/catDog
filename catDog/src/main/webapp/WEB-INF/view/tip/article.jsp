@@ -9,23 +9,10 @@
 <style type="text/css">
 .btn {
 	width:70px;
-    background-color: #262626;
+    background-color: #51321b;
     border: none;
     color:#ffffff;
     padding: 10px 0;
-    text-align: center;
-    display: inline-block;
-    font-size: 15px;
-    margin: 4px;
-    border-radius:10px;
-}
-
-.btn2 {
-	width:50px;
-    background-color: white;
-    border: 1px dashed #262626;
-    color:#262626;
-    padding: 5px 0;
     text-align: center;
     display: inline-block;
     font-size: 15px;
@@ -371,7 +358,7 @@ $(function(){
 			
 		<tr>
 			<td align="left">
-				<button type="button" class="btn2" onclick="report();">신고</button>
+				<button type="button" onclick="report();">신고</button>
 			</td>
 		</tr>	
 			 
@@ -379,7 +366,7 @@ $(function(){
 				<td colspan="2" align="left" style="padding-left: 5px;">
 				이전글 :
 					<c:if test="${not empty preReadTip}">
-						<a href="<%=cp%>/tip/article?${query}&tipNum=${preReadTip.tipNum}">${preReadTip.subject}</a>
+						<a href="<%=cp%>/tip/article?${query}&tipNum=${preReadTip.tipNum}" style="color: black;">${preReadTip.subject}</a>
 					</c:if>
 				</td>
 			</tr>
@@ -388,7 +375,7 @@ $(function(){
 				<td colspan="2" align="left" style="padding-left: 5px;">
 				다음글 :
 					<c:if test="${not empty nextReadTip}">
-						<a href="<%=cp%>/tip/article?${query}&tipNum=${nextReadTip.tipNum}">${nextReadTip.subject}</a>
+						<a href="<%=cp%>/tip/article?${query}&tipNum=${nextReadTip.tipNum}" style="color: black;">${nextReadTip.subject}</a>
 					</c:if>
 				</td>
 			</tr>

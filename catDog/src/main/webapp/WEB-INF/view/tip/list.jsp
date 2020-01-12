@@ -9,7 +9,7 @@
 <style type="text/css">
 .btn {
 	width:70px;
-    background-color: #262626;
+    background-color: #51321b;
     border: none;
     color:#ffffff;
     padding: 6px 0;
@@ -35,8 +35,6 @@ function searchList() {
 		<h3><span style="font-family: Webdings"></span>꿀팁</h3>
 	</div>
 	
-	<div>
-	
 	<table style="width: 100%;  border-spacing: 0px;">
 		   <tr height="40">
 		      <td align="right">
@@ -57,7 +55,7 @@ function searchList() {
 		<table style="width: 100%;  border-spacing: 0px;">
 			<tr height="35">
 				<td align="left" width="50%">
-					전체 <span style="color: red;">${dataCount}</span>건 <span style="color: red;">${total_page}</span> 페이지
+					전체 게시글 <span style="color: red;">${dataCount}</span>건 / 총 <span style="color: red;">${total_page}</span> 페이지
 				</td>
 				<td align="right">
 					&nbsp;
@@ -66,7 +64,7 @@ function searchList() {
 		</table>
 		
 		<table style="width: 100%; border-spacing: 0px; border-collapse: collapse;">
-			<tr align="center" bgcolor="#D96262" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
+			<tr align="center" bgcolor="#51321b" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 				<th width="60" style="color: white;">번호</th>
 				<th width="100" style="color: white;">말머리</th>
 				<th style="color: white;">제목</th>
@@ -78,10 +76,10 @@ function searchList() {
 
  		<c:forEach var="dto" items="${listTipTop}">
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
-				<td><span style="display: inline-block;padding: 1px 3px; background: #A66242; color: #FFFFFF">공지</span></td>
+				<td><span style="display: inline-block;padding: 1px 3px; background: #f3a34e; color: #FFFFFF; border-radius: 5px 5px;"><i class="fas fa-exclamation-circle" style="color: red;"></i>&nbsp;공지</span></td>
 				<td>${dto.tipCategory}</td>
 				<td align="left" style="padding-left: 10px;">
-					<a href="${articleUrl}&tipNum=${dto.tipNum}">${dto.subject}</a>
+					<a href="${articleUrl}&tipNum=${dto.tipNum}" style="color: black;">${dto.subject}</a>
 				</td>
 				<td>${dto.nickName}</td>
 				<td>${dto.created}</td>
@@ -94,7 +92,7 @@ function searchList() {
 				<td>${dto.listNum}</td>
 				<td>${dto.tipCategory}</td>
 				<td align="left" style="padding-left: 10px;">
-					<a href="${articleUrl}&tipNum=${dto.tipNum}">${dto.subject}</a>
+					<a href="${articleUrl}&tipNum=${dto.tipNum}" style="color: black;">${dto.subject}</a>
 				</td>
 				<td>${dto.nickName}</td>
 				<td>${dto.created}</td>

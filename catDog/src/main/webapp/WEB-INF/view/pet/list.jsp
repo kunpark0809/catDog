@@ -63,7 +63,7 @@ function article(myPetNum) {
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
 			<tr height="35">
 				<td align="left" width="50%">
-					${dataCount}개(${page}/${total_page} 페이지)
+					전체 게시글 <span style="color: red;">${dataCount}</span>건 / 총 <span style="color: red;">${total_page}</span> 페이지
 				</td>
 				<td align="right">
 					&nbsp;
