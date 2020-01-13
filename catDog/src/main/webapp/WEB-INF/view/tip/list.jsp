@@ -32,13 +32,13 @@ function searchList() {
 
 <div class="container-board">
 	 <div class="body-title">
-		<h3><span style="font-family: Webdings"></span>꿀팁</h3>
+		<span style="font-family: Webdings">꿀팁</span>
 	</div>
 	
 		<table style="width: 100%;  border-spacing: 0px;">
 			<tr height="35">
 				<td align="left" width="50%">
-					전체 게시글 <span style="color: red;">${dataCount}</span>건 / 총 <span style="color: red;">${total_page}</span> 페이지
+					전체 게시글 <span style="color: #D96262;">${dataCount}</span>건 / 총 <span style="color: #D96262;">${total_page}</span> 페이지
 				</td>
 				<td align="right">
 					&nbsp;

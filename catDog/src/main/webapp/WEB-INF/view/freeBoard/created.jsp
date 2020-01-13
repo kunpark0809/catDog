@@ -8,17 +8,17 @@
 %>
 
 <style type="text/css">
-.btn {
-	width:70px;
-    background-color: #262626;
-    border: none;
-    color:#ffffff;
-    padding: 10px 0;
-    text-align: center;
-    display: inline-block;
-    font-size: 15px;
-    margin: 4px;
-    border-radius:10px;
+.bts {
+width: 70px;
+background-color: #51321b;
+border: none;
+color: #ffffff;
+padding: 6px 0;
+text-align: center;
+display: inline-block;
+font-size: 15px;
+margin: 4px;
+border-radius: 5px;
 }
 </style>
 
@@ -48,45 +48,42 @@
 
 </script>
 
-<div class="page-section" id="command" style="text-align: center;">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<p class="section-heading text-uppercase" style="font-size: 45px; font-weight:bold; border-bottom: 3px solid; border-bottom-width: 100%; padding-bottom: 20px;">자유게시판</p>
-				</div>
-			</div>
-    	</div>
-    <div>
+<div class="container-board">
+	 <div class="body-title">
+		<span style="font-family: Webdings">자유게시판</span>
+	</div>
+	
 		<form name="freeBoardForm" method="post" enctype="multipart/form-data" onsubmit="return submitContents(this);">
 			<div class="container" style="color: white;">
 			
 				
 			  <table style="width: 100%; margin: 20px auto 10px; border-spacing: 0px; border-collapse: collapse;">
 			  <tbody id="freeBoardb">
+			
 			  
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
-			      <td width="100" bgcolor="#262626" style="text-align: center; font-weight: bold;">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</td>
+			      <td width="100" bgcolor="#51321b" style="text-align: center; font-weight: bold;">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</td>
 			      <td style="padding-left:10px;"> 
 			        <input type="text" name="subject" maxlength="100" class="boxTF" style="width: 100%;" value="${dto.subject}">
 			      </td>
 			  </tr>
-			  
-			   <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;"> 
-					<td width="100" bgcolor="#262626" style="text-align: center; font-weight: bold;">공지여부</td>
+			
+			<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;"> 
+					<td width="100" bgcolor="#51321b" style="text-align: center; font-weight: bold;">공지여부</td>
 					<td style="padding-left:10px;">
 						<input type="checkbox" name="notice" value="1" ${dto.notice==1?"checked='checked'":""}> <label>공지</label>
 					</td>
 			  </tr>
 			
 			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;"> 
-			      <td width="100" bgcolor="#262626" style="text-align: center; font-weight: bold;">작&nbsp;&nbsp;성&nbsp;&nbsp;자</td>
+			      <td width="100" bgcolor="#51321b" style="text-align: center; font-weight: bold;">작&nbsp;&nbsp;성&nbsp;&nbsp;자</td>
 			      <td style="padding-left:10px; color: #262626">
 			           ${sessionScope.member.nickName}
 			      </td>
 			  </tr>
 
 			  <tr align="left" style="border-bottom: 1px solid #cccccc;"> 
-			      <td width="100" bgcolor="#262626" style="text-align: center; padding-top:5px; font-weight: bold;" valign="top">내&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;용</td>
+			      <td width="100" bgcolor="#51321b" style="text-align: center; padding-top:5px; font-weight: bold;" valign="top">내&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;용</td>
 			      <td valign="top" style="padding:5px 0px 5px 10px;"> 
 			        <textarea name="content" id="content" class="boxTA" style="width: 100%;">${dto.content}</textarea>
 			      </td>
@@ -98,9 +95,9 @@
 			<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
 			     <tr height="45"> 
 			      <td align="center">
-			        <button type="submit" class="btn">${mode=='update'?'수정완료':'등록하기'}</button>
-			        <button type="reset" class="btn">다시입력</button>
-			        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/freeBoard/list';">${mode=='update'?'수정취소':'등록취소'}</button>
+			        <button type="submit" class="bts">${mode=='update'?'수정완료':'등록하기'}</button>
+			        <button type="reset" class="bts">다시입력</button>
+			        <button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/freeBoard/list';">${mode=='update'?'수정취소':'등록취소'}</button>
 			        	<c:if test="${mode=='update'}">
 								<input type="hidden" name="bbsNum" value="${dto.bbsNum}">
 								<input type="hidden" name="page" value="${page}">
@@ -111,7 +108,6 @@
 			</table>
 		</form>
     </div>
-</div>
 
 <script type="text/javascript">
 var oEditors = [];

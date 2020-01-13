@@ -20,6 +20,15 @@ margin: 4px;
 border-radius: 5px;
 }
 
+.bts2 {
+  background-color: white;
+  border: 1px solid;
+  border-color: #a9a9a9;
+  color: #black;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
 
 </style>
 
@@ -296,15 +305,15 @@ $(function(){
 </script>
 
 
-<div class="body-container" style="width: 700px; margin: 20px auto 10px; text-align: center;">
+<div class="container-board">
 	<div class="body-title">
-		<h3>자유게시판</h3>
+		<span style="font-family: Webdings">자유게시판</span>
 	</div>
 	
 	<div>
-		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
-			<tr height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td width="50%" align="left" style="padding-left: 5px; font-size: 20px;">
+		<table style="width: 100%; margin: 10px auto 0px; border-spacing: 0px; border-collapse: collapse;">
+			<tr height="35" style="border-top: 2px solid #D96262; padding-top:20px; padding-bottom:20px; border-bottom: 1px solid #cccccc;">
+				<td width="50%" align="left" style="padding-left: 5px; font-size: 20px; padding-top:20px; padding-bottom:20px; border-bottom: 1px solid #cccccc;">
 					${dto.subject}
 				</td>
 				
@@ -313,23 +322,18 @@ $(function(){
 			    </td> 
 			</tr>
 			
-			<tr height="35" style="border-bottom: 1px solid #cccccc;">
-				<td width="50%" align="left" style="padding-left: 5px;">
+			<tr height="35" style="border-top: 1px solid #cccccc;">
+				<td align="left" style="padding-left: 5px; font-size: 17px;">
 				작성자 : ${dto.nickName}
 				</td>
 			</tr>
 			
-			<tr height="35">
-				<td width="50%" align="left" style="padding-left: 5px;">
-			 	${dto.content}
+			<tr>
+				<td colspan="2" align="center" style="padding: 10px 5px;" valign="top" height="200">
+					${dto.content}<br>
 				</td>
 			</tr>
 			
-		<tr>
-			<td align="left">
-				<button type="button" onclick="report();">신고</button>
-			</td>
-		</tr>	
 			 
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
 				<td colspan="2" align="left" style="padding-left: 5px;">
@@ -369,25 +373,15 @@ $(function(){
 		</table>
 	</div>
 	
-	<div>
+	<div id="listReply"></div>
 		<table style='width: 100%; margin: 15px quto 0px; border-spacing:0px;' >
-			<tr height='30'>
-				<td align='left'>
-					<span style='font-weight: bold;' > 댓글쓰기 </span><span> - 타인을 비방하거나 개인정보를 유출하는 글의 게시를 삼가 주세요.</span>
-				</td>
-			</tr>
 			<tr>
 				<td style='padding: 5px 5px 0px;'>
-					<textarea class='boxTA' style='width:99%; height: 70px; '></textarea>
-				</td>
-			</tr>
-			<tr>
-				<td align="right">
-					<button type='button' class='bts btnSendReply' data-freeBoardNum='10'> 댓글 등록 </button>
+					<textarea class='boxTA' style='width:90%; height: 70px;'></textarea>
+					<b style="float: right;"><button type='button' class='bts2 btnSendReply' data-bbsNum='10' style="height: 75px;"> 댓글 등록 </button></b>
 				</td>
 			</tr>
 		</table>
-		<div id="listReply"></div>
 	</div>
 		
 	<div id="report_dialog" style="display: none; text-align: left;">

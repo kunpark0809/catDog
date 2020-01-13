@@ -20,6 +20,15 @@ margin: 4px;
 border-radius: 5px;
 }
 
+.bts2 {
+  background-color: white;
+  border: 1px solid;
+  border-color: #a9a9a9;
+  color: #black;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
 
 </style>
 
@@ -324,13 +333,13 @@ $(function(){
 
 <div class="container-board">
 	<div class="body-title">
-		<h3>꿀팁</h3>
+		<span style="font-family: Webdings">꿀팁</span>
 	</div>
 	
 	<div>
-		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
-			<tr height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td width="50%" align="left" style="padding-left: 5px; font-size: 20px;">
+		<table style="width: 100%; margin: 10px auto 0px; border-spacing: 0px; border-collapse: collapse;">
+			<tr height="35" style="border-top: 2px solid #D96262; padding-top:20px; padding-bottom:20px; border-bottom: 1px solid #cccccc;">
+				<td width="50%" align="left" style="padding-left: 5px; font-size: 20px; padding-top:20px; padding-bottom:20px; border-bottom: 1px solid #cccccc;">
 					[${dto.tipCategory}] ${dto.subject}
 				</td>
 				
@@ -340,7 +349,7 @@ $(function(){
 			</tr>
 			
 			<tr height="35" style="border-top: 1px solid #cccccc;">
-				<td align="left" style="padding-left: 5px; font-size: 20px;">
+				<td align="left" style="padding-left: 5px; font-size: 17px;">
 				작성자 : ${dto.nickName}
 				</td>
 			</tr>
@@ -389,27 +398,23 @@ $(function(){
 				</td>
 				
 				<td align="right">
-					<button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/tip/list?${query}';">리스트</button>
+					<br><button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/tip/list?${query}';">리스트</button>
 				</td>
 			</tr>
 		</table>
 	</div>
-	
-	<div>
 		
 		<div id="listReply"></div>
 		<table style='width: 100%; margin: 15px quto 0px; border-spacing:0px;' >
 			<tr>
 				<td style='padding: 5px 5px 0px;'>
 					<textarea class='boxTA' style='width:90%; height: 70px;'></textarea>
-					<b style="float: right;"><button type='button' class='btnSendReply' data-tipNum='10' style="height: 75px;"> 댓글 등록 </button></b>
+					<b style="float: right;"><button type='button' class='bts2 btnSendReply' data-tipNum='10' style="height: 75px;"> 댓글 등록 </button></b>
 				</td>
 			</tr>
 		</table>
 	</div>
 	
-	
-		
 	<div id="report_dialog" style="display: none; text-align: left;">
 			<strong>신고사유 : 대표적인 사유 1개를 선택해 주세요</strong>
 			<br><br>
@@ -431,6 +436,3 @@ $(function(){
 			
 		</form>
 	</div>
-	
-	
-</div>
