@@ -17,11 +17,17 @@
 	</insert>
 	
 	<select id="listEvent" parameterType="map" resultType="com.catDog.event.Event">
-		SELECT e.eventNum, e.num, e.subject, e.content, e.hitCount, ep.imageFileName
+		SELECT e.eventNum, e.num, e.subject, e.content, e.hitCount, ep.imageFileName, e.startDate, e.endDate
 		FROM event e JOIN eventPic ep ON e.eventNum = ep.eventNum
 		<where>
 			<if test="keyword!=null and keyword!=''">
 				<include refid="where-list"/>
+			</if>
+			<if test="sort=='ing'">
+				AND e.endDate &gt; SYSDATE
+			</if>
+			<if test="sort=='end'">
+				AND e.endDate &lt; SYSDATE
 			</if>
 			AND INSTR(ep.imageFileName, 'main') &gt; 0
 		</where>

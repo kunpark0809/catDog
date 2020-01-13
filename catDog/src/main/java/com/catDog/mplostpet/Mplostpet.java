@@ -7,7 +7,9 @@ public class Mplostpet {
 	
 	private int lostPetListNum;
 	private int lostPetNum;
+	private int speciesSort;
 	private int sort;
+	private int status;
 	private String lostSubject;
 	private String lostCreated;
 	private int lostHitCount;
@@ -65,6 +67,18 @@ public class Mplostpet {
 	}
 	public void setLostPetListNum(int lostPetListNum) {
 		this.lostPetListNum = lostPetListNum;
+	}
+	public int getSpeciesSort() {
+		return speciesSort;
+	}
+	public void setSpeciesSort(int speciesSort) {
+		this.speciesSort = speciesSort;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
 	}
 	
 }

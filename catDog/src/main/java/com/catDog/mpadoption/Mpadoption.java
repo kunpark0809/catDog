@@ -8,6 +8,7 @@ public class Mpadoption {
 	private int adoptionListNum;
 	private int adoptionNum;
 	private int speciesSort;
+	private String status;
 	private String adoptionSubject;
 	private String adoptionCreted;
 	private int adoptionHitCount;
@@ -67,6 +68,12 @@ public class Mpadoption {
 	}
 	public void setAdoptionListNum(int adoptionListNum) {
 		this.adoptionListNum = adoptionListNum;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	

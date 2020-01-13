@@ -9,16 +9,16 @@
 
 <style type="text/css">
 .imgLayout{
-	width: 190px;
-	height: 205px;
+	width: 200px;
+	height: 400px;
 	padding: 10px 5px 10px;
 	margin: 5px;
 	border: 1px solid #DAD9FF;
 	cursor: pointer;
 }
 .subject {
-     width:180px;
-     height:25px;
+     width:200px;
+     height:20px;
      line-height:25px;
      margin:5px auto;
      border-top: 1px solid #DAD9FF;
@@ -28,6 +28,7 @@
      text-overflow:ellipsis;
      cursor: pointer;
 }
+
 </style>
 
 <script type="text/javascript">
@@ -40,9 +41,83 @@ function article(eventNum) {
 	var url="${articleUrl}&eventNum="+eventNum;
 	location.href=url;
 }
+
+function ajaxJSON(url, type, query, fn) {
+	$.ajax({
+		type:type
+		,url:url
+		,data:query
+		,dataType:"json"
+		,success:function(data) {
+			fn(data);
+		}
+		,beforeSend:function(jqXHR) {
+	        jqXHR.setRequestHeader("AJAX", true);
+	    }
+	    ,error:function(jqXHR) {
+	    	if(jqXHR.status==403) {
+	    		login();
+	    		return false;
+	    	}
+	    	console.log(jqXHR.responseText);
+	    }
+	});
+}
+
+function ajaxHTML(url, type, query, selector) {
+	$.ajax({
+		type:type
+		,url:url
+		,data:query
+		,success:function(data) {
+			$(selector).html(data);
+		}
+		,beforeSend:function(jqXHR) {
+	        jqXHR.setRequestHeader("AJAX", true);
+	    }
+	    ,error:function(jqXHR) {
+	    	if(jqXHR.status==403) {
+	    		login();
+	    		return false;
+	    	}
+	    	console.log(jqXHR.responseText);
+	    }
+	});
+}
+
+
+function eventDetail(eventNum, num){
+	var url = "<%=cp%>/event/article";
+	var query = "eventNum="+eventNum;
+	
+	var fn=function(data) {
+		$("#event_subject").val(data.event.subject);
+		$("#event_imageFileName").val(data.event.imageFileName);
+	}
+	
+	ajaxJSON(url, "get", query, fn);
+	
+	$('#eventDetail_dialog').dialog({
+		  modal: true,
+		  height: 750,
+		  width: 1000,
+		  bottom: 120,
+		  title: 'event',
+		  close: function(event, ui) {
+		  }
+	});
+	
+}
+	
+	
+$(function(){
+	$(".btnDialogCancel").click(function(){
+		$('#eventDetail_dialog').dialog("close");
+	});
+});
 </script>
 
-<div class="body-container" style="width: 630px; margin: 20px auto 10px;">
+<div class="container-board">
 	<div class="body-title">
 		<h3><i class="far fa-image"></i> 이벤트 </h3>
 	</div>
@@ -56,31 +131,38 @@ function article(eventNum) {
 				<td align="right">
 					&nbsp;
 				</td>
+				<td style="text-align: right; width: 50%; color: #51321b">
+					<a href="<%=cp%>/event/list?sort=ing">진행중인 이벤트&nbsp;</a>&nbsp;|&nbsp;
+					<a href="<%=cp%>/event/list?sort=end">종료된 이벤트</a>
+				</td>
 			</tr>
 		</table>
 		
-		<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
+		<table style="width: 100%; margin: 0px auto; border-spacing: 0px; height: 500px;">
 			<c:forEach var="dto" items="${list}" varStatus="status">
 				<c:if test="${status.index==0}">
 					<tr>
 				</c:if>
-				<c:if test="${status.index!=0 && status.index%3==0}">
+				<c:if test="${status.index!=0 && status.index%4==0}">
 					<c:out value="</tr><tr>" escapeXml="false"/>
 				</c:if>
 				<td width="210" align="center">
 					<div class="imgLayout">
 						<img src="<%=cp%>/uploads/event/${dto.imageFileName}" width="180" 
-						height="180" border="0" onclick="article('${dto.eventNum}');">
-						<span class="subject" onclick="article('${dto.eventNum}');" >
+						height="180" border="0" onclick="eventDetail()">
+						<span class="subject" onclick="eventDetail()" >
 						${dto.subject}
+						</span>
+						<span class="subject" onclick="article('${dto.eventNum}');" >
+						${dto.startDate}&nbsp;~&nbsp;${dto.endDate}
 						</span>
 					</div>
 				</td>
 			</c:forEach>
 			
 			<c:set var="n" value="${list.size()}"/>
-			<c:if test="${n>0&&n%3!=0}">
-				<c:forEach var="i" begin="${n%3+1}" end="3" step="1">
+			<c:if test="${n>0&&n%4!=0}">
+				<c:forEach var="i" begin="${n%4+1}" end="4" step="1">
 					<td width="210">
 						<div class="imgLayout">&nbsp;</div>
 					</td>
@@ -125,6 +207,28 @@ function article(eventNum) {
 				</td>
 			</tr>
 		</table>
+	</div>
+	
+	<div id="eventDetail_dialog" style="display: none; text-align: left; border-top-width: 50px;">
+		<div id="eventSubject" style="text-align: left;">
+		<form name="eventForm">
+			<input type="hidden" name="eventNum" value="${dto.eventNum}">
+			<input type="hidden" name="subject" value="${dto.subject}">
+			<input type="hidden" name="imageFileName" value="${dto.imageFileName}">
+		</form>	
+		</div>
+				<input type="radio" name="reasonSortNum" value="1" checked="checked">&nbsp;타 웹사이트 홍보<br>
+				<input type="radio" name="reasonSortNum" value="2">&nbsp;도색적이고 폭력적인 내용<br>
+				<input type="radio" name="reasonSortNum" value="3">&nbsp;욕설 및 모욕적인 언행<br>
+				<input type="radio" name="reasonSortNum" value="4">&nbsp;현행법에 저촉되는 행위(불법거래, 저작권 등)<br>
+				<input type="radio" name="reasonSortNum" value="5">&nbsp;기타<br>
+				
+			<div class="btn_box" align="center">
+				<button type="button" class="btnDialogCancel">취소</button>
+				<button type="button" class="btnDialogOn">신고하기</button>
+			</div>
+			
+		</form>
 	</div>
 	
 </div>

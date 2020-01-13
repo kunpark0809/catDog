@@ -34,10 +34,10 @@
 		JOIN qnaCategory c ON q.qnaCategoryNum=c.qnaCategoryNum
 		JOIN memberDetail md ON q.num=md.num
 		<where>
+			q.parent IS NULL
 			<if test="keyword != null and keyword != ''">
-				<include refid="where-list"/>
+				AND <include refid="where-list"/>
 			</if>
-			AND q.parent IS NULL
 			AND q.num=#{num}
 		</where>
 		ORDER BY qnaNum DESC

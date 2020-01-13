@@ -25,7 +25,7 @@
 	</sql>
 	
 	<select id="listMpLostPet" parameterType="map" resultType="com.catDog.mplostpet.Mplostpet">
-		SELECT lostPetNum, sort, subject lostSubject, num, nickName,
+		SELECT lostPetNum, sort, speciesSort, subject lostSubject, num, nickName,
 		hitCount lostHitCount, TO_CHAR(created, 'yyyy.mm.dd') lostCreated
 		FROM lostPet
 		<where>

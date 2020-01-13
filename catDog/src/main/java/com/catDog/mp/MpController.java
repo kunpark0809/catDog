@@ -81,6 +81,7 @@ public class MpController {
 		map.put("keyword", keyword);
 		map.put("num", info.getMemberIdx());
 		
+		
 		dataCountMpQna = Mpqnaservice.dataCountMpQna(map);
 		if(dataCountMpQna != 0)
 			total_page = myUtil.pageCount(rows, dataCountMpQna);
@@ -363,6 +364,13 @@ public class MpController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);
+		map.put("num", info.getMemberIdx());
+		
+		int offset = (current_page - 1) * rows;
+		if (offset < 0)
+			offset = 0;
+		map.put("offset", offset);
+		map.put("rows", rows);
 
 		dataCountMpLostPet = Mplostpetservice.dataCountMpLostPet(map);
 		if (dataCountMpLostPet != 0)
@@ -370,12 +378,6 @@ public class MpController {
 		if (total_page < current_page)
 			current_page = total_page;
 
-		int offset = (current_page - 1) * rows;
-		if (offset < 0)
-			offset = 0;
-		map.put("offset", offset);
-		map.put("rows", rows);
-		map.put("num", info.getMemberIdx());
 
 		List<Mplostpet> listMpLostPet = Mplostpetservice.listMpLostPet(map);
 
@@ -394,7 +396,7 @@ public class MpController {
 		}
 
 		listUrl = cp + "/mypage/lostpet/lostpet";
-		articleUrl = cp + "/adopt/article?page=" + current_page;
+		articleUrl = cp + "/aband/article?page=" + current_page;
 		if (query.length() != 0) {
 			listUrl = listUrl + "?" + query;
 			articleUrl = articleUrl + "&" + query;

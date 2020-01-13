@@ -26,7 +26,7 @@
 	
 	<select id="listMpTip" parameterType="map" resultType="com.catDog.mptip.Mptip">
 		SELECT t.tipNum tipNum, t.subject tipSubject, md.num, md.nickname, t.hitCount tipHitCount,
-		TO_CHAR(t.created, 'yyyy-mm-dd') tipCreated
+		t.tipCategoryNum tipCategoryNum, TO_CHAR(t.created, 'yyyy-mm-dd') tipCreated
 		FROM tip t
 		JOIN memberDetail md ON t.num = md.num
 		<where>

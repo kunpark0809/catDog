@@ -10,6 +10,7 @@ public class Mptip {
 	private String tipSubject;
 	private String tipCreated;
 	private int tipHitCount;
+	private int tipCategoryNum;
 
 	public long getNum() {
 		return num;
@@ -59,6 +60,12 @@ public class Mptip {
 	}
 	public void setTipListNum(int tipListNum) {
 		this.tipListNum = tipListNum;
+	}
+	public int getTipCategoryNum() {
+		return tipCategoryNum;
+	}
+	public void setTipCategoryNum(int tipCategoryNum) {
+		this.tipCategoryNum = tipCategoryNum;
 	}
 
 	

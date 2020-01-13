@@ -7,6 +7,7 @@
 %>
 
 <link rel="stylesheet" href="<%=cp%>/resource/css/tabs.css" type="text/css">
+<link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
 <style>
 .alert-info {
     border: 1px solid #9acfea;
@@ -17,6 +18,7 @@
     margin-top: 10px;
     margin-bottom: 20px;
 }
+
 </style>
 
 <script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery.form.js"></script>
@@ -146,9 +148,9 @@ $(document).on("click",".tabs li",function(){
 
 </script>
 
-<div class="body-container" style="width: 800px; margin: 0px auto;">
+<div class="container-board">
     <div class="body-title">
-        <h3><i class="fas fa-phone-square"></i> 내가 쓴 글 </h3>
+        <h3><i class="fas fa-chalkboard"></i>&nbsp;&nbsp;  내가 쓴 글 </h3>
     </div>
     
     <div>

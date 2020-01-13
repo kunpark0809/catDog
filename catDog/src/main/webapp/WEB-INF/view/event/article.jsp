@@ -232,7 +232,7 @@ $(function(){
 
 </script>
 
-<div class="body-container" style="width: 700px; margin: 20px auto 10px;">
+<div class="container-board">
 	<div class="body-title">
 		<h3><i class="far fa-image"></i> 이벤트 </h3>
 	</div>

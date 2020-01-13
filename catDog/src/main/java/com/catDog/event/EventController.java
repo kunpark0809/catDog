@@ -38,6 +38,7 @@ public class EventController {
 	public String list(@RequestParam(value="page", defaultValue="1") int current_page,
 					   @RequestParam(defaultValue="all") String condition,
 					   @RequestParam(defaultValue="") String keyword, HttpServletRequest req,
+					   @RequestParam(defaultValue="ing") String sort,
 					   Model model) throws Exception {
 		
 		String cp = req.getContextPath();
@@ -46,10 +47,10 @@ public class EventController {
 		
 		map.put("keyword", keyword);
 		map.put("condition", condition);
-		
+		map.put("sort", sort);
 		int dataCount = service.dataCount(map);
 		
-		int rows = 6;
+		int rows = 8;
 		int offset = (current_page-1)*rows;
 		if(offset < 0) offset = 0;
 		
@@ -60,14 +61,15 @@ public class EventController {
 		
 		List<Event> list = service.listEvent(map);
 		
-		String listUrl = cp+"/event/list";
-		String articleUrl = cp+"/event/article?page=" + current_page;
+		String listUrl = cp+"/event/list?sort="+sort;
+		String articleUrl = cp+"/event/article?page=" + current_page + "&sort=" + sort;
 		
 		String paging = myUtil.paging(current_page, total_page, listUrl);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("total_page", total_page);
+		model.addAttribute("listUrl", listUrl);
 		model.addAttribute("articleUrl", articleUrl);
 		model.addAttribute("page", current_page);
 		model.addAttribute("paging", paging);
