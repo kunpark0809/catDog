@@ -9,6 +9,6 @@ public class DonationController {
 	@RequestMapping(value="/mypage/donation")
 	public String donation() throws Exception{
 		
-		return "redirect:/mypage/danation";
+		return ".mypage.donation";
 	}
 }

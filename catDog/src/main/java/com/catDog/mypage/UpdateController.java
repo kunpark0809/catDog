@@ -27,8 +27,6 @@ public class UpdateController {
 		
 		if(dropout==null) {
 			model.addAttribute("mode", "update");
-		} else {
-			model.addAttribute("mode", "dropout");
 		}
 		
 		return ".mypage.pwd";
@@ -50,11 +48,9 @@ public class UpdateController {
 		if(! bPwd) {
 			if(mode.equals("update")) {
 				model.addAttribute("mode", "update");
-			} else {
-				model.addAttribute("mode", "dropout");
 			}
 			model.addAttribute("message", "패스워드가 일치하지 않습니다.");
-			return ".customer.updatePwd";
+			return ".mypage.pwd";
 		}
 		
 		model.addAttribute("dto", dto);

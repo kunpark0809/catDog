@@ -7,7 +7,7 @@
 	String cp=request.getContextPath();
 %>
 <link rel="stylesheet" href="<%=cp%>/resource/css/cs.css">
-	<div>
+	<div class="body-container" style="width: 1000px; margin: 20px auto 0px; border-spacing: 0px; min-height: 510px;">
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
 			<tr height="35">
 				<td align="left" width="50%">

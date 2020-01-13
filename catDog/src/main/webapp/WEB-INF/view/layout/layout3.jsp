@@ -75,7 +75,7 @@
     <tiles:insertAttribute name="header"/>
 </div>
 	
-<div class="container-board">
+<div class="body-board">
     <tiles:insertAttribute name="body"/>
 </div>
 

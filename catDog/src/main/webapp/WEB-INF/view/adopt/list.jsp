@@ -12,7 +12,7 @@
 	}
 </script>
 <link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
-<div class="shin_body">
+<div class="wide-container">
     <div class="body-title">
         <h3><i class="fas fa-chalkboard"></i>입양 게시판 </h3>
         
@@ -37,7 +37,7 @@
 									
 								<p>
 									<c:if test="${dto.status=='0'}">
-										<span style="display: inline-block;padding: 2px 8px;background: #d96262;border-radius: 3px; color: #FFFFFF;">입양완료</span>
+										<span style="display: inline-block;padding: 2px 8px;background: #f3a34e;border-radius: 3px; color: #FFFFFF;">입양완료</span>
 									</c:if>
 									&nbsp;<span style="margin: 0px;">${dto.subject}</span>
 								</p>

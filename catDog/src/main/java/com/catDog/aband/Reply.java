@@ -8,7 +8,7 @@ public class Reply {
 	private int parent;
 	
 	private int replyCount;
-	private int adoptionReplyNum;
+	private int lostPetReplyNum;
 	
 	private int answerCount;
 	public long getNum() {
@@ -47,17 +47,18 @@ public class Reply {
 	public void setReplyCount(int replyCount) {
 		this.replyCount = replyCount;
 	}
-	public int getAdoptionReplyNum() {
-		return adoptionReplyNum;
-	}
-	public void setAdoptionReplyNum(int adoptionReplyNum) {
-		this.adoptionReplyNum = adoptionReplyNum;
-	}
+
 	public int getAnswerCount() {
 		return answerCount;
 	}
 	public void setAnswerCount(int answerCount) {
 		this.answerCount = answerCount;
+	}
+	public int getLostPetReplyNum() {
+		return lostPetReplyNum;
+	}
+	public void setLostPetReplyNum(int lostPetReplyNum) {
+		this.lostPetReplyNum = lostPetReplyNum;
 	}
 	
 	

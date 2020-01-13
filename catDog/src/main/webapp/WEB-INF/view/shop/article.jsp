@@ -142,7 +142,7 @@ function listReview(page){
 }
 
 </script>
-	<div class="shin_body"> 
+	<div class="wide-container"> 
 		<div class="sortList">
 		
 			<a class="sortName" data-num="0" id="sort-0">전체</a>

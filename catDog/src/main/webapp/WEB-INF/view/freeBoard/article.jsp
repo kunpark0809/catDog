@@ -7,31 +7,19 @@
 	String cp=request.getContextPath();
 %>
 <style type="text/css">
-.btn {
-	width:70px;
-    background-color: #262626;
-    border: none;
-    color:#ffffff;
-    padding: 10px 0;
-    text-align: center;
-    display: inline-block;
-    font-size: 15px;
-    margin: 4px;
-    border-radius:10px;
+.bts {
+width: 70px;
+background-color: #51321b;
+border: none;
+color: #ffffff;
+padding: 6px 0;
+text-align: center;
+display: inline-block;
+font-size: 15px;
+margin: 4px;
+border-radius: 5px;
 }
 
-.btn2 {
-	width:50px;
-    background-color: white;
-    border: 1px dashed #262626;
-    color:#262626;
-    padding: 5px 0;
-    text-align: center;
-    display: inline-block;
-    font-size: 15px;
-    margin: 4px;
-    border-radius:10px;
-}
 
 </style>
 
@@ -339,7 +327,7 @@ $(function(){
 			
 		<tr>
 			<td align="left">
-				<button type="button" class="btn2" onclick="report();">신고</button>
+				<button type="button" onclick="report();">신고</button>
 			</td>
 		</tr>	
 			 
@@ -347,7 +335,7 @@ $(function(){
 				<td colspan="2" align="left" style="padding-left: 5px;">
 				이전글 :
 					<c:if test="${not empty preReadFreeBoard}">
-						<a href="<%=cp%>/freeBoard/article?${query}&bbsNum=${preReadFreeBoard.bbsNum}">${preReadFreeBoard.subject}</a>
+						<a href="<%=cp%>/freeBoard/article?${query}&bbsNum=${preReadFreeBoard.bbsNum}" style="color: black;">${preReadFreeBoard.subject}</a>
 					</c:if>
 				</td>
 			</tr>
@@ -356,7 +344,7 @@ $(function(){
 				<td colspan="2" align="left" style="padding-left: 5px;">
 				다음글 :
 					<c:if test="${not empty nextReadFreeBoard}">
-						<a href="<%=cp%>/freeBoard/article?${query}&bbsNum=${nextReadFreeBoard.bbsNum}">${nextReadFreeBoard.subject}</a>
+						<a href="<%=cp%>/freeBoard/article?${query}&bbsNum=${nextReadFreeBoard.bbsNum}" style="color: black;">${nextReadFreeBoard.subject}</a>
 					</c:if>
 				</td>
 			</tr>
@@ -366,16 +354,16 @@ $(function(){
 			<tr height="45">
 				<td  width="300" align="left">
 					<c:if test="${sessionScope.member.userId==dto.userId}">
-						<button type="button" class="btn" onclick="updateFreeBoard();">수정</button>
+						<button type="button" class="bts" onclick="updateFreeBoard();">수정</button>
 					</c:if>
 					  <c:if test="${sessionScope.member.userId==dto.userId || fn:indexOf(sessionScope.member.userId,'admin') == 0}">
-						<button type="button" class="btn" onclick="deleteFreeBoard();">삭제</button>
+						<button type="button" class="bts" onclick="deleteFreeBoard();">삭제</button>
 					</c:if>
 					
 				</td>
 				
 				<td align="right">
-					<button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/freeBoard/list?${query}';">리스트</button>
+					<button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/freeBoard/list?${query}';">리스트</button>
 				</td>
 			</tr>
 		</table>
@@ -395,7 +383,7 @@ $(function(){
 			</tr>
 			<tr>
 				<td align="right">
-					<button type='button' class='btn btnSendReply' data-freeBoardNum='10'> 댓글 등록 </button>
+					<button type='button' class='bts btnSendReply' data-freeBoardNum='10'> 댓글 등록 </button>
 				</td>
 			</tr>
 		</table>

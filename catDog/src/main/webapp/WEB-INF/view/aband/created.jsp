@@ -88,7 +88,7 @@
 
 	</script>
 	<link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
-	<div class="shin_body">
+	<div class="wide-container">
 	<div class="body-title">
 		<h3><i class="fas fa-chalkboard-teacher"></i> 입양 등록 </h3>
 	</div>
@@ -103,8 +103,8 @@
 						<td>
 							<select name="sort">
 								<option value="">::카테고리 선택::</option>
-								<option value="0" ${dto.sort==1?"selected='selected'":""}>잃어버렸어요</option>
-								<option value="1" ${dto.sort==0?"selected='selected'":""}>보호하고있어요</option>
+								<option value="0" ${dto.sort==0?"selected='selected'":""}>잃어버렸어요</option>
+								<option value="1" ${dto.sort==1?"selected='selected'":""}>보호하고있어요</option>
 							</select>
 							<select name="speciesSort">
 								<option value="">::애견동물 선택::</option>
@@ -123,7 +123,7 @@
 					<tr>
 						<td>장&nbsp;&nbsp;소</td>
 						<td>
-							<input type="text" name="addr" value="${dto.subject}">
+							<input type="text" name="addr" value="${dto.addr}">
 						</td>
 					</tr>
 					<tr>
@@ -141,15 +141,12 @@
 				        </c:if>
 				        
 				        <c:if test="${mode=='created'}">
-						    <strong>이름:</strong> <br><br>
 							
-							<strong>성별:</strong> <br><br>
+							<strong>특징:</strong> <br><br>
 							
-							<strong>나이:</strong> <br><br>
+							<strong>상세설명:</strong> <br><br>
 							
-							<strong>몸무게:</strong> <br><br>
-							
-							<strong>입양 문의:</strong> <br><br>				        
+							<strong>문의 방법:</strong> <br><br>				        
 				        </c:if>
 				        
 				        </textarea>

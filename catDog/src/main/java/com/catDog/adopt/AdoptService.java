@@ -9,8 +9,7 @@ public interface AdoptService {
 	
 	public int dataCount(Map<String, Object> map);
 	public List<Adopt> listAdopt(Map<String, Object> map);
-	
-	
+		
 	public void updateHitCount(int adoptionNum) throws Exception;
 	public Adopt readAdopt(int adoptionNum);
 	

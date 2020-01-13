@@ -116,7 +116,7 @@ function productPay(mode){
 }
 </script>
 
-<div class="shin_body">
+<div class="wide-container">
 	<div class="order_tit" style="width: 100%;">
         <h2 style="display: inline; float: left;">장바구니</h2>
         <ol style="display: inline-block; float: right;">

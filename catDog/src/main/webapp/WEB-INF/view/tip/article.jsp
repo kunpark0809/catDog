@@ -7,31 +7,19 @@
 	String cp=request.getContextPath();
 %>
 <style type="text/css">
-.btn {
-	width:70px;
-    background-color: #262626;
-    border: none;
-    color:#ffffff;
-    padding: 10px 0;
-    text-align: center;
-    display: inline-block;
-    font-size: 15px;
-    margin: 4px;
-    border-radius:10px;
+.bts {
+width: 70px;
+background-color: #51321b;
+border: none;
+color: #ffffff;
+padding: 6px 0;
+text-align: center;
+display: inline-block;
+font-size: 15px;
+margin: 4px;
+border-radius: 5px;
 }
 
-.btn2 {
-	width:50px;
-    background-color: white;
-    border: 1px dashed #262626;
-    color:#262626;
-    padding: 5px 0;
-    text-align: center;
-    display: inline-block;
-    font-size: 15px;
-    margin: 4px;
-    border-radius:10px;
-}
 
 </style>
 
@@ -334,7 +322,7 @@ $(function(){
 </script>
 
 
-<div class="body-container" style="width: 700px; margin: 20px auto 10px; text-align: center;">
+<div class="container-board">
 	<div class="body-title">
 		<h3>꿀팁</h3>
 	</div>
@@ -351,35 +339,30 @@ $(function(){
 			    </td> 
 			</tr>
 			
-			<tr height="35" style="border-bottom: 1px solid #cccccc;">
-				<td width="50%" align="left" style="padding-left: 5px;">
+			<tr height="35" style="border-top: 1px solid #cccccc;">
+				<td align="left" style="padding-left: 5px; font-size: 20px;">
 				작성자 : ${dto.nickName}
 				</td>
 			</tr>
 			
-			<tr height="35">
-				<td width="50%" align="left" style="padding-left: 5px;">
-			 	${dto.content}
+			<tr>
+				<td colspan="2" align="center" style="padding: 10px 5px;" valign="top" height="200">
+					${dto.content}
 				</td>
 			</tr>
 			
 			<tr>
 				<td colspan="2" height="40" style="padding-bottom: 15px;" align="center">
-					<button type="button" class="btn btnSendTipLike" title="좋아요"><i class="fas fa-hand-point-up"></i>&nbsp;&nbsp;<span id="tipLikeCount">${dto.tipLikeCount}</span></button>
+					<button type="button" class="bts btnSendTipLike" title="좋아요"><i class="fas fa-hand-point-up"></i>&nbsp;&nbsp;<span id="tipLikeCount">${dto.tipLikeCount}</span></button>
+					
 				</td>
-			</tr>
-			
-		<tr>
-			<td align="left">
-				<button type="button" class="btn2" onclick="report();">신고</button>
-			</td>
-		</tr>	
+			</tr>	
 			 
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
 				<td colspan="2" align="left" style="padding-left: 5px;">
 				이전글 :
 					<c:if test="${not empty preReadTip}">
-						<a href="<%=cp%>/tip/article?${query}&tipNum=${preReadTip.tipNum}">${preReadTip.subject}</a>
+						<a href="<%=cp%>/tip/article?${query}&tipNum=${preReadTip.tipNum}" style="color: black;">${preReadTip.subject}</a>
 					</c:if>
 				</td>
 			</tr>
@@ -388,7 +371,7 @@ $(function(){
 				<td colspan="2" align="left" style="padding-left: 5px;">
 				다음글 :
 					<c:if test="${not empty nextReadTip}">
-						<a href="<%=cp%>/tip/article?${query}&tipNum=${nextReadTip.tipNum}">${nextReadTip.subject}</a>
+						<a href="<%=cp%>/tip/article?${query}&tipNum=${nextReadTip.tipNum}" style="color: black;">${nextReadTip.subject}</a>
 					</c:if>
 				</td>
 			</tr>
@@ -398,39 +381,31 @@ $(function(){
 			<tr height="45">
 				<td  width="300" align="left">
 					<c:if test="${sessionScope.member.userId==dto.userId}">
-						<button type="button" class="btn" onclick="updateTip();">수정</button>
+						<button type="button" class="bts" onclick="updateTip();">수정</button>
 					</c:if>
 					  <c:if test="${sessionScope.member.userId==dto.userId || fn:indexOf(sessionScope.member.userId,'admin') == 0}">
-						<button type="button" class="btn" onclick="deleteTip();">삭제</button>
+						<button type="button" class="bts" onclick="deleteTip();">삭제</button>
 					</c:if>
 				</td>
 				
 				<td align="right">
-					<button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/tip/list?${query}';">리스트</button>
+					<button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/tip/list?${query}';">리스트</button>
 				</td>
 			</tr>
 		</table>
 	</div>
 	
 	<div>
+		
+		<div id="listReply"></div>
 		<table style='width: 100%; margin: 15px quto 0px; border-spacing:0px;' >
-			<tr height='30'>
-				<td align='left'>
-					<span style='font-weight: bold;' > 댓글쓰기 </span><span> - 타인을 비방하거나 개인정보를 유출하는 글의 게시를 삼가 주세요.</span>
-				</td>
-			</tr>
 			<tr>
 				<td style='padding: 5px 5px 0px;'>
-					<textarea class='boxTA' style='width:99%; height: 70px; '></textarea>
-				</td>
-			</tr>
-			<tr>
-				<td align="right">
-					<button type='button' class='btn btnSendReply' data-tipNum='10'> 댓글 등록 </button>
+					<textarea class='boxTA' style='width:90%; height: 70px;'></textarea>
+					<b style="float: right;"><button type='button' class='btnSendReply' data-tipNum='10' style="height: 75px;"> 댓글 등록 </button></b>
 				</td>
 			</tr>
 		</table>
-		<div id="listReply"></div>
 	</div>
 	
 	

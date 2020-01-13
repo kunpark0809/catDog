@@ -162,7 +162,7 @@
 </script>
 
 
-<div class="shin_body">
+<div class="wide-container">
 	
 
 		<form method="post" name="payForm">

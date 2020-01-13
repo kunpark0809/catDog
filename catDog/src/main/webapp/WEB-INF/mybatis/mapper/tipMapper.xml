@@ -12,7 +12,7 @@
 			FROM tipReply WHERE parent !=0 GROUP BY parent
 		) a ON tr.tipReplyNum = a.parent
 		WHERE tipNum=#{tipNum} AND tr.parent=0
-		ORDER BY tr.tipReplyNum DESC
+		ORDER BY tr.tipReplyNum ASC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 
@@ -45,7 +45,7 @@
 		FROM tipReply tr
 		JOIN memberDetail md ON md.num = tr.num
 		WHERE parent = #{parent}
-		ORDER BY tipReplyNum DESC
+		ORDER BY tipReplyNum ASC
 	</select>
 	
 	<select id="replyParentCount" parameterType="Integer" resultType="Integer">

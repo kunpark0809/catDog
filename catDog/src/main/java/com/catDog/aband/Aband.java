@@ -16,7 +16,7 @@ public class Aband {
 	private String imageFileName; 
 	private int status; // 진행상황
 	private int speciesSort; // 동물분류
-	
+	  
 	private MultipartFile upload;
 
 	public int getLostPetNum() {

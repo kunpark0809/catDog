@@ -6,18 +6,19 @@
 	String cp=request.getContextPath();
 %>
 <style type="text/css">
-.btn2 {
-	width:70px;
-    background-color: black;
-    border: 1px solid;
-    color:#ffffff;
-    padding: 10px 0;
-    text-align: center;
-    display: inline-block;
-    font-size: 15px;
-    margin: 4px;
-    border-radius:10px;
+.bts {
+width: 70px;
+background-color: #51321b;
+border: none;
+color: #ffffff;
+padding: 6px 0;
+text-align: center;
+display: inline-block;
+font-size: 15px;
+margin: 4px;
+border-radius: 5px;
 }
+
 </style>
 
 
@@ -35,11 +36,11 @@
 
 	<tbody id='listReplyBody'>
 		<c:forEach var="vo" items="${listReply}">
-			<tr height='35' style='background: #eeeeee;'>
-				<td width='50%' style='padding:5px 5px; border:1px solid #cccccc; border-right:none;' align="left">
+			<tr height='35' style='background: #51321b;'>
+				<td width='50%' style='padding:5px 5px; border:1px solid #cccccc; border-right:none; color: white;' align="left">
 					<span>${vo.nickName}</span>
 				</td>
-				<td width='50%' style='padding:5px 5px; border:1px solid #cccccc; border-left:none;' align='right'>
+				<td width='50%' style='padding:5px 5px; border:1px solid #cccccc; border-left:none; color: white;' align='right'>
 					<span>${vo.created}</span> |
 					<c:if test="${vo.userId == sessionScope.member.userId || sessionScope.member.userId == 'admin' }">
 						<span class="deleteReply" style="cursor: pointer;" data-bbsReplyNum='${vo.bbsReplyNum}' data-pageNo='${pageNo}'>삭제</span>
@@ -57,7 +58,7 @@
 			
 			<tr>
 				<td style='padding:7px 5px;' align="left">
-					<button type='button' class='btn2 btnReplyParentLayout' data-bbsReplyNum='${vo.bbsReplyNum}'>답글 <span id="parentCount${vo.bbsReplyNum}">${vo.parentCount}</span></button>
+					<button type='button' class='bts btnReplyParentLayout' data-bbsReplyNum='${vo.bbsReplyNum}'>답글 <span id="parentCount${vo.bbsReplyNum}">${vo.parentCount}</span></button>
 				</td>
 			</tr>
 			<tr class='replyParent' style='display: none;'>
@@ -70,7 +71,7 @@
 						</div>
 					</div>
 					<div style='padding: 0px 13px 10px 10px; text-align: right; font-weight: bold;'>
-						<button type='button' class='btn2 btnSendReplyParent' data-bbsReplyNum='${vo.bbsReplyNum}'>답글 등록</button>
+						<button type='button' class='bts btnSendReplyParent' data-bbsReplyNum='${vo.bbsReplyNum}'>답글 등록</button>
 					</div>
 				</td>
 			</tr>

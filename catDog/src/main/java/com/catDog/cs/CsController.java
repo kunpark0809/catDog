@@ -372,6 +372,7 @@ public class CsController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("qnaCategoryNum", qnaCategoryNum);
+		List<Qna> categoryList = service.listCategory(map);
 		
 		if (keyword != null && keyword != "") {
 			map.put("condition", condition);
@@ -406,8 +407,8 @@ public class CsController {
        	         "&keyword=" + URLEncoder.encode(keyword, "utf-8");	
 		}
 		
-		listUrl = cp+"/qna/list?qnaCategoryNum="+qnaCategoryNum;
-		articleUrl = cp + "/qna/article?qnaCategoryNum="+qnaCategoryNum+"&page="+current_page;
+		listUrl = cp+"/qna/list?page="+current_page+"&qnaCategoryNum="+qnaCategoryNum;
+		articleUrl = cp + "/qna/article?page="+current_page+"&qnaCategoryNum="+qnaCategoryNum;
 		if(query.length()!=0) {
 			listUrl = listUrl + "?" + query;
 			articleUrl = articleUrl + "&" + query;
@@ -415,13 +416,14 @@ public class CsController {
         
         String paging = util.paging(current_page, total_page, listUrl);
         
-        model.addAttribute("qnaCategoryNum", qnaCategoryNum);
+        model.addAttribute("categoryList", categoryList);
         model.addAttribute("list", list);
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("page", current_page);
 		model.addAttribute("paging", paging);
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("articleUrl", articleUrl);
+		model.addAttribute("qnaCategoryNum", qnaCategoryNum);
 		
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
@@ -456,8 +458,8 @@ public class CsController {
 	@RequestMapping(value="/qna/article")
 	public String qnaArticle(
 			@RequestParam int qnaNum,
-			@RequestParam int qnaCategoryNum,
-			@RequestParam String page,
+			@RequestParam(defaultValue="1") int qnaCategoryNum,
+			@RequestParam(defaultValue="1") String page,
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
 			HttpServletRequest req,
@@ -468,7 +470,8 @@ public class CsController {
 			keyword = URLDecoder.decode(keyword, "utf-8");
 		}
 		
-		String query = "page=" + page + "&qnaCategoryNum=" + qnaCategoryNum;
+		
+		String query = "page=" + page;
 		if (keyword.length() != 0) {
 			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
 		}
@@ -485,7 +488,7 @@ public class CsController {
 			answerDto.setContent(answerDto.getContent().replaceAll("\n", "<br>"));
 		}
 		
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<String, Object>();	
 		map.put("qnaCategoryNum", qnaCategoryNum);
 		map.put("qnaNum", questionDto.getQnaNum());
 		map.put("condition", condition);
@@ -494,6 +497,7 @@ public class CsController {
 		Qna preReadDto = service.preReadQnaQuestion(map);
 		Qna nextReadDto = service.nextReadQnaQuestion(map);
 		
+		model.addAttribute("qnaCategoryNum", qnaCategoryNum);
 		model.addAttribute("questionDto", questionDto);
 		model.addAttribute("answerDto", answerDto);
 		model.addAttribute("preReadDto", preReadDto);
