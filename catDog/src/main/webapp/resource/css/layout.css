@@ -59,20 +59,30 @@ ul li {
 	clear:both;
 	top: 97px;
     position: relative;
+
 }
 
 .container-board{
 	min-height: 600px;
 	width: 1000px;
     margin: 0px auto;
+    padding: 60px 0px;
 }
-
 
 .wide-container{
 	min-height: 530px;
 	width: 1200px; 
     margin: 0px auto;
+    padding: 60px 0px;
 }
+
+.body-title{
+	font-family: Webdings;
+    font-weight: bold;
+    font-size: 40px;
+    color: black;
+}
+
 
 .footer-board{
 	clear:both;

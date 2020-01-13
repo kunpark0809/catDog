@@ -53,10 +53,14 @@ $(function(){
 						
 							<td width="20%">
 								<div class="productLink" onclick="javascript:location.href='${articleUrl}&productNum=${dto.productNum}'">
-									<input type="hidden" value="${dto.productNum}">
-									<input type="hidden" value="${dto.price}">
+									<div class="product-image">
 										<img alt="" src="<%=cp%>/uploads/shop/${dto.imageFileName}" width="200" height="200">
-									<p style="margin: 0px;">${dto.name}</p>
+									</div>
+									<div class="product-text">
+										<p style="margin: 0px;">${dto.name}</p>
+										<p style="margin: 0px;">${dto.price}</p>
+									</div>
+									
 								</div>
 							</td>
 					</c:forEach>
