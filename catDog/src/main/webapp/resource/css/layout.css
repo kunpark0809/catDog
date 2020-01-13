@@ -62,14 +62,14 @@ ul li {
 }
 
 .container-board{
-	min-height: 490px;
+	min-height: 600px;
 	width: 1000px;
     margin: 0px auto;
 }
 
 
 .wide-container{
-	min-height: 490px;
+	min-height: 530px;
 	width: 1200px; 
     margin: 0px auto;
 }
