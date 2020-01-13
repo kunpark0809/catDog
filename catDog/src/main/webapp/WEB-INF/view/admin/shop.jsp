@@ -54,7 +54,7 @@
 				<td>${dto.requestDate}</td>
 				<td align="right">${dto.totalWithComma }원</td>
 				<td>${dto.statusToString}</td>
-				<td>(버튼)</td>
+				<td><button>수정</button> </td>
 			</tr>
 			</c:forEach>
 		</table>

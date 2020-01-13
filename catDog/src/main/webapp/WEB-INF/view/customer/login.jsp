@@ -24,7 +24,9 @@
 }
 </style>
 
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript">
+
 function bgLabel(ob, id) {
     if(!ob.value) {
 	    document.getElementById(id).style.display="";
@@ -97,6 +99,31 @@ function sendLogin() {
 		       		<a href="<%=cp%>/customer/register">회원가입</a>
 		      </td>
 		  </tr>
+		  <tr>
+		  	<td>
+		  		<div align="center">
+			  		<a id="kakao-login-btn"></a>
+					<a href="http://developers.kakao.com/logout"></a>
+					<script type='text/javascript'>
+					  //<![CDATA[
+					    // 사용할 앱의 JavaScript 키를 설정해 주세요.
+					    Kakao.init('b9ef4aedfdb873e59d1caf06b1541f6a');
+					    // 카카오 로그인 버튼을 생성합니다.
+					    Kakao.Auth.createLoginButton({
+					      container: '#kakao-login-btn',
+					      success: function(authObj) {
+					        alert(JSON.stringify(authObj));
+					      },
+					      fail: function(err) {
+					         alert(JSON.stringify(err));
+					      }
+					    });
+					  //]]>
+					</script>
+		  		</div>
+		  	</td>
+		  </tr>
+		  
 		  
 		  <tr align="center" height="40" >
 		    	<td><span style="color: blue;">${message}</span></td>
@@ -106,3 +133,5 @@ function sendLogin() {
 		</form>           
 	</div>
 </div>
+
+
