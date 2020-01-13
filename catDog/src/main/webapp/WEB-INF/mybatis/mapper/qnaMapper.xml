@@ -66,7 +66,7 @@
 		FROM qna q
 		JOIN qnaCategory c ON q.qnaCategoryNum=c.qnaCategoryNum        
 		JOIN memberDetail md ON q.num = md.num
-		WHERE qnaNum=#{qnaNum} and q.qnaCategorynum=#{qnaCategoryNum}                  
+		WHERE qnaNum=#{qnaNum}               
 	</select>
 	
 	<select id="readQnaAnswer" parameterType="Integer" resultType="com.catDog.cs.Qna">
@@ -75,13 +75,14 @@
 		FROM qna q
 		JOIN qnaCategory c ON q.qnaCategoryNum=c.qnaCategoryNum        
 		JOIN memberDetail md ON q.num = md.num
-		WHERE parent = #{qnaNum} and q.qnaCategorynum=#{qnaCategoryNum}                  
+		WHERE parent = #{qnaNum}                 
 	</select>
 	
 	<select id="preReadQnaQuestion" parameterType="map" resultType="com.catDog.cs.Qna">
-		SELECT q.qnaNum, md.userId, q.subject, q.questionPrivate
+		SELECT q.qnaNum, md.userId, q.subject, q.questionPrivate, q.qnaCategoryNum, qc.qnaCategory
 		FROM qna q
 		JOIN memberDetail md ON q.num=md.num
+		JOIN qnaCategory qc ON q.qnaCategoryNum=qc.qnaCategoryNum
 		<where>
 			q.parent IS NULL and q.qnaCategorynum=#{qnaCategoryNum}
 			<if test="keyword != null and keyword != '' ">
@@ -94,9 +95,10 @@
 	</select>
 	
 	<select id="nextReadQnaQuestion" parameterType="map" resultType="com.catDog.cs.Qna">
-		SELECT q.qnaNum, md.userId, q.subject, q.questionPrivate
+		SELECT q.qnaNum, md.userId, q.subject, q.questionPrivate, q.qnaCategoryNum, qc.qnaCategory
 		FROM qna q
 		JOIN memberDetail md ON q.num=md.num
+		JOIN qnaCategory qc ON q.qnaCategoryNum=qc.qnaCategoryNum
 		<where>
 			q.parent IS NULL and q.qnaCategorynum=#{qnaCategoryNum}
 			<if test="keyword != null and keyword != '' ">
