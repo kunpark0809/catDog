@@ -22,6 +22,7 @@
   font-size:14px;
   border-radius:4px;
 }
+
 </style>
 
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
@@ -88,7 +89,7 @@ function sendLogin() {
 		  </tr>
 		  <tr align="center" height="65" > 
 		      <td>
-		        <button type="button" onclick="sendLogin();" class="btnConfirm">로그인</button>
+		        <button type="button" onclick="sendLogin();" class="bts">로그인</button>
 		      </td>
 		  </tr>
 

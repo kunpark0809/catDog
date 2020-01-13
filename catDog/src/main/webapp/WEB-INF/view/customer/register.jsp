@@ -363,7 +363,7 @@ function nickNameCheck() {
 			        <p style="margin-top: 1px; margin-bottom: 5px;">
 			            <input type="text" name="zip" id="zip" value="${dto.zip}"
 			                       class="boxTF" readonly="readonly">
-			            <button type="button" class="btnConfirm" onclick="daumPostcode();">우편번호</button>          
+			            <button type="button" class="bts" onclick="daumPostcode();">우편번호</button>          
 			        </p>
 			      </td>
 			  </tr>
@@ -415,9 +415,9 @@ function nickNameCheck() {
 			  <table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
 			     <tr height="45"> 
 			      <td align="center" >
-			        <button type="button" name="sendButton" class="btnConfirm" onclick="memberOk();">${mode=="update"?"정보수정":"회원가입"}</button>
-			        <button type="reset" class="btnConfirm">다시입력</button>
-			        <button type="button" class="btnConfirm" onclick="javascript:location.href='<%=cp%>/';">${mode=="update"?"수정취소":"가입취소"}</button>
+			        <button type="button" name="sendButton" class="bts" onclick="memberOk();">${mode=="update"?"정보수정":"회원가입"}</button>
+			        <button type="reset" class="bts">다시입력</button>
+			        <button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/';">${mode=="update"?"수정취소":"가입취소"}</button>
 			      </td>
 			    </tr>
 			    <tr height="30">

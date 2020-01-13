@@ -76,7 +76,7 @@
 		  <tr align="center" height="65" > 
 		      <td>
 		        &nbsp;
-		        <button type="button" onclick="sendOk();" class="btnConfirm">확인</button>
+		        <button type="button" onclick="sendOk();" class="bts">확인</button>
 		        &nbsp;
 		      </td>
 		  </tr>

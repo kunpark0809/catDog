@@ -19,7 +19,7 @@
                     해당 정보를 접근할 수 있는 권한이 없습니다.
             </div>
             <div style="margin-top: 20px;">
-                     <button type="button" onclick="javascript:location.href='<%=cp%>/';" class="btnConfirm">메인화면으로 이동</button>
+                     <button type="button" onclick="javascript:location.href='<%=cp%>/';" class="bts">메인화면으로 이동</button>
                 </div>
         </div>
      </div>   

@@ -103,8 +103,8 @@
 		  </tr>
 		  <tr align="center" height="65" > 
 		      <td>
-		        <button type="button" onclick="javascript:location.href='<%=cp%>';" class="btnConfirm" style="width: 230px;">다음에 변경</button>
-		        <button type="button" onclick="sendOk();" class="btnConfirm" style="width: 230px;">변경 완료</button>
+		        <button type="button" onclick="javascript:location.href='<%=cp%>';" class="bts" style="width: 230px;">다음에 변경</button>
+		        <button type="button" onclick="sendOk();" class="bts" style="width: 230px;">변경 완료</button>
 		      </td>
 		  </tr>
 		  <tr align="center" height="10" > 
