@@ -21,15 +21,7 @@ a.sortName{
 	color:#262626;
 }
 
-.productLink{
-	cursor: pointer;
-    text-align: center;
-    border: 1px solid #e4e4e4;
-    border-radius: 5px;
-    margin: 5px;
-    padding: 5px 0px;
-    height: 250px;
-}
+
 .link{
 	cursor: pointer;
     text-align: center;
@@ -90,8 +82,15 @@ a.sortName{
 	cursor: pointer;
 }
 
+.productLink{
+	cursor: pointer;
+    text-align: center;
+    height: 250px;
+    position: relative;
+}
+
 .product-image{
-	position: relative;
+	
 }
 
 .product-text {

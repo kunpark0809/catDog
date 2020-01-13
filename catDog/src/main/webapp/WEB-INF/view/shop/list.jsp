@@ -26,14 +26,11 @@ $(function(){
 });
 </script>
 	<div class="wide-container">
-		<h3 style="display: inline;">Shop</h3>
+		<div class="body-title">${bigSortNum=="1"?"강아지":"고양이"}&nbsp;용품</div>
 		<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
 			<span><button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/shop/created'">글올리기</button></span>
 		</c:if>
-		
-		<div class="bestProduct">
-		<h3 class="text-muted">BEST</h3>
-		</div>
+
 		<div class=" " >
 		
 			<a class="sortName" data-num="0" id="sort-0">전체</a>
@@ -54,7 +51,7 @@ $(function(){
 							<td width="20%">
 								<div class="productLink" onclick="javascript:location.href='${articleUrl}&productNum=${dto.productNum}'">
 									<div class="product-image">
-										<img alt="" src="<%=cp%>/uploads/shop/${dto.imageFileName}" width="200" height="200">
+										<img alt="" src="<%=cp%>/uploads/shop/${dto.imageFileName}" width="100%" height="250">
 									</div>
 									<div class="product-text">
 										<p style="margin: 0px;">${dto.name}</p>

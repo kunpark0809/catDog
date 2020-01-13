@@ -23,8 +23,10 @@
 </script>
 <link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
 <div class="wide-container">
-<div class="body-title">
-        <h3 style="float:left;"><i class="fas fa-chalkboard"></i>유기동물 게시판 </h3>
+	<div style="line-height: 40px;">
+	<div class="body-title" style="float:left;">
+        <i class="fas fa-chalkboard"></i>유기동물 게시판    
+     </div>
         <button style="float:left;" type="button" class="btn" onclick="javascript:location.href='<%=cp%>/aband/created'">글올리기</button>
          <form name="searchForm" action="/catDog/aband/list?sort=${sort}" method="post" style="float:right;">
   
@@ -58,9 +60,8 @@
 
            <button type="button" class="btn" onclick="searchList();">검색</button>
        </form>
-    </div>
     
-    <div>
+	</div>
 
 	            <div style="clear: both;">
 		           <ul class="tabs">
@@ -101,5 +102,3 @@
 		   </tr>
 		</table>
     </div>
-
-</div>
