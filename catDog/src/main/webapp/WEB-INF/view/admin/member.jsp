@@ -5,6 +5,14 @@
 <%
 	String cp = request.getContextPath();
 %>
+<style type="text/css">
+td {
+	white-space: nowrap; 
+	text-overflow: ellipsis; 
+	overflow: hidden;
+}
+
+</style>
 <script type="text/javascript">
 	function searchList() {
 		var f = document.searchForm;
@@ -34,7 +42,7 @@
 </script>
 
 
-<div class="body-container" style="width: 1100px; margin: 0px auto;">
+<div class="body-container" style="width: 1200px; margin: 0px auto; padding-top:60px; min-height: 490px;">
 	<div class="body-title">
 		<h3>
 			<span style="font-family: Wingdings">CD</span> 회원 관리
@@ -55,20 +63,21 @@
 		</table>
 
 		<table
-			style="font-size: 15px; width: 100%; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
-			<tr align="center" bgcolor="#eeeeee" height="35"
-				style="border-top: 2px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<th width="100" style="color: #787878;">사용자번호</th>
-				<th width="100" style="color: #787878;">ID</th>
-				<th style="color: #787878;">닉네임</th>
-				<th width="80" style="color: #787878;">성명</th>
-				<th width="90" style="color: #787878;">마일리지</th>
-				<th width="90" style="color: #787878;">주문횟수</th>
-				<th width="90" style="color: #787878;">신고횟수</th>
-				<th width="250" style="color: #787878;">최종접속시간</th>
-				<th width="180" style="color: #787878;">로그인실패횟수</th>
-				<th width="120" style="color: #787878;">활성화</th>
-				<th width="90" style="color: #787878;">강퇴</th>
+			style="font-size: 15px; width: 100%; margin: 0px auto; border-spacing: 0px;
+			 border-collapse: collapse; table-layout: fixed;">
+			<tr align="center" bgcolor="#51321b" height="35"
+				style=" color:white;">
+				<th width="100">사용자번호</th>
+				<th width="100">ID</th>
+				<th>닉네임</th>
+				<th width="100">성명</th>
+				<th width="80">마일리지</th>
+				<th width="80">주문횟수</th>
+				<th width="80">신고횟수</th>
+				<th width="200">최종접속시간</th>
+				<th width="120">로그인실패횟수</th>
+				<th width="100">활성화</th>
+				<th width="90">강퇴</th>
 			</tr>
 
 
@@ -86,7 +95,7 @@
 					<td>${dto.failure_cnt }</td>
 					<td>
 						<c:if test="${dto.failure_cnt==5}">
-							<button type='button' onclick='revive("${dto.userId}")'>활성화</button>
+							<button type='button'  class="yellowBts" onclick='revive("${dto.userId}")'>활성화</button>
 						</c:if>
 					</td>
 					<td>
@@ -98,7 +107,7 @@
 								강퇴됨(신고누적)
 							</c:when>
 							<c:otherwise>
-								<button type="button" onclick='ban("${dto.userId}")'>강퇴</button>
+								<button type="button" class="yellowBts" onclick='ban("${dto.userId}")' style="padding: 0px;">강퇴</button>
 							</c:otherwise>
 						</c:choose>
 					</td>
@@ -115,7 +124,7 @@
 		<table style="width: 100%; margin: 10px auto; border-spacing: 0px;">
 			<tr height="40">
 				<td align="left">
-					<button type="button" class="btnConfirm"
+					<button type="button" class="bts"
 						onclick="javascript:location.href='<%=cp%>/admin/member';">초기화</button>
 				</td>
 				<td align="left" style="width:65%;">
@@ -133,7 +142,7 @@
 							
 						
 							
-						<button type="button" class="btnConfirm" onclick="searchList()">검색</button>
+						<button type="button" class="bts" onclick="searchList()">검색</button>
 					</form>
 				</td>
 

@@ -21,16 +21,44 @@ ul li {
 
 /* 버튼 스타일  */
 .bts {
-width: 70px;
-background-color: #51321b;
-border: none;
-color: #ffffff;
-padding: 6px 0;
-text-align: center;
-display: inline-block;
-font-size: 15px;
-margin: 4px;
-border-radius: 5px;
+	width: 70px;
+	background-color: #51321b;
+	border: none;
+	color: #ffffff;
+	padding: 6px 0;
+	text-align: center;
+	display: inline-block;
+	font-size: 15px;
+	margin: 4px;
+	border-radius: 5px;
+}
+
+/*주황색 버튼 스타일(개 색)*/
+.yellowBts { 
+	width: 70px;
+	background-color: #f3a34e;
+	border: none;
+	color: #ffffff;
+	padding: 6px 0;
+	text-align: center;
+	display: inline-block;
+	font-size: 15px;
+	margin: 4px;
+	border-radius: 5px;
+}
+
+/*연한 갈색 버튼 스타일(홈페이지 색 중 하나)*/
+.brownBts{
+	width: 70px;
+	background-color: #A66E4E;
+	border: none;
+	color: #ffffff;
+	padding: 6px 0;
+	text-align: center;
+	display: inline-block;
+	font-size: 15px;
+	margin: 4px;
+	border-radius: 5px;	
 }
 
 

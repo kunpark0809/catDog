@@ -8,6 +8,20 @@
 <link rel="stylesheet" href="<%=cp%>/resource/css/tabs.css"
 	type="text/css">
 
+<style type="text/css">
+ul.tabs li.active{
+	    font-weight: 700;
+		border: 0px;
+	    border-bottom-color:  transparent;
+}
+
+td {
+	white-space: nowrap; 
+	text-overflow: ellipsis; 
+	overflow: hidden;
+}
+</style>
+
 <script type="text/javascript">
 
 function searchList() {
@@ -48,7 +62,7 @@ $(function(){
 </script>
 
 
-<div class="body-container" style="width: 1100px; margin: 0px auto;">
+<div class="body-container" style="width: 1200px; min-height:490px; padding-top:60px; margin: 0px auto;">
 	<div class="body-title">
 		<h3>
 			<i class="fas fa-comments"></i> 신고 관리
@@ -80,15 +94,15 @@ $(function(){
 		<table
 			style="width: 100%; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
 			<tr align="center" bgcolor="#eeeeee" height="35"
-				style="border-top: 2px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<th width="70" style="color: #787878;">신고번호</th>
-				<th width="100" style="color: #787878;">게시판</th>
-				<th width="190" style="color: #787878;">신고분류</th>
-				<th width="190" style="color: #787878;">신고자</th>
-				<th width="190" style="color: #787878;">피신고자</th>
-				<th width="190" style="color: #787878;">신고일</th>
-				<th width="140" style="color: #787878;">글 보기</th>
-				<th width="100" style="color: #787878;">처리여부</th>
+				style="color:white; background-color:#51321b;">
+				<th width="70">신고번호</th>
+				<th width="100">게시판</th>
+				<th width="150">신고분류</th>
+				<th width="190">신고자</th>
+				<th width="190">피신고자</th>
+				<th width="190">신고일</th>
+				<th>글 보기</th>
+				<th width="100">처리여부</th>
 			</tr>
 
 			<c:forEach var="dto" items="${list}">
@@ -103,19 +117,16 @@ $(function(){
 					<td>
 						<c:choose>
 							<c:when test="${dto.boardSort==1}">
-								<a
-									href="<%=cp%>/tip/article?tipNum=${dto.reportedPostNum}"
-									target="_blank"> 꿀팁(${dto.reportedPostNum})</a>
+								<button class="yellowBts" style="width: 130px; padding: 0px;"
+								onclick="window.open('<%=cp%>/tip/article?tipNum=${dto.reportedPostNum}')">꿀팁(${dto.reportedPostNum})</button>
 							</c:when>
 							<c:when test="${dto.boardSort==2}">
-								<a
-									href="<%=cp%>/pet/article?myPetNum=${dto.reportedPostNum}"
-									target="_blank"> 내새끼자랑(${dto.reportedPostNum})</a>
+								<button class="yellowBts" style="width: 130px; padding: 0px;"
+									onclick="window.open('<%=cp%>/pet/article?myPetNum=${dto.reportedPostNum}')">내새끼자랑(${dto.reportedPostNum})</button>
 							</c:when>
 							<c:when test="${dto.boardSort==3}">
-								<a
-									href="<%=cp%>/freeBoard/article?bbsNum=${dto.reportedPostNum}"
-									target="_blank"> 자유게시판(${dto.reportedPostNum})</a>
+								<button class="yellowBts" style="width: 130px; padding: 0px;"
+								onclick="window.open('<%=cp%>/freeBoard/article?bbsNum=${dto.reportedPostNum}')">자유게시판(${dto.reportedPostNum})</button>
 							</c:when>
 						</c:choose>
 					</td>
@@ -155,10 +166,10 @@ $(function(){
 		<table style="width: 100%; margin: 10px auto; border-spacing: 0px;">
 			<tr height="40">
 				<td align="left" width="70" style="padding-left: 20px;">
-					<button type="button" class="btnConfirm"
+					<button type="button" class="bts"
 						onclick="javascript:location.href='<%=cp%>/admin/bbs';">초기화</button>
 				</td>
-				<td align="left" width="200" style="padding-left: 150px;">
+				<td align="left" width="200" style="padding-left: 250px;">
 					<form name="searchForm" action="<%=cp%>/admin/bbs" method="post">
 						<select name="condition" class="selectField">
 							<option value="all" ${condition=="all"?"selected='selected'":""}>모두</option>
@@ -170,7 +181,7 @@ $(function(){
 								${condition=="reasonName"?"selected='selected'":""}>신고분류</option>
 						</select> <input type="text" name="keyword" value="${keyword}"
 							class="boxTF">
-						<button type="button" class="btnconFirm" onclick="searchList()">검색</button>
+						<button type="button" class="bts" onclick="searchList()">검색</button>
 						<input type="hidden" name="group" value="${group }"> <input
 							type="hidden" name="page" value="${page }">
 

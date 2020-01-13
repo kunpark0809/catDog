@@ -61,8 +61,10 @@ function sendLogin() {
 }
 </script>
 
-<div class="body-container">
-    <div style="width:360px; margin: 0px auto; padding-top:90px;">
+<div class="body-container" style="background-image:url('<%=cp%>/resource/img/loginbg.jpg');
+ background-position:center center; background-repeat: no-repeat; ">
+    <div style="width:360px; min-height:490px; margin: 0px auto; padding-top:90px;">
+    	<div style=" background-color: rgba( 255, 255, 255, 0.5 ); padding-top: 40px;">
     	<div style="text-align: center;">
         	<span style="font-weight: bold; font-size:27px; color: #424951;">회원 로그인</span>
         </div>
@@ -75,7 +77,7 @@ function sendLogin() {
 		        <input type="text" name="userId" id="userId" class="loginTF" maxlength="15"
 		                   tabindex="1"
                            onfocus="document.getElementById('lblUserId').style.display='none';"
-                           onblur="bgLabel(this, 'lblUserId');">
+                           onblur="bgLabel(this, 'lblUserId');" style="width: 280px;">
 		      </td>
 		  </tr>
 		  <tr align="center" height="60"> 
@@ -84,25 +86,25 @@ function sendLogin() {
 		        <input type="password" name="userPwd" id="userPwd" class="loginTF" maxlength="20" 
 		                   tabindex="2"
                            onfocus="document.getElementById('lblUserPwd').style.display='none';"
-                           onblur="bgLabel(this, 'lblUserPwd');">
+                           onblur="bgLabel(this, 'lblUserPwd');" style="width: 280px;">
 		      </td>
 		  </tr>
 		  <tr align="center" height="65" > 
 		      <td>
-		        <button type="button" onclick="sendLogin();" class="bts">로그인</button>
+		        <button type="button" onclick="sendLogin();" class="bts" style="width: 300px;">로그인</button>
 		      </td>
 		  </tr>
 
 		  <tr align="center" height="45">
 		      <td>
-		       		<a href="<%=cp%>/customer/idFind">아이디찾기</a>&nbsp;&nbsp;&nbsp;
-		       		<a href="<%=cp%>/customer/pwdFind">패스워드찾기</a>&nbsp;&nbsp;&nbsp;
-		       		<a href="<%=cp%>/customer/register">회원가입</a>
+		       		<button style="width: 93px; background-color: #A66E4E;" class="bts" type="button" onclick="javascript:location.href='<%=cp%>/customer/idFind';">아이디찾기</button>
+		       		<button style="width: 93px; background-color: #A66E4E;" class="bts" type="button" onclick="javascript:location.href='<%=cp%>/customer/pwdFind';">패스워드찾기</button>
+		       		<button style="width: 93px; background-color: #A66E4E;" class="bts" type="button" onclick="javascript:location.href='<%=cp%>/customer/register';">회원가입</button>
 		      </td>
-		  </tr>
+		  </tr> 
 		  <tr>
 		  	<td>
-		  		<div align="center">
+		  		<div align="center" style="padding: 10px 0;">
 			  		<a id="kakao-login-btn"></a>
 					<a href="http://developers.kakao.com/logout"></a>
 					<script type='text/javascript'>
@@ -114,10 +116,11 @@ function sendLogin() {
 					      container: '#kakao-login-btn',
 					      success: function(authObj) {
 					        alert(JSON.stringify(authObj));
-					      },
+					      },	
 					      fail: function(err) {
 					         alert(JSON.stringify(err));
-					      }
+					      },
+					      size:'large'
 					    });
 					  //]]>
 					</script>
@@ -132,6 +135,7 @@ function sendLogin() {
 		  
 		  </table>
 		</form>           
+	</div>
 	</div>
 </div>
 

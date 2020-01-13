@@ -14,7 +14,7 @@
 </script>
 
 
-<div class="body-container" style="width: 1100px; margin: 0px auto;">
+<div class="body-container" style="width: 1200px; padding-top:60px; min-height:490px; margin: 0px auto;">
 	<div class="body-title">
 		<h3>
 			<span style="font-family: Wingdings">-</span> 쇼핑몰 관리
@@ -32,21 +32,21 @@
 		<table
 			style="font-size: 15px; width: 100%; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
 			<tr align="center" bgcolor="#eeeeee" height="35"
-				style="border-top: 2px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<th width="80" style="color: #787878;">주문번호</th>
-				<th width="150" style="color: #787878;">주문자</th>
-				<th width="150" style="color: #787878;">이메일</th>
-				<th width="150" style="color: #787878;">전화번호</th>
-				<th width="150" style="color: #787878;">주문일</th>
-				<th width="90" style="color: #787878;">총주문액수</th>
-				<th width="90" style="color: #787878;">진행상태</th>
-				<th width="90" style="color: #787878;">상세정보</th>
+				style="color:white; background-color:#51321b;">
+				<th width="80">주문번호</th>
+				<th width="150">주문자</th>
+				<th width="150">이메일</th>
+				<th width="150">전화번호</th>
+				<th width="150">주문일</th>
+				<th width="90">총주문액수</th>
+				<th width="90">진행상태</th>
+				<th width="90">상세정보</th>
 			</tr>
 
 
 			 <c:forEach var="dto" items="${list}"> 
-				<tr align="center" bgcolor="#eeeeee" height="35"
-				style="border-top: 2px solid #cccccc; border-bottom: 1px solid #cccccc;">
+				<tr align="center" bgcolor="white" height="35"
+				style="border-bottom: 1px solid #cccccc;">
 				<td>${dto.requestNum }</td>
 				<td>${dto.customerName}(${dto.userId})</td>
 				<td>${dto.email }</td>
@@ -54,7 +54,7 @@
 				<td>${dto.requestDate}</td>
 				<td align="right">${dto.totalWithComma }원</td>
 				<td>${dto.statusToString}</td>
-				<td><button>수정</button> </td>
+				<td><button class="yellowBts" style="padding: 0px;">수정</button> </td>
 			</tr>
 			</c:forEach>
 		</table>
@@ -68,7 +68,7 @@
 		<table style="width: 100%; margin: 10px auto; border-spacing: 0px;">
 			<tr height="40">
 				<td align="left">
-					<button type="button" class="btnConfirm"
+					<button type="button" class="bts"
 						onclick="javascript:location.href='<%=cp%>/admin/shop';">초기화</button>
 				</td>
 				<td align="left" style="width:65%;">
@@ -91,7 +91,7 @@
 							
 						
 							
-						<button type="button" class="btnConfirm" onclick="searchList()">검색</button>
+						<button type="button" class="bts" onclick="searchList()">검색</button>
 					</form>
 				</td>
 
