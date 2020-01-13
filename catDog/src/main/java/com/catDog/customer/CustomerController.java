@@ -25,7 +25,7 @@ import com.catDog.admin.Report;
 public class CustomerController {
 	@Autowired
 	private CustomerService service;
-	
+
 	@Autowired
 	private AdminService service2;
 
@@ -82,7 +82,7 @@ public class CustomerController {
 	@RequestMapping(value = "/customer/register", method = RequestMethod.GET)
 	public String registerForm(Model model) {
 
-		model.addAttribute("menu","customer");
+		model.addAttribute("menu", "customer");
 		model.addAttribute("mode", "register");
 
 		return ".customer.register";
@@ -155,85 +155,98 @@ public class CustomerController {
 		return "redirect:/";
 	}
 
-	@RequestMapping(value="/customer/idFind", method=RequestMethod.GET)
+	@RequestMapping(value = "/customer/idFind", method = RequestMethod.GET)
 	public String idFindForm(HttpSession session) throws Exception {
-		SessionInfo info=(SessionInfo)session.getAttribute("member");
-		if(info!=null) {
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if (info != null) {
 			return "redirect:/";
 		}
-		
+
 		return ".customer.idFind";
 	}
-	
-	
-	@RequestMapping(value="/customer/pwdFind", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/customer/pwdFind", method = RequestMethod.GET)
 	public String pwdFindForm(HttpSession session) throws Exception {
-		SessionInfo info=(SessionInfo)session.getAttribute("member");
-		if(info!=null) {
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		if (info != null) {
 			return "redirect:/";
 		}
-		
+
 		return ".customer.pwdFind";
 	}
-	
-	@RequestMapping(value="/customer/pwdFind", method=RequestMethod.POST)
-	public String pwdFindSubmit(@RequestParam String userId,
-			final RedirectAttributes reAttr,
-			Model model
-			) throws Exception {
-		
+
+	@RequestMapping(value = "/customer/pwdFind", method = RequestMethod.POST)
+	public String pwdFindSubmit(@RequestParam String userId, final RedirectAttributes reAttr, Model model)
+			throws Exception {
+
 		Customer dto = service.readCustomer(userId);
-		if(dto==null || dto.getEmail()==null || dto.getEnabled()==0) {
+		if (dto == null || dto.getEmail() == null || dto.getEnabled() == 0) {
 			model.addAttribute("message", "등록된 아이디가 아닙니다.");
 			return ".customer.pwdFind";
 		}
-		
+
 		try {
 			service.generatePwd(dto);
 		} catch (Exception e) {
 			model.addAttribute("message", "이메일 전송이 실패했습니다.");
 			return ".customer.pwdFind";
 		}
-		
-		StringBuilder sb=new StringBuilder();
+
+		StringBuilder sb = new StringBuilder();
 		sb.append("회원님의 이메일로 임시패스워드를 전송했습니다.<br>");
 		sb.append("로그인 후 패스워드를 변경하시기 바랍니다.<br>");
-		
+
 		reAttr.addFlashAttribute("title", "패스워드 찾기");
 		reAttr.addFlashAttribute("message", sb.toString());
-		
+
 		return "redirect:/customer/complete";
 	}
-	
+
 	@RequestMapping("/customer/recentReport")
 	@ResponseBody
-	public Map<String, Object> recentReport(
-			HttpSession session, HttpServletRequest req
-			) throws Exception{
-		Map<String, Object> model=new HashMap<>();
-		
+	public Map<String, Object> recentReport(HttpSession session, HttpServletRequest req) throws Exception {
+		Map<String, Object> model = new HashMap<>();
+
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		String userId = info.getUserId();
 		String url = req.getContextPath();
-		
+
 		Report report = service2.recentReport(userId);
-		
-		if (report.getBoardSort()==1) {
-			url+="/tip/article?tipNum="+report.getReportedPostNum();
-		} else if (report.getBoardSort()==2) {
-			url+="/pet/article?myPetNum="+report.getReportedPostNum();
-		} else if (report.getBoardSort()==3) {
-			url+="/freeBoard/article?bbsNum="+report.getReportedPostNum();
+
+		if (report.getBoardSort() == 1) {
+			url += "/tip/article?tipNum=" + report.getReportedPostNum();
+		} else if (report.getBoardSort() == 2) {
+			url += "/pet/article?myPetNum=" + report.getReportedPostNum();
+		} else if (report.getBoardSort() == 3) {
+			url += "/freeBoard/article?bbsNum=" + report.getReportedPostNum();
 		}
-		
+
 		model.put("url", url);
 		model.put("reportDate", report.getReportDate());
 		model.put("reasonName", report.getReasonName());
 		model.put("reportCount", info.getReportCount());
-		
+
 		return model;
 	}
-	
-	
-	
+
+	@RequestMapping("/customer/deactivateWarn")
+	@ResponseBody
+	public Map<String, Object> deactivateWarn(HttpSession session, HttpServletRequest req) throws Exception {
+		Map<String, Object> model = new HashMap<>();
+
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		String userId = info.getUserId();
+
+		try {
+			service2.deactivateWarn(userId);
+			session.setAttribute("member.warn", 0);
+			model.put("status", 1);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.put("status", 0);
+		}
+
+		return model;
+	}
+
 }

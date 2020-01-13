@@ -57,38 +57,52 @@ function ajaxHTML(url, type, query, selector) {
 $(function(){
 	$("#warningModal_open_btn").click(function(){
 		
-		var url="<%=cp%>/customer/recentReport";
-		var query = {};
+		var url1="<%=cp%>/customer/recentReport";
+		var query = {temp:new Date().getTime()};
 		
 		var fn = function(data){
 			var url2 = data.url;
 			var reportDate = data.reportDate;
 			var reasonName = data.reasonName;
-			var reasonCount = data.reasonCount;
+			var reportCount = data.reportCount;
 			
-			var warning = "<a href = '"+url2+"'>회원님이 작성한 글</a>이"+ reportDate+"에"+reasonName+"라서 경고" 
-			+reasonCount+"경고 받음";
+			var warning = "<a href = '"+url2+"' style='color:blue;'>회원님이 작성한 글</a>이 "+reportDate+"에 '"+reasonName;
+			warning+="'의 사유로 신고되었고,<br>운영진의 심의 결과 경고 1회를 부여하였습니다.<br>현재 경고횟수는 ";
+			warning+=reportCount+"회이며 경고 3회 누적시 회원 자격이 영구적으로 정지됩니다.";
 			
-			$("#warningModal").text(warning);
+			$("#warningModal").show();
+			$(".warningModal-content").html(warning);
 		};
 		
-		ajaxJSON(url, "post", query, fn);
-		
-		
-		
-		
-		
+		ajaxJSON(url1, "post", query, fn);
 		
 		$('#warningModal').dialog({
 			  modal: true,
-			  height: 650,
+			  height: 300,
 			  width: 600,
 			  title: '경고',
 			  close: function(event, ui) {
 			  }
 		});
 	});
-});	
+});
+
+$(function(){
+	$("#confirm").click(function(){
+				
+		var url="<%=cp%>/customer/deactivateWarn";
+		var query={};
+		
+		var fn = function(data){
+			if(data.status==1){
+			$('#warningModal').dialog("close");
+			}
+		};
+		
+		ajaxJSON(url, "post", query, fn);
+	});
+});
+
 </script>
 
 <!-- 헤더(카테고리) -->
@@ -200,8 +214,10 @@ $(function(){
 	</div>
 <!-- 모달 창 -->
 		<div id="warningModal" style="display: none;">
-	   
-	
+	 		<div class="warningModal-content"></div>
+	      	<div>
+	 			<button type="button" id="confirm">확인</button>
+	 		</div>
 		</div>
 	
 </nav>
