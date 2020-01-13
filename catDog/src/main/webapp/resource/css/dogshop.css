@@ -32,7 +32,7 @@ a.sortName{
 }
 .sortList{
 	width: 100%;
-	margin: 0px auto;
+	margin: 20px auto 0px;
 	text-align: center;
 }
 .sortActive {
@@ -63,10 +63,6 @@ a.sortName{
 	width: 45%;
 	float: left;
 	padding-left: 50px;
-}
-
-.productList > img {
-	width: 100px;
 }
 
 .imgList{
@@ -118,14 +114,21 @@ a.sortName{
 	margin: 10px auto;
 }
 
-.productList > table{
+.productList{
 	width: 100%;
-	margin: 0px auto;
-	border-collapse: collapse;
-	border-spacing: 0;
+	margin-top: 10px;
 }
 
+.productList > ul {
+	list-style: none;
+	margin:0px; 
+	padding:0px;
+}
 
+.productList > ul > li{
+	display: inline-block;
+	margin: 0px 10px 10px;
+}
 
 .btnList{
 	width: 100%;
@@ -221,4 +224,9 @@ a.sortName{
 
 .payProduct > table > tr > td{
 	border: 1px solid #d8d8d8;
+}
+
+.numberInput{
+	width: 40px;
+    text-align: right;
 }

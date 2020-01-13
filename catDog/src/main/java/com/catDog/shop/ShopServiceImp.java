@@ -174,7 +174,7 @@ public class ShopServiceImp implements ShopService{
 	public void updateproduct(Shop dto, String pathname) throws Exception {
 		
 		try {
-			if(dto.getMain()!=null) {
+			if(!dto.getMain().isEmpty()) {
 				
 				if(dto.getImageFileName()!=null)
 					fileManager.doFileDelete(dto.getImageFileName(),pathname);

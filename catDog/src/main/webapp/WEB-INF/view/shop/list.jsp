@@ -26,12 +26,12 @@ $(function(){
 });
 </script>
 	<div class="wide-container">
-		<div class="body-title">${bigSortNum=="1"?"강아지":"고양이"}&nbsp;용품</div>
-		<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
-			<span><button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/shop/created'">글올리기</button></span>
-		</c:if>
-
-		<div class=" " >
+			<div class="body-title"><i class="fas fa-gifts"></i>&nbsp;${bigSortNum=="1"?"강아지":"고양이"}&nbsp;용품
+			<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
+				<span style="float: right;"><button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/shop/created'" >상품등록</button></span>
+			</c:if>
+</div>
+		<div class="sortList">
 		
 			<a class="sortName" data-num="0" id="sort-0">전체</a>
 			<c:forEach var="sort" items="${smallSortList}">
@@ -39,17 +39,12 @@ $(function(){
 			</c:forEach>
 		</div>
 		<div class="productList">	
-			<table style="width: 100%">
+			<ul style="width: 100%">
 					<c:forEach var="dto" items="${list}" varStatus="status">
-					     <c:if test="${status.index==0}">
-                     		  <tr>
-		                 </c:if>
-		                 <c:if test="${status.index!=0 && status.index%4==0}">
-		                       <c:out value="</tr><tr>" escapeXml="false"/>
-		                 </c:if>
+
 						
-							<td width="20%">
-								<div class="productLink" onclick="javascript:location.href='${articleUrl}&productNum=${dto.productNum}'">
+							<li style="width:23%;" onclick="javascript:location.href='${articleUrl}&productNum=${dto.productNum}'">
+
 									<div class="product-image">
 										<img alt="" src="<%=cp%>/uploads/shop/${dto.imageFileName}" width="100%" height="250">
 									</div>
@@ -58,11 +53,9 @@ $(function(){
 										
 										<p style="margin: 0px;" class="product-price"><fmt:formatNumber value="${dto.price}" type="currency"/>원</p>
 									</div>
-									
-								</div>
-							</td>
+							</li>
 					</c:forEach>
-			</table>
+			</ul>
 		</div>
 		
 		<div class="paging">

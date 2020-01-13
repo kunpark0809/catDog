@@ -119,8 +119,11 @@ function changePrice(){
 		$("input[name=productCount]").val(1);
 		count = 1;
 	}
-	
+	var productSum = parseInt(count)*${dto.price};
 	$("input[name=productSum]").val(count*${dto.price});
+	
+	document.getElementById("pointSum").innerHTML= "(<i class='fas fa-paw' style='color: #d96363;'></i> "+Math.floor(productSum*0.01)+"원)";
+	document.getElementById("productSum").innerHTML=new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(productSum)+"원";
 }
 
 function deleteProduct(){
@@ -143,13 +146,7 @@ function listReview(page){
 
 </script>
 	<div class="wide-container"> 
-		<div class="sortList">
-		
-			<a class="sortName" data-num="0" id="sort-0">전체</a>
-			<c:forEach var="sort" items="${smallSortList}">
-				<a class="sortName" data-num="${sort.smallSortNum}" id="sort-${sort.smallSortNum}">${sort.sortName}</a>	
-			</c:forEach>
-		</div>
+
 		<div class="product-info">
 			<div class="product-img">
 				<div class="main-img">
@@ -167,29 +164,36 @@ function listReview(page){
 			<div class="product-info-detail"> 
 				<table>
 				<tr>
-					<td colspan="2">${dto.name}</td>
+					<td colspan="2" style=" font-size: 30px; font-weight: bold;">${dto.name}</td>
 				</tr>
 				<tr>
-					<td>가격</td>
+					<td width="100">가격</td>
 					<fmt:formatNumber var="price" value="${dto.price}" type="currency" />
 					<td>${price}원</td>
 				</tr>
 				<tr>
-					<td>배송비</td>
+					<td width="100">배송비</td>
 					<td>2,500원 / 주문시 결제(선결제)</td>
 				</tr>
 				<tr>
-					<td>포인트</td>
+					<td width="100">포인트</td>
 					<fmt:parseNumber var="point" value="${dto.price*0.01}" integerOnly="true"/>
 					<td>${point}원</td>
 				</tr>
 				</table>
-				<div class="product_count">
-					<input type="number" value="1" name="productCount" onchange="changePrice();">
-
-					<span><input type="text" readonly="readonly" name="productSum" value="${price}">원</span>
+				<div class="product_count" style="min-height: 50px;">
+					<span style="width: 60%; float:left;">${dto.name}</span>
+					<span style="width: 20%; float:left;"><input type="number" value="1" name="productCount" onchange="changePrice();" class="numberInput"></span>
+					<input type="hidden" readonly="readonly" name="productSum" value="${price}">
+					<div style="float: left; width: 20%; text-align: right;">
+					<b>
+						<p id="productSum" > ${price}원</p>
+						<p id="pointSum" > (<i class="fas fa-paw" style="color: #d96363;"></i>&nbsp;<fmt:parseNumber value="${dto.price*0.01}" integerOnly="true"/>원)</p>
+					</b>
+					</div>
 				</div>
-				<div class="product_btn">
+			
+				<div class="product_btn" style="margin-top: 10px;">
 					<button type="button" class="payBtn" onclick="pay('${dto.productNum}');">구매하기</button>
 					<button type="button" class="cartBtn" onclick="cart();">장바구니</button>
 				</div>

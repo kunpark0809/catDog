@@ -131,7 +131,6 @@ public class ShopController {
 			return "redirect:/shop/list?"+query;
 		}
 
-		List<Shop> smallSortList = service.smallSortList(dto.getBigSortNum());
 		List<Shop> picList = service.readProductPic(productNum);
 		
 		model.addAttribute("bigSortNum",bigSortNum);
@@ -140,7 +139,6 @@ public class ShopController {
 		model.addAttribute("query",query);
 		model.addAttribute("picList", picList);
 		model.addAttribute("dto", dto);
-		model.addAttribute("smallSortList",smallSortList);
 		return ".shop.article";
 	}
 	
