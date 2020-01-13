@@ -368,6 +368,7 @@ $(function(){
 				
 				<td align="right">
 					<button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/freeBoard/list?${query}';">리스트</button>
+					<button type="button" class="bts" onclick="report();" class='bts'>신고</button>
 				</td>
 			</tr>
 		</table>
@@ -377,7 +378,7 @@ $(function(){
 		<table style='width: 100%; margin: 15px quto 0px; border-spacing:0px;' >
 			<tr>
 				<td style='padding: 5px 5px 0px;'>
-					<textarea class='boxTA' style='width:90%; height: 70px;'></textarea>
+					<textarea class='boxTA' style='width:90%; height: 70px; border-radius: 5px;'></textarea>
 					<b style="float: right;"><button type='button' class='bts2 btnSendReply' data-bbsNum='10' style="height: 75px;"> 댓글 등록 </button></b>
 				</td>
 			</tr>

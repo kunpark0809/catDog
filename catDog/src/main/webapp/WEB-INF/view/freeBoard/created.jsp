@@ -92,7 +92,7 @@ border-radius: 5px;
 			
 			</table>
 			</div>
-			<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
+			<table style="width: 100%; border-spacing: 0px;">
 			     <tr height="45"> 
 			      <td align="center">
 			        <button type="submit" class="bts">${mode=='update'?'수정완료':'등록하기'}</button>

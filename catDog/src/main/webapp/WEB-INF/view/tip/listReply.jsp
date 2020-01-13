@@ -20,19 +20,9 @@ border-radius: 5px;
 }
 
 .bts2 {
-  background-color: white;
-  border: 1px solid;
-  border-color: #a9a9a9;
-  color: #black;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-}
-
-.bts3 {
 width: 65px;
 background-color: white;
-border: 1px solid #d96262;
+border: 1px solid #a9a9a9;
 color: black;
 padding: 6px 0;
 text-align: center;
@@ -51,13 +41,12 @@ border-radius: 5px;
 			<td colspan='2'>
 				<div style='clear: both;'>
 					<br><div style='float: left;'><span style='color: #D96262; font-weight: bold;'>댓글 ${replyCount}개</span></div>
-					<div style='float: right; text-align: right;'><button type="button" onclick="report();" class='bts2'>신고</button></div>
 				</div>
 			</td>
 		</tr>
 	</thead>
 
-	<tbody id='listReplyBody' style="background-color: #f9f9f9">
+	<tbody id='listReplyBody' style="background-color: white">
 		<c:forEach var="vo" items="${listReply}">
 			<tr height='35' style="background-color: #f9f9f9;">
 				<td width='50%' style='padding:5px 5px; color: #a66242; font-weight: bold;' align="left">
@@ -76,7 +65,7 @@ border-radius: 5px;
 			<tr>
 				<td colspan='2' valign='top' style='padding:0px 5px;' align="left">
 					${vo.content}
-					<p><button type='button' class='bts3 btnReplyParentLayout' data-tipReplyNum='${vo.tipReplyNum}'>답글 <span id="parentCount${vo.tipReplyNum}">${vo.parentCount}</span></button><p>
+					<p><button type='button' class='bts2 btnReplyParentLayout' data-tipReplyNum='${vo.tipReplyNum}'>답글 <span id="parentCount${vo.tipReplyNum}">${vo.parentCount}</span></button><p>
 				</td>
 			</tr>
 			
@@ -86,12 +75,12 @@ border-radius: 5px;
 						<div style='clear: both; padding: 10px 10px;'>
 							<div style='float: left; width: 5%;'>└</div>
 							<div style='float: left; width:95%'>
-							<textarea cols='72' rows='12' class='boxTA' style='width:98%; height: 70px;'></textarea>
+							<textarea cols='72' rows='12' class='boxTA' style='width:98%; height: 70px; border-radius: 5px;'></textarea>
 						</div>
 					</div>
 					
 					<div style='padding: 0px 13px 10px 10px; text-align: right; font-weight: bold;'>
-						<button type='button' class='bts3 btnSendReplyParent' data-tipReplyNum='${vo.tipReplyNum}'>답글 등록</button>
+						<button type='button' class='bts2 btnSendReplyParent' data-tipReplyNum='${vo.tipReplyNum}'>답글 등록</button>
 					</div>
 			</tr>
 			

@@ -399,6 +399,7 @@ $(function(){
 				
 				<td align="right">
 					<br><button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/tip/list?${query}';">리스트</button>
+					<button type="button" class="bts" onclick="report();" class='bts'>신고</button>
 				</td>
 			</tr>
 		</table>

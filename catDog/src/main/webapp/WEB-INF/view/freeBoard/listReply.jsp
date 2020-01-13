@@ -20,19 +20,9 @@ border-radius: 5px;
 }
 
 .bts2 {
-  background-color: white;
-  border: 1px solid;
-  border-color: #a9a9a9;
-  color: #black;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-}
-
-.bts3 {
 width: 65px;
 background-color: white;
-border: 1px solid #d96262;
+border: 1px solid #a9a9a9;
 color: black;
 padding: 6px 0;
 text-align: center;
@@ -57,7 +47,7 @@ border-radius: 5px;
 		</tr>
 	</thead>
 
-	<tbody id='listReplyBody' style="background-color: #f9f9f9">
+	<tbody id='listReplyBody' style="background-color: white">
 		<c:forEach var="vo" items="${listReply}">
 			<tr height='35' style="background-color: #f9f9f9;">
 				<td width='50%' style='padding:5px 5px; color: #a66242; font-weight: bold;' align="left">
@@ -76,7 +66,7 @@ border-radius: 5px;
 			<tr>
 				<td colspan='2' valign='top' style='padding:0px 5px;' align="left">
 					${vo.content}
-				<p><button type='button' class='bts3 btnReplyParentLayout' data-bbsReplyNum='${vo.bbsReplyNum}'>답글 <span id="parentCount${vo.bbsReplyNum}">${vo.parentCount}</span></button><p>
+				<p><button type='button' class='bts2 btnReplyParentLayout' data-bbsReplyNum='${vo.bbsReplyNum}'>답글 <span id="parentCount${vo.bbsReplyNum}">${vo.parentCount}</span></button><p>
 				</td>
 			</tr>
 			
@@ -91,7 +81,7 @@ border-radius: 5px;
 					</div>
 					
 					<div style='padding: 0px 13px 10px 10px; text-align: right; font-weight: bold;'>
-						<button type='button' class='bts3 btnSendReplyParent' data-bbsReplyNum='${vo.bbsReplyNum}'>답글 등록</button>
+						<button type='button' class='bts2 btnSendReplyParent' data-bbsReplyNum='${vo.bbsReplyNum}'>답글 등록</button>
 					</div>
 			</tr>
 		</c:forEach>

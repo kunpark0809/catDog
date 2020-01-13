@@ -55,7 +55,7 @@ border-radius: 5px;
 	</div>
 	
 		<form name="tipForm" method="post" enctype="multipart/form-data" onsubmit="return submitContents(this);">
-			<div class="container" style="color: white;">
+			<div style="color: white;">
 			
 				
 			  <table style="width: 100%; margin: 20px auto 10px; border-spacing: 0px; border-collapse: collapse;">
@@ -107,7 +107,7 @@ border-radius: 5px;
 			
 			</table>
 			</div>
-			<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
+			<table style="width: 100%; border-spacing: 0px;">
 			     <tr height="45"> 
 			      <td align="center">
 			        <button type="submit" class="bts">${mode=='update'?'수정완료':'등록하기'}</button>
