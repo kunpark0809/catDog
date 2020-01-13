@@ -55,7 +55,8 @@ $(function(){
 									</div>
 									<div class="product-text">
 										<p style="margin: 0px;">${dto.name}</p>
-										<p style="margin: 0px;">${dto.price}</p>
+										
+										<p style="margin: 0px;" class="product-price"><fmt:formatNumber value="${dto.price}" type="currency"/>원</p>
 									</div>
 									
 								</div>
