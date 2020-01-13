@@ -158,7 +158,7 @@ function submitReview(){
 
 </script>
 
-<div class="body-container" style="width: 1200px; margin: 20px auto 0px; border-spacing: 0px;">
+<div class="wide-container">
 	<div class="body-title">
 		<h3><span style="font-family: Webdings"></span> 주문 상품 정보 </h3>
 	</div>
@@ -176,24 +176,24 @@ function submitReview(){
 		</table>
 	
 		<table style="width: 100%; border-spacing: 0px; border-collapse: collapse;">
-			<tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
-				<th width="130" style="color: #787878;">주문일자<br>[주문번호]</th>
-				<th style="color: #787878; width: 80px;">이미지</th>
-				<th width="300" style="color: #787878;">상품정보</th>
-				<th width="80" style="color: #787878;">수량</th>
-				<th width="60" style="color: #787878;">상품구매금액</th>
-				<th width="60" style="color: #787878;">주문처리상태</th>
-				<th width="70" style="color: #787878;">취소/교환/반품</th>
+			<tr align="center" bgcolor="#51321b" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
+				<th width="130" style="color: white;">주문일자<br>[주문번호]</th>
+				<th style="color: white; width: 80px;">이미지</th>
+				<th width="300" style="color: white;">상품정보</th>
+				<th width="70" style="color: white;">수량</th>
+				<th width="70" style="color: white;">상품구매금액</th>
+				<th width="60" style="color: white;">주문처리상태</th>
+				<th width="70" style="color: white;">취소/교환/반품</th>
 			</tr>
 			
 			<c:forEach var="dto" items="${list}">
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
 				<td>${dto.requestDate}<br><a href="<%=cp%>/mypage/requestDetailCheck?&requestNum=${dto.requestNum}">${dto.requestNum}</a></td>
 				<td align="left" style="padding-left: 10px;">
-					<a href="<%=cp%>/shop/article?productNum=${dto.productNum}"><img style="width: 80px; height: 80px;" src="<%=cp%>/uploads/shop/${dto.imageFileName}"></a>
+					<a href="<%=cp%>/shop/article?productNum=${dto.productNum}" style="color: #f3a34e;"><img style="width: 80px; height: 80px;" src="<%=cp%>/uploads/shop/${dto.imageFileName}"></a>
 				</td>
 				<td>
-					<a href="<%=cp%>/shop/article?productNum=${dto.productNum}">${dto.productName}</a>
+					<a href="<%=cp%>/shop/article?productNum=${dto.productNum}" style="color: black;">${dto.productName}</a>
 				</td>
 				<td>${dto.productCount}</td>
 				<td>${dto.productSum}</td>
@@ -212,7 +212,7 @@ function submitReview(){
 				</c:when>
 				<c:when test="${dto.status==4}">
 					<td>배송완료
-						<br><button type="button" class="btn reviewBtn" onclick="reviewDialog(${dto.productNum},${dto.requestDetailNum})">후기등록</button> 
+						<br><button type="button" class="bts reviewBtn" onclick="reviewDialog(${dto.productNum},${dto.requestDetailNum})">후기등록</button> 
 					</td>
 				</c:when>
 				<c:when test="${dto.status==5}">
@@ -225,17 +225,17 @@ function submitReview(){
 				<c:choose>
 				<c:when test="${dto.status==0}">
 					<td>
-						<button type="button" class="btn" onclick="requestCancle(${dto.requestNum});">주문취소</button> 
+						<button type="button" class="bts" onclick="requestCancle(${dto.requestNum});">주문취소</button> 
 					</td>
 				</c:when>
 				<c:when test="${dto.status==1}">
 					<td>
-						<button type="button" class="btn" onclick="">결제취소</button> 
+						<button type="button" class="bts" onclick="">결제취소</button> 
 					</td>
 				</c:when>
 				<c:when test="${dto.status==4}">
-					<td><button type="button" class="btn" onclick="requestRefund(${dto.requestNum});">환불신청</button>
-						<br><button type="button" class="btn" onclick="requestSwap(${dto.requestNum});">교환신청</button>
+					<td><button type="button" class="bts" onclick="requestRefund(${dto.requestNum});">환불신청</button>
+						<br><button type="button" class="bts" onclick="requestSwap(${dto.requestNum});">교환신청</button>
 					</td>
 				</c:when>
 				<c:when test="${dto.status==6}">

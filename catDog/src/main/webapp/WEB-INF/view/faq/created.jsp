@@ -34,7 +34,7 @@
    }
 </script>
 
-<div class="body-container" style="width: 830px; margin: 20px auto 0px; border-spacing: 0px;">
+<div class="container-board" style="width: 830px; margin: 20px auto 0px; border-spacing: 0px;">
 	<div class="alert-info">
    	 <i class="fas fa-info-circle"></i>
       	   고객님들이 자주 묻는 질문에 미리 답을 달아봅시다!
@@ -45,14 +45,14 @@
   <tbody id="faqtb">
 
   <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-      <td width="100" bgcolor="#eeeeee" style="text-align: center;">제&nbsp;&nbsp;&nbsp;&nbsp;목</td>
+      <td width="100" bgcolor="#51321b" style="text-align: center; font-weight: bold; color: white;">제&nbsp;&nbsp;&nbsp;&nbsp;목</td>
       <td style="padding-left:10px;"> 
-        <input type="text" name="subject" maxlength="100" class="boxTF" style="width: 95%;" value="${dto.subject}">
+        <input type="text" name="subject" maxlength="100" class="boxTF" style="width: 95%; border-radius:5px;" value="${dto.subject}">
       </td>
   </tr>
 
   <tr align="left" style="border-bottom: 1px solid #cccccc;"> 
-      <td width="100" bgcolor="#eeeeee" style="text-align: center; padding-top:5px;" valign="top">내&nbsp;&nbsp;&nbsp;&nbsp;용</td>
+      <td width="100" bgcolor="#51321b" style="text-align: center; font-weight: bold; padding-top:5px; color: white;" valign="top">내&nbsp;&nbsp;&nbsp;&nbsp;용</td>
       <td valign="top" style="padding:5px 0px 5px 10px;">
         <textarea id="content" name="content" rows="12" class="boxTA" style="width: 95%;">${dto.content}</textarea>
       </td>
@@ -63,9 +63,9 @@
   <table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
      <tr height="45"> 
       <td align="center" >
-	        <button type="submit" class="btn">${mode=='update'?'수정완료':'등록하기'}</button>
-	        <button type="reset" class="btn">다시입력</button>
-	        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/faq/list';">${mode=='update'?'수정취소':'등록취소'}</button>
+	        <button type="submit" class="bts">${mode=='update'?'수정완료':'등록하기'}</button>
+	        <button type="reset" class="bts">다시입력</button>
+	        <button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/faq/list';">${mode=='update'?'수정취소':'등록취소'}</button>
 	         <c:if test="${mode=='update'}">
 	         	 <input type="hidden" name="faqNum" value="${dto.faqNum}">
 	        	 <input type="hidden" name="page" value="${page}">

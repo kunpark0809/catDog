@@ -61,7 +61,7 @@ function updateFaq(faqNum) {
 
 
 
-<div class="body-container" style="width: 830px; margin: 20px auto 0px; border-spacing: 0px;">
+<div class="container-board" style="width: 830px; margin: 20px auto 0px; border-spacing: 0px;">
 
 <div class="body-title">
 		<h3><span style="font-family: Webdings"></span> FAQ </h3>
@@ -73,10 +73,10 @@ function updateFaq(faqNum) {
 </div>
 
 <table style="width: 100%; margin: 50px auto; border-spacing: 0px; border-collapse: collapse;">
-  <tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 2px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
-      <th width="60" style="color: #787878;">번호</th>
-      <th style="color: #787878;">제목</th>
-      <th width="100" style="color: #787878;">작성자</th>
+  <tr align="center" bgcolor="#51321b" height="35" style="border-top: 2px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
+      <th width="60" style="color: white;">번호</th>
+      <th style="color: white;">제목</th>
+      <th width="100" style="color: white;">작성자</th>
   </tr>
  
 <c:forEach var="dto" items="${list}">
@@ -92,8 +92,8 @@ function updateFaq(faqNum) {
       	${dto.content}  
       	<br>
       	<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
-      	<button type="button" class="btn" onclick="updateFaq(${dto.faqNum});" ${fn:indexOf(sessionScope.member.userId,'admin') != 0 ? "style='pointer-events:none;'":""}>수정</button>
-		<button type="button" class="btn" onclick="deleteFaq(${dto.faqNum});" ${fn:indexOf(sessionScope.member.userId,'admin') != 0 ? "style='pointer-events:none;'":""}>삭제</button>
+      	<button type="button" class="bts" onclick="updateFaq(${dto.faqNum});" ${fn:indexOf(sessionScope.member.userId,'admin') != 0 ? "style='pointer-events:none;'":""}>수정</button>
+		<button type="button" class="bts" onclick="deleteFaq(${dto.faqNum});" ${fn:indexOf(sessionScope.member.userId,'admin') != 0 ? "style='pointer-events:none;'":""}>삭제</button>
 		</c:if> 
 		
       </td>     
@@ -112,7 +112,7 @@ function updateFaq(faqNum) {
 <table style="width: 100%; margin: 10px auto; border-spacing: 0px;">
    <tr height="40">
       <td align="left" width="100">
-          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/faq/list';">새로고침</button>
+          <button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/faq/list';">새로고침</button>
       </td>
       <td align="center">
           <form name="searchForm" action="<%=cp%>/faq/list" method="post">
@@ -120,13 +120,13 @@ function updateFaq(faqNum) {
                   <option value="subject" ${condition=="subject"?"selected='selected'":""}>제목</option>
                   <option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
             </select>
-            <input type="text" id="keyword" name="keyword" class="boxTF" value="${keyword}">
-            <button type="button" class="btn" onclick="searchList();">검색</button>
+            <input type="text" id="keyword" name="keyword" class="boxTF" value="${keyword}" size="30;" style="border-radius:5px;">
+            <button type="button" class="bts" onclick="searchList();" style="width: 2%"><i class="fas fa-search"></i></button>
         </form>
       </td>
       <td align="right" width="100">
       <c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
-          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/faq/created';">등록하기</button>
+          <button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/faq/created';">등록하기</button>
       </c:if>
       </td>
    </tr>

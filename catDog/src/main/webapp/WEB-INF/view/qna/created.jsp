@@ -36,7 +36,7 @@
 
 </script>
 
-<div class="body-container" style="width: 830px; margin: 20px auto 0px; border-spacing: 0px;">
+<div class="container-board">
 	<div class="alert-info">
    	 <i class="fas fa-info-circle"></i>
       	   궁금하신 질문을 해달라냥!
@@ -46,7 +46,7 @@
   <table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
   <tbody id="qnatb">
   <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-      <td width="100" bgcolor="#eeeeee" style="text-align: center;">분&nbsp;&nbsp;&nbsp;&nbsp;류</td>
+      <td width="100" bgcolor="#51321b" style="text-align: center; font-weight: bold; color: white;">분&nbsp;&nbsp;&nbsp;&nbsp;류</td>
       <td style="padding-left:10px;"> 
         <select name="qnaCategoryNum" class="selectField" ${(mode!='created' && (mode!='updateQuestion' || mode=="updateAnswer" || mode=="insertAnswer")) ? "disabled='disabled'":""}>
         	<c:forEach var="vo" items="${listCategory}">
@@ -61,22 +61,22 @@
   </tr>
 
   <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-      <td width="100" bgcolor="#eeeeee" style="text-align: center;">제&nbsp;&nbsp;&nbsp;&nbsp;목</td>
+      <td width="100" bgcolor="#51321b" style="text-align: center; font-weight: bold; color: white;">제&nbsp;&nbsp;&nbsp;&nbsp;목</td>
       <td style="padding-left:10px;"> 
-        <input type="text" name="subject" maxlength="100" class="boxTF" style="width: 95%;" value="${dto.subject}"
+        <input type="text" name="subject" maxlength="100" class="boxTF" style="width: 95%; border-radius:5px;" value="${dto.subject}"
                ${(mode=="insertAnswer" || mode=="updateAnswer") ? "readonly='readonly'":"" }>
       </td>
   </tr>
 
   <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;"> 
-      <td width="100" bgcolor="#eeeeee" style="text-align: center;">작성자</td>
+      <td width="100" bgcolor="#51321b" style="text-align: center; font-weight: bold; color: white;">작성자</td>
       <td style="padding-left:10px;"> 
           ${sessionScope.member.nickName}
       </td>
   </tr>
 
   <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-      <td width="100" bgcolor="#eeeeee" style="text-align: center;">공개여부</td>
+      <td width="100" bgcolor="#51321b" style="text-align: center; font-weight: bold; color: white;">공개여부</td>
       <td style="padding-left:10px;">
         <input type="radio" name="questionPrivate" value="0" ${empty dto || dto.questionPrivate==0?"checked='checked'":"" }> 공개
         <input type="radio" name="questionPrivate" value="1" ${dto.questionPrivate==1?"checked='checked'":"" }> 비공개
@@ -84,7 +84,7 @@
   </tr>
 
   <tr align="left" style="border-bottom: 1px solid #cccccc;"> 
-      <td width="100" bgcolor="#eeeeee" style="text-align: center; padding-top:5px;" valign="top">내&nbsp;&nbsp;&nbsp;&nbsp;용</td>
+      <td width="100" bgcolor="#51321b" style="text-align: center; font-weight: bold; padding-top:5px; color: white;" valign="top">내&nbsp;&nbsp;&nbsp;&nbsp;용</td>
       <td valign="top" style="padding:5px 0px 5px 10px;"> 
       	<c:if test="${mode!='insertAnswer' && mode!='updateAnswer'}">
         <textarea id="content" name="content" rows="12" class="boxTA" style="width: 95%;">${dto.content}</textarea>
@@ -100,16 +100,16 @@
   <table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
      <tr height="45"> 
       <td align="center" >
-	        <button type="submit" class="btn">${(mode=='updateQuestion' || mode=='updateAnswer')?'수정완료':'등록하기'}</button>
-	        <button type="reset" class="btn">다시입력</button>
-	        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/qna/list';">${(mode=='updateQuestion' || mode=='updateAnswer')?'수정취소':'등록취소'}</button>
+	        <button type="submit" class="bts">${(mode=='updateQuestion' || mode=='updateAnswer')?'수정완료':'등록하기'}</button>
+	        <button type="reset" class="bts">다시입력</button>
+	        <button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/qna/list';">${(mode=='updateQuestion' || mode=='updateAnswer')?'수정취소':'등록취소'}</button>
 	         <c:if test="${mode=='updateQuestion' || mode=='updateAnswer'}">
 	         	 <input type="hidden" name="qnaNum" value="${dto.qnaNum}">
 	        	 <input type="hidden" name="page" value="${page}">
 	        </c:if>
 	        <c:if test="${mode=='insertAnswer' || mode=='updateAnswer' || mode=='deleteAnswer'}">
 	        	<input type="hidden" name="qnaNum" value="${dto.qnaNum}">
-	        	<input type="hidden" name="parent" value="${dto.qnaNum}">
+	        	<input type="hidden" name="parent" value="${dto.parent}">
 	        	<input type="hidden" name="page" value="${page}">
 	        </c:if>
       </td>

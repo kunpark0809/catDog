@@ -3,16 +3,3 @@
 a {
 	color: #262626;
 }
-
-.btn {
-	width:70px;
-    background-color: #262626;
-    border: none;
-    color:#ffffff;
-    padding: 10px 0;
-    text-align: center;
-    display: inline-block;
-    font-size: 12px;
-    margin: 4px;
-    border-radius:10px;
-}

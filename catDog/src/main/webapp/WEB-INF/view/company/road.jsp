@@ -43,7 +43,7 @@ geocoder.addressSearch(addr, function(result, status) {
 	
 });
 </script>
-<div align="center"><h2>^오^ 흠냐리 ^오^</h2></div>
+<div align="center"><h2> </h2></div>
 
 <div id="map" style="width: 900px; height: 500px; margin: 0px auto;"></div>
 				

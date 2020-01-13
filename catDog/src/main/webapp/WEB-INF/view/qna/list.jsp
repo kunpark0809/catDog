@@ -35,7 +35,7 @@ $(function(){
 });
 </script>
 
-<div class="body-container" style="width: 830px; margin: 20px auto 0px; border-spacing: 0px;">
+<div class="container-board">
 
 <div class="body-title">
 		<h3><span style="font-family: Webdings"></span> QnA </h3>
@@ -60,20 +60,20 @@ $(function(){
 <div style="clear: both;">
 			<ul class="tabs">
 				<c:forEach var="vo" items="${categoryList}">
-					<li id="tab-${vo.qnaCategoryNum}" data-tab="${vo.qnaCategoryNum}">
+					<li style="color: #f3a34e; font-weight: bold; background-color: #51321b;" id="tab-${vo.qnaCategoryNum}" data-tab="${vo.qnaCategoryNum}">
 					${vo.qnaCategory}</li>
 				</c:forEach>
 			</ul>
 		</div>
 
 <table style="width: 100%; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
-  <tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 2px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
-      <th width="60" style="color: #787878;">번호</th>
-      <th width="100" style="color: #787878;">유형</th>
-      <th style="color: #787878;">제목</th>
-      <th width="100" style="color: #787878;">작성자</th>
-      <th width="100" style="color: #787878;">문의일자</th>
-      <th width="80" style="color: #787878;">처리결과</th>
+  <tr align="center" bgcolor="#51321b" height="35" style="border-top: 2px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
+      <th width="60" style="color: white;">번호</th>
+      <th width="100" style="color: white;">유형</th>
+      <th style="color: white;">제목</th>
+      <th width="100" style="color: white;">작성자</th>
+      <th width="100" style="color: white;">문의일자</th>
+      <th width="80" style="color: white;">처리결과</th>
   </tr>
  
 <c:forEach var="dto" items="${list}">
@@ -85,14 +85,14 @@ $(function(){
       		<c:when test="${dto.questionPrivate==1}">
       			<i class="fa fa-lock" title="공개여부" style="color: #333333;"></i>
       			<c:if test="${sessionScope.member.userId==dto.userId || fn:indexOf(sessionScope.member.userId,'admin') == 0}">
-      				<a href="${articleUrl}&qnaNum=${dto.qnaNum}">${dto.subject}</a>
+      				<a href="${articleUrl}&qnaNum=${dto.qnaNum}" style="color: black;">${dto.subject}</a>
       			</c:if>
       			<c:if test="${sessionScope.member.userId!=dto.userId && fn:indexOf(sessionScope.member.userId,'admin') != 0}">
       				${dto.subject}
       			</c:if>
       		</c:when>
       		<c:otherwise>
-      			<a href="${articleUrl}&qnaNum=${dto.qnaNum}">${dto.subject}</a>
+      			<a href="${articleUrl}&qnaNum=${dto.qnaNum}" style="color: black;">${dto.subject}</a>
       		</c:otherwise>
       	</c:choose>
       </td>
@@ -115,7 +115,7 @@ $(function(){
 <table style="width: 100%; margin: 10px auto; border-spacing: 0px;">
    <tr height="40">
       <td align="left" width="100">
-          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/qna/list';">새로고침</button>
+          <button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/qna/list';">새로고침</button>
       </td>
       <td align="center">
           <form name="searchForm" action="<%=cp%>/qna/list" method="post">
@@ -125,12 +125,12 @@ $(function(){
                   <option value="nickName" ${condition=="nickName"?"selected='selected'":""}>작성자</option>
                   <option value="created" ${condition=="created"?"selected='selected'":""}>작성일</option>
             </select>
-            <input type="text" id="keyword" name="keyword" class="boxTF" value="${keyword}">
-            <button type="button" class="btn" onclick="searchList();">검색</button>
+            <input type="text" id="keyword" name="keyword" class="boxTF" value="${keyword}" size="30;" style="border-radius:5px;">
+            <button type="button" class="bts" onclick="searchList();" style="width: 2%"><i class="fas fa-search"></i></button>
         </form>
       </td>
       <td align="right" width="100">
-          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/qna/created';">질문하기</button>
+          <button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/qna/created';">질문하기</button>
       </td>
    </tr>
 </table>

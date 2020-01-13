@@ -407,7 +407,7 @@ public class CsController {
        	         "&keyword=" + URLEncoder.encode(keyword, "utf-8");	
 		}
 		
-		listUrl = cp+"/qna/list?page="+current_page+"&qnaCategoryNum="+qnaCategoryNum;
+		listUrl = cp+"/qna/list?qnaCategoryNum="+qnaCategoryNum;
 		articleUrl = cp + "/qna/article?page="+current_page+"&qnaCategoryNum="+qnaCategoryNum;
 		if(query.length()!=0) {
 			listUrl = listUrl + "?" + query;
@@ -471,12 +471,16 @@ public class CsController {
 		}
 		
 		
-		String query = "page=" + page;
+		String query = "page=" + page + "&qnaCategoryNum="+qnaCategoryNum;
 		if (keyword.length() != 0) {
 			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
 		}
 		
-		Qna questionDto = service.readQnaQuestion(qnaNum);
+		Map<String, Object> map = new HashMap<String, Object>();	
+		map.put("qnaCategoryNum", qnaCategoryNum);
+		map.put("qnaNum", qnaNum);
+		
+		Qna questionDto = service.readQnaQuestion(map);
 		if(questionDto==null) {
 			return ".qna.list?"+query;
 		}
@@ -488,11 +492,11 @@ public class CsController {
 			answerDto.setContent(answerDto.getContent().replaceAll("\n", "<br>"));
 		}
 		
-		Map<String, Object> map = new HashMap<String, Object>();	
-		map.put("qnaCategoryNum", qnaCategoryNum);
-		map.put("qnaNum", questionDto.getQnaNum());
-		map.put("condition", condition);
-		map.put("keyword", keyword);
+		Map<String, Object> map2 = new HashMap<String, Object>();	
+		map2.put("qnaCategoryNum", qnaCategoryNum);
+		map2.put("qnaNum", questionDto.getQnaNum());
+		map2.put("condition", condition);
+		map2.put("keyword", keyword);
 		
 		Qna preReadDto = service.preReadQnaQuestion(map);
 		Qna nextReadDto = service.nextReadQnaQuestion(map);
@@ -510,18 +514,23 @@ public class CsController {
 	
 	@RequestMapping(value="/qna/updateQuestion", method=RequestMethod.GET)
 	public String updateQnaForm(
+			@RequestParam(defaultValue="1") int qnaCategoryNum,
 			@RequestParam int qnaNum,
 			@RequestParam String page,
 			HttpSession session,
 			Model model) throws Exception {
 		
-		Qna dto = service.readQnaQuestion(qnaNum);
+		Map<String, Object> map = new HashMap<String, Object>();	
+		map.put("qnaCategoryNum", qnaCategoryNum);
+		map.put("qnaNum", qnaNum);
+		Qna dto = service.readQnaQuestion(map);
 		if(dto==null) {
 			return ".qna.list";
 		}
 		
 		List<Qna> listCategory = service.listQnaCategory();
 		
+		model.addAttribute("qnaCategoryNum", qnaCategoryNum);
 		model.addAttribute("mode", "updateQuestion");
 		model.addAttribute("page", page);
 		model.addAttribute("dto", dto);		
@@ -547,12 +556,16 @@ public class CsController {
 	
 	@RequestMapping(value="/qna/insertAnswer", method=RequestMethod.GET)
 	public String qnaAnswerForm(
+			@RequestParam(defaultValue="1") int qnaCategoryNum,
 			@RequestParam int qnaNum,
 			@RequestParam String page,
 			HttpSession session,
 			Model model) throws Exception {
 		
-		Qna dto = service.readQnaQuestion(qnaNum);
+		Map<String, Object> map = new HashMap<String, Object>();	
+		map.put("qnaCategoryNum", qnaCategoryNum);
+		map.put("qnaNum", qnaNum);
+		Qna dto = service.readQnaQuestion(map);
 		if(dto==null) {
 			return ".qna.list";
 		}
@@ -561,6 +574,7 @@ public class CsController {
 		
 		List<Qna> listCategory = service.listQnaCategory();
 		
+		model.addAttribute("qnaCategoryNum", qnaCategoryNum);
 		model.addAttribute("mode", "insertAnswer");
 		model.addAttribute("page", page);
 		model.addAttribute("dto", dto);		
@@ -587,26 +601,32 @@ public class CsController {
 	
 	@RequestMapping(value="/qna/updateAnswer", method=RequestMethod.GET)
 	public String qnaAnswerUpdateForm(
+			@RequestParam(defaultValue="1") int qnaCategoryNum,
 			@RequestParam int qnaNum,
 			@RequestParam int page,
 			HttpSession session,
 			Model model) throws Exception {
 		
-		Qna dto = service.readQnaQuestion(qnaNum);
+		Map<String, Object> map = new HashMap<String, Object>();	
+		map.put("qnaCategoryNum", qnaCategoryNum);
+		map.put("qnaNum", qnaNum);
+		Qna questionDto = service.readQnaQuestion(map);
 		
-	
-		if(dto==null) {
+		Qna answerDto = service.readQnaAnswer(questionDto.getQnaNum());
+		if(answerDto==null) {
 			return ".qna.list";
 		}
 		
 		
-		dto.setContent("["+dto.getSubject()+"] 에 대한 답변입니다.\n");
+		answerDto.setContent(answerDto.getContent());
 		
 		List<Qna> listCategory = service.listQnaCategory();
 		
+		model.addAttribute("qnaCategoryNum", qnaCategoryNum);
 		model.addAttribute("mode", "updateAnswer");
 		model.addAttribute("page", page);
-		model.addAttribute("dto", dto);		
+		model.addAttribute("questionDto", questionDto);
+		model.addAttribute("dto", answerDto);		
 		model.addAttribute("listCategory", listCategory);		
 
 		return ".qna.created";
@@ -614,13 +634,12 @@ public class CsController {
 	
 	@RequestMapping(value="/qna/updateAnswer", method=RequestMethod.POST)
 	public String qnaAnswerUpdateSubmit(
+			@RequestParam(defaultValue="1") int qnaCategoryNum,
 			Qna dto,
-			@RequestParam int qnaNum,
 			HttpSession session) throws Exception {
 		try {
 			SessionInfo info=(SessionInfo)session.getAttribute("member");
-			
-			dto.setParent(qnaNum);
+
 			dto.setNum(info.getMemberIdx());
 			service.updateQnaAnswer(dto);
 		} catch (Exception e) {
@@ -630,12 +649,16 @@ public class CsController {
 	
 	@RequestMapping(value="/qna/deleteQuestion")
 	public String deleteQnaQuestion(
+			@RequestParam(defaultValue="1") int qnaCategoryNum,
 			@RequestParam int qnaNum,
 			HttpSession session) throws Exception {
 		
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
-		Qna dto = service.readQnaQuestion(qnaNum);
+		Map<String, Object> map = new HashMap<String, Object>();	
+		map.put("qnaCategoryNum", qnaCategoryNum);
+		map.put("qnaNum", qnaNum);
+		Qna dto = service.readQnaQuestion(map);
 		if(dto!=null) {
 			if(info.getUserId().equals(dto.getUserId())||info.getUserId().equals("admin")) {
 				try {
@@ -649,12 +672,16 @@ public class CsController {
 	
 	@RequestMapping(value="/qna/deleteAnswer")
 	public String deleteQnaAnswer(
+			@RequestParam(defaultValue="1") int qnaCategoryNum,
 			@RequestParam int qnaNum,
 			HttpSession session) throws Exception {
 		
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
-		Qna dto = service.readQnaQuestion(qnaNum);
+		Map<String, Object> map = new HashMap<String, Object>();	
+		map.put("qnaCategoryNum", qnaCategoryNum);
+		map.put("qnaNum", qnaNum);
+		Qna dto = service.readQnaQuestion(map);
 		if(dto!=null) {
 			if(info.getUserId().equals(dto.getUserId())||info.getUserId().equals("admin")) {
 				try {

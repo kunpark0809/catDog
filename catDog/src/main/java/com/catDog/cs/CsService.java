@@ -30,7 +30,7 @@ public interface CsService {
 	public int qnaDataCount(Map<String, Object> map);
 	public List<Qna> listQna(Map<String, Object> map);
 	
-	public Qna readQnaQuestion(int qnaNum);
+	public Qna readQnaQuestion(Map<String, Object> map);
 	public Qna readQnaAnswer(int qnaNum);
 	
 	public Qna preReadQnaQuestion(Map<String, Object> map);

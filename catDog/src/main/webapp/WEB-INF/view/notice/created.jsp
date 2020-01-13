@@ -59,7 +59,7 @@
 	    </c:if>
 </script>
 
-<div class="body-container" style="width: 830px; margin: 20px auto 0px; border-spacing: 0px;">
+<div class="container-board" style="width: 830px; margin: 20px auto 0px; border-spacing: 0px;">
     <div class="body-title">
         <h3><span style="font-family: Webdings"></span> 공지사항 </h3>
     </div>
@@ -69,35 +69,35 @@
 			  <table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
 			  <tbody id="noticetb">
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
-			      <td width="100" bgcolor="#eeeeee" style="text-align: center;">제&nbsp;&nbsp;&nbsp;&nbsp;목</td>
+			      <td width="100" bgcolor="#51321b" style="text-align: center; font-weight: bold; color: white;">제&nbsp;&nbsp;&nbsp;&nbsp;목</td>
 			      <td style="padding-left:10px;"> 
-			        <input type="text" name="subject" maxlength="100" class="boxTF" style="width: 95%;" value="${dto.subject}">
+			        <input type="text" name="subject" maxlength="100" class="boxTF" style="width: 95%; border-radius:5px;" value="${dto.subject}">
 			      </td>
 			  </tr>
 			  
 			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;"> 
-				<td width="100" bgcolor="#eeeeee" style="text-align: center;">공지여부</td>
+				<td width="100" bgcolor="#51321b" style="text-align: center; font-weight: bold; color: white;">공지여부</td>
 				<td style="padding-left:10px;">
 					<input type="checkbox" name="notice" value="1" ${dto.notice==1?"checked='checked'":""}> <label>공지</label>
 				</td>
 			  </tr>
 			
 			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;"> 
-			      <td width="100" bgcolor="#eeeeee" style="text-align: center;">작성자</td>
+			      <td width="100" bgcolor="#51321b" style="text-align: center; font-weight: bold; color: white;">작성자</td>
 			      <td style="padding-left:10px;"> 
 			          ${sessionScope.member.nickName}
 			      </td>
 			  </tr>
 			
 			  <tr align="left" style="border-bottom: 1px solid #cccccc;"> 
-			      <td width="100" bgcolor="#eeeeee" style="text-align: center; padding-top:5px;" valign="top">내&nbsp;&nbsp;&nbsp;&nbsp;용</td>
+			      <td width="100" bgcolor="#51321b" style="text-align: center; font-weight: bold; padding-top:5px; color: white;" valign="top">내&nbsp;&nbsp;&nbsp;&nbsp;용</td>
 			      <td valign="top" style="padding:5px 0px 5px 10px;"> 
 			        <textarea name="content" id="content" class="boxTA" style="width:98%; height: 270px;">${dto.content}</textarea>
 			      </td>
 			  </tr>
 			  
 			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-			      <td width="100" bgcolor="#eeeeee" style="text-align: center;">첨&nbsp;&nbsp;&nbsp;&nbsp;부</td>
+			      <td width="100" bgcolor="#51321b" style="text-align: center; font-weight: bold; color: white;">첨&nbsp;&nbsp;&nbsp;&nbsp;부</td>
 			      <td style="padding-left:10px;"> 
 			          <input type="file" name="upload" class="boxTF" size="53" style="width: 95%; height: 25px;">
 			       </td>
@@ -107,7 +107,7 @@
 			<c:if test="${mode=='update'}">
 				<c:forEach var="vo" items="${listFile}">
 					<tr id="fileTr${vo.noticeFileNum}" align="left" height="40" style="border-bottom: 1px solid #cccccc;"> 
-						<td width="100" bgcolor="#eeeeee" style="text-align: center;">첨부된파일</td>
+						<td width="100" bgcolor="#51321b" style="text-align: center; font-weight: bold; color: white;">첨부된파일</td>
 						<td style="padding-left:10px;">
 							<a href="javascript:deleteFile('${vo.noticeFileNum}')"><i class="far fa-trash-alt"></i></a>&nbsp;${vo.originalFileName}
 						</td>
@@ -120,9 +120,9 @@
 			  <table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
 			     <tr height="45"> 
 			      <td align="center" >
-			        <button type="submit" class="btn">${mode=='update'?'수정완료':'등록하기'}</button>
-			        <button type="reset" class="btn">다시입력</button>
-			        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/notice/list';">${mode=='update'?'수정취소':'등록취소'}</button>
+			        <button type="submit" class="bts">${mode=='update'?'수정완료':'등록하기'}</button>
+			        <button type="reset" class="bts">다시입력</button>
+			        <button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/notice/list';">${mode=='update'?'수정취소':'등록취소'}</button>
 					<c:if test="${mode=='update'}">
 						<input type="hidden" name="noticeNum" value="${dto.noticeNum}">
 						<input type="hidden" name="page" value="${page}">

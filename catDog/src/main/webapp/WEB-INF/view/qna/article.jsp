@@ -24,7 +24,7 @@ function deleteQuestion(qnaNum) {
 
 function updateQuestion(qnaNum) {
 	<c:if test="${sessionScope.member.userId==questionDto.userId}">
-		var q = "qnaNum=${questionDto.qnaNum}&page=${page}";
+		var q = "qnaNum=${questionDto.qnaNum}&page=${page}&qnaCategoryNum=${qnaCategoryNum}";
 		var url = "<%=cp%>/qna/updateQuestion?"+q;
 		
 		location.href=url;
@@ -37,7 +37,7 @@ function updateQuestion(qnaNum) {
 
 function insertAnswer(qnaNum) {
 	<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
-		var q = "qnaNum=${questionDto.qnaNum}&page=${page}";
+		var q = "qnaNum=${questionDto.qnaNum}&page=${page}&qnaCategoryNum=${qnaCategoryNum}";
 		var url = "<%=cp%>/qna/insertAnswer?"+q;
 		
 		location.href=url;
@@ -64,7 +64,7 @@ function deleteAnswer(qnaNum) {
 
 function updateAnswer(qnaNum) {
 	<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
-		var q = "qnaNum=${questionDto.qnaNum}&page=${page}";
+		var q = "qnaNum=${questionDto.qnaNum}&page=${page}&qnaCategoryNum=${qnaCategoryNum}";
 		var url = "<%=cp%>/qna/updateAnswer?"+q;
 		
 		location.href=url;
@@ -78,7 +78,7 @@ function updateAnswer(qnaNum) {
 
 </script>
 
-<div class="body-container" style="width: 830px; margin: 20px auto 0px; border-spacing: 0px;">
+<div class="container-board">
 <div class="alert-info">
     <i class="fas fa-info-circle"></i>
          궁금하신 질문을 해달라냥!
@@ -142,14 +142,14 @@ function updateAnswer(qnaNum) {
 	      		<c:when test="${preReadDto.questionPrivate==1}">
 	      			<i class="fa fa-lock" title="공개여부" style="color: #333333;"></i>
 	      			<c:if test="${sessionScope.member.userId==preReadDto.userId || fn:indexOf(sessionScope.member.userId,'admin') == 0}">
-	      				<a href="<%=cp%>/qna/article?${query}&page=${page}&qnaNum=${preReadDto.qnaNum}">${preReadDto.subject}</a>
+	      				<a href="<%=cp%>/qna/article?${query}&qnaNum=${preReadDto.qnaNum}" style="color: black;">${preReadDto.subject}</a>
 	      			</c:if>
 	      			<c:if test="${sessionScope.member.userId!=preReadDto.userId && fn:indexOf(sessionScope.member.userId,'admin') != 0}">
 	      				${preReadDto.subject}
 	      			</c:if>
 	      		</c:when>
 	      		<c:otherwise>
-	      			<a href="<%=cp%>/qna/article?${query}&page=${page}&qnaNum=${preReadDto.qnaNum}">${preReadDto.subject}</a>
+	      			<a href="<%=cp%>/qna/article?${query}&qnaNum=${preReadDto.qnaNum}" style="color: black;">${preReadDto.subject}</a>
 	      		</c:otherwise>
 	      	</c:choose>
         </c:if>
@@ -164,14 +164,14 @@ function updateAnswer(qnaNum) {
 	      		<c:when test="${nextReadDto.questionPrivate==1}">
 	      			<i class="fa fa-lock" title="공개여부" style="color: #333333;"></i>
 	      			<c:if test="${sessionScope.member.userId==nextReadDto.userId || fn:indexOf(sessionScope.member.userId,'admin') == 0}">
-	      				<a href="<%=cp%>/qna/article?${query}&page=${page}&qnaNum=${nextReadDto.qnaNum}">${nextReadDto.subject}</a>
+	      				<a href="<%=cp%>/qna/article?${query}&qnaNum=${nextReadDto.qnaNum}" style="color: black;">${nextReadDto.subject}</a>
 	      			</c:if>
 	      			<c:if test="${sessionScope.member.userId!=nextReadDto.userId && fn:indexOf(sessionScope.member.userId,'admin') != 0}">
 	      				${nextReadDto.subject}
 	      			</c:if>
 	      		</c:when>
 	      		<c:otherwise>
-	      			<a href="<%=cp%>/qna/article?${query}&page=${page}&qnaNum=${nextReadDto.qnaNum}">${nextReadDto.subject}</a>
+	      			<a href="<%=cp%>/qna/article?${query}&qnaNum=${nextReadDto.qnaNum}" style="color: black;">${nextReadDto.subject}</a>
 	      		</c:otherwise>
 	      	</c:choose>
         </c:if>
@@ -183,24 +183,24 @@ function updateAnswer(qnaNum) {
 <tr height="45">
     <td width="400" align="left">
         <c:if test="${sessionScope.member.userId==questionDto.userId}">
-            <button type="button" class="btn" onclick="updateQuestion();">질문수정</button>
+            <button type="button" class="bts" onclick="updateQuestion();" style="color: white;">질문수정</button>
         </c:if>
         <c:if test="${sessionScope.member.userId==questionDto.userId || fn:indexOf(sessionScope.member.userId,'admin') == 0}">
-            <button type="button" class="btn" onclick="deleteQuestion();">질문삭제</button>
+            <button type="button" class="bts" onclick="deleteQuestion();" style="color: white;">질문삭제</button>
         </c:if>
         <c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0 && empty answerDto}">
-            <button type="button" class="btn" onclick="insertAnswer();">답변</button>
+            <button type="button" class="bts" onclick="insertAnswer();" style="color: white;">답변</button>
         </c:if>
         <c:if test="${not empty answerDto && fn:indexOf(sessionScope.member.userId,'admin') == 0}">
-            <button type="button" class="btn" onclick="updateAnswer();">답변수정</button>
+            <button type="button" class="bts" onclick="updateAnswer();" style="color: white;">답변수정</button>
         </c:if>
         <c:if test="${not empty answerDto && fn:indexOf(sessionScope.member.userId,'admin') == 0}">
-            <button type="button" class="btn" onclick="deleteAnswer();">답변삭제</button>
+            <button type="button" class="bts" onclick="deleteAnswer();" style="color: white;">답변삭제</button>
         </c:if>
     </td>
 
     <td align="right">
-        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/qna/list?${query}&page=${page}';">리스트</button>
+        <button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/qna/list?${query}';" style="color: white;">리스트</button>
     </td>
 </tr>
 </table>

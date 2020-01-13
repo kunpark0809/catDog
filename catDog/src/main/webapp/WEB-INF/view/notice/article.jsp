@@ -71,7 +71,7 @@ function updateNotice(noticeNum) {
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
 				<td colspan="2" align="left" style="padding-left: 5px;">
 					첨부 :
-    					 <a href="<%=cp%>/notice/download?noticeFileNum=${file.noticeFileNum}">${file.originalFileName}</a>
+    					 <a href="<%=cp%>/notice/download?noticeFileNum=${file.noticeFileNum}" style="color: black;">${file.originalFileName}</a>
     					 (<fmt:formatNumber value="${file.fileSize/1024}" pattern="0.00"/>KByte)
 				</td>
 			</tr>
@@ -81,7 +81,7 @@ function updateNotice(noticeNum) {
 				<td colspan="2" align="left" style="padding-left: 5px;">
 					이전글 :
 						<c:if test="${not empty preReadDto}">
-              				<a href="<%=cp%>/notice/article?${query}&noticeNum=${preReadDto.noticeNum}">${preReadDto.subject}</a>
+              				<a href="<%=cp%>/notice/article?${query}&noticeNum=${preReadDto.noticeNum}" style="color: black;">${preReadDto.subject}</a>
        					 </c:if>
 				</td>
 			</tr>
@@ -90,7 +90,7 @@ function updateNotice(noticeNum) {
 				<td colspan="2" align="left" style="padding-left: 5px;">
 					다음글 :
 					<c:if test="${not empty nextReadDto}">
-             		 <a href="<%=cp%>/notice/article?${query}&noticeNum=${nextReadDto.noticeNum}">${nextReadDto.subject}</a>
+             		 <a href="<%=cp%>/notice/article?${query}&noticeNum=${nextReadDto.noticeNum}" style="color: black;">${nextReadDto.subject}</a>
        				 </c:if>
 				</td>
 			</tr>

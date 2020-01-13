@@ -256,10 +256,10 @@ public class CsServiceImpl implements CsService {
 	}
 
 	@Override
-	public Qna readQnaQuestion(int qnaNum) {
+	public Qna readQnaQuestion(Map<String, Object> map) {
 		Qna dto = null;
 		try{
-			dto=dao.selectOne("qna.readQnaQuestion", qnaNum);
+			dto=dao.selectOne("qna.readQnaQuestion", map);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
