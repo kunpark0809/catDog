@@ -8,6 +8,29 @@
 	String cp = request.getContextPath();
 %>
 
+<link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
+<style>
+.ui-dialog-titlebar{
+	background: none;
+    border: none;
+    border-bottom: 1px solid #e4e4e4;
+    border-radius: 0px;
+    color: red;
+    text-align: center;
+    font-size: 25px;
+}
+
+.ui-dialog-title{
+	padding-left: 41px;
+}
+
+.ui-dialog{
+	border-radius: 0px;
+	position: fixed;
+	
+}
+</style>
+
 <script>
 function ajaxJSON(url, type, query, fn) {
 	$.ajax({
@@ -78,11 +101,14 @@ $(function(){
 		
 		$('#warningModal').dialog({
 			  modal: true,
-			  height: 300,
-			  width: 600,
+			  height: 290,
+			  width: 840,
 			  title: '경고',
 			  close: function(event, ui) {
-			  }
+			  },
+			  open: function(event, ui) {
+					$(".ui-dialog-titlebar-close", $(this).parent()).hide();
+				}
 		});
 	});
 });
@@ -192,7 +218,8 @@ $(function(){
 			<c:if test="${sessionScope.member.warn == 1}">
 			<li class="nav-icon">
 			
-			<img id="warningModal_open_btn" width="25" height="25" src="<%=cp%>/resource/img/warning.gif"></li>
+			<img id="warningModal_open_btn" width="25" height="25" src="<%=cp%>/resource/img/warning.gif"
+			style="padding-top: 7px; margin-right: 10px;"></li>
 		
 			</c:if>
 				<c:if test="${empty sessionScope.member}">
@@ -215,8 +242,8 @@ $(function(){
 <!-- 모달 창 -->
 		<div id="warningModal" style="display: none;">
 	 		<div class="warningModal-content"></div>
-	      	<div>
-	 			<button type="button" id="confirm">확인</button>
+	      	<div style="text-align: center;">
+	 			<button type="button" id="confirm" class="bts">확인</button>
 	 		</div>
 		</div>
 	

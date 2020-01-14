@@ -220,7 +220,7 @@
 		resultType="com.catDog.admin.Member">
 		SELECT md.num, md.userId, name, nickName, mileage, NVL(count, 0)
 		requestCount,
-		reportCount, failure_cnt, lastLogin, NVL(stateCode, 0)
+		reportCount, failure_cnt, TO_CHAR(lastLogin, 'YYYY-MM-DD HH24:MI:SS') lastLogin, NVL(stateCode, 0)
 		stateCode
 		FROM memberDetail md
 		LEFT OUTER JOIN (
