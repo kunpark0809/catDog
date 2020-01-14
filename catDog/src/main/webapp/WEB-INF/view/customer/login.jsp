@@ -62,8 +62,8 @@ function sendLogin() {
 </script>
 
 <div class="body-container" style="background-image:url('<%=cp%>/resource/img/loginbg.jpg');
- background-position:center center; background-repeat: no-repeat; ">
-    <div style="width:360px; min-height:490px; margin: 0px auto; padding-top:90px;">
+ background-position:center center; background-repeat: no-repeat; min-height: 700px;">
+    <div style="width:360px; min-height:490px; margin: 0px auto; padding-top:105px;">
     	<div style=" background-color: rgba( 255, 255, 255, 0.5 ); padding-top: 40px;">
     	<div style="text-align: center;">
         	<span style="font-weight: bold; font-size:27px; color: #424951;">회원 로그인</span>
@@ -127,7 +127,7 @@ function sendLogin() {
 		  		</div>
 		  	</td>
 		  </tr>
-		  
+		  	
 		  
 		  <tr align="center" height="40" >
 		    	<td><span style="color: blue;">${message}</span></td>

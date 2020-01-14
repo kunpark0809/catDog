@@ -341,7 +341,8 @@ function selectCategorySales(){
 	
 	<div id="subtotal" style="margin: 0px auto;">
 		<br>
-		<div style="text-align: center;"><h4>주식회사 멍냥개냥</h4></div>
+		<!-- <div style="text-align: center;"><h4>주식회사 멍냥개냥</h4></div> -->
+		<img src="<%=cp%>/resource/img/logos/dogcatdogcat.png" style="display:block; margin:0px auto; height: 150px; width: auto;">
 		<br><br>
 		
 		<table border="1" style=" text-align: center; margin: 0px auto;">

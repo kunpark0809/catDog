@@ -625,8 +625,8 @@ public class AdminController {
 
 		// 분기별로 매출액 계산하기
 		for (int i = 1; i <= quarterNumber; i++) {
-			int yearMonth = (2017 + i / 4);// yearMonth에서 year 설정
-
+			int yearMonth = (2017 + ((i - 1) / 4));// yearMonth에서 year 설정
+			
 			// categories 채워넣기
 			switch (i % 4) {
 			case 1:
