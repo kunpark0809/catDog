@@ -32,7 +32,7 @@ function searchList() {
 
 <div class="container-board">
 	 <div class="body-title">
-		<span style="font-family: Webdings">꿀팁</span>
+		<span style="font-family: Webdings"><i class="fab fa-forumbee"></i> 꿀팁</span>
 	</div>
 	
 		<table style="width: 100%;  border-spacing: 0px;">

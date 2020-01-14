@@ -30,6 +30,38 @@ border-radius: 5px;
   display: inline-block;
 }
 
+.ui-dialog-titlebar{
+	background: none;
+    color: black;
+    border: none;
+    border-bottom: 1px solid #e4e4e4;
+    border-radius: 0px;
+}
+.ui-dialog .ui-dialog-titlebar {
+    padding-left: 0px;
+}
+.ui-dialog{
+	padding: 5px 20px;
+	border-radius: 0px;
+	position: fixed;
+}
+
+.dialog_cancel{
+   background: white;
+   color:#262626;
+   border: 1px solid #d8d8d8;
+   width: 25%;
+   padding: 5px 0px;
+}
+
+.dialog_submit{
+   background: #D96262;
+   color: white;
+   border: 1px solid #D96262;
+   width: 25%;
+   padding: 5px 0px;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -306,8 +338,8 @@ $(function(){
 
 
 <div class="container-board">
-	<div class="body-title">
-		<span style="font-family: Webdings">자유게시판</span>
+	 <div class="body-title">
+		<span style="font-family: Webdings"><i class="far fa-comments"></i> 자유게시판</span>
 	</div>
 	
 	<div>
@@ -367,8 +399,8 @@ $(function(){
 				</td>
 				
 				<td align="right">
-					<button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/freeBoard/list?${query}';">리스트</button>
 					<button type="button" class="bts" onclick="report();" class='bts'>신고</button>
+					<button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/freeBoard/list?${query}';">리스트</button>
 				</td>
 			</tr>
 		</table>
@@ -386,7 +418,7 @@ $(function(){
 	</div>
 		
 	<div id="report_dialog" style="display: none; text-align: left;">
-			<strong>신고사유 : 대표적인 사유 1개를 선택해 주세요</strong>
+			<strong style="color: #a66e4e">신고사유 : 대표적인 사유 1개를 선택해 주세요</strong>
 			<br><br>
 		<form name="reportForm">
 			<input type="hidden" name="reportedPostNum" value="${dto.bbsNum}">
@@ -399,9 +431,9 @@ $(function(){
 				<input type="radio" name="reasonSortNum" value="4">&nbsp;현행법에 저촉되는 행위(불법거래, 저작권 등)<br>
 				<input type="radio" name="reasonSortNum" value="5">&nbsp;기타<br>
 				
-			<div class="btn_box" align="center">
-				<button type="button" class="btnDialogCancel">취소</button>
-				<button type="button" class="btnDialogOn">신고하기</button>
+			<div class="dialog_btn_box" align="center">
+				<button type="button" class="btnDialogCancel dialog_cancel">취소</button>
+				<button type="button" class="dialog_submit btnDialogOn">신고하기</button>
 			</div>
 			
 		</form>

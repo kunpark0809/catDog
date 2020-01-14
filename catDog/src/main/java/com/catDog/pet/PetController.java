@@ -40,7 +40,7 @@ public String list(
 
 	String cp = req.getContextPath();
 
-	int rows = 6;
+	int rows = 12;
 	int total_page;
 	int dataCount;
 

@@ -7,30 +7,59 @@
 	String cp=request.getContextPath();
 %>
 <style type="text/css">
-.btn {
-	width:70px;
-    background-color: #262626;
-    border: none;
-    color:#ffffff;
-    padding: 10px 0;
-    text-align: center;
-    display: inline-block;
-    font-size: 15px;
-    margin: 4px;
-    border-radius:10px;
+.bts {
+width: 70px;
+background-color: #51321b;
+border: none;
+color: #ffffff;
+padding: 6px 0;
+text-align: center;
+display: inline-block;
+font-size: 15px;
+margin: 4px;
+border-radius: 5px;
 }
 
-.btn2 {
-	width:50px;
-    background-color: white;
-    border: 1px dashed #262626;
-    color:#262626;
-    padding: 5px 0;
-    text-align: center;
-    display: inline-block;
-    font-size: 15px;
-    margin: 4px;
-    border-radius:10px;
+.bts2 {
+  background-color: white;
+  border: 1px solid;
+  border-color: #a9a9a9;
+  color: #black;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.ui-dialog-titlebar{
+	background: none;
+    color: black;
+    border: none;
+    border-bottom: 1px solid #e4e4e4;
+    border-radius: 0px;
+}
+.ui-dialog .ui-dialog-titlebar {
+    padding-left: 0px;
+}
+.ui-dialog{
+	padding: 5px 20px;
+	border-radius: 0px;
+	position: fixed;
+}
+
+.dialog_cancel{
+   background: white;
+   color:#262626;
+   border: 1px solid #d8d8d8;
+   width: 25%;
+   padding: 5px 0px;
+}
+
+.dialog_submit{
+   background: #D96262;
+   color: white;
+   border: 1px solid #D96262;
+   width: 25%;
+   padding: 5px 0px;
 }
 
 </style>
@@ -187,15 +216,15 @@ $(function(){
 </script>
 
 
-<div class="body-container" style="width: 700px; margin: 20px auto 10px; text-align: center;">
+<div class="wide-container">
 	<div class="body-title">
-		<h3>내새끼자랑</h3>
+		<span style="font-family: Webdings"><i class="fas fa-paw"></i> 내새끼 자랑</span>
 	</div>
 	
 	<div>
-		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
-			<tr height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td width="50%" align="left" style="padding-left: 5px; font-size: 20px;">
+		<table style="width: 100%; margin: 10px auto 0px; border-spacing: 0px; border-collapse: collapse;">
+			<tr height="35" style="border-top: 2px solid #D96262; padding-top:20px; padding-bottom:20px; border-bottom: 1px solid #cccccc;">
+				<td width="50%" align="left" style="padding-left: 5px; font-size: 20px; padding-top:20px; padding-bottom:20px; border-bottom: 1px solid #cccccc;">
 					${dto.subject}
 				</td>
 				
@@ -204,9 +233,9 @@ $(function(){
 			    </td> 
 			</tr>
 			
-			<tr height="35" style="border-bottom: 1px solid #cccccc;">
-				<td width="50%" align="left" style="padding-left: 5px;">
-				이름 : ${dto.nickName}
+			<tr height="35" style="border-top: 1px solid #cccccc;">
+				<td align="left" style="padding-left: 5px; font-size: 17px;">
+				작성자 : ${dto.nickName}
 				</td>
 			</tr>
 			
@@ -218,21 +247,16 @@ $(function(){
 			
 			<tr>
 				<td colspan="2" height="40" style="padding-bottom: 15px;" align="center">
-					<button type="button" class="btn btnSendPetLike" title="좋아요"><i class="fas fa-hand-point-up"></i>&nbsp;&nbsp;<span id="petLikeCount">${dto.petLikeCount}</span></button>
+					<button type="button" class="bts btnSendPetLike" title="좋아요"><i class="fas fa-hand-point-up"></i>&nbsp;&nbsp;<span id="petLikeCount">${dto.petLikeCount}</span></button>
+					
 				</td>
-			</tr>
-			
-		<tr>
-			<td align="left">
-				<button type="button" class="btn2" onclick="report();">신고</button>
-			</td>
-		</tr>	
+			</tr>	
 			 
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
 				<td colspan="2" align="left" style="padding-left: 5px;">
 				이전글 :
 					<c:if test="${not empty preReadPet}">
-						<a href="<%=cp%>/pet/article?${query}&myPetNum=${preReadPet.myPetNum}">${preReadPet.subject}</a>
+						<a href="<%=cp%>/pet/article?${query}&myPetNum=${preReadPet.myPetNum}" style="color: black;">${preReadPet.subject}</a>
 					</c:if>
 				</td>
 			</tr>
@@ -241,7 +265,7 @@ $(function(){
 				<td colspan="2" align="left" style="padding-left: 5px;">
 				다음글 :
 					<c:if test="${not empty nextReadPet}">
-						<a href="<%=cp%>/pet/article?${query}&myPetNum=${nextReadPet.myPetNum}">${nextReadPet.subject}</a>
+						<a href="<%=cp%>/pet/article?${query}&myPetNum=${nextReadPet.myPetNum}" style="color: black;">${nextReadPet.subject}</a>
 					</c:if>
 				</td>
 			</tr>
@@ -251,23 +275,23 @@ $(function(){
 			<tr height="45">
 				<td  width="300" align="left">
 					<c:if test="${sessionScope.member.userId==dto.userId}">
-						<button type="button" class="btn" onclick="updatePet('${dto.myPetNum}');">수정</button>
+						<button type="button" class="bts" onclick="updatePet();">수정</button>
 					</c:if>
-					<c:if test="${sessionScope.member.userId==dto.userId || sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">
-						<button type="button" class="btn" onclick="deletePet('${dto.myPetNum}');">삭제</button>
+					  <c:if test="${sessionScope.member.userId==dto.userId || fn:indexOf(sessionScope.member.userId,'admin') == 0}">
+						<button type="button" class="bts" onclick="deletePet();">삭제</button>
 					</c:if>
 				</td>
 				
 				<td align="right">
-					<button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/pet/list?${query}';">리스트</button>
+					<button type="button" class="bts" onclick="report();" class='bts'>신고</button>
+					<button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/pet/list?${query}';">리스트</button>
 				</td>
 			</tr>
 		</table>
 	</div>
 	
-		
 	<div id="report_dialog" style="display: none; text-align: left;">
-			<strong>신고사유 : 대표적인 사유 1개를 선택해 주세요</strong>
+			<strong style="color: #a66e4e">신고사유 : 대표적인 사유 1개를 선택해 주세요</strong>
 			<br><br>
 		<form name="reportForm">
 			<input type="hidden" name="reportedPostNum" value="${dto.myPetNum}">
@@ -280,13 +304,10 @@ $(function(){
 				<input type="radio" name="reasonSortNum" value="4">&nbsp;현행법에 저촉되는 행위(불법거래, 저작권 등)<br>
 				<input type="radio" name="reasonSortNum" value="5">&nbsp;기타<br>
 				
-			<div class="btn_box" align="center">
-				<button type="button" class="btnDialogCancel">취소</button>
-				<button type="button" class="btnDialogOn">신고하기</button>
+			<div class="dialog_btn_box" align="center">
+				<button type="button" class="btnDialogCancel dialog_cancel">취소</button>
+				<button type="button" class="dialog_submit btnDialogOn">신고하기</button>
 			</div>
 			
 		</form>
 	</div>
-	
-	
-</div>

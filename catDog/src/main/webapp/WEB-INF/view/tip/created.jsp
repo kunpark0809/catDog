@@ -51,7 +51,7 @@ border-radius: 5px;
 
 <div class="container-board">
 	 <div class="body-title">
-		<span style="font-family: Webdings">꿀팁</span>
+		<span style="font-family: Webdings"><i class="fab fa-forumbee"></i> 꿀팁</span>
 	</div>
 	
 		<form name="tipForm" method="post" enctype="multipart/form-data" onsubmit="return submitContents(this);">
@@ -83,12 +83,14 @@ border-radius: 5px;
 			      </td>
 			  </tr>
 			
+			<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">
 			<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;"> 
-					<td width="100" bgcolor="#51321b" style="text-align: center; font-weight: bold;">공지여부</td>
-					<td style="padding-left:10px;">
-						<input type="checkbox" name="notice" value="1" ${dto.notice==1?"checked='checked'":""}> <label>공지</label>
-					</td>
-			  </tr>
+				<td width="100" bgcolor="#51321b" style="text-align: center; font-weight: bold; color: white;">공지여부</td>
+				<td style="padding-left:10px;">
+					<input type="checkbox" name="notice" value="1" ${dto.notice==1?"checked='checked'":""}> <label>공지</label>
+				</td>
+			</tr>
+			 </c:if>
 			
 			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#51321b" style="text-align: center; font-weight: bold;">작&nbsp;&nbsp;성&nbsp;&nbsp;자</td>

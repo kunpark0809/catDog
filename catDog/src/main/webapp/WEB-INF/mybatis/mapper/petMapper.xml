@@ -32,8 +32,9 @@
 	</select>
 	
 	<select id="listPet" parameterType="map" resultType="com.catDog.pet.Pet">
-		SELECT mp.myPetNum, mp.subject, mp.imageFileName, mp.num, TO_CHAR(created, 'yyyy.mm.dd') as created
+		SELECT mp.myPetNum, mp.subject, mp.imageFileName, mp.num, TO_CHAR(created, 'yyyy.mm.dd') as created, md.nickName
 		FROM myPet mp
+		JOIN memberDetail md ON md.num = mp.num
 		<where>
 			<if test="keyword!=null and keyword!=''">
 				<include refid="where-list"/>
