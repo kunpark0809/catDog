@@ -30,6 +30,11 @@
 		<div class="swiper-button-prev"></div>
 	</div>
 	
+	<!-- 가로 배너 -->
+	<div align="center"><br>
+	<a href="<%=cp%>/shop/list"><img alt="" src="<%=cp%>/resource/img/logos/baner.JPG"></a>
+	</div>
+	
 	<!-- 장소추천 -->
 	<section class="page-section" id="command">
 		<div class="container">
