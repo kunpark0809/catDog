@@ -1,5 +1,15 @@
 @charset "UTF-8";
 
+textarea:focus {
+  outline: none;
+}
+button:focus {
+  outline: none;
+}
+input:focus {
+  outline: none;
+}
+
 .sortName:hover, .sortName:active{
 	cursor: pointer;
 	color: #A66E4E;
@@ -11,14 +21,15 @@
 } 
 a.sortName{
 	display: inline-block;
-	text-align: center;
-	width : 125px;
-	height : 50px;
-	line-height : 50px;
-	border: 1px solid #d8d8d8;
-	border-radius: 5px;
-	text-decoration: none;
-	color:#262626;
+    text-align: center;
+    width: 125px;
+    height: 40px;
+    line-height: 40px;
+    border: 1px solid #d8d8d8;
+    border-radius: 5px;
+    font-size: 15px;
+    text-decoration: none;
+    color: #262626;
 }
 
 
@@ -110,8 +121,9 @@ a.sortName{
 }
 
 .shin_body{
-	width: 1200px;  
-	margin: 10px auto;
+	width: -webkit-fill-available;
+	margin: 0px auto;
+    padding: 60px 0px;
 }
 
 .productList{
@@ -188,6 +200,39 @@ a.sortName{
 	height: 50px;
 }
 
+#top-menu{
+	text-align: center;
+	position: fixed;
+	width: -webkit-fill-available;
+	background: #e4e4e4;
+    border-bottom: 1px solid #e4e4e4;
+}
+
+#top-menu > ul{
+	padding: 0px;
+	margin: 5px 0px
+}
+
+#top-menu > ul > li{
+	display: inline-block;
+	margin: 0px 30px;
+}
+
+
+.product-menu{
+	font-weight: bold;
+    font-size: 15px;
+    border-bottom: 1.3px solid #e4e4e4;
+    margin-top: 20px;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.admin_msg{
+	font-size: 9pt;
+	color:gray;
+}
+
 .admin_btn{
 	float:right;
 	text-align: right;
@@ -205,14 +250,20 @@ a.sortName{
 	background: white;
 	color:#262626;
 	border: 1px solid #d8d8d8;
-	width: 30%;
+	width: 25%;
+	padding: 5px 0px;
 }
 
 .dialog_submit{
 	background: #D96262;
 	color: white;
 	border: 1px solid #D96262;
-	width: 30%;
+	width: 25%;
+	padding: 5px 0px;
+}
+
+.dialog_btn_box{
+	margin-top: 20px;
 }
 
 .payProduct > table{
@@ -230,3 +281,4 @@ a.sortName{
 	width: 40px;
     text-align: right;
 }
+

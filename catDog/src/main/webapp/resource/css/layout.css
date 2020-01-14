@@ -119,6 +119,10 @@ ul li {
     padding: 60px 0px;
 }
 
+.admin_msg{
+	font-size: 9pt;
+}
+
 .body-title{
     font-weight: bold;
     font-size: 40px;
