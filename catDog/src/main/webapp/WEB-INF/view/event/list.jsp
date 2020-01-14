@@ -37,8 +37,8 @@ function searchList() {
 	f.submit();
 }
 
-function article(eventNum) {
-	var url="${articleUrl}&eventNum="+eventNum;
+function article() {
+	var url="${articleUrl}&eventNum="+$("input[name=eventNum]").val();
 	location.href=url;
 }
 
@@ -86,13 +86,15 @@ function ajaxHTML(url, type, query, selector) {
 }
 
 
-function eventDetail(eventNum, num){
-	var url = "<%=cp%>/event/article";
+function eventDetail(eventNum){
+	var url = "<%=cp%>/event/eventDetail";
 	var query = "eventNum="+eventNum;
 	
 	var fn=function(data) {
-		$("#event_subject").val(data.event.subject);
-		$("#event_imageFileName").val(data.event.imageFileName);
+		var list = data.list;
+		$("#eventSubject").text(list[0].subject);
+		$("#eventImg").attr("src", "<%=cp%>/uploads/event/"+list[0].imageFileName);
+		$("input[name=eventNum]").val(list[0].eventNum);
 	}
 	
 	ajaxJSON(url, "get", query, fn);
@@ -102,7 +104,7 @@ function eventDetail(eventNum, num){
 		  height: 750,
 		  width: 1000,
 		  bottom: 120,
-		  title: 'event',
+		  title: '이벤트',
 		  close: function(event, ui) {
 		  }
 	});
@@ -115,6 +117,7 @@ $(function(){
 		$('#eventDetail_dialog').dialog("close");
 	});
 });
+
 </script>
 
 <div class="container-board">
@@ -146,14 +149,14 @@ $(function(){
 				<c:if test="${status.index!=0 && status.index%4==0}">
 					<c:out value="</tr><tr>" escapeXml="false"/>
 				</c:if>
-				<td width="210" align="center">
+				<td width="240" align="center">
 					<div class="imgLayout">
-						<img src="<%=cp%>/uploads/event/${dto.imageFileName}" width="180" 
-						height="180" border="0" onclick="eventDetail()">
-						<span class="subject" onclick="eventDetail()" >
+						<img src="<%=cp%>/uploads/event/${dto.imageFileName}" width="200" 
+						height="340" border="0" onclick="eventDetail('${dto.eventNum}')">
+						<span class="subject" onclick="eventDetail('${dto.eventNum}')" >
 						${dto.subject}
 						</span>
-						<span class="subject" onclick="article('${dto.eventNum}');" >
+						<span class="subject" onclick="eventDetail('${dto.eventNum}');" >
 						${dto.startDate}&nbsp;~&nbsp;${dto.endDate}
 						</span>
 					</div>
@@ -210,22 +213,12 @@ $(function(){
 	</div>
 	
 	<div id="eventDetail_dialog" style="display: none; text-align: left; border-top-width: 50px;">
-		<div id="eventSubject" style="text-align: left;">
-		<form name="eventForm">
-			<input type="hidden" name="eventNum" value="${dto.eventNum}">
-			<input type="hidden" name="subject" value="${dto.subject}">
-			<input type="hidden" name="imageFileName" value="${dto.imageFileName}">
-		</form>	
-		</div>
-				<input type="radio" name="reasonSortNum" value="1" checked="checked">&nbsp;타 웹사이트 홍보<br>
-				<input type="radio" name="reasonSortNum" value="2">&nbsp;도색적이고 폭력적인 내용<br>
-				<input type="radio" name="reasonSortNum" value="3">&nbsp;욕설 및 모욕적인 언행<br>
-				<input type="radio" name="reasonSortNum" value="4">&nbsp;현행법에 저촉되는 행위(불법거래, 저작권 등)<br>
-				<input type="radio" name="reasonSortNum" value="5">&nbsp;기타<br>
+		<input type="hidden" name="eventNum">
+			<img id="eventImg" alt="" src="">
 				
-			<div class="btn_box" align="center">
+			<div class="btn_box" align="center" style="padding-top: 20px;">
 				<button type="button" class="btnDialogCancel">취소</button>
-				<button type="button" class="btnDialogOn">신고하기</button>
+				<button type="button" onclick="article();">상세보기</button>
 			</div>
 			
 		</form>

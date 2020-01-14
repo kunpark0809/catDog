@@ -48,6 +48,7 @@ public class EventController {
 		map.put("keyword", keyword);
 		map.put("condition", condition);
 		map.put("sort", sort);
+		
 		int dataCount = service.dataCount(map);
 		
 		int rows = 8;
@@ -102,6 +103,20 @@ public class EventController {
 			e.printStackTrace();
 		}
 		return "redirect:/event/list";
+	}
+	
+	@RequestMapping(value="/event/eventDetail", method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> eventDetail(@RequestParam int eventNum) throws Exception {
+		
+		List<Event> list = service.readEvent(eventNum);
+	
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("eventNum", eventNum);
+		map.put("list", list);
+		
+		return map;
+		
 	}
 	
 	@RequestMapping(value="/event/article", method=RequestMethod.GET)

@@ -54,6 +54,12 @@
 			<if test="keyword!=null and keyword!=''">
 				<include refid="where-list"/>
 			</if>
+			<if test="sort=='ing'">
+				AND e.endDate &gt; SYSDATE
+			</if>
+			<if test="sort=='end'">
+				AND e.endDate &lt; SYSDATE
+			</if>
 		</where>
 	</select>
 	
