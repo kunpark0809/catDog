@@ -160,14 +160,14 @@ function submitReview(){
 
 <div class="wide-container">
 	<div class="body-title">
-		<h3><span style="font-family: Webdings"></span> 주문 상품 정보 </h3>
+		<span style="font-family: Webdings">주문 상품 정보</span>  
 	</div>
 	
 	<div>
-		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
+		<table style="width: 100%; border-spacing: 0px;">
 			<tr height="35">
 				<td align="left" width="50%">
-					${dataCount}개(${page}/${total_page} 페이지)
+					<span style="color: #D96262;">${dataCount}</span>개(<span style="color: #D96262;">${page}</span>/${total_page} 페이지)
 				</td>
 				<td align="right">
 					&nbsp;
@@ -188,9 +188,9 @@ function submitReview(){
 			
 			<c:forEach var="dto" items="${list}">
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
-				<td>${dto.requestDate}<br><a href="<%=cp%>/mypage/requestDetailCheck?&requestNum=${dto.requestNum}">${dto.requestNum}</a></td>
+				<td>${dto.requestDate}<br><a href="<%=cp%>/mypage/requestDetailCheck?&requestNum=${dto.requestNum}" style="color: #f3a34e;">${dto.requestNum}</a></td>
 				<td align="left" style="padding-left: 10px;">
-					<a href="<%=cp%>/shop/article?productNum=${dto.productNum}" style="color: #f3a34e;"><img style="width: 80px; height: 80px;" src="<%=cp%>/uploads/shop/${dto.imageFileName}"></a>
+					<a href="<%=cp%>/shop/article?productNum=${dto.productNum}"><img style="width: 80px; height: 80px;" src="<%=cp%>/uploads/shop/${dto.imageFileName}"></a>
 				</td>
 				<td>
 					<a href="<%=cp%>/shop/article?productNum=${dto.productNum}" style="color: black;">${dto.productName}</a>
@@ -199,24 +199,24 @@ function submitReview(){
 				<td>${dto.productSum}</td>
 				<c:choose>
 				<c:when test="${dto.status==0}">
-					<td>입금대기</td>
+					<td style="color: #f3a34e; font-weight: bold;">입금대기</td>
 				</c:when>
 				<c:when test="${dto.status==1}">
-					<td>결제완료</td>
+					<td style="color: #f3a34e; font-weight: bold;">결제완료</td>
 				</c:when>
 				<c:when test="${dto.status==2}">
-					<td>배송준비중</td>
+					<td style="color: #f3a34e; font-weight: bold;">배송준비중</td>
 				</c:when>
 				<c:when test="${dto.status==3}">
-					<td>배송중</td>
+					<td style="color: #f3a34e; font-weight: bold;">배송중</td>
 				</c:when>
 				<c:when test="${dto.status==4}">
-					<td>배송완료
+					<td style="color: #f3a34e; font-weight: bold;">배송완료
 						<br><button type="button" class="bts reviewBtn" onclick="reviewDialog(${dto.productNum},${dto.requestDetailNum})">후기등록</button> 
 					</td>
 				</c:when>
 				<c:when test="${dto.status==5}">
-					<td>취소완료</td>
+					<td style="color: #f3a34e; font-weight: bold;">취소완료</td>
 				</c:when>
 				<c:otherwise>
 					<td>-</td>
@@ -239,16 +239,16 @@ function submitReview(){
 					</td>
 				</c:when>
 				<c:when test="${dto.status==6}">
-					<td>환불진행중</td>
+					<td style="color: #f3a34e; font-weight: bold;">환불진행중</td>
 				</c:when>
 				<c:when test="${dto.status==7}">
-					<td>환불완료</td>
+					<td style="color: #f3a34e; font-weight: bold;">환불완료</td>
 				</c:when>
 				<c:when test="${dto.status==8}">
-					<td>교환진행중</td>
+					<td style="color: #f3a34e; font-weight: bold;">교환진행중</td>
 				</c:when>
 				<c:when test="${dto.status==9}">
-					<td>교환 완료</td>
+					<td style="color: #f3a34e; font-weight: bold;">교환 완료</td>
 				</c:when>
 				<c:otherwise><td>-</td></c:otherwise>
 				</c:choose>

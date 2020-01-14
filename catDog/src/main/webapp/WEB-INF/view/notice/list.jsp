@@ -17,20 +17,14 @@ function searchList() {
 <div class="container-board">
 
 	<div class="body-title">
-		<h3><span style="font-family: Webdings"></span> 공지사항 </h3>
+		<span style="font-family: Webdings">공지사항</span>
 	</div>
-	
-	<div class="alert-info">
-    <i class="fas fa-info-circle"></i>
-         중요하니 꼭 읽어보라냥!
-	</div>
-	
 	
 	<div>
-		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
+		<table style="width: 100%; border-spacing: 0px;">
 			<tr height="35">
 				<td align="left" width="50%">
-					${dataCount}개(${page}/${total_page} 페이지)
+					 <span style="color: #D96262;">${dataCount}</span>개(<span style="color: #D96262;">${page}</span>/${total_page} 페이지)
 				</td>
 				<td align="right">
 					&nbsp;

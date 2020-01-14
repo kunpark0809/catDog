@@ -38,18 +38,13 @@ $(function(){
 <div class="container-board">
 
 <div class="body-title">
-		<h3><span style="font-family: Webdings"></span> QnA </h3>
+		<span style="font-family: Webdings">질문과 답변</span>
 </div>
 
-<div class="alert-info">
-  <i class="fas fa-info-circle"></i>
-    궁금하신 질문을 해달라냥!
-</div>
-
-<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
+<table style="width: 100%;  border-spacing: 0px;">
    <tr height="35">
       <td align="left" width="50%">
-          ${dataCount}개(${page}/${total_page} 페이지)
+          <span style="color: #D96262;">${dataCount}</span>개(<span style="color: #D96262;">${page}</span>/${total_page} 페이지)
       </td>
       <td align="right">
           &nbsp;
@@ -60,7 +55,7 @@ $(function(){
 <div style="clear: both;">
 			<ul class="tabs">
 				<c:forEach var="vo" items="${categoryList}">
-					<li style="color: #f3a34e; font-weight: bold; background-color: #51321b;" id="tab-${vo.qnaCategoryNum}" data-tab="${vo.qnaCategoryNum}">
+					<li style="text-align:center; color: #f3a34e; font-weight: bold; background-color: #ffffff; width: 68px; font-size: 12px;" id="tab-${vo.qnaCategoryNum}" data-tab="${vo.qnaCategoryNum}">
 					${vo.qnaCategory}</li>
 				</c:forEach>
 			</ul>

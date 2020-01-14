@@ -36,33 +36,32 @@ function updateNotice(noticeNum) {
 }
 </script>
 
-<div class="body-container" style="width: 830px; margin: 20px auto 0px; border-spacing: 0px;">
-	<div class="alert-info">
-  <i class="fas fa-info-circle"></i>
-    중요하니 꼼꼼히 읽어보라냥!
-</div>
+<div class="container-board">
+	<div class="body-title">
+		<span style="font-family: Webdings">공지사항</span>
+	</div>
 	
 	
 
 	<div>
-		<table style="width: 100%; margin-top: 20px; border-spacing: 0px; border-collapse: collapse;">
-			<tr height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td colspan="2" align="center">
+		<table style="width: 100%; margin: 10px auto 0px; border-spacing: 0px; border-collapse: collapse;">
+			<tr height="35" style="border-top: 2px solid #D96262; padding-top:20px; padding-bottom:20px; border-bottom: 1px solid #cccccc;">
+				<td width="50%" align="left" style="padding-left: 5px; font-size: 20px; padding-top:20px; padding-bottom:20px; border-bottom: 1px solid #cccccc;">
 					${dto.subject}
 				</td>
+				<td width="50%" align="right" style="font-size: 15px; font-weight: bold;">
+			         날짜&nbsp;&nbsp;${dto.created}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;조회수&nbsp;&nbsp;${dto.hitCount}
+			    </td> 
 			</tr>
 
-			<tr height="35" style="border-bottom: 1px solid #cccccc;">
-				<td width="50%" align="left" style="padding-left: 5px;">
-					이름 : ${dto.nickName}
-				</td>
-				<td width="50%" align="right" style="padding-right: 5px;">
-					${dto.created} | 조회 ${dto.hitCount}
+			<tr height="35" style="border-top: 1px solid #cccccc;">
+				<td align="left" style="padding-left: 5px; font-size: 17px;">
+					작성자 : ${dto.nickName}
 				</td>
 			</tr>
 			
-			<tr style="border-bottom: 1px solid #cccccc;">
-				<td colspan="2" align="left" style="padding: 10px 5px;" valign="top" height="200">
+			<tr>
+				<td colspan="2" align="center" style="padding: 10px 5px;" valign="top" height="200">
 					${dto.content}
 				</td>
 			</tr>
@@ -100,12 +99,12 @@ function updateNotice(noticeNum) {
 			<tr height="45">
 			<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
 				<td width="300" align="left">
-					<button type="button" class="btn" onclick="updateNotice();" ${fn:indexOf(sessionScope.member.userId,'admin') != 0 ? "style='pointer-events:none;'":""}>수정</button>
-					<button type="button" class="btn" onclick="deleteNotice();" ${fn:indexOf(sessionScope.member.userId,'admin') != 0 ? "style='pointer-events:none;'":""}>삭제</button>
+					<button type="button" class="bts" onclick="updateNotice();" ${fn:indexOf(sessionScope.member.userId,'admin') != 0 ? "style='pointer-events:none;'":""}>수정</button>
+					<button type="button" class="bts" onclick="deleteNotice();" ${fn:indexOf(sessionScope.member.userId,'admin') != 0 ? "style='pointer-events:none;'":""}>삭제</button>
 				</td>
 			</c:if>
 				<td align="right">
-					<button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/notice/list?${query}';">리스트</button>
+					<button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/notice/list?${query}';">리스트</button>
 				</td>
 			</tr>
 		</table>

@@ -59,10 +59,10 @@
 	    </c:if>
 </script>
 
-<div class="container-board" style="width: 830px; margin: 20px auto 0px; border-spacing: 0px;">
+<div class="container-board">
     <div class="body-title">
-        <h3><span style="font-family: Webdings"></span> 공지사항 </h3>
-    </div>
+		<span style="font-family: Webdings">공지사항</span>
+	</div>
     
     <div>
 			<form name="boardForm" method="post" onsubmit="return submitContents(this);" enctype="multipart/form-data">

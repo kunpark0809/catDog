@@ -27,30 +27,6 @@ function checkRequest(){
 	            f.refundReason.focus();
 	            return;
 	        }
-	
-	    	str = f.name.value;
-	    	
-	        if(!str) {
-	            alert("이름을 입력하세요. ");
-	            f.name.focus();
-	            return;
-	        }
-	        
-			str = f.bank.value;
-	    	
-	        if(!str) {
-	            alert("은행명 입력하세요. ");
-	            f.bank.focus();
-	            return;
-	        }
-	        
-			str = f.refundAccount.value;
-	    	
-	        if(!str) {
-	            alert("계좌번호를 입력하세요. ");
-	            f.refundAccount.focus();
-	            return;
-	        }
     	
 		
    		f.action="<%=cp%>/mypage/${mode}";
@@ -62,20 +38,36 @@ function checkRequest(){
 
 </script>
 
-<div class="body-container" style="width: 1200px; margin: 20px auto 0px; border-spacing: 0px;">
-	
+<div class="container-board">
+		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
+			<tr height="35" style="border-bottom: 2px solid #D96262; padding-top:20px; padding-bottom:20px;">
+				<c:if test="${mode=='refundRequest'}">
+				<td align="left" width="50%">
+					<h2>환불 신청</h2>
+				</td>
+				</c:if>
+				<c:if test="${mode=='swapRequest'}">
+				<td align="left" width="50%">
+					<h2>교환 신청</h2>
+				</td>
+				</c:if>
+				<td align="right">
+					&nbsp;
+				</td>
+			</tr>
+		</table><br>
 
 <form name="boardForm" method="post" enctype="multipart/form-data" onsubmit="return submitContents(this);">
   <div class="detailList">
-  <table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
+  <table style="width: 100%; border-spacing: 0px; border-collapse: collapse;">
   
-  <tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
-				<th width="15" style="color: #787878;"><input type="checkbox" value="all" id="requestAllCheck" onchange="checkRequest();"></th>
-				<th width="130" style="color: #787878;">주문일자<br>[주문상세번호]</th>
-				<th style="color: #787878; width: 80px;">이미지</th>
-				<th width="300" style="color: #787878;">상품정보</th>
-				<th width="80" style="color: #787878;">수량</th>
-				<th width="60" style="color: #787878;">상품구매금액</th>
+  <tr align="center" bgcolor="#51321b" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
+				<th width="15" style="color: white;"><input type="checkbox" value="all" id="requestAllCheck" onchange="checkRequest();"></th>
+				<th width="130" style="color: white;">주문일자<br>[주문상세번호]</th>
+				<th style="color: white; width: 80px;">이미지</th>
+				<th width="300" style="color: white;">상품정보</th>
+				<th width="80" style="color: white;">수량</th>
+				<th width="60" style="color: white;">상품구매금액</th>
 	</tr>
 			
 			<c:forEach var="dto" items="${detailList}">
@@ -89,7 +81,7 @@ function checkRequest(){
 					<img style="width: 80px; height: 80px;" src="<%=cp%>/uploads/dogshop/${dto.imageFileName}">
 				</td>
 				<td>
-					<a href="<%=cp%>/dogshop/article?productNum=${dto.productNum}">${dto.productName}</a>
+					<a href="<%=cp%>/dogshop/article?productNum=${dto.productNum}" style="color: black;">${dto.productName}</a>
 				</td>
 				<td>${dto.productCount}</td>
 				<td>${dto.productSum}</td>
@@ -100,20 +92,20 @@ function checkRequest(){
 			
   <table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
   <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;"> 
-      <td width="100" bgcolor="#eeeeee" style="text-align: center;">작성자</td>
-      <td style="padding-left:10px;"> 
+      <td width="100" bgcolor="#51321b" style="text-align: center; font-weight: bold; color: white;">작&nbsp;&nbsp;성&nbsp;&nbsp;자</td>
+      <td style="padding-left:10px; color: #262626"> 
           ${detailList.get(0).name}
       </td>
   </tr>
 
   <tr align="left" style="border-bottom: 1px solid #cccccc;"> 
-      <td width="100" bgcolor="#eeeeee" style="text-align: center; padding-top:5px;" valign="top">사&nbsp;&nbsp;&nbsp;&nbsp;유</td>
-      <c:if test="${mode=='refund'}">
+      <td width="100" bgcolor="#51321b" style="text-align: center; padding-top:5px; color: white;" valign="top">사&nbsp;&nbsp;&nbsp;&nbsp;유</td>
+      <c:if test="${mode=='refundRequest'}">
       <td valign="top" style="padding:5px 0px 5px 10px;"> 
         <textarea id="Reason" name="refundReason" rows="12" class="boxTA" style="width: 95%; resize: none;"></textarea>
       </td>
       </c:if>
-      <c:if test="${mode=='swap'}">
+      <c:if test="${mode=='swapRequest'}">
       <td valign="top" style="padding:5px 0px 5px 10px;"> 
         <textarea id="Reason" name="swapReason" rows="12" class="boxTA" style="width: 95%; resize: none;"></textarea>
       </td>
@@ -122,37 +114,38 @@ function checkRequest(){
   
   </table>
   
-  <c:if test="${mode=='refund'}">
+  <c:if test="${mode=='refundRequest'}">
    <table style="width: 50%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
  	 <tr align="left" height="10px" style="border-bottom: 1px solid #cccccc;"> 
-      <td width="50" bgcolor="#eeeeee" style="text-align: center;">이름</td>
+      <td width="50" bgcolor="#51321b" style="text-align: center; color: white;">이름</td>
       <td style="padding-left:10px;"> 
-         <textarea id="name" name="name" rows="1" class="boxTA" style="width: 95%; resize: none;">${pay.name}</textarea>
+         <textarea id="name" name="name" rows="1" class="boxTA" style="width: 95%; resize: none; border-radius:5px;">${pay.name}</textarea>
       </td>
   	</tr>
  	 
  	 <tr align="left" height="10px" style="border-bottom: 1px solid #cccccc;"> 
-      <td width="100" bgcolor="#eeeeee" style="text-align: center;">은행명</td>
+      <td width="100" bgcolor="#51321b" style="text-align: center; color: white;">은행명</td>
       <td style="padding-left:10px;"> 
-         <textarea id="bank" name="bank" rows="1" class="boxTA" style="width: 95%; resize: none;">${pay.bank}</textarea>
+         <textarea id="bank" name="bank" rows="1" class="boxTA" style="width: 95%; resize: none; border-radius:5px;">${pay.bank}</textarea>
       </td>
   	</tr>
 
    <tr align="left" height="10px" style="border-bottom: 1px solid #cccccc;"> 
-      <td width="100" bgcolor="#eeeeee" style="text-align: center;">계좌번호</td>
+      <td width="100" bgcolor="#51321b" style="text-align: center; color: white;">계좌번호</td>
       <td style="padding-left:10px;"> 
-         <textarea id="refundAccount" name="refundAccount" rows="1" class="boxTA" style="width: 95%; resize: none;">${pay.refundAccount}</textarea>
+         <textarea id="refundAccount" name="refundAccount" rows="1" class="boxTA" style="width: 95%; resize: none; border-radius:5px;">${pay.refundAccount}</textarea>
       </td>
   	</tr>
   
   </table>
 </c:if>
+<br>
   <table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
      <tr height="45"> 
       <td align="center" >
-	        <button type="submit" class="btn">${mode=='refund'?'환불신청':'교환신청'}</button>
-	        <button type="reset" class="btn">다시입력</button>
-	        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/mypage/requestCheck';">${mode=='refund'?'환불취소':'교환취소'}</button>
+	        <button type="submit" class="bts">${mode=='refundRequest'?'환불신청':'교환신청'}</button>
+	        <button type="reset" class="bts">다시입력</button>
+	        <button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/mypage/requestCheck';">${mode=='refundRequest'?'환불취소':'교환취소'}</button>
 
       </td>
     </tr>

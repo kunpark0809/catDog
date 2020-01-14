@@ -47,22 +47,24 @@ $(function(){
                 if(data.status == false){
                     myInvoiceData += ('<p>'+data.msg+'<p>');
                 }else{
-                    myInvoiceData += ('<tr>');                
-                    myInvoiceData += ('<th>'+"보내는사람"+'</td>');                     
-                    myInvoiceData += ('<th>'+data.senderName+'</td>');                     
+                	myInvoiceData += ('<table style="width: 100%; border-spacing: 0px; border-collapse: collapse;">');
+                    myInvoiceData += ('<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">');                
+                    myInvoiceData += ('<td style="width: 200px; text-align: left; background-color: #51321b; color: white;">&nbsp;&nbsp;보내는 사람</td>');                     
+                    myInvoiceData += ('<td style="text-align: left;">&nbsp;&nbsp;&nbsp;'+data.senderName+'</td>');                     
                     myInvoiceData += ('</tr>'); 
-                    myInvoiceData += ('<tr>');                
-                    myInvoiceData += ('<th>'+"받는사람"+'</td>');                     
-                    myInvoiceData += ('<th>'+data.receiverName+'</td>');                     
+                    myInvoiceData += ('<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">');                
+                    myInvoiceData += ('<td style="width: 200px; text-align: left; background-color: #51321b; color: white;">&nbsp;&nbsp;받는 사람</td>');                     
+                    myInvoiceData += ('<td style="text-align: left;">&nbsp;&nbsp;&nbsp;'+data.receiverName+'</td>');                     
                     myInvoiceData += ('</tr>'); 
-                    myInvoiceData += ('<tr>');                
-                    myInvoiceData += ('<th>'+"제품정보"+'</td>');                     
-                    myInvoiceData += ('<th>'+data.itemName+'</td>');                     
+                    myInvoiceData += ('<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">');                
+                    myInvoiceData += ('<td style="width: 200px; text-align: left; background-color: #51321b; color: white;">&nbsp;&nbsp;제품 정보</td>');                     
+                    myInvoiceData += ('<td style="text-align: left;">&nbsp;&nbsp;&nbsp;'+data.itemName+'</td>');                     
                     myInvoiceData += ('</tr>');     
-                    myInvoiceData += ('<tr>');                
-                    myInvoiceData += ('<th>'+"송장번호"+'</td>');                     
-                    myInvoiceData += ('<th>'+data.invoiceNo+'</td>');                     
-                    myInvoiceData += ('</tr>');                                     
+                    myInvoiceData += ('<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">');                
+                    myInvoiceData += ('<td style="width: 200px; text-align: left; background-color: #51321b; color: white;">&nbsp;&nbsp;송장 정보</td>');                     
+                    myInvoiceData += ('<td style="text-align: left;">&nbsp;&nbsp;&nbsp;우체국 택배&nbsp;&nbsp;&nbsp;'+data.invoiceNo+'</td>');                     
+                    myInvoiceData += ('</tr>');         
+                    myInvoiceData += ('</table>');
                 }
                 
                 
@@ -73,21 +75,23 @@ $(function(){
                 if(trackingDetails != null) {
                 var myTracking="";
                 var header ="";
+                header += ('<table style="width: 800px; border-spacing: 0px; border-collapse: collapse;">');
                 header += ('<tr>');                
-                header += ('<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+"시간"+'</th>');
-                header += ('<th>&nbsp;&nbsp;&nbsp;&nbsp;'+"장소"+'</th>');
-                header += ('<th>&nbsp;&nbsp;&nbsp;&nbsp;'+"유형"+'</th>');
-                header += ('<th>'+"전화번호"+'</th>');                     
-                header += ('</tr>');     
+                header += ('<th style="width: 200px; text-align: center; background-color: #51321b; color: white;">시간</th>');
+                header += ('<th style="width: 200px; text-align: center; background-color: #51321b; color: white;">장소</th>');
+                header += ('<th style="width: 100px; text-align: center; background-color: #51321b; color: white;">유형</th>');
+                header += ('<th style="width: 200px; text-align: center; background-color: #51321b; color: white;">전화번호</th>');                     
+                header += ('</tr>');  
                 
                 $.each(trackingDetails,function(key,value) {
-                    myTracking += ('<tr>');                
-                    myTracking += ('<td>'+value.timeString+'</td>');
-                    myTracking += ('<td>&nbsp;&nbsp;'+value.where+'</td>');
-                    myTracking += ('<td>&nbsp;&nbsp;'+value.kind+'</td>');
-                    myTracking += ('<td>&nbsp;&nbsp;'+value.telno+'</td>');                     
+                	myTracking += ('<tr>');                
+                    myTracking += ('<td style="width: 200px; text-align: center;">'+value.timeString+'</td>');
+                    myTracking += ('<td style="width: 200px; text-align: center;">'+value.where+'</td>');
+                    myTracking += ('<td style="width: 100px; text-align: center;">'+value.kind+'</td>');
+                    myTracking += ('<td style="width: 200px; text-align: center;">'+value.telno+'</td>');                     
                     myTracking += ('</tr>');                                    
-                });
+                });  
+                myTracking += ('</table>');  
                 }
                 $("#myPtag2").html(header+myTracking);
                 
@@ -97,16 +101,16 @@ $(function(){
 })
 </script>
 
-<div class="wide-container" style="width: 1200px; margin: 20px auto 0px; border-spacing: 0px;">
+<div class="wide-container">
 	<div class="body-title">
-		<h3><span style="font-family: Webdings"></span> 주문 상세 조회 </h3>
+		<span style="font-family: Webdings">주문 상세 조회</span>  
 	</div>
 	
 	<div>
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
-			<tr height="35">
+			<tr height="35" style="border-top: 2px solid #D96262; padding-top:20px; padding-bottom:20px;">
 				<td align="left" width="50%">
-					주문 정보
+					<h4>주문 정보</h4>
 				</td>
 				<td align="right">
 					&nbsp;
@@ -132,37 +136,37 @@ $(function(){
 				<td style="width: 200px; text-align: left; background-color: #51321b; color: white;">&nbsp;&nbsp;주문처리상태</td>
 				<c:choose>
 				<c:when test="${detailList.get(0).status==0}">
-					<td style="text-align: left;">&nbsp;&nbsp;&nbsp;입금대기</td>
+					<td style="text-align: left; color: #f3a34e; font-weight: bold;">&nbsp;&nbsp;&nbsp;입금대기</td>
 				</c:when>
 				<c:when test="${detailList.get(0).status==1}">
-					<td style="text-align: left;">&nbsp;&nbsp;&nbsp;결제완료</td>
+					<td style="text-align: left; color: #f3a34e; font-weight: bold;">&nbsp;&nbsp;&nbsp;결제완료</td>
 				</c:when>
 				<c:when test="${detailList.get(0).status==2}">
-					<td style="text-align: left;">&nbsp;&nbsp;&nbsp;배송준비중</td>
+					<td style="text-align: left; color: #f3a34e; font-weight: bold;">&nbsp;&nbsp;&nbsp;배송준비중</td>
 				</c:when>
 				<c:when test="${detailList.get(0).status==3}">
-					<td style="text-align: left;">&nbsp;&nbsp;&nbsp;배송중</td>
+					<td style="text-align: left; color: #f3a34e; font-weight: bold;">&nbsp;&nbsp;&nbsp;배송중</td>
 				</c:when>
 				<c:when test="${detailList.get(0).status==4}">
-					<td style="text-align: left;">&nbsp;&nbsp;&nbsp;배송완료
-						<br><button type="button" class="bts" onclick="#" style="color: white;">후기등록</button> 
+					<td style="text-align: left; color: #f3a34e; font-weight: bold;">&nbsp;&nbsp;&nbsp;배송완료
+						&nbsp;&nbsp;<button type="button" class="bts" onclick="#" style="color: white;">후기등록</button> 
 					</td>
 				</c:when>
 				<c:when test="${detailList.get(0).status==5}">
-					<td style="text-align: left;">&nbsp;&nbsp;&nbsp;취소완료</td>
+					<td style="text-align: left; color: #f3a34e; font-weight: bold;">&nbsp;&nbsp;&nbsp;취소완료</td>
 				</c:when>
 				<c:when test="${detailList.get(0).status==6}">
-					<td style="text-align: left;">&nbsp;&nbsp;&nbsp;환불진행중</td>
+					<td style="text-align: left; color: #f3a34e; font-weight: bold;">&nbsp;&nbsp;&nbsp;환불진행중</td>
 				</c:when>
 				<c:when test="${detailList.get(0).status==7}">
-					<td style="text-align: left;">&nbsp;&nbsp;&nbsp;환불완료</td>
+					<td style="text-align: left; color: #f3a34e; font-weight: bold;">&nbsp;&nbsp;&nbsp;환불완료</td>
 				</c:when>
 				<c:when test="${detailList.get(0).status==8}">
-					<td style="text-align: left;">&nbsp;&nbsp;&nbsp;교환진행중</td>
+					<td style="text-align: left; color: #f3a34e; font-weight: bold;">&nbsp;&nbsp;&nbsp;교환진행중</td>
 				</c:when>
 				<c:when test="${detailList.get(0).status==9}">
-					<td style="text-align: left;">&nbsp;&nbsp;&nbsp;교환완료
-					<br><button type="button" class="bts" onclick="#" style="color: white;">후기등록</button>
+					<td style="text-align: left; color: #f3a34e; font-weight: bold;">&nbsp;&nbsp;&nbsp;교환완료
+						&nbsp;&nbsp;<button type="button" class="bts" onclick="#" style="color: white;">후기등록</button>
 					</td>
 				</c:when>
 				</c:choose>
@@ -171,9 +175,9 @@ $(function(){
 		<br>
 		
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
-			<tr height="35">
+			<tr height="35" style="border-top: 2px solid #D96262; padding-top:20px; padding-bottom:20px;">
 				<td align="left" width="50%">
-					결제 정보
+					<h4>결제 정보</h4>
 				</td>
 				<td align="right">
 					&nbsp;
@@ -232,24 +236,24 @@ $(function(){
 				<td>${dto.productSum}</td>
 				<c:choose>
 				<c:when test="${dto.status==0}">
-					<td>입금대기</td>
+					<td style="color: #f3a34e; font-weight: bold;">입금대기</td>
 				</c:when>
 				<c:when test="${dto.status==1}">
-					<td>결제완료</td>
+					<td style="color: #f3a34e; font-weight: bold;">결제완료</td>
 				</c:when>
 				<c:when test="${dto.status==2}">
-					<td>배송준비중</td>
+					<td style="color: #f3a34e; font-weight: bold;">배송준비중</td>
 				</c:when>
 				<c:when test="${dto.status==3}">
-					<td>배송중</td>
+					<td style="color: #f3a34e; font-weight: bold;">배송중</td>
 				</c:when>
 				<c:when test="${dto.status==4}">
-					<td>배송완료
+					<td style="color: #f3a34e; font-weight: bold;">배송완료
 						<br><button type="button" class="bts" onclick="#" style="color: white;">후기등록</button> 
 					</td>
 				</c:when>
 				<c:when test="${dto.status==5}">
-					<td>취소완료</td>
+					<td style="color: #f3a34e; font-weight: bold;">취소완료</td>
 				</c:when>
 				<c:otherwise>
 					<td>-</td>
@@ -272,16 +276,16 @@ $(function(){
 					</td>
 				</c:when>
 				<c:when test="${dto.status==6}">
-					<td>환불진행중</td>
+					<td style="color: #f3a34e; font-weight: bold;">환불진행중</td>
 				</c:when>
 				<c:when test="${dto.status==7}">
-					<td>환불완료</td>
+					<td style="color: #f3a34e; font-weight: bold;">환불완료</td>
 				</c:when>
 				<c:when test="${dto.status==8}">
-					<td>교환진행중</td>
+					<td style="color: #f3a34e; font-weight: bold;">교환진행중</td>
 				</c:when>
 				<c:when test="${dto.status==9}">
-					<td>교환 완료</td>
+					<td style="color: #f3a34e; font-weight: bold;">교환 완료</td>
 				</c:when>
 				<c:otherwise><td>-</td></c:otherwise>
 				</c:choose>
@@ -292,9 +296,9 @@ $(function(){
 		<br>
 		
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
-			<tr height="35">
+			<tr height="35" style="border-top: 2px solid #D96262; padding-top:20px; padding-bottom:20px;">
 				<td align="left" width="50%">
-					배송 정보
+					<h4>배송 정보</h4>
 				</td>
 				<td align="right">
 					&nbsp;
@@ -326,12 +330,11 @@ $(function(){
 		
 		
             <button type="button" class="bts" id="myButton1" style="color: white;">배송조회</button>
-     	<br>
+     	<br><br>
         
-        <div id="myPtag">
-        	
-        </div>
+        <div id="myPtag"></div>
         
+        <br>
         <div id="myPtag2">
         </div>
 	</div>

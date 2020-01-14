@@ -34,10 +34,9 @@
    }
 </script>
 
-<div class="container-board" style="width: 830px; margin: 20px auto 0px; border-spacing: 0px;">
-	<div class="alert-info">
-   	 <i class="fas fa-info-circle"></i>
-      	   고객님들이 자주 묻는 질문에 미리 답을 달아봅시다!
+<div class="container-board">
+<div class="body-title">
+		<span style="font-family: Webdings">자주 묻는 질문</span>
 	</div>
 
 <form name="boardForm" method="post" enctype="multipart/form-data" onsubmit="return submitContents(this);">

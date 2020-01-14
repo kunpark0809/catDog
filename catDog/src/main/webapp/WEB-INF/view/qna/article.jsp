@@ -79,24 +79,23 @@ function updateAnswer(qnaNum) {
 </script>
 
 <div class="container-board">
-<div class="alert-info">
-    <i class="fas fa-info-circle"></i>
-         궁금하신 질문을 해달라냥!
-</div>
+<div class="body-title">
+		<span style="font-family: Webdings">질문과 답변</span>
+	</div>
 
-<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
-<tr height="35">
-    <td colspan="2" align="left">
+<table style="width: 100%; margin: 10px auto 0px; border-spacing: 0px; border-collapse: collapse;">
+<tr height="35" style="border-top: 2px solid #D96262; padding-top:20px; padding-bottom:20px; border-bottom: 1px solid #cccccc;">
+    <td width="75%" align="left" style="padding-left: 5px; font-size: 20px; padding-top:20px; padding-bottom:20px; border-bottom: 1px solid #cccccc;">
     	<span class="questionQ">질문이다냥!</span><span class="questionSubject">&nbsp;♣ ${questionDto.qnaCategory} ♣ ${questionDto.subject}</span>
     </td>
+    <td width="25%" align="right" style="font-size: 15px; font-weight: bold;">
+		문의일자 &nbsp;&nbsp;${questionDto.created}
+	</td> 
 </tr>
 
-<tr height="35" style="border-bottom: 1px solid #cccccc;">
-    <td width="50%" align="left" style="padding-left: 5px;">
+<tr height="35" style="border-top: 1px solid #cccccc;">
+    <td align="left" style="padding-left: 5px; font-size: 17px;" colspan="2">
        작성자 : ${questionDto.nickName}
-    </td>
-    <td width="50%" align="right" style="padding-right: 5px;">
-     문의일자 : ${questionDto.created}
     </td>
 </tr>
 
@@ -109,18 +108,18 @@ function updateAnswer(qnaNum) {
 
 <c:if test="${not empty answerDto}">
 	<table style="width: 100%; margin: 10px auto 0px; border-spacing: 0px; border-collapse: collapse;">
-	<tr height="35">
-	    <td colspan="2" align="left">
-    	<span class="answerA"></span><span class="answerSubject">${answerDto.subject} 에 대한 답변이다냥!</span>
-	    </td>
+	<tr height="35" style="border-top: 2px solid #D96262; padding-top:20px; padding-bottom:20px; border-bottom: 1px solid #cccccc;">
+		<td width="75%" align="left" style="padding-left: 5px; font-size: 20px; padding-top:20px; padding-bottom:20px; border-bottom: 1px solid #cccccc;">
+    		<span class="answerSubject">${answerDto.subject} 에 대한 답변이다냥!</span>
+    	</td>
+    	<td width="25%" align="right" style="font-size: 15px; font-weight: bold;">
+			답변일자 &nbsp;&nbsp;${answerDto.created}
+		</td>
 	</tr>
 	
-	<tr height="35" style="border-bottom: 1px solid #cccccc;">
-	    <td width="50%" align="left" style="padding-left: 5px;">
+	<tr height="35" style="border-top: 1px solid #cccccc;">
+	    <td align="left" style="padding-left: 5px; font-size: 17px;" colspan="2">
 	       담당자 : ${answerDto.nickName}
-	    </td>
-	    <td width="50%" align="right" style="padding-right: 5px;">
-	     답변일자 :  ${answerDto.created}
 	    </td>
 	</tr>
 	
@@ -134,7 +133,7 @@ function updateAnswer(qnaNum) {
 </c:if>
 
 <table style="width: 100%; margin: 0px auto 0px; border-spacing: 0px; border-collapse: collapse;">
-<tr height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
+<tr height="35" style="border-bottom: 1px solid #cccccc;">
     <td colspan="2" align="left" style="padding-left: 5px;">
        이전글 :
         <c:if test="${not empty preReadDto}">

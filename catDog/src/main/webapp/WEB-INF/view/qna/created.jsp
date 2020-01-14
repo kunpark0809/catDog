@@ -37,9 +37,8 @@
 </script>
 
 <div class="container-board">
-	<div class="alert-info">
-   	 <i class="fas fa-info-circle"></i>
-      	   궁금하신 질문을 해달라냥!
+	<div class="body-title">
+		<span style="font-family: Webdings">질문과 답변</span>
 	</div>
 
 <form name="boardForm" method="post" enctype="multipart/form-data" onsubmit="return submitContents(this);">

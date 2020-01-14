@@ -61,19 +61,14 @@ function updateFaq(faqNum) {
 
 
 
-<div class="container-board" style="width: 830px; margin: 20px auto 0px; border-spacing: 0px;">
+<div class="container-board">
 
 <div class="body-title">
-		<h3><span style="font-family: Webdings"></span> FAQ </h3>
-</div>
+		<span style="font-family: Webdings">자주 묻는 질문</span>
+	</div>
 
-<div class="alert-info">
-  <i class="fas fa-info-circle"></i>
-     자주 묻는 질문을 모아놨다냥!
-</div>
-
-<table style="width: 100%; margin: 50px auto; border-spacing: 0px; border-collapse: collapse;">
-  <tr align="center" bgcolor="#51321b" height="35" style="border-top: 2px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
+<table style="width: 100%; border-spacing: 0px; border-collapse: collapse;">
+  <tr align="center" bgcolor="#51321b" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
       <th width="60" style="color: white;">번호</th>
       <th style="color: white;">제목</th>
       <th width="100" style="color: white;">작성자</th>

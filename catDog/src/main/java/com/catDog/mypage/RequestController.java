@@ -118,7 +118,7 @@ public class RequestController {
 		List<Pay> detailList = service.requestDetailList(requestNum);
 		
 		model.addAttribute("detailList", detailList);
-		model.addAttribute("mode", "refund");
+		model.addAttribute("mode", "refundRequest");
 		
 		return ".mypage.refundRequest";
 	}
@@ -149,7 +149,7 @@ public class RequestController {
 		List<Pay> detailList = service.requestDetailList(requestNum);
 		
 		model.addAttribute("detailList", detailList);
-		model.addAttribute("mode", "swap");
+		model.addAttribute("mode", "swapRequest");
 		
 		return ".mypage.refundRequest";
 	}
