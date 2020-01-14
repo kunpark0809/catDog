@@ -6,6 +6,24 @@
 	String cp = request.getContextPath();
 %>
 <link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
+<style>
+.ui-dialog-titlebar{
+	background: none;
+    color: black;
+    border: none;
+    border-bottom: 1px solid #e4e4e4;
+    border-radius: 0px;
+}
+.ui-dialog .ui-dialog-titlebar {
+    padding-left: 0px;
+}
+.ui-dialog{
+	padding: 5px 20px;
+	border-radius: 0px;
+	position: fixed;
+	
+}
+</style>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	<script type="text/javascript" src="<%=cp%>/resource/vendor/jquery-ui/jquery-ui.min.js"></script>
 <script type="text/javascript">
@@ -145,7 +163,11 @@
 				  width: 300,
 				  title: '우편번호 검색',
 				  close: function(event, ui) {
-				  }
+				  },
+					open: function(event, ui) {
+						$(".ui-dialog-titlebar-close", $(this).parent()).hide();
+					}
+			
 			});
 		});
 	});

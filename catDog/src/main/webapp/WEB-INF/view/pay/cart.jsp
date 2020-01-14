@@ -6,6 +6,24 @@
 	String cp=request.getContextPath();
 %>
 <link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
+<style>
+.ui-dialog-titlebar{
+	background: none;
+    color: black;
+    border: none;
+    border-bottom: 1px solid #e4e4e4;
+    border-radius: 0px;
+}
+.ui-dialog .ui-dialog-titlebar {
+    padding-left: 0px;
+}
+.ui-dialog{
+	padding: 5px 20px;
+	border-radius: 0px;
+	position: fixed;
+	
+}
+</style>
 <script type="text/javascript">
 function ajaxJSON(url, type, query, fn) {
 	$.ajax({
@@ -57,7 +75,10 @@ function changeDialog(productNum, cartNum){
 		  title: '수량 변경',
 		  close: function(event, ui) {
 			  $("input[name=productCount]").val(1);
-		  }
+		  },
+			open: function(event, ui) {
+				$(".ui-dialog-titlebar-close", $(this).parent()).hide();
+			}
 	});
 }
 
