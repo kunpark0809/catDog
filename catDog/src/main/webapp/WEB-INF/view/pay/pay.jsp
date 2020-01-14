@@ -185,44 +185,53 @@
 
 
 <div class="wide-container">
-	
+		<div class="order_tit" style="width: 100%;height: 60px;margin-bottom: 10px; line-height: 60px;">
+        <div class="body-title" style="display: inline-block;"><i class="far fa-credit-card"></i>&nbsp;주문서작성/결제</div>
+        <div class="pay-seq" style="float: right; font-size: 14pt;">
+        <ul>
+            <li class="page-off">01&nbsp;&nbsp;장바구니&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp; </li>
+            <li class="page-on">02&nbsp;&nbsp;주문서작성/결제&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;</li>
+            <li class="page-off">03&nbsp;&nbsp;주문완료</li>
+        </ul>
+        </div>
+    	</div>
 
 		<form method="post" name="payForm">
 			<div class="payProduct">
-				<table>
-					<tr>
-						<td colspan="2">상품정보</td>
+				<table style="text-align: center;">
+					<tr style="color:white; background-color:#51321b;">
+						<td colspan="2" style="padding: 5px 0px;">상품정보</td>
 						<td>판매가</td>
 						<td>수량</td>
 						<td>배송비</td>
 						<td>합계</td>
 					</tr>
 					<c:if test="${mode=='direct'}">
-						<tr>
+						<tr style="border-bottom: 1px solid #cccccc;">
 							<td>
 							<input type="hidden" name="productNum" value="${product.productNum}">
 							<img alt=""
 								src="<%=cp%>/uploads/shop/${product.imageFileName}"
 								width="50"></td>
-							<td>${product.productName}</td>
-							<td>${product.productSum}</td>
+							<td  style="padding: 5px 0px;">${product.productName}</td>
+							<td><fmt:formatNumber value="${product.productSum}" type="number"/></td>
 							<td><input type="hidden" name="productCount" value="${product.productCount}">${product.productCount}</td>
 							<td>기본배송</td>
-							<td><input type="hidden" name="productSum" value="${product.productSum}">${product.productSum}</td>
+							<td><input type="hidden" name="productSum" value="${product.productSum}"><fmt:formatNumber value="${product.productSum}" type="number"/></td>
 						</tr>
 					</c:if>
 
 					<c:if test="${mode=='cart'}">
 						<c:forEach var="dto" items="${cartList}">
-							<tr>
+							<tr style="border-bottom: 1px solid #cccccc;">
 								<td>
 								<input type="hidden" name="payCartNum" value="${dto.cartNum}">
 								<img alt="" src="<%=cp%>/uploads/shop/${dto.imageFileName}" width="50"></td>
 								<td>${dto.productName}</td>
-								<td>${dto.productSum}</td>
+								<td><fmt:formatNumber value="${dto.productSum}" type="number"/></td>
 								<td>${dto.productCount}</td>
 								<td>기본배송</td>
-								<td>${dto.productSum}</td>
+								<td><fmt:formatNumber value="${dto.productSum}" type="number"/></td>
 							</tr>
 						</c:forEach>
 					</c:if>
