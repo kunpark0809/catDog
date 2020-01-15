@@ -79,8 +79,8 @@
 						src="<%=cp%>/uploads/shop/${dto.imageFileName}" alt="" style="height: 351px; width: 351px;">
 						<!-- 사진사이즈 정해져있음 -->
 					</a>
-					<div class="portfolio-caption">
-						<h6>${dto.name}</h6>
+					<div class="portfolio-caption" style="height: 70px;">
+						<h5>${dto.name}</h5>
 						<p class="text-muted">가격 : ${dto.price}원</p>
 					</div>
 				</div>
@@ -110,8 +110,8 @@
 						src="<%=cp%>/uploads/shop/${dto.imageFileName}" alt="" style="height: 351px; width: 351px;">
 						<!-- 사진사이즈 정해져있음 -->
 					</a>
-					<div class="portfolio-caption">
-						<h6>${dto.name}</h6>
+					<div class="portfolio-caption"  style="height: 70px;">
+						<h5>${dto.name}</h5>
 						<p class="text-muted">가격 : ${dto.price}원</p>
 					</div>
 				</div>

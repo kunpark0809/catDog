@@ -75,7 +75,7 @@
 	</select>
 	
 	<select id="readNotice" parameterType="Integer" resultType="com.catDog.cs.Notice">
-		select n.num, md.userId, nickName, subject, created, content, noticeNum,
+		select n.num, md.userId, nickName, subject, to_char(created, 'yyyy-mm-dd hh24:mi:ss') created, content, noticeNum,
 		hitCount, notice
 		from notice n
 		join memberDetail md on md.num=n.num

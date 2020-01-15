@@ -176,7 +176,7 @@ function submitReview(){
 		</table>
 	
 		<table style="width: 100%; border-spacing: 0px; border-collapse: collapse;">
-			<tr align="center" bgcolor="#51321b" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
+			<tr align="center" bgcolor="#db6a6a" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 				<th width="130" style="color: white;">주문일자<br>[주문번호]</th>
 				<th style="color: white; width: 80px;">이미지</th>
 				<th width="300" style="color: white;">상품정보</th>
@@ -212,7 +212,7 @@ function submitReview(){
 				</c:when>
 				<c:when test="${dto.status==4}">
 					<td style="color: #f3a34e; font-weight: bold;">배송완료
-						<br><button type="button" class="bts reviewBtn" onclick="reviewDialog(${dto.productNum},${dto.requestDetailNum})">후기등록</button> 
+						<br><button type="button" class="bts reviewBtn" style="color: white; background-color: #f3a34e" onclick="reviewDialog(${dto.productNum},${dto.requestDetailNum})">후기등록</button> 
 					</td>
 				</c:when>
 				<c:when test="${dto.status==5}">
@@ -228,17 +228,17 @@ function submitReview(){
 				<c:choose>
 				<c:when test="${dto.status==0}">
 					<td>
-						<button type="button" class="bts" onclick="requestCancle(${dto.requestNum});">주문취소</button> 
+						<button type="button" class="bts" style="color: white; background-color: #f3a34e" onclick="requestCancle(${dto.requestNum});">주문취소</button> 
 					</td>
 				</c:when>
 				<c:when test="${dto.status==1}">
 					<td>
-						<button type="button" class="bts" onclick="">결제취소</button> 
+						<button type="button" class="bts" style="color: white; background-color: #f3a34e" onclick="">결제취소</button> 
 					</td>
 				</c:when>
 				<c:when test="${dto.status==4}">
-					<td><button type="button" class="bts" onclick="requestRefund(${dto.requestNum});">환불신청</button>
-						<br><button type="button" class="bts" onclick="requestSwap(${dto.requestNum});">교환신청</button>
+					<td><button type="button" class="bts" style="color: white; background-color: #f3a34e" onclick="requestRefund(${dto.requestNum});">환불신청</button>
+						<br><button type="button" class="bts" style="color: white; background-color: #f3a34e" onclick="requestSwap(${dto.requestNum});">교환신청</button>
 					</td>
 				</c:when>
 				<c:when test="${dto.status==6}">

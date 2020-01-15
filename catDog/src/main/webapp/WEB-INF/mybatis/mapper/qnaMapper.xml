@@ -61,7 +61,7 @@
 	</select>
 	
 	<select id="readQnaQuestion" parameterType="Integer" resultType="com.catDog.cs.Qna">
-		SELECT q.qnaNum, md.userId, q.num, nickName, q.subject, q.content, q.parent, q.created,
+		SELECT q.qnaNum, md.userId, q.num, nickName, q.subject, q.content, q.parent, TO_CHAR(q.created, 'YYYY-MM-DD hh24:mi:ss') created,
 				q.questionPrivate, q.qnaCategoryNum, qnaCategory
 		FROM qna q
 		JOIN qnaCategory c ON q.qnaCategoryNum=c.qnaCategoryNum        
@@ -70,7 +70,7 @@
 	</select>
 	
 	<select id="readQnaAnswer" parameterType="Integer" resultType="com.catDog.cs.Qna">
-		SELECT q.qnaNum, md.userId, q.num, nickName, q.subject, q.content, q.parent, q.created,
+		SELECT q.qnaNum, md.userId, q.num, nickName, q.subject, q.content, q.parent, TO_CHAR(q.created, 'YYYY-MM-DD hh24:mi:ss') created,
 				q.questionPrivate, q.qnaCategoryNum, qnaCategory
 		FROM qna q
 		JOIN qnaCategory c ON q.qnaCategoryNum=c.qnaCategoryNum        

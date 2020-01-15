@@ -80,7 +80,7 @@ $(function(){
 <div style="clear: both;">
 			<ul class="tabs">
 				<c:forEach var="vo" items="${categoryList}">
-					<li style="text-align:center; color: #f3a34e; font-weight: bold; background-color: #ffffff; width: 68px; font-size: 12px;" id="tab-${vo.qnaCategoryNum}" data-tab="${vo.qnaCategoryNum}">
+					<li style="text-align:center; color: #f3a34e; font-weight: bold; background-color: #ffffff;" id="tab-${vo.qnaCategoryNum}" data-tab="${vo.qnaCategoryNum}">
 					${vo.qnaCategory}</li>
 				</c:forEach>
 			</ul>

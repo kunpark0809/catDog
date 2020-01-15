@@ -49,19 +49,19 @@ $(function(){
                 }else{
                 	myInvoiceData += ('<table style="width: 100%; border-spacing: 0px; border-collapse: collapse;">');
                     myInvoiceData += ('<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">');                
-                    myInvoiceData += ('<td style="width: 200px; text-align: left; background-color: #51321b; color: white;">&nbsp;&nbsp;보내는 사람</td>');                     
+                    myInvoiceData += ('<td style="width: 200px; text-align: left; background-color: #db6a6a; color: white;">&nbsp;&nbsp;보내는 사람</td>');                     
                     myInvoiceData += ('<td style="text-align: left;">&nbsp;&nbsp;&nbsp;'+data.senderName+'</td>');                     
                     myInvoiceData += ('</tr>'); 
                     myInvoiceData += ('<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">');                
-                    myInvoiceData += ('<td style="width: 200px; text-align: left; background-color: #51321b; color: white;">&nbsp;&nbsp;받는 사람</td>');                     
+                    myInvoiceData += ('<td style="width: 200px; text-align: left; background-color: #db6a6a; color: white;">&nbsp;&nbsp;받는 사람</td>');                     
                     myInvoiceData += ('<td style="text-align: left;">&nbsp;&nbsp;&nbsp;'+data.receiverName+'</td>');                     
                     myInvoiceData += ('</tr>'); 
                     myInvoiceData += ('<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">');                
-                    myInvoiceData += ('<td style="width: 200px; text-align: left; background-color: #51321b; color: white;">&nbsp;&nbsp;제품 정보</td>');                     
+                    myInvoiceData += ('<td style="width: 200px; text-align: left; background-color: #db6a6a; color: white;">&nbsp;&nbsp;제품 정보</td>');                     
                     myInvoiceData += ('<td style="text-align: left;">&nbsp;&nbsp;&nbsp;'+data.itemName+'</td>');                     
                     myInvoiceData += ('</tr>');     
                     myInvoiceData += ('<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">');                
-                    myInvoiceData += ('<td style="width: 200px; text-align: left; background-color: #51321b; color: white;">&nbsp;&nbsp;송장 정보</td>');                     
+                    myInvoiceData += ('<td style="width: 200px; text-align: left; background-color: #db6a6a; color: white;">&nbsp;&nbsp;송장 정보</td>');                     
                     myInvoiceData += ('<td style="text-align: left;">&nbsp;&nbsp;&nbsp;우체국 택배&nbsp;&nbsp;&nbsp;'+data.invoiceNo+'</td>');                     
                     myInvoiceData += ('</tr>');         
                     myInvoiceData += ('</table>');
@@ -77,10 +77,10 @@ $(function(){
                 var header ="";
                 header += ('<table style="width: 800px; border-spacing: 0px; border-collapse: collapse;">');
                 header += ('<tr>');                
-                header += ('<th style="width: 200px; text-align: center; background-color: #51321b; color: white;">시간</th>');
-                header += ('<th style="width: 200px; text-align: center; background-color: #51321b; color: white;">장소</th>');
-                header += ('<th style="width: 100px; text-align: center; background-color: #51321b; color: white;">유형</th>');
-                header += ('<th style="width: 200px; text-align: center; background-color: #51321b; color: white;">전화번호</th>');                     
+                header += ('<th style="width: 200px; text-align: center; background-color: #db6a6a; color: white;">시간</th>');
+                header += ('<th style="width: 200px; text-align: center; background-color: #db6a6a; color: white;">장소</th>');
+                header += ('<th style="width: 100px; text-align: center; background-color: #db6a6a; color: white;">유형</th>');
+                header += ('<th style="width: 200px; text-align: center; background-color: #db6a6a; color: white;">전화번호</th>');                     
                 header += ('</tr>');  
                 
                 $.each(trackingDetails,function(key,value) {
@@ -121,19 +121,19 @@ $(function(){
 		<br>
 		<table style="width: 100%; border-spacing: 0px; border-collapse: collapse;">
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td style="width: 200px; text-align: left; background-color: #51321b; color: white;">&nbsp;&nbsp;주문번호</td>
+				<td style="width: 200px; text-align: left; background-color: #db6a6a; color: white;">&nbsp;&nbsp;주문번호</td>
 				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).requestNum}</td>
 			</tr>
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td style="width: 200px; text-align: left; background-color: #51321b; color: white;">&nbsp;&nbsp;주문일자</td>
+				<td style="width: 200px; text-align: left; background-color: #db6a6a; color: white;">&nbsp;&nbsp;주문일자</td>
 				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).requestDate}</td>
 			</tr>
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td style="width: 200px; text-align: left; background-color: #51321b; color: white;">&nbsp;&nbsp;주문자</td>
+				<td style="width: 200px; text-align: left; background-color: #db6a6a; color: white;">&nbsp;&nbsp;주문자</td>
 				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).name}</td>
 			</tr>
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td style="width: 200px; text-align: left; background-color: #51321b; color: white;">&nbsp;&nbsp;주문처리상태</td>
+				<td style="width: 200px; text-align: left; background-color: #db6a6a; color: white;">&nbsp;&nbsp;주문처리상태</td>
 				<c:choose>
 				<c:when test="${detailList.get(0).status==0}">
 					<td style="text-align: left; color: #f3a34e; font-weight: bold;">&nbsp;&nbsp;&nbsp;입금대기</td>
@@ -148,9 +148,7 @@ $(function(){
 					<td style="text-align: left; color: #f3a34e; font-weight: bold;">&nbsp;&nbsp;&nbsp;배송중</td>
 				</c:when>
 				<c:when test="${detailList.get(0).status==4}">
-					<td style="text-align: left; color: #f3a34e; font-weight: bold;">&nbsp;&nbsp;&nbsp;배송완료
-						&nbsp;&nbsp;<button type="button" class="bts" onclick="#" style="color: white;">후기등록</button> 
-					</td>
+					<td style="text-align: left; color: #f3a34e; font-weight: bold;">&nbsp;&nbsp;&nbsp;배송완료</td>
 				</c:when>
 				<c:when test="${detailList.get(0).status==5}">
 					<td style="text-align: left; color: #f3a34e; font-weight: bold;">&nbsp;&nbsp;&nbsp;취소완료</td>
@@ -165,9 +163,7 @@ $(function(){
 					<td style="text-align: left; color: #f3a34e; font-weight: bold;">&nbsp;&nbsp;&nbsp;교환진행중</td>
 				</c:when>
 				<c:when test="${detailList.get(0).status==9}">
-					<td style="text-align: left; color: #f3a34e; font-weight: bold;">&nbsp;&nbsp;&nbsp;교환완료
-						&nbsp;&nbsp;<button type="button" class="bts" onclick="#" style="color: white;">후기등록</button>
-					</td>
+					<td style="text-align: left; color: #f3a34e; font-weight: bold;">&nbsp;&nbsp;&nbsp;교환완료</td>
 				</c:when>
 				</c:choose>
 			</tr>
@@ -189,23 +185,23 @@ $(function(){
 		
 		<table style="width: 100%; border-spacing: 0px; border-collapse: collapse;">
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td style="width: 200px; text-align: left; background-color: #51321b; color: white;">&nbsp;&nbsp;총 주문금액</td>
+				<td style="width: 200px; text-align: left; background-color: #db6a6a; color: white;">&nbsp;&nbsp;총 주문금액</td>
 				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).total}</td>
 			</tr>
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td style="width: 200px; text-align: left; background-color: #51321b; color: white;">&nbsp;&nbsp;사용 포인트</td>
+				<td style="width: 200px; text-align: left; background-color: #db6a6a; color: white;">&nbsp;&nbsp;사용 포인트</td>
 				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).usePoint}</td>
 			</tr>
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td style="width: 200px; text-align: left; background-color: #51321b; color: white;">&nbsp;&nbsp;총 결제금액</td>
+				<td style="width: 200px; text-align: left; background-color: #db6a6a; color: white;">&nbsp;&nbsp;총 결제금액</td>
 				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).purchase}</td>
 			</tr>
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td style="width: 200px; text-align: left; background-color: #51321b; color: white;">&nbsp;&nbsp;적립 포인트</td>
+				<td style="width: 200px; text-align: left; background-color: #db6a6a; color: white;">&nbsp;&nbsp;적립 포인트</td>
 				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).point}</td>
 			</tr>
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td style="width: 200px; text-align: left; background-color: #51321b; color: white;">&nbsp;&nbsp;결제수단</td>
+				<td style="width: 200px; text-align: left; background-color: #db6a6a; color: white;">&nbsp;&nbsp;결제수단</td>
 				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).payMethod}</td>
 			</tr>
 		</table>
@@ -213,7 +209,7 @@ $(function(){
 		<br>
 		
 		<table style="width: 100%; border-spacing: 0px; border-collapse: collapse;">
-			<tr align="center" bgcolor="#51321b" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
+			<tr align="center" bgcolor="#db6a6a" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 				<th width="130" style="color: white;">주문일자<br>[주문상세번호]</th>
 				<th style="color: white; width: 80px;">이미지</th>
 				<th width="300" style="color: white;">상품정보</th>
@@ -249,7 +245,6 @@ $(function(){
 				</c:when>
 				<c:when test="${dto.status==4}">
 					<td style="color: #f3a34e; font-weight: bold;">배송완료
-						<br><button type="button" class="bts" onclick="#" style="color: white;">후기등록</button> 
 					</td>
 				</c:when>
 				<c:when test="${dto.status==5}">
@@ -262,7 +257,7 @@ $(function(){
 				<c:choose>
 				<c:when test="${dto.status==0}">
 					<td>
-						<button type="button" class="bts" onclick="requestCancle(${dto.requestNum});" style="color: white;">주문취소</button> 
+						<button type="button" class="bts" onclick="requestCancle(${dto.requestNum});" style="color: white; background-color: #f3a34e">주문취소</button> 
 					</td>
 				</c:when>
 				<c:when test="${dto.status==1}">
@@ -271,8 +266,8 @@ $(function(){
 					</td>
 				</c:when>
 				<c:when test="${dto.status==4}">
-					<td><button type="button" class="bts" onclick="requestRefund(${dto.requestNum});" style="color: white;">환불신청</button>
-						<br><button type="button" class="bts" onclick="requestSwap(${dto.requestNum});" style="color: white;">교환신청</button>
+					<td><button type="button" class="bts" onclick="requestRefund(${dto.requestNum});" style="color: white; background-color: #f3a34e">환불신청</button>
+						<br><button type="button" class="bts" onclick="requestSwap(${dto.requestNum});" style="color: white; background-color: #f3a34e">교환신청</button>
 					</td>
 				</c:when>
 				<c:when test="${dto.status==6}">
@@ -310,26 +305,26 @@ $(function(){
 		
 		<table style="width: 100%; border-spacing: 0px; border-collapse: collapse;">
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td style="width: 200px; text-align: left; background-color: #51321b; color: white;">&nbsp;&nbsp;배송자 정보</td>
+				<td style="width: 200px; text-align: left; background-color: #db6a6a; color: white;">&nbsp;&nbsp;배송자 정보</td>
 				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).deliverName}</td>
 			</tr>
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td style="width: 200px; text-align: left; background-color: #51321b; color: white;">&nbsp;&nbsp;주소</td>
+				<td style="width: 200px; text-align: left; background-color: #db6a6a; color: white;">&nbsp;&nbsp;주소</td>
 				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;[${detailList.get(0).deliverZip}]&nbsp;${detailList.get(0).deliverAddr1}&nbsp;${detailList.get(0).deliverAddr2}&nbsp;</td>
 			</tr>
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td style="width: 200px; text-align: left; background-color: #51321b; color: white;">&nbsp;&nbsp;휴대폰 번호</td>
+				<td style="width: 200px; text-align: left; background-color: #db6a6a; color: white;">&nbsp;&nbsp;휴대폰 번호</td>
 				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).deliverTel}</td>
 			</tr>
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td style="width: 200px; text-align: left; background-color: #51321b; color: white;">&nbsp;&nbsp;메모</td>
+				<td style="width: 200px; text-align: left; background-color: #db6a6a; color: white;">&nbsp;&nbsp;메모</td>
 				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).memo}</td>
 			</tr>
 		</table>
 		<br>
 		
 		
-            <button type="button" class="bts" id="myButton1" style="color: white;">배송조회</button>
+            <button type="button" class="bts" id="myButton1" style="color: white; background-color: #f3a34e">배송조회</button>
      	<br><br>
         
         <div id="myPtag"></div>
