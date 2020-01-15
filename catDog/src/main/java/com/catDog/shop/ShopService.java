@@ -20,4 +20,5 @@ public interface ShopService {
 	public void insertReview(Shop dto) throws Exception;
 	public int reviewCount(Map<String, Object> map);
 	public List<Shop> reviewList(Map<String, Object> map);
+	public List<Shop> listAllReview(Map<String, Object> map);
 }

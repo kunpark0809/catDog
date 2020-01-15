@@ -16,6 +16,8 @@ import com.catDog.cs.CsService;
 import com.catDog.cs.Notice;
 import com.catDog.park.Park;
 import com.catDog.park.ParkService;
+import com.catDog.shop.Shop;
+import com.catDog.shop.ShopService;
 
 @Controller("mainController")
 public class MainController {
@@ -25,6 +27,9 @@ public class MainController {
 	
 	@Autowired
 	private CsService service;
+	
+	@Autowired
+	private ShopService shopService;
 	 
 	@RequestMapping(value="/main", method=RequestMethod.GET)
 	public String method(HttpServletRequest req,
@@ -53,6 +58,44 @@ public class MainController {
 		
 		model.addAttribute("parkList", parkList);
 		model.addAttribute("parkListUrl", parkListUrl);
+		
+		Map<String, Object> reviewMap = new HashMap<String, Object>();
+		reviewMap.put("offset", 0);
+		reviewMap.put("rows", rows);
+		
+		List<Shop> reviewList = shopService.listAllReview(reviewMap);
+		
+		String reviewListUrl = cp+"/shop/article?";
+		
+		model.addAttribute("reviewList", reviewList);
+		model.addAttribute("reviewListUrl", reviewListUrl);
+		
+		Map<String, Object> dogProductMap = new HashMap<String, Object>();
+		dogProductMap.put("smallSortNum", 0);
+		dogProductMap.put("bigSortNum", 1);
+		dogProductMap.put("offset", 0);
+		dogProductMap.put("rows", 6);
+		
+		List<Shop> dogProductList = shopService.listDogProduct(dogProductMap);
+		
+		String dogProductListUrl = cp+"/shop/article?";
+		
+		model.addAttribute("dogProductList", dogProductList);
+		model.addAttribute("dogProductListUrl", dogProductListUrl);
+		
+		Map<String, Object> catProductMap = new HashMap<String, Object>();
+		catProductMap.put("smallSortNum", 0);
+		catProductMap.put("bigSortNum", 0);
+		catProductMap.put("offset", 0);
+		catProductMap.put("rows", 6);
+		
+		List<Shop> catProductList = shopService.listDogProduct(catProductMap);
+		
+		String catProductListUrl = cp+"/shop/article?";
+		
+		model.addAttribute("catProductList", catProductList);
+		model.addAttribute("catProductListUrl", catProductListUrl);
+		
 		
 		
 		return ".mainLayout";

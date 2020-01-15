@@ -6,6 +6,31 @@
 <%
 	String cp=request.getContextPath();
 %>
+<style type="text/css">
+.selectField {
+width: 70px;
+background-color: white;
+border: 2px solid #51321b;
+color: black;
+padding: 3px 0;
+text-align: center;
+display: inline-block;
+font-size: 15px;
+margin: 2px;
+}
+
+.boxTF {
+width: 300px;
+background-color: white;
+border: 2px solid #51321b;
+color: black;
+padding: 3px 0;
+text-align: center;
+display: inline-block;
+font-size: 15px;
+margin: 2px;
+}
+</style>
 <link rel="stylesheet" href="<%=cp%>/resource/css/cs.css">
 <link rel="stylesheet" href="<%=cp%>/resource/css/tabs.css" type="text/css">
 <script type="text/javascript">
@@ -120,8 +145,8 @@ $(function(){
                   <option value="nickName" ${condition=="nickName"?"selected='selected'":""}>작성자</option>
                   <option value="created" ${condition=="created"?"selected='selected'":""}>작성일</option>
             </select>
-            <input type="text" id="keyword" name="keyword" class="boxTF" value="${keyword}" size="30;" style="border-radius:5px;">
-            <button type="button" class="bts" onclick="searchList();" style="width: 2%"><i class="fas fa-search"></i></button>
+            <input type="text" id="keyword" name="keyword" class="boxTF" value="${keyword}" size="30;">
+            <button type="button" class="bts" onclick="searchList();"><i class="fas fa-search"></i></button>
         </form>
       </td>
       <td align="right" width="100">

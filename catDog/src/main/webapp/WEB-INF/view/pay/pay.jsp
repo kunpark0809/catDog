@@ -236,6 +236,7 @@
 						</c:forEach>
 					</c:if>
 				</table>
+				<p onclick="javascript:location.href='<%=cp%>/pay/cart'" style="margin: 5px 0px;border-bottom: 1px solid black;width: max-content;font-size: 11pt; cursor: pointer;">&lt;&nbsp;장바구니 가기</p>
 			</div>
 			<div class="pay_customer">
 				<div class="title">
@@ -245,8 +246,7 @@
 					</p>
 				</div>
 				<div class="">
-					<table border="1">
-						<caption>주문 정보 입력</caption>
+					<table class="payTable">
 						<colgroup>
 							<col style="width: 139px;">
 							<col style="width: auto;">
@@ -313,8 +313,7 @@
 					</p>
 				</div>
 				<div class="">
-					<table border="1">
-						<caption>주문 정보 입력</caption>
+					<table class="payTable">
 						<colgroup>
 							<col style="width: 139px;">
 							<col style="width: auto;">
@@ -383,7 +382,7 @@
 				</div>
 
 				<div class="">
-					<table class="">
+					<table class="payTable">
 						<colgroup>
 							<col style="width: 15%;">
 							<col style="width: 85%;">

@@ -98,6 +98,14 @@
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 	
+	<select id="listAllReview" parameterType="map" resultType="com.catDog.shop.Shop">
+		SELECT productReviewNum, rate, pr.content, pr.created, pr.num,md.nickName, pr.productnum
+		FROM productReview pr
+		JOIN memberDetail md ON pr.num= md.num
+		ORDER BY pr.created DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
 	<select id="reviewCount" parameterType="map" resultType="Integer">
 		SELECT NVL(COUNT(*),0) FROM productReview
 		WHERE productNum=#{productNum}
@@ -107,10 +115,9 @@
 		INSERT INTO productReview(productReviewNum,rate,content,num,productNum) 
 		VALUES(PRODUCTREVIEW_SEQ.NEXTVAL,#{rate},#{content},#{num},#{productNum})
 	</insert>
-<!-- 	
+ 	
 	<update id="reviewStatus" parameterType="String"> 
-		UPDATE requestDetail SET status=10 WHERE productDetailNum = #{productDetailNum}
+		UPDATE requestDetail SET status=10 WHERE requestDetailNum = #{requestDetailNum}
 	</update>
-	 -->
 	
 </mapper>

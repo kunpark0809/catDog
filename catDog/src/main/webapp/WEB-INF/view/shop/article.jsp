@@ -14,10 +14,16 @@
     border: none;
     border-bottom: 1px solid #e4e4e4;
     border-radius: 0px;
+    text-align: left;
 }
 .ui-dialog .ui-dialog-titlebar {
     padding-left: 0px;
 }
+.ui-dialog-title{
+	padding-left: 10px;
+	font-size: 14pt;
+}
+
 .ui-dialog{
 	padding: 5px 20px;
 	border-radius: 0px;

@@ -205,6 +205,7 @@ public class ShopServiceImp implements ShopService{
 	public void insertReview(Shop dto) throws Exception {
 		try {
 			dao.insertData("shop.reviewInsert",dto);
+			dao.updateData("shop.reviewStatus",dto.getRequestDetailNum());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -232,6 +233,17 @@ public class ShopServiceImp implements ShopService{
 		}
 		
 		return result;
+	}
+
+	@Override
+	public List<Shop> listAllReview(Map<String, Object> map) {
+		List<Shop> list = null;
+		try {
+			list = dao.selectList("shop.listAllReview",map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	

@@ -6,6 +6,32 @@
 <%
 	String cp=request.getContextPath();
 %>
+<style type="text/css">
+.selectField {
+width: 70px;
+background-color: white;
+border: 2px solid #51321b;
+color: black;
+padding: 3px 0;
+text-align: center;
+display: inline-block;
+font-size: 15px;
+margin: 2px;
+}
+
+.boxTF {
+width: 300px;
+background-color: white;
+border: 2px solid #51321b;
+color: black;
+padding: 3px 0;
+text-align: center;
+display: inline-block;
+font-size: 15px;
+margin: 2px;
+}
+</style>
+
 <link rel="stylesheet" href="<%=cp%>/resource/css/cs.css">
 <script type="text/javascript">
 function searchList() {
@@ -97,14 +123,14 @@ function searchList() {
 				<td align="center">
 					<form name="searchForm" action="<%=cp%>/notice/list" method="post">
 						<select name="condition" class="selectField">
-							<option value="all" ${condition=="all"?"selected='selected'":""}>제목+내용</option>
+							<option value="all" ${condition=="all"?"selected='selected'":""}>전체</option>
 							<option value="subject" ${condition=="subject"?"selected='selected'":""}>제목</option>
 							<option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
 							<option value="nickName" ${condition=="nickName"?"selected='selected'":""}>작성자</option>
 							<option value="created" ${condition=="created"?"selected='selected'":""}>등록일</option>
 						</select>
-						<input type="text" name="keyword" value="${keyword}" class="boxTF" size="30;" style="border-radius:5px;">
-						<button type="button" class="bts" onclick="searchList()" style="width: 2%"><i class="fas fa-search"></i></button>
+						<input type="text" name="keyword" value="${keyword}" class="boxTF" size="30;">
+						<button type="button" class="bts" onclick="searchList()"><i class="fas fa-search"></i></button>
 					</form>
 				</td>
 				<td align="right" width="100">

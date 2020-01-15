@@ -23,7 +23,7 @@ public class Shop {
 	
 	private long num;
 	private String productReviewNum;
-	private String productDetailNum;
+	private String requestDetailNum;
 	private int rate;
 	private String nickName;
 	
@@ -119,17 +119,18 @@ public class Shop {
 	public void setNum(long num) {
 		this.num = num;
 	}
-	public String getProductDetailNum() {
-		return productDetailNum;
-	}
-	public void setProductDetailNum(String productDetailNum) {
-		this.productDetailNum = productDetailNum;
-	}
+
 	public String getNickName() {
 		return nickName;
 	}
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
+	}
+	public String getRequestDetailNum() {
+		return requestDetailNum;
+	}
+	public void setRequestDetailNum(String requestDetailNum) {
+		this.requestDetailNum = requestDetailNum;
 	}
 	
 }

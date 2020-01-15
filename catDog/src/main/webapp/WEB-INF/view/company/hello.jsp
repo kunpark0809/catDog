@@ -7,7 +7,7 @@
 	String cp=request.getContextPath();
 %>
 
-<div class="body-container" style="width: 1200px; margin: 20px auto 0px; border-spacing: 0px;">
+<div class="wide-container">
 	<div class="body-title">
 		<h3><span style="font-family: Webdings"></span> </h3>
 	</div>
