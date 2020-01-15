@@ -310,21 +310,23 @@
 				<div class="col-md-6" style="box-sizing: border-box;">
 					<span> <font color="#F2F2F2" size="4px;"><i
 							class="fas fa-check" style="color: #F2F2F2">&nbsp;</i>공지사항</font><br>
-					</span>
+					</span><br>
 					<c:forEach var="vo" items="${noticeList}">
-					<p >
+					<p style="margin-bottom: 10px;">
 						<a href="${noticeListUrl}&noticeNum=${vo.noticeNum}" style="color: #666666">${vo.subject}</a>
+						
 					</p>
 					</c:forEach>
 				</div>
 				<div class="col-md-6" style="box-sizing: border-box;">
 					<span> <font color="#F2F2F2" size="4px;"><i
 							class="far fa-grin-hearts" style="color: #F2F2F2">&nbsp;</i>후기</font><br>
-					</span> 
-					<p style="color: #666666">후기입니다후기입니다후기입니다후기입니다후기입니다후기입니다</p>
-					<p style="color: #666666">후기입니다후기입니다후기입니다후기입니다후기입니다후기입니다</p>
-					<p style="color: #666666">후기입니다후기입니다후기입니다후기입니다후기입니다후기입니다</p>
-					<p style="color: #666666">후기입니다후기입니다후기입니다후기입니다후기입니다후기입니다</p>
+					</span> <br>
+					<c:forEach var="vo" items="${reviewList}">
+					<p style="margin-bottom: 10px;">
+						<a href="${reviewListUrl}&productNum=${vo.productNum}" style="color: #666666">${vo.content}</a>
+					</p>
+					</c:forEach>
 				</div>
 			</div>
 		</div>

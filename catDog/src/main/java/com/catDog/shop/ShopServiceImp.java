@@ -235,6 +235,17 @@ public class ShopServiceImp implements ShopService{
 		return result;
 	}
 
+	@Override
+	public List<Shop> listAllReview(Map<String, Object> map) {
+		List<Shop> list = null;
+		try {
+			list = dao.selectList("shop.listAllReview",map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 	
 	
 

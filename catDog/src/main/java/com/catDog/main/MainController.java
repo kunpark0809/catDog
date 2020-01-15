@@ -16,6 +16,8 @@ import com.catDog.cs.CsService;
 import com.catDog.cs.Notice;
 import com.catDog.park.Park;
 import com.catDog.park.ParkService;
+import com.catDog.shop.Shop;
+import com.catDog.shop.ShopService;
 
 @Controller("mainController")
 public class MainController {
@@ -25,6 +27,9 @@ public class MainController {
 	
 	@Autowired
 	private CsService service;
+	
+	@Autowired
+	private ShopService shopService;
 	 
 	@RequestMapping(value="/main", method=RequestMethod.GET)
 	public String method(HttpServletRequest req,
@@ -53,6 +58,18 @@ public class MainController {
 		
 		model.addAttribute("parkList", parkList);
 		model.addAttribute("parkListUrl", parkListUrl);
+		
+		Map<String, Object> reviewMap = new HashMap<String, Object>();
+		reviewMap.put("offset", 0);
+		reviewMap.put("rows", rows);
+		
+		List<Shop> reviewList = shopService.listAllReview(reviewMap);
+		
+		String reviewListUrl = cp+"/shop/article?";
+		
+		model.addAttribute("reviewList", reviewList);
+		model.addAttribute("reviewListUrl", reviewListUrl);
+		
 		
 		
 		return ".mainLayout";
