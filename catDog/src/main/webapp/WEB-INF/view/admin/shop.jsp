@@ -5,6 +5,30 @@
 <%
 	String cp = request.getContextPath();
 %>
+<style type="text/css">
+.selectField {
+	background-color: white;
+	border: 2px solid #51321b;
+	color: black;
+	padding: 3px 0;
+	text-align: center;
+	display: inline-block;
+	font-size: 15px;
+	margin: 2px;
+}
+
+.boxTF {
+	background-color: white;
+	border: 2px solid #51321b;
+	color: black;
+	padding: 3px 0;
+	text-align: center;
+	display: inline-block;
+	font-size: 15px;
+	margin: 2px;
+}
+</style>
+
 <script type="text/javascript">
 	function searchList() {
 		var f = document.searchForm;
@@ -69,7 +93,7 @@
 			<tr height="40">
 				<td align="left">
 					<button type="button" class="bts"
-						onclick="javascript:location.href='<%=cp%>/admin/shop';">초기화</button>
+						onclick="javascript:location.href='<%=cp%>/admin/shop';">새로고침</button>
 				</td>
 				<td align="left" style="width:65%;">
 					<form name="searchForm" action="<%=cp%>/admin/shop" method="post">
@@ -91,7 +115,7 @@
 							
 						
 							
-						<button type="button" class="bts" onclick="searchList()">검색</button>
+						<button type="button" class="bts" onclick="searchList()" style="width: 5%;"><i class="fas fa-search"></i></button>
 					</form>
 				</td>
 

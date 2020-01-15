@@ -20,6 +20,31 @@ td {
 	text-overflow: ellipsis; 
 	overflow: hidden;
 }
+
+.selectField {
+	background-color: white;
+	border: 2px solid #51321b;
+	color: black;
+	padding: 3px 0;
+	text-align: center;
+	display: inline-block;
+	font-size: 15px;
+	margin: 2px;
+}
+
+.boxTF {
+	background-color: white;
+	border: 2px solid #51321b;
+	color: black;
+	padding: 3px 0;
+	text-align: center;
+	display: inline-block;
+	font-size: 15px;
+	margin: 2px;
+}
+
+
+
 </style>
 
 <script type="text/javascript">
@@ -167,7 +192,7 @@ $(function(){
 			<tr height="40">
 				<td align="left" width="70" style="padding-left: 20px;">
 					<button type="button" class="bts"
-						onclick="javascript:location.href='<%=cp%>/admin/bbs';">초기화</button>
+						onclick="javascript:location.href='<%=cp%>/admin/bbs';">새로고침</button>
 				</td>
 				<td align="left" width="200" style="padding-left: 250px;">
 					<form name="searchForm" action="<%=cp%>/admin/bbs" method="post">
@@ -181,7 +206,7 @@ $(function(){
 								${condition=="reasonName"?"selected='selected'":""}>신고분류</option>
 						</select> <input type="text" name="keyword" value="${keyword}"
 							class="boxTF">
-						<button type="button" class="bts" onclick="searchList()">검색</button>
+						<button type="button" class="bts" onclick="searchList()" style="width: 5%;"><i class="fas fa-search"></i></button>
 						<input type="hidden" name="group" value="${group }"> <input
 							type="hidden" name="page" value="${page }">
 
