@@ -52,7 +52,6 @@
 					<img alt="" src="<%=cp%>/uploads/park/${dto.imageFileName}" width="351px" height="263.250px" style="padding-top: 15px;"><br>
 					<span class="placeName" onclick="javascript:article('${dto.recommendNum}');" style="font-weight: bold; font-size: 24px;">${dto.placeName}</span><br>
 				</a>
-					<p><i class="fas fa-eye"></i>&nbsp;&nbsp;${dto.hitCount}</p>
 				</div>
 				</c:forEach>
 			</div>
@@ -69,97 +68,23 @@
 				</div>
 			</div>
 			<div class="row">
+				<c:forEach var="dto" items="${dogProductList}">
 				<div class="col-md-4 col-sm-6 portfolio-item" style="max-width: 30%;">
-					<a class="portfolio-link" data-toggle="modal"
-						href="#portfolioModal1">
+					<a class="portfolio-link" href="${dogProductListUrl}&productNum=${dto.productNum}">
 						<div class="portfolio-hover">
 							<div class="portfolio-hover-content">
 								<i class="fas fa-plus fa-3x"></i>
 							</div>
 						</div> <img class="img-fluid"
-						src="<%=cp%>/resource/img/portfolio/01-thumbnail.jpg" alt="">
+						src="<%=cp%>/uploads/shop/${dto.imageFileName}" alt="" style="height: 351px; width: 351px;">
 						<!-- 사진사이즈 정해져있음 -->
 					</a>
 					<div class="portfolio-caption">
-						<h4>멍용품1</h4>
-						<p class="text-muted">추천1</p>
+						<h6>${dto.name}</h6>
+						<p class="text-muted">가격 : ${dto.price}원</p>
 					</div>
 				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item" style="max-width: 30%;">
-					<a class="portfolio-link" data-toggle="modal"
-						href="#portfolioModal2">
-						<div class="portfolio-hover">
-							<div class="portfolio-hover-content">
-								<i class="fas fa-plus fa-3x"></i>
-							</div>
-						</div> <img class="img-fluid"
-						src="<%=cp%>/resource/img/portfolio/02-thumbnail.jpg" alt="">
-					</a>
-					<div class="portfolio-caption">
-						<h4>멍용품2</h4>
-						<p class="text-muted">추천2</p>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item" style="max-width: 30%;">
-					<a class="portfolio-link" data-toggle="modal"
-						href="#portfolioModal3">
-						<div class="portfolio-hover">
-							<div class="portfolio-hover-content">
-								<i class="fas fa-plus fa-3x"></i>
-							</div>
-						</div> <img class="img-fluid"
-						src="<%=cp%>/resource/img/portfolio/03-thumbnail.jpg" alt="">
-					</a>
-					<div class="portfolio-caption">
-						<h4>멍용품3</h4>
-						<p class="text-muted">추천3</p>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item" style="max-width: 30%;">
-					<a class="portfolio-link" data-toggle="modal"
-						href="#portfolioModal4">
-						<div class="portfolio-hover">
-							<div class="portfolio-hover-content">
-								<i class="fas fa-plus fa-3x"></i>
-							</div>
-						</div> <img class="img-fluid"
-						src="<%=cp%>/resource/img/portfolio/04-thumbnail.jpg" alt="">
-					</a>
-					<div class="portfolio-caption">
-						<h4>멍용품4</h4>
-						<p class="text-muted">추천4</p>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item" style="max-width: 30%;">
-					<a class="portfolio-link" data-toggle="modal"
-						href="#portfolioModal5">
-						<div class="portfolio-hover">
-							<div class="portfolio-hover-content">
-								<i class="fas fa-plus fa-3x"></i>
-							</div>
-						</div> <img class="img-fluid"
-						src="<%=cp%>/resource/img/portfolio/05-thumbnail.jpg" alt="">
-					</a>
-					<div class="portfolio-caption">
-						<h4>멍용품5</h4>
-						<p class="text-muted">추천5</p>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item" style="max-width: 30%;">
-					<a class="portfolio-link" data-toggle="modal"
-						href="#portfolioModal6">
-						<div class="portfolio-hover">
-							<div class="portfolio-hover-content">
-								<i class="fas fa-plus fa-3x"></i>
-							</div>
-						</div> <img class="img-fluid"
-						src="<%=cp%>/resource/img/portfolio/06-thumbnail.jpg" alt="">
-					</a>
-					<div class="portfolio-caption">
-						<h4>멍용품6</h4>
-						<p class="text-muted">추천6</p>
-					</div>
-				</div>
+				</c:forEach>
 			</div>
 		</div>
 	</section>
@@ -174,96 +99,23 @@
 				</div>
 			</div>
 			<div class="row">
+				<c:forEach var="dto" items="${catProductList}">
 				<div class="col-md-4 col-sm-6 portfolio-item" style="max-width: 30%;">
-					<a class="portfolio-link" data-toggle="modal"
-						href="#portfolioModal1">
+					<a class="portfolio-link" href="${catProductListUrl}&productNum=${dto.productNum}">
 						<div class="portfolio-hover">
 							<div class="portfolio-hover-content">
 								<i class="fas fa-plus fa-3x"></i>
 							</div>
 						</div> <img class="img-fluid"
-						src="<%=cp%>/resource/img/portfolio/01-thumbnail.jpg" alt="">
+						src="<%=cp%>/uploads/shop/${dto.imageFileName}" alt="" style="height: 351px; width: 351px;">
+						<!-- 사진사이즈 정해져있음 -->
 					</a>
 					<div class="portfolio-caption">
-						<h4>냥용품1</h4>
-						<p class="text-muted">추천1</p>
+						<h6>${dto.name}</h6>
+						<p class="text-muted">가격 : ${dto.price}원</p>
 					</div>
 				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item" style="max-width: 30%;">
-					<a class="portfolio-link" data-toggle="modal"
-						href="#portfolioModal2">
-						<div class="portfolio-hover">
-							<div class="portfolio-hover-content">
-								<i class="fas fa-plus fa-3x"></i>
-							</div>
-						</div> <img class="img-fluid"
-						src="<%=cp%>/resource/img/portfolio/02-thumbnail.jpg" alt="">
-					</a>
-					<div class="portfolio-caption">
-						<h4>냥용품2</h4>
-						<p class="text-muted">추천2</p>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item" style="max-width: 30%;">
-					<a class="portfolio-link" data-toggle="modal"
-						href="#portfolioModal3">
-						<div class="portfolio-hover">
-							<div class="portfolio-hover-content">
-								<i class="fas fa-plus fa-3x"></i>
-							</div>
-						</div> <img class="img-fluid"
-						src="<%=cp%>/resource/img/portfolio/03-thumbnail.jpg" alt="">
-					</a>
-					<div class="portfolio-caption">
-						<h4>냥용품3</h4>
-						<p class="text-muted">추천3</p>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item" style="max-width: 30%;">
-					<a class="portfolio-link" data-toggle="modal"
-						href="#portfolioModal4">
-						<div class="portfolio-hover">
-							<div class="portfolio-hover-content">
-								<i class="fas fa-plus fa-3x"></i>
-							</div>
-						</div> <img class="img-fluid"
-						src="<%=cp%>/resource/img/portfolio/04-thumbnail.jpg" alt="">
-					</a>
-					<div class="portfolio-caption">
-						<h4>냥용품4</h4>
-						<p class="text-muted">추천4</p>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item" style="max-width: 30%;">
-					<a class="portfolio-link" data-toggle="modal"
-						href="#portfolioModal5">
-						<div class="portfolio-hover">
-							<div class="portfolio-hover-content">
-								<i class="fas fa-plus fa-3x"></i>
-							</div>
-						</div> <img class="img-fluid"
-						src="<%=cp%>/resource/img/portfolio/05-thumbnail.jpg" alt="">
-					</a>
-					<div class="portfolio-caption">
-						<h4>냥용품5</h4>
-						<p class="text-muted">추천5</p>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-6 portfolio-item" style="max-width: 30%;">
-					<a class="portfolio-link" data-toggle="modal"
-						href="#portfolioModal6">
-						<div class="portfolio-hover">
-							<div class="portfolio-hover-content">
-								<i class="fas fa-plus fa-3x"></i>
-							</div>
-						</div> <img class="img-fluid"
-						src="<%=cp%>/resource/img/portfolio/06-thumbnail.jpg" alt="">
-					</a>
-					<div class="portfolio-caption">
-						<h4>냥용품6</h4>
-						<p class="text-muted">추천6</p>
-					</div>
-				</div>
+				</c:forEach>
 			</div>
 		</div>
 	</section>

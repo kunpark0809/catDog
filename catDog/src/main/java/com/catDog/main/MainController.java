@@ -70,6 +70,32 @@ public class MainController {
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("reviewListUrl", reviewListUrl);
 		
+		Map<String, Object> dogProductMap = new HashMap<String, Object>();
+		dogProductMap.put("smallSortNum", 0);
+		dogProductMap.put("bigSortNum", 1);
+		dogProductMap.put("offset", 0);
+		dogProductMap.put("rows", 6);
+		
+		List<Shop> dogProductList = shopService.listDogProduct(dogProductMap);
+		
+		String dogProductListUrl = cp+"/shop/article?";
+		
+		model.addAttribute("dogProductList", dogProductList);
+		model.addAttribute("dogProductListUrl", dogProductListUrl);
+		
+		Map<String, Object> catProductMap = new HashMap<String, Object>();
+		catProductMap.put("smallSortNum", 0);
+		catProductMap.put("bigSortNum", 0);
+		catProductMap.put("offset", 0);
+		catProductMap.put("rows", 6);
+		
+		List<Shop> catProductList = shopService.listDogProduct(catProductMap);
+		
+		String catProductListUrl = cp+"/shop/article?";
+		
+		model.addAttribute("catProductList", catProductList);
+		model.addAttribute("catProductListUrl", catProductListUrl);
+		
 		
 		
 		return ".mainLayout";
