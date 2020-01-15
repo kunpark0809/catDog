@@ -16,7 +16,7 @@
   width: 340px; height: 35px;
   padding: 5px;
   padding-left: 15px;
-  border:1px solid #999999;
+  border: 2px solid #51321b;
   color:#333333;
   margin-top:5px; margin-bottom:5px;
   font-size:14px;
@@ -47,15 +47,17 @@
 	}
 </script>
 
-<div class="body-container">
-    <div style="width:420px; margin: 0px auto; padding-top:90px;">
+<div class="body-container" style="min-height: 490px; padding-top: 100px; background-image:url('<%=cp%>/resource/img/loginbg.jpg');
+ background-position:center center; background-repeat: no-repeat;">
+    <div style="width:420px; margin: 0px auto; background-color: rgba( 255, 255, 255, 0.5 );">
 	
-    	<div style="text-align: center;">
+		
+    	<div style="text-align: center; padding-top: 30px;">
         	<span style="font-weight: bold; font-size:27px; color: #424951;">패스워드 찾기</span>
         </div>
 	
 		<form name="pwdFindForm" method="post" action="">
-		  <table style="width:100%; margin: 20px auto; padding:30px;  border-collapse: collapse; border: 1px solid #DAD9FF;">
+		  <table style="width:100%; margin: 20px auto; padding:30px;">
 		  <tr style="height:50px;"> 
 		      <td style="text-align: center;">
 		          아이디를 입력해주세요.
@@ -76,7 +78,7 @@
 		  <tr align="center" height="65" > 
 		      <td>
 		        &nbsp;
-		        <button type="button" onclick="sendOk();" class="bts">확인</button>
+		        <button type="button" onclick="sendOk();" class="bts" style="width: 364px;">확인</button>
 		        &nbsp;
 		      </td>
 		  </tr>

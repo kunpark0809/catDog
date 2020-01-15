@@ -16,7 +16,7 @@
   width: 340px; height: 35px;
   padding: 5px;
   padding-left: 15px;
-  border:1px solid #999999;
+  border: 2px solid #51321b;
   color:#333333;
   margin-top:5px; margin-bottom:5px;
   font-size:14px;
@@ -77,7 +77,7 @@ function sendLogin() {
 		        <input type="text" name="userId" id="userId" class="loginTF" maxlength="15"
 		                   tabindex="1"
                            onfocus="document.getElementById('lblUserId').style.display='none';"
-                           onblur="bgLabel(this, 'lblUserId');" style="width: 280px;">
+                           onblur="bgLabel(this, 'lblUserId');" style="width: 278px;">
 		      </td>
 		  </tr>
 		  <tr align="center" height="60"> 
@@ -86,7 +86,7 @@ function sendLogin() {
 		        <input type="password" name="userPwd" id="userPwd" class="loginTF" maxlength="20" 
 		                   tabindex="2"
                            onfocus="document.getElementById('lblUserPwd').style.display='none';"
-                           onblur="bgLabel(this, 'lblUserPwd');" style="width: 280px;">
+                           onblur="bgLabel(this, 'lblUserPwd');" style="width: 278px;">
 		      </td>
 		  </tr>
 		  <tr align="center" height="65" > 
