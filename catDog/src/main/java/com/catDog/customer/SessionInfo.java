@@ -9,6 +9,7 @@ public class SessionInfo {
 	private String nickName;
 	private int reportCount;
 	private int warn;
+	private String userPic;
 
 	public long getMemberIdx() {
 		return memberIdx;
@@ -64,6 +65,14 @@ public class SessionInfo {
 
 	public void setWarn(int warn) {
 		this.warn = warn;
+	}
+
+	public String getUserPic() {
+		return userPic;
+	}
+
+	public void setUserPic(String userPic) {
+		this.userPic = userPic;
 	}
 
 }

@@ -8,6 +8,7 @@
 	String cp = request.getContextPath();
 %>
 
+<link href="https://fonts.googleapis.com/css?family=Jua&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
 <style>
 .ui-dialog-titlebar{
@@ -29,6 +30,8 @@
 	position: fixed;
 	
 }
+
+
 </style>
 
 <script>
@@ -102,7 +105,7 @@ $(function(){
 		$('#warningModal').dialog({
 			  modal: true,
 			  height: 290,
-			  width: 840,
+			  width: 800,
 			  title: '경고',
 			  close: function(event, ui) {
 			  },
@@ -133,7 +136,7 @@ $(function(){
 
 <!-- 헤더(카테고리) -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-	<div style="width: 1300px; margin: 0px auto;">
+	<div style="width: 1600px; margin: 0px auto;">
 		<div style="float: left;">
 			<a class="navbar-brand js-scroll-trigger" href="<%=cp%>/"><img
 				alt="" width="200" src="<%=cp%>/resource/img/logos/dogcatdogcat.png">
@@ -209,30 +212,46 @@ $(function(){
 				
 			</ul>
 		</div>
-		<div style="width: 245px; margin: 20px auto; float: right;">
-			<c:if test="${not empty sessionScope.member}">
-			<div style="margin: 12px 10px 0px 0px; float: left;">${sessionScope.member.nickName}님</div>
+		<div style="width: 300px; margin: 19px auto; float: right;">
+			<div style="min-width: 40px;">
+			<c:if test="${not empty sessionScope.member.userPic}">
+				<img src="<%=cp%>/uploads/photo/${sessionScope.member.userPic}" style="float:left; border-radius: 30px; width: 40px; height: 40px;">
 			</c:if>
-			
+			</div>
+		
+			<div style="min-width: 115px;">
+			<c:if test="${not empty sessionScope.member}">
+			<div style="margin: 8px 10px 0px; float: left;">
+				<div style="font-family:'NanumSquareRound', sans-serif; float:left; max-width: 100px; overflow: hidden;
+					text-overflow: ellipsis; white-space: nowrap;">
+				${sessionScope.member.nickName}</div>
+				<div style="float:left; font-family: 'NanumSquareRound', sans-serif;">
+				님
+				</div>
+			</div>
+			</c:if>
+			</div>
 			<ul>
+			
 			<c:if test="${sessionScope.member.warn == 1}">
 			<li class="nav-icon">
 			
 			<img id="warningModal_open_btn" width="25" height="25" src="<%=cp%>/resource/img/warning.gif"
-			style="padding-top: 7px; margin-right: 10px;"></li>
+			style="float:left; padding-top: 7px; margin-right: 10px;"></li>
 		
 			</c:if>
+			
 				<c:if test="${empty sessionScope.member}">
-					<li class="nav-icon"><a class="nav-link js-scroll-trigger"
+					<li class="nav-icon" style="padding-top: 5px;"><a class="nav-link js-scroll-trigger"
 						href="<%=cp%>/customer/login"><i class="fas fa-key"
-							style="color: #d96262"></i></a></li>
+							style="float:left; color: #d96262;"></i></a></li>
 				</c:if>
 				<c:if test="${not empty sessionScope.member}">
-					<li class="nav-icon"><a class="nav-link js-scroll-trigger" href="<%=cp%>/customer/logout"><i
-							class="fas fa-sign-out-alt" style="color: #d96262"></i></a></li>
+					<li class="nav-icon" style="padding-top: 5px;"><a class="nav-link js-scroll-trigger" href="<%=cp%>/customer/logout"><i
+							class="fas fa-sign-out-alt" style="float:left; color: #d96262"></i></a></li>
 				</c:if>
-				<li class="nav-icon"><a class="nav-link js-scroll-trigger" href="<%=cp%>/pay/cart"><i
-						class="fas fa-cart-plus" style="color: #d96262"></i></a></li>
+				<li class="nav-icon" style="padding-top: 5px;"><a class="nav-link js-scroll-trigger" href="<%=cp%>/pay/cart"><i
+						class="fas fa-cart-plus" style="float:left; color: #d96262"></i></a></li>
 			</ul>
 		</div>
 		
@@ -240,8 +259,8 @@ $(function(){
 
 	</div>
 <!-- 모달 창 -->
-		<div id="warningModal" style="display: none;">
-	 		<div class="warningModal-content"></div>
+		<div id="warningModal" style="display: none; text-align: center;">
+	 		<div class="warningModal-content" st></div>
 	      	<div style="text-align: center;">
 	 			<button type="button" id="confirm" class="bts">확인</button>
 	 		</div>

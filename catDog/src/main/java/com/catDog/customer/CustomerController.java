@@ -96,7 +96,7 @@ public class CustomerController {
 	public String registerSubmit(Customer dto, final RedirectAttributes reAttr, Model model, HttpSession session)
 			throws Exception {
 
-		String root = session.getServletContext().getRealPath("	");
+		String root = session.getServletContext().getRealPath("/");
 		String pathname = root + "uploads" + File.separator + "photo";
 
 		try {

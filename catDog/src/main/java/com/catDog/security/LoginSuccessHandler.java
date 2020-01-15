@@ -32,12 +32,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
 	@Autowired
 	private CustomerService service;
-	
-	@Autowired
-	private AdminService service2;
-	
-	
-	
+
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -68,6 +63,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 			info.setNickName(member.getNickName());
 			info.setReportCount(member.getReportCount());
 			info.setWarn(member.getWarn());
+			info.setUserPic(member.getUserPic());
 			session.setAttribute("member", info);
 
 			Date endDate = new Date();
