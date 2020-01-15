@@ -320,22 +320,41 @@ a.sortName{
     text-align: right;
 }
 
-.payTable{
+.payTable > table{
 	border-top: 2px solid #e4e4e4;
 	border-collapse: collapse;
 	border-spacing: 0;
 	width: 100%;
 }
 
-.payTable > tr {
-	border-bottom: 1px solid #e4e4e4;
+.payInput{
+	border: 1px solid #e4e4e4;
+	width: 220px;
+	padding: 5px 0px 5px 5px;
 }
 
-.payTable > tr > th{
-	background: #51321b;
-	color : white;
-	font-weight: bold;
+.payTA{
+	border: 1px solid #e4e4e4;
+	width: 95%;
+	padding: 5px 0px 5px 5px;
+	resize: vertical;
+	height: 70px;
 }
 
+.payTdCon{
+    padding: 7px 13px;
+}
 
+.payTdTit{
+	background: #eaeaea;
+	color: black;
+	padding-left: 20px;
+	width: 160px;
+}
 
+.readInput{
+	border: none;
+	width: max-content;	
+
+}
+	

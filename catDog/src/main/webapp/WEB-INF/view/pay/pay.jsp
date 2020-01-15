@@ -2,6 +2,7 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	String cp = request.getContextPath();
 %>
@@ -60,6 +61,7 @@
 			f.submit();
 			return;
 		}
+		
 		
 		if(f.checkAgree.value!=1){
 			alert("상기 내용 확인 후 동의해주셔야 결제진행이 가능합니다.");
@@ -135,7 +137,7 @@
 	
 	function changePoint(){
  		var point = $("#usePoint");
-		var total = Number($("#total").val())+2500;
+		var total = ${mode=='cart'? cartList.get(0).total:product.total}+2500;
 		
 		if(point.val() < 0){
 			point.val("0");
@@ -152,7 +154,9 @@
 			point.val(total);
 		}
 		
-		$("#purchase").val(total-point.val()); 
+		$("input[name=purchase]").val(total-point.val());
+		$("#purchase").text((total-point.val()).toLocaleString()+"원" ); 
+		
 	}
 	
 	$(function(){
@@ -184,7 +188,7 @@
 </script>
 
 
-<div class="wide-container">
+<div class="container-board">
 		<div class="order_tit" style="width: 100%;height: 60px;margin-bottom: 10px; line-height: 60px;">
         <div class="body-title" style="display: inline-block;"><i class="far fa-credit-card"></i>&nbsp;주문서작성/결제</div>
         <div class="pay-seq" style="float: right; font-size: 14pt;">
@@ -197,9 +201,9 @@
     	</div>
 
 		<form method="post" name="payForm">
-			<div class="payProduct">
+			<div class="payProduct" style="margin-bottom: 50px;">
 				<table style="text-align: center;">
-					<tr style="color:white; background-color:#51321b;">
+					<tr style="color: black;background-color: #eaeaea;">
 						<td colspan="2" style="padding: 5px 0px;">상품정보</td>
 						<td>판매가</td>
 						<td>수량</td>
@@ -238,31 +242,23 @@
 				</table>
 				<p onclick="javascript:location.href='<%=cp%>/pay/cart'" style="margin: 5px 0px;border-bottom: 1px solid black;width: max-content;font-size: 11pt; cursor: pointer;">&lt;&nbsp;장바구니 가기</p>
 			</div>
-			<div class="pay_customer">
+			<div class="pay_customer" style="margin-bottom: 50px;">
 				<div class="title">
 					<h3>주문 정보</h3>
-					<p class="">
-						필수입력사항
-					</p>
 				</div>
-				<div class="">
-					<table class="payTable">
-						<colgroup>
-							<col style="width: 139px;">
-							<col style="width: auto;">
-						</colgroup>
+				<div class="payTable">
+					<table>
 						<!-- 국내 쇼핑몰 -->
-						<tbody class="">
-							<tr>
-								<th>주문하시는 분 </th>
-								<td>
-								<input name="name" class="" placeholder="" size="15" value="${customer.name}" type="text">
+							<tr style="	border-bottom: 1px solid #d4d4d4;">
+								<td class="payTdTit">주문하시는 분 </td>
+								<td class="payTdCon">
+								<input name="name" class="payInput" placeholder="" size="15" value="${customer.name}" type="text">
 								</td>
 							</tr>
-							<tr class="">
-								<th>휴대전화 </th>
-								<td>
-									<select id="" name="tel1">
+							<tr style="	border-bottom: 1px solid #d4d4d4;">
+								<td class="payTdTit">휴대전화 </td>
+								<td class="payTdCon">
+									<select name="tel1" class="payInput" >
 											<option value="010" ${customer.tel1=="010" ? "selected='selected'" : ""}>010</option>
 											<option value="011" ${customer.tel1=="011" ? "selected='selected'" : ""}>011</option>
 											<option value="016" ${customer.tel1=="016" ? "selected='selected'" : ""}>016</option>
@@ -270,20 +266,18 @@
 											<option value="018" ${customer.tel1=="018" ? "selected='selected'" : ""}>018</option>
 											<option value="019" ${customer.tel1=="019" ? "selected='selected'" : ""}>019</option>
 									</select>
-									-<input id="" name="tel2" maxlength="4" size="4" value="${customer.tel2}" type="text">
-									-<input id="" name="tel3" maxlength="4" size="4" value="${customer.tel3}" type="text">
+									-<input class="payInput" name="tel2" maxlength="4" size="4" value="${customer.tel2}" type="text">
+									-<input class="payInput" name="tel3" maxlength="4" size="4" value="${customer.tel3}" type="text">
 								</td>
 							</tr>
-						</tbody>
 						<!-- 해외 쇼핑몰 -->
 						<!-- 이메일 국내/해외 -->
-						<tbody class="">
-							<tr>
-								<th>이메일</th>
-								<td>
-									<input id="" name="email1" class="mailId" value="${customer.email1}" type="text">
-									@<input id="" name="email2" class="mailAddress" readonly="readonly" value="${customer.email2}" type="text">
-									<select id="" name="selectEmail" onchange="changeEmail();">
+							<tr style="	border-bottom: 1px solid #d4d4d4;">
+								<td class="payTdTit">이메일</td>
+								<td class="payTdCon">
+									<input class="payInput" name="email1" class="mailId" value="${customer.email1}" type="text">
+									@<input class="payInput" name="email2" class="mailAddress" readonly="readonly" value="${customer.email2}" type="text">
+									<select name="selectEmail" onchange="changeEmail();" class="payInput">
 										<option value="" selected="selected">- 이메일 선택 -</option>
 										<option value="naver.com" ${customer.email2=="naver.com" ? "selected='selected'" : ""}>naver.com</option>
 										<option value="daum.net" ${customer.email2=="daum.net" ? "selected='selected'" : ""}>daum.net</option>
@@ -299,64 +293,52 @@
 										<li>- 이메일 주소란에는 반드시 수신가능한 이메일주소를 입력해 주세요</li>
 									</ul></td>
 							</tr>
-						</tbody>
 						
 					</table>
 				</div>
 			</div>
 			
-			<div class="pay_deliver">
+			<div class="pay_deliver" >
 				<div class="title">
 					<h3>배송 정보</h3>
-					<p class="">
-						필수입력사항
-					</p>
 				</div>
-				<div class="">
-					<table class="payTable">
-						<colgroup>
-							<col style="width: 139px;">
-							<col style="width: auto;">
-						</colgroup>
+				<div class="payTable" style="margin-bottom: 50px;">
+					<table>
 						<!-- 국내 쇼핑몰 -->
-						<tbody class="">
-							<tr class="">
-								<th>배송지 선택</th>
-								<td>
+							<tr style="	border-bottom: 1px solid #d4d4d4;">
+								<td class="payTdTit">배송지 선택</td>
+								<td class="payTdCon">
 									<div class="address">
-										<input id="" name="addressType" value="same" type="radio" ${not empty sessionScope.member?"checked='checked'":""}>
+										<input name="addressType" value="same" type="radio" ${not empty sessionScope.member?"checked='checked'":""}>
 										${not empty sessionScope.member?"기본 배송지":"주문자 정보와 동일"}
 										
-										<input id="" name="addressType" value="direct" type="radio">
+										<input name="addressType" value="direct" type="radio">
 										직접 입력
 										<a href="#none" id="btn_shipp_addr" class="">
 										<span class="">주소록 보기</span></a>
 									</div>
 								</td>
 							</tr>
-							<tr>
-								<th scope="row">받으시는 분 </th>
-								<td>
-								<input name="deliverName" class="" placeholder="" size="15" value="${customer.name}" type="text">
+							<tr style="	border-bottom: 1px solid #d4d4d4;">
+								<td class="payTdTit">받으시는 분 </td>
+								<td class="payTdCon">
+								<input name="deliverName" class="payInput" placeholder="" size="15" value="${customer.name}" type="text">
 								</td>
 							</tr>
-							<tr class="">
-								<th>주소</th>
-								<td>
-									<input id="" name="deliverZip" type="text" value="${customer.zip}"> 
-									<a id="" class="" >
-										<button type="button" class="btn" id="btnZip" data-toggle="modal">우편번호</button>
-									</a><br> 
-									<input id="" name="deliverAddr1" class="" placeholder="" size="40" value="${customer.addr1}" type="text"> 
-									<span class="">기본주소</span><br>
-									<input id="" name="deliverAddr2" class="" size="40" value="${customer.addr2}" type="text"> 
-									<span class="">나머지주소</span><span class=" ">(선택입력가능)</span>
+							<tr style="	border-bottom: 1px solid #d4d4d4;">
+								<td class="payTdTit">주소</td>
+								<td class="payTdCon">
+									<input class="payInput" name="deliverZip" type="text" value="${customer.zip}"> 
+										<button type="button" id="btnZip" data-toggle="modal" style="background:white; color:black; width: 100px;height: 35px; font-size: 11pt; border: 1px solid #d4d4d4; ">우편번호검색</button>
+									<br> 
+									<input name="deliverAddr1" class="payInput" style="width:500px; margin-top: 5px;" placeholder="" size="40" value="${customer.addr1}" type="text"> 
+									<input name="deliverAddr2" class="payInput" size="40" value="${customer.addr2}" type="text"> 
 								</td>
 							</tr>
-							<tr class="">
-								<th>휴대전화 </th>
-								<td>
-									<select id="" name="deliverTel1">
+							<tr style="	border-bottom: 1px solid #d4d4d4;">
+								<td class="payTdTit">휴대전화 </td>
+								<td class="payTdCon">
+									<select name="deliverTel1" class="payInput">
 											<option value="010" ${customer.tel1=="010" ? "selected='selected'" : ""}>010</option>
 											<option value="011" ${customer.tel1=="011" ? "selected='selected'" : ""}>011</option>
 											<option value="016" ${customer.tel1=="016" ? "selected='selected'" : ""}>016</option>
@@ -364,131 +346,133 @@
 											<option value="018" ${customer.tel1=="018" ? "selected='selected'" : ""}>018</option>
 											<option value="019" ${customer.tel1=="019" ? "selected='selected'" : ""}>019</option>
 									</select>
-									-<input id="" name="deliverTel2" maxlength="4" size="4" value="${customer.tel2}" type="text">
-									-<input id="" name="deliverTel3" maxlength="4" size="4" value="${customer.tel3}" type="text">
+									-<input class="payInput" name="deliverTel2" maxlength="4" size="4" value="${customer.tel2}" type="text">
+									-<input class="payInput" name="deliverTel3" maxlength="4" size="4" value="${customer.tel3}" type="text">
 								</td>
 							</tr>
-						</tbody>
 						<!-- 배송메시지 -->
-						<tbody class="">
-							<tr class="">
-								<th>배송 메시지</th>
-								<td>
-									<textarea rows="" cols="60" name="memo"></textarea>
+							<tr style="	border-bottom: 1px solid #d4d4d4;">
+								<td class="payTdTit">배송 메시지</td>
+								<td class="payTdCon">
+									<textarea  class="payTA" name="memo"></textarea>
 								</td>
 							</tr>
-						</tbody>
 					</table>
 				</div>
 
-				<div class="">
-					<table class="payTable">
-						<colgroup>
-							<col style="width: 15%;">
-							<col style="width: 85%;">
-						</colgroup>
-						<tbody>
-							<tr>
-								<th >상품 합계 금액</th>
-								<td><strong id="" class=""><input id="total" name="total" readonly="readonly" value="${mode=='cart'? cartList.get(0).total:product.total}"></strong>
+				<div class="payTable" style="margin-bottom: 50px;">
+					<div class="title">
+						<h3>결제정보</h3>
+					</div>
+					<table>
+							<tr style="	border-bottom: 1px solid #d4d4d4;">
+								<td class="payTdTit"> 상품 합계 금액</td>
+								<td class="payTdCon">
+								<input class="readInput" type="hidden" name="total" value="${mode=='cart'? cartList.get(0).total:product.total}">
+								<strong id="total" class="">
+								<fmt:formatNumber value="${mode=='cart'? cartList.get(0).total:product.total}" type="number"/>원
+								</strong>
 								</td>
 							</tr>
-							<tr>
-								<th>배송비</th>
-								<td>
+							<tr style="	border-bottom: 1px solid #d4d4d4;">
+								<td class="payTdTit">배송비</td>
+								<td class="payTdCon">
 									<span id="deliver">2,500</span>원 
 								</td>
 							</tr>
 							<c:if test="${not empty sessionScope.member}">
-								<tr>
-									<th>적립 포인트</th>
-									<td>
-								
-										<span id=""><input id="point" name="point" readonly="readonly" value="${mode=='cart'? cartList.get(0).point:product.point}"></span>원 
+								<tr style="	border-bottom: 1px solid #d4d4d4;">
+									<td class="payTdTit">적립 포인트</td>
+									<td class="payTdCon">
+										<input name="point" type="hidden" class="readInput" value="${mode=='cart'? cartList.get(0).point:product.point}">
+										<span id="point">
+										<fmt:formatNumber value="${mode=='cart'? cartList.get(0).point:product.point}" type="number"/>원
+										</span> 
 								
 									</td>
 								</tr>
-								<tr>
-									<th>포인트 사용</th>
-									<td>
+								<tr style="	border-bottom: 1px solid #d4d4d4;">
+									<td class="payTdTit">포인트 사용</td>
+									<td class="payTdCon">
 								
-										<span id=""><input id="usePoint" type="text" value="0" name="usePoint" onchange="changePoint();"> </span>원 
-										<span id="">(보유 포인트 : ${customer.mileage}원)</span>
+										<span><input id="usePoint" class="payInput" type="text" value="0" name="usePoint" onchange="changePoint();"> </span>
+										<span>(보유 포인트 : <fmt:formatNumber value="${customer.mileage}" type="number"/>원)</span>
 								
 									</td>
 								</tr>
 							</c:if>
-							<tr>
-								<th>최종 결제 금액</th>
-								<td>
-									<strong id="" class=""><input id="purchase" name="purchase" readonly="readonly" value="${mode=='cart'? (cartList.get(0).total+2500):(product.total+2500)}"></strong>원
+							<tr style="	border-bottom: 1px solid #d4d4d4;">
+								<td class="payTdTit">최종 결제 금액</td>
+								<td class="payTdCon">
+									<input name="purchase" class="readInput" type="hidden" value="">
+									<strong>
+									<span id="purchase"><fmt:formatNumber value="${mode=='cart'? (cartList.get(0).total+2500):(product.total+2500)}" type="number"/>원</span>
+									</strong>
 
 								</td>
 							</tr>
-						</tbody>
 					</table>
 				</div>
 
-				<div class="title">
-						<h3>결제수단</h3>
-					</div>
 
-					<div class="">
-						<div class="">
-							<div class="">
+							<div class="" style="margin-bottom: 50px;">
+								<div class="title" style="border-bottom: 2px solid #d4d4d4;">
+									<h3>결제수단</h3>
+								</div>
+							<div style="border-bottom: 1px solid #d4d4d4; padding: 10px 0px;">
 								<span class="">
-									<input id="" name="payMethod" value="0" type="radio">
+									<input name="payMethod" value="0" type="radio">
 									무통장 입금
 								</span> 
 								<span class="">
-									<input id="" name="payMethod" value="1" type="radio">
+									<input name="payMethod" value="1" type="radio">
 									신용카드
 								</span> 
 								<span class="">
-									<input id="" name="payMethod" value="2" type="radio">
+									<input name="payMethod" value="2" type="radio">
 									계좌이체
 								</span> 
 								<span class="">
-									<input id="" name="payMethod" value="3" type="radio">
+									<input name="payMethod" value="3" type="radio">
 									휴대폰결제
-								</span> 
+								</span>
+							<div id="bankBox" class="pay_bankbook_box" style="display: none;">
+								<em class="pay_bankbook_txt">( 무통장 입금 의 경우 입금확인 후부터 배송단계가
+									진행됩니다. )</em>
+								<table>
+									<tr style="padding: 10px 0px;">
+	
+										<td><strong>입금자명</strong></td>
+										<td><input type="text" name="bankSender" class="payInput"
+											readonly="readonly" value="${sessionScope.member.name}"></td>
+									</tr>
+									<tr style="padding: 10px 0px;">
+										<td><strong>입금은행</strong></td>
+										<td><select name="bankAccount" class="payInput">
+												<option value="">선택하세요</option>
+												<option value="1">국민은행 000000-00-000000 주식회사 멍냥개냥</option>
+										</select></td>
+									</tr>
+								</table>
 							</div>
+							</div>
+					</div>
 
-						<div id="bankBox" class="pay_bankbook_box" style="display: none;">
-                            <em class="pay_bankbook_txt">( 무통장 입금 의 경우 입금확인 후부터 배송단계가 진행됩니다. )</em>
-                            <table>
-                            <tr>
-                                
-                                 <td>   <strong>입금자명</strong></td>
-                                  <td>  <input type="text" name="bankSender" readonly="readonly" value="${sessionScope.member.name}"></td>
-                              </tr>  
-                               <tr>
-                              	  <td>      <strong>입금은행</strong></td>
-	                              <td>
-	                                    <select name="bankAccount" class="chosen-select">
-	                                        <option value="">선택하세요</option>
-	                                        <option value="1">국민은행 000000-00-000000 주식회사 멍냥개냥</option>
-	                                    </select>
-	                                </td>
-                                </tr>
-                            </table>
-                        </div>
+						
 
 						<!-- 최종결제금액 -->
-						<div class="" style="float: left;">
+						<div class="" style="text-align: center;">
 
-							<p class="" id="">
+							<p class="" style="margin-bottom: 50px;">
 								<input id="" name="checkAgree" value="1" type="checkbox" >
-								결제정보를 확인하였으며, 구매진행에 동의합니다.
+								<b>(필수)</b>&nbsp;결제정보를 확인하였으며, 구매진행에 동의합니다.
 							
 							</p>
 							<div class="btn">
 								<input type="hidden" name="mileage" value="${customer.mileage}">
-								<button type="button" onclick="pay();">결제하기</button>
+								<button type="button" onclick="pay();" class="pinkBtn" style="width: 250px;font-size: 15pt;">결제하기</button>
 							</div>
 						</div>
-					</div>
-				</div>
 			</div>
 		</form>
 
