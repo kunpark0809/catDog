@@ -18,7 +18,7 @@
 	
 	
 	<select id="listPark" parameterType="map" resultType="com.catDog.park.Park">
-		SELECT r.recommendNum, r.placeName, r.content, r.hitCount, rp.imageFileName
+		SELECT r.recommendNum, r.placeName, r.content, rp.imageFileName
 		FROM recommend r
 		JOIN recommendPic rp ON r.recommendNum = rp.recommendNum
 		<where>

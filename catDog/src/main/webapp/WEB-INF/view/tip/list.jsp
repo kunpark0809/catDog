@@ -20,6 +20,29 @@ margin: 4px;
 border-radius: 5px;
 }
 
+.selectField {
+width: 60px;
+background-color: white;
+border: 2px solid #51321b;
+color: black;
+padding: 3px 0;
+text-align: center;
+display: inline-block;
+font-size: 15px;
+margin: 2px;
+}
+
+.boxTF {
+width: 300px;
+background-color: white;
+border: 2px solid #51321b;
+color: black;
+padding: 3px 0;
+text-align: center;
+display: inline-block;
+font-size: 15px;
+margin: 2px;
+}
 
 </style>
 

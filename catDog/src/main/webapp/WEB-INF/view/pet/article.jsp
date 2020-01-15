@@ -170,11 +170,14 @@ $(function(){
 function report(){
 	$('#report_dialog').dialog({
 		  modal: true,
-		  height: 300,
+		  height: 380,
 		  width: 500,
 		  title: '신고하기',
 		  close: function(event, ui) {
-		  }
+		  },
+			open: function(event, ui) {
+			$(".ui-dialog-titlebar-close", $(this).parent()).hide();
+		}
 	});
 	
 }
@@ -311,3 +314,4 @@ $(function(){
 			
 		</form>
 	</div>
+</div>
