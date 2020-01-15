@@ -67,6 +67,10 @@ public class EventController {
 		
 		String paging = myUtil.paging(current_page, total_page, listUrl);
 		
+	
+			
+	    model.addAttribute("sort",sort);
+		
 		model.addAttribute("list", list);
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("total_page", total_page);

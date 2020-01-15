@@ -14,20 +14,20 @@ function searchList() {
 }
 </script>
 
-<div class="body-container" style="width: 830px; margin: 20px auto 0px; border-spacing: 0px;">
+<div class="container-board" style="padding: 60px;">
 
 	<div class="body-title">
-		<h3><span style="font-family: Webdings"></span> 포인트 조회 </h3>
+		<h3><span style="font-family: Webdings"><i class="fab fa-pinterest"></i></span> 포인트 조회 </h3>
 	</div>
 	
 	<div>
-		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
+		<table style="width: 100%; border-spacing: 0px;">
 			<tr height="35">
 				<td align="left" width="50%">
-					${dataCount}개(${page}/${total_page} 페이지)
+					전체 <span style="color: #D96262;">${dataCount}</span>건 / 총 <span style="color: #D96262;">${total_page}</span> 페이지
 				</td>
 				<td align="right" width="50%">
-					잔여포인트 : ${list.get(0).mileage}
+					잔여포인트 : ${empty list? 0:list.get(0).mileage}
 				</td>
 				<td align="right">
 					&nbsp;
@@ -36,10 +36,10 @@ function searchList() {
 		</table>
 		
 		<table style="width: 100%; border-spacing: 0px; border-collapse: collapse;">
-			<tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
-				<th width="100" style="color: #787878;">날짜</th>
-				<th style="color: #787878;">내용</th>
-				<th width="100" style="color: #787878;"> 포인트 </th>
+			<tr align="center" bgcolor="#51321b" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
+				<th width="100" style="color: white;">날짜</th>
+				<th style="color: white;">내용</th>
+				<th width="100" style="color: white;"> 포인트 </th>
 			</tr>
 		 
 		<c:forEach var="dto" items="${list}">
@@ -60,12 +60,12 @@ function searchList() {
 			</tr>
 		</table>
 
-		<table style="width: 100%; margin: 10px auto; border-spacing: 0px;">
+		<%-- <table style="width: 100%; margin: 10px auto; border-spacing: 0px;">
 			<tr height="40">
 				<td align="left" width="100">
 					<button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/mypage/point';">새로고침</button>
 				</td>
-				<%-- <td align="center">
+				<td align="center">
 					<form name="searchForm" action="<%=cp%>/notice/list" method="post">
 						<select name="condition" class="selectField">
 							<option value="all" ${condition=="all"?"selected='selected'":""}>제목+내용</option>
@@ -77,9 +77,9 @@ function searchList() {
 						<input type="text" name="keyword" value="${keyword}" class="boxTF">
 						<button type="button" class="btn" onclick="searchList()">검색</button>
 					</form>
-				</td> --%>
+				</td>
 			</tr>
-		</table>
+		</table> --%>
 	</div>
 	
 </div>

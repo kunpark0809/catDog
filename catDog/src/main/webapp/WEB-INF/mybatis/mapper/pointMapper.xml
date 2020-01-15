@@ -5,6 +5,9 @@
 	<select id="listPoint" parameterType="map" resultType="com.catDog.mypage.Point">
 		SELECT pd.num, pd.point, pd.content, md.userId, md.mileage, TO_CHAR(pd.created, 'yyyy.mm.dd') created, pd.checked
 		FROM pointDetail pd JOIN memberDetail md ON pd.num = md.num
+		<where>
+			pd.num=#{num}
+		</where>
 		ORDER BY pd.created DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
@@ -17,6 +20,7 @@
 	
 	<select id="dataCount" parameterType="map" resultType="Integer">
 		SELECT NVL(COUNT(*), 0)
-		FROM pointDetail pd
+		FROM pointDetail pd JOIN memberDetail md ON pd.num = md.num
+		WHERE pd.num=#{num}
 	</select>
 </mapper>

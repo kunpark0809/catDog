@@ -28,10 +28,52 @@
      text-overflow:ellipsis;
      cursor: pointer;
 }
+.ui-dialog-titlebar{
+   background: none;
+    color: black;
+    border: none;
+    border-bottom: 1px solid #e4e4e4;
+    border-radius: 0px;
+}
+.ui-dialog .ui-dialog-titlebar {
+    padding-left: 0px;
+}
+.ui-dialog{
+   padding: 5px 20px;
+   border-radius: 0px;
+   position: fixed;
+   
+}
+.dialog_cancel{
+   background: white;
+   color:#262626;
+   border: 1px solid #d8d8d8;
+   width: 25%;
+   padding: 5px 0px;
+}
+
+.dialog_submit{
+   background: #D96262;
+   color: white;
+   border: 1px solid #D96262;
+   width: 25%;
+   padding: 5px 0px;
+}
 
 </style>
 
 <script type="text/javascript">
+
+$(document).ready(function(){
+	var info="${sort}";
+	
+	if(info=="ing"){
+		$(".ing").css("font-weight","bold");
+	}else{
+		$(".end").css("font-weight","bold");
+	}
+});
+
 function searchList() {
 	var f=document.searchForm;
 	f.submit();
@@ -106,6 +148,9 @@ function eventDetail(eventNum){
 		  bottom: 120,
 		  title: '이벤트',
 		  close: function(event, ui) {
+		  },
+		  open: function(event, ui) {
+			  $(".ui-dialog-titlebar-close", $(this).parent()).hide();
 		  }
 	});
 	
@@ -122,21 +167,21 @@ $(function(){
 
 <div class="container-board">
 	<div class="body-title">
-		<h3><i class="far fa-image"></i> 이벤트 </h3>
+		<span style="font-family: Webdings"><i class="fas fa-cookie-bite"></i></i> 이벤트</span>
 	</div>
 	
 	<div>
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
 			<tr height="35">
 				<td align="left" width="50%">
-					${dataCount}개(${page}/${total_page} 페이지)
+					전체 게시글 <span style="color: #D96262;">${dataCount}</span> 건 / 총 <span style="color: #D96262;">${total_page}</span> 페이지
 				</td>
 				<td align="right">
 					&nbsp;
 				</td>
-				<td style="text-align: right; width: 50%; color: #51321b">
-					<a href="<%=cp%>/event/list?sort=ing">진행중인 이벤트&nbsp;</a>&nbsp;|&nbsp;
-					<a href="<%=cp%>/event/list?sort=end">종료된 이벤트</a>
+				<td style="text-align: right; width: 50%; color: #51321b;">
+					<a class="ing" href="<%=cp%>/event/list?sort=ing">진행중인 이벤트&nbsp;</a>&nbsp;|&nbsp;
+					<a class="end" href="<%=cp%>/event/list?sort=end">종료된 이벤트</a>
 				</td>
 			</tr>
 		</table>
@@ -217,8 +262,8 @@ $(function(){
 			<img id="eventImg" alt="" src="">
 				
 			<div class="btn_box" align="center" style="padding-top: 20px;">
-				<button type="button" class="btnDialogCancel">취소</button>
-				<button type="button" onclick="article();">상세보기</button>
+				<button type="button" class="btnDialogCancel dialog_cancel">취소</button>
+				<button type="button" class="dialog_submit" onclick="article();">상세보기</button>
 			</div>
 			
 		</form>

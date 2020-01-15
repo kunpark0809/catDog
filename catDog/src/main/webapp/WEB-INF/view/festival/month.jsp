@@ -9,13 +9,22 @@
 <link rel="stylesheet" href="<%=cp%>/resource/css/tabs.css" type="text/css">
 
 <style type="text/css">
-.ui-widget-header {
+.ui-dialog-titlebar {
 	background: none;
+	color: black;
 	border: none;
-	height: 35px;
-	line-height: 35px;
-	border-bottom: 1px solid #cccccc;
+	border-bottom: 1px solid #e4e4e4;
 	border-radius: 0px;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+	padding-left: 0px;
+}
+
+.ui-dialog {
+	padding: 5px 20px;
+	border-radius: 0px;
+	position: fixed;
 }
 
 .help-block {
@@ -54,6 +63,19 @@
 	color: #333333;
 }
 
+.dialog_bts {
+	width: 100px;
+	background-color: #51321b;
+	border: none;
+	color: #ffffff;
+	padding: 6px 0;
+	text-align: center;
+	display: inline-block;
+	font-size: 15px;
+	margin: 4px;
+	border-radius: 5px;
+}
+
 .preMonthDate, .nextMonthDate {
 	color: #aaaaaa;
 }
@@ -77,7 +99,6 @@
 	margin: 1.5px 0;
 	font-size: 13px;
 	color: #555555;
-	background: #eeeeee;
 	cursor: pointer;
 	white-space: nowrap;
 	overflow: hidden;
@@ -140,6 +161,10 @@ function changeDate(year, month) {
 
 $(function() {
 	$(".textDate").click(function(){
+		if(${empty sessionScope || "${fn:indexOf(sessionScope.member.userId,'admin') == 0}"}){
+			return;
+		}
+		
 		$("form[name=festivalForm]").each(function() {
 			this.reset();
 		});
@@ -306,9 +331,8 @@ $(function() {
 
 <div style="width: 900px; margin: 20px auto 10px;">
 	<div class="body-title">
-		<h3>
-			<i class="far fa-calendar-alt"></i> 일정관리
-		</h3>
+		<span style="font-family: Webdings"><i class="far fa-calendar-alt"></i> 일정관리</span>
+		<span style="width: 100px; height: 55px;"><img src="/catDog/resource/img/event.png"></span>
 	</div>
 
 	<div>
@@ -321,7 +345,7 @@ $(function() {
 		</div>
 		
 		<div id="tab-content" style="clear: both; padding: 20px 0px 0px;">
-			<table style="width: 840px; margin: 0px auto; border-spacing: 0;">
+			<table style="width: 900px; margin: 0px auto; border-spacing: 0;">
 				<tr height="60">
 					<td width="200">&nbsp;</td>
 					<td align="center">
@@ -360,30 +384,30 @@ $(function() {
 	<form name="festivalForm">
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
 			<tr>
-				<td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+				<td width="100" valign="top" style="text-align: left; padding-top: 5px;">
 				<label style="font-weight: 900;">제목</label></td>
 				<td style="padding: 0 0 15px 15px;">
 					<p style="margin-top: 1px; margin-bottom: 5px;">
 						<input type="text" name="subject" id="form-subject" maxlength="100" class="boxTF" style="width: 95%;">
 					</p>
-					<p class="help-block">* 제목은 필수 입니다.</p>
+					<p class="help-block" style="color: #A66E4E;">* 제목은 필수 입니다.</p>
 				</td>
 			</tr>
 			<tr>
-				<td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+				<td width="100" valign="top" style="text-align: left; padding-top: 5px;">
 					<label style="font-weight: 900;">일정분류</label></td>
 				<td style="padding: 0 0 15px 15px;">
 					<p style="margin-top: 1px; margin-bottom: 5px;">
 						<select name="color" id="form-color" class="selectField">
-							<option value="#A66E4E" ${dto.color=="#A66E4E"?"selected='selected' ":""}>강아지일정</option>
-							<option value="#D96262" ${dto.color=="#D96262"?"selected='selected' ":""}>고양이일정</option>
-							<option value="#8DC3F2" ${dto.color=="#8DC3F2"?"selected='selected' ":""}>기타일정</option>
+							<option value="#A66E4E" ${dto.color=="#A66E4E"?"selected='#A66E4E' ":""}>강아지일정</option>
+							<option value="#D96262" ${dto.color=="#D96262"?"selected='#D96262' ":""}>고양이일정</option>
+							<option value="#8DC3F2" ${dto.color=="#8DC3F2"?"selected='#8DC3F2' ":""}>기타일정</option>
 						</select>
 					</p>
 				</td>
 			</tr>
 			<tr>
-				<td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+				<td width="100" valign="top" style="text-align: left; padding-top: 5px;">
 					<label style="font-weight: 900;">종일일정</label></td>
 				<td style="padding: 0 0 15px 15px;">
 					<p style="margin-top: 5px; margin-bottom: 5px;">
@@ -394,7 +418,7 @@ $(function() {
 			</tr>
 
 			<tr>
-				<td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+				<td width="100" valign="top" style="text-align: left; padding-top: 5px;">
 					<label style="font-weight: 900;">시작일자</label></td>
 				
 				<td style="padding: 0 0 15px 15px;">
@@ -402,24 +426,24 @@ $(function() {
 						<input type="text" name="startDate" id="form-startDate" maxlength="10" class="boxTF" readonly="readonly" style="width: 25%; background: #ffffff;">
 						<input type="text" name="startTime" id="form-startTime" maxlength="5" class="boxTF" style="width: 15%; display: none;" placeholder="시작시간">
 					</p>
-					<p class="help-block">* 시작날짜는 필수입니다.</p>
+					<p class="help-block" style="color: #A66E4E;">* 시작날짜는 필수입니다.</p>
 				</td>
 			</tr>
 
 			<tr>
-				<td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+				<td width="100" valign="top" style="text-align: left; padding-top: 5px;">
 					<label style="font-weight: 900;">종료일자</label></td>
 				<td style="padding: 0 0 15px 15px;">
 					<p style="margin-top: 1px; margin-bottom: 5px;">
 						<input type="text" name="endDate" id="form-endDate" maxlength="10" class="boxTF" readonly="readonly" style="width: 25%; background: #ffffff;">
 						<input type="text" name="endTime" id="form-endTime" maxlength="5" class="boxTF" style="width: 15%; display: none;" placeholder="종료시간">
 					</p>
-					<p class="help-block">종료일자는 선택사항이며, 시작일 이후로 해주세요.</p>
+					<p class="help-block" style="color: #A66E4E;">종료일자는 선택사항이며, 시작일 이후로 해주세요.</p>
 				</td>
 			</tr>
 			
 			<tr>
-				<td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+				<td width="100" valign="top" style="text-align: left; padding-top: 5px;">
 				<label style="font-weight: 900;">장소</label></td>
 				<td style="padding: 0 0 15px 15px;">
 					<p style="margin-top: 1px; margin-bottom: 5px;">
@@ -429,7 +453,7 @@ $(function() {
 			</tr>
 			
 			<tr>
-				<td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+				<td width="100" valign="top" style="text-align: left; padding-top: 5px;">
 					<label style="font-weight: 900;">내용</label></td>
 				<td style="padding: 0 0 15px 15px;">
 					<p style="margin-top: 1px; margin-bottom: 5px;">
@@ -440,9 +464,9 @@ $(function() {
 
 			<tr height="45">
 				<td align="center" colspan="2">
-					<button type="button" class="btn" id="btnFestivalSendOk">일정등록</button>
-					<button type="reset" class="btn">다시입력</button>
-					<button type="button" class="btn" id="btnFestivalSendCancel">등록취소</button>
+					<button type="button" class="dialog_bts" id="btnFestivalSendOk">일정등록</button>
+					<button type="reset" class="dialog_bts">다시입력</button>
+					<button type="button" class="dialog_bts" id="btnFestivalSendCancel">등록취소</button>
 				</td>
 			</tr>
 		</table>

@@ -7,6 +7,32 @@
 %>
 <link rel="stylesheet" href="<%=cp%>/resource/css/game.css">
 <script src='https://cdn.sobekrepository.org/includes/jquery-rotate/2.2/jquery-rotate.min.js'></script>
+<style type="text/css">
+.ui-dialog-titlebar{
+   background: none;
+    color: black;
+    border: none;
+    border-bottom: 1px solid #e4e4e4;
+    border-radius: 0px;
+}
+.ui-dialog .ui-dialog-titlebar {
+    padding-left: 0px;
+}
+.ui-dialog{
+   padding: 5px 20px;
+   border-radius: 0px;
+   position: fixed;
+   
+}
+.dialog_cancel{
+   background: #D96262;
+   color: white;
+   border: 1px solid #D96262;
+   width: 25%;
+   padding: 5px 0px;
+}
+</style>
+
 <script type="text/javascript">
 (function($) {
      $.fn.extend({
@@ -28,51 +54,51 @@
            var data = [
                   {
                color: '#3f297e',
-               text: 'N분의 1'
+               text: '1000 Point'
              },
              {
                color: '#1d61ac',
-               text: '요즘것들'
+               text: '강아지 사료'
              },
              {
                color: '#169ed8',
-               text: '도박'
+               text: '고양이 사료'
              },
              {
                color: '#209b6c',
-               text: '젓가락'
+               text: '강아지 간식'
              },
              {
                color: '#60b236',
-               text: '거북선'
+               text: '고양이 간식'
              },
              {
                color: '#efe61f',
-               text: '겁'
+               text: '강아지 장난감 '
              },
              {
                color: '#f7a416',
-               text: 'Day Day'
+               text: '고양이 장난감 '
              },
              {
                color: '#e6471d',
-               text: '호랑나비'
+               text: '강아지 집'
              },
              {
                color: '#dc0936',
-               text: 'Okey Dokey'
+               text: '고양이 집'
              },
              {
                color: '#e5177b',
-               text: '오빠차'
+               text: '2000 Point'
              },
              {
                color: '#be107f',
-               text: 'RESPECT'
+               text: '강아지 용품'
              },
              {
                color: '#881f7e',
-               text: '작두'
+               text: '고양이  용품'
              }
            ];
     
@@ -214,7 +240,7 @@ function report(){
 		  modal: true,
 		  height: 300,
 		  width: 500,
-		  title: '죄송하기',
+		  title: '서비스 점검중',
 		  close: function(event, ui) {
 		  }
 	});
@@ -227,6 +253,7 @@ $(function(){
 		$('#report_dialog').dialog("close");
 	});
 });
+
 </script>
 
 <p class="title"> 오늘의 주인공은 누구냥!? </p>
@@ -242,7 +269,7 @@ $(function(){
 <div id="report_dialog" style="display: none; text-align: center;">
 			<strong><br><br>서비스 진행 준비중 입니다.<br> 이용에 불편을 드려 죄송합니당.</strong>
 			<br><br>
-	<div class="btn_box" align="center">
-				<button type="button" class="btnDialogCancel">확인</button>
+	<div class="btn_box" align="center" style="padding-top: 20px;">
+				<button type="button" class="btnDialogCancel dialog_cancel">확인</button>
 	</div>
 </div>

@@ -116,7 +116,7 @@ $(function(){
 
 <div class="body-container" style="width: 900px; margin: 20px auto 10px;">
 	<div class="body-title">
-		<h3><i class="far fa-calendar-alt"></i> 일정관리 </h3>
+		<span style="font-family: Webdings"><i class="far fa-calendar-alt"></i> 일정관리</span>
 	</div>
 	<div>
 		<div style="clear: both;">
@@ -128,7 +128,7 @@ $(function(){
 		</div>
 		
 		<div id="tab-content" style="clear: both; padding: 20px 0px 0px;">
-			<table style="width: 805px; margin: 0px auto; border-spacing: 0;">
+			<table style="width: 900px; margin: 0px auto; border-spacing: 0;">
 				<tr height="60">
 					<td align="center">
 						<span class="btnDate" onclick="changeDate(${todayYear});">오늘</span>
@@ -139,7 +139,7 @@ $(function(){
 				</tr>
 			</table>
 			
-			<table id="yearCalendar" style="width: 805px; margin-top: 5px; border-spacing: 0px; border-collapse: collapse;">
+			<table id="yearCalendar" style="width: 900px; margin-top: 5px; border-spacing: 0px; border-collapse: collapse;">
 				<c:forEach var="m" begin="1" end="12" step="3">
 					<tr align="center" height="33">
 						<td colspan="7" align="center" style="font-weight: 600;">${m}월</td>

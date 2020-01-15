@@ -83,9 +83,9 @@ $(function(){
 		var $tr, $td, $input;
 		
 		$tr=$("<tr align='left' height='40' style='border-bottom: 1px solid #cccccc;'>");
-	      $td=$("<td>", {width:"100", bgcolor:"#262626", style:"text-align: center;", html:"본문사진"});
+	      $td=$("<td>", {width:"100", bgcolor:"#eeeeee", style:"text-align: center;", html:"본문사진"});
 	      $tr.append($td);
-	      $td=$("<td style='padding-left:10px; color: #262626;'>");
+	      $td=$("<td style='padding-left:10px; color: #eeeeee;'>");
 	      $input=$("<input>", {type:"file", name:"upload", class:"boxTF", style:"width: 95%; height: 25px;"});
 	      $td.append($input);
 	      $tr.append($td);
@@ -134,7 +134,7 @@ function deleteFile(eventPicNum) {
 
 <div class="body-container" style="width: 700px; margin: 20px auto 10px;">
 	<div class="body-title">
-		<h3><i class="far fa-image"></i> 이벤트 </h3>
+		<span style="font-family: Webdings"><i class="fas fa-cookie-bite"></i></i> 이벤트</span>
 	</div>
 	
 	<div>
@@ -142,13 +142,13 @@ function deleteFile(eventPicNum) {
 			<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
 			<tbody id="eventb">
 				<tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-					<td width="100" bgcolor="#eeeeee" style="text-align: center;">제&nbsp;&nbsp;&nbsp;&nbsp;목</td>
+					<td width="100" bgcolor="#eeeeee" style="text-align: center; font-weight: bold;">제&nbsp;&nbsp;&nbsp;&nbsp;목</td>
 					<td style="padding-left:10px;">
 						<input type="text" name="subject" maxlength="100" class="boxTF" style="width: 95%;" value="${list.get(0).subject}">
 					</td>
 				</tr>
 				
-				<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
+				<tr align="left" height="40" style="border-bottom: 1px solid #cccccc; font-weight: bold;">
 					<td width="100" bgcolor="#eeeeee" style="text-align: center;">작&nbsp;성&nbsp;자</td>
 					<td style="padding-left:10px;">
 						${sessionScope.member.nickName}
@@ -156,7 +156,7 @@ function deleteFile(eventPicNum) {
 				</tr>
 				
 				<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-					<td width="100" bgcolor="#eeeeee" style="text-align: center;">시&nbsp;작&nbsp;일</td>
+					<td width="100" bgcolor="#eeeeee" style="text-align: center; font-weight: bold;">시&nbsp;작&nbsp;일</td>
 					<td style="padding-left:10px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
 						<input type="text" name="startDate" maxlength="10" class="boxTF" readonly="readonly" style="width: 20%; text-align: center; background: #ffffff;">
@@ -165,30 +165,30 @@ function deleteFile(eventPicNum) {
 				</tr>
 				
 				<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-					<td width="100" bgcolor="#eeeeee" style="text-align: center;">종&nbsp;료&nbsp;일</td>
+					<td width="100" bgcolor="#eeeeee" style="text-align: center; font-weight: bold;">종&nbsp;료&nbsp;일</td>
 					<td style="padding-left:10px;">
 						<input type="text" name="endDate" maxlength="10" class="boxTF" readonly="readonly" style="width: 20%; text-align: center; background: #ffffff;">
 					</td>
 				</tr>
 				
 				<tr align="left" style="border-bottom: 1px solid #cccccc;">
-					<td width="100" bgcolor="#eeeeee" style="text-align: center; padding-top:5px;" valign="top">설&nbsp;&nbsp;&nbsp;&nbsp;명</td>
+					<td width="100" bgcolor="#eeeeee" style="text-align: center; padding-top:5px; font-weight: bold;" valign="top">설&nbsp;&nbsp;&nbsp;&nbsp;명</td>
 					<td valign="top" style="padding:5px 0px 5px 10px;">
 						<textarea name="content" rows="12" class="boxTA" style="width: 95%;">${list.get(0).content}</textarea>
 					</td>
 				</tr>  
 				<c:if test="${mode=='created'}">	
 					<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-						<td width="100" bgcolor="#eeeeee" style="text-align: center;">썸네일사진</td>
+						<td width="100" bgcolor="#eeeeee" style="text-align: center; font-weight: bold;">썸네일사진</td>
 						<td style="padding-left:10px;">
-							<input type="file" name="mainUpload" class="boxTF" size="53" style="height: 25px;" >
+							<input type="file" name="mainUpload" class="boxTF" size="53" style="height: 25px; font-weight: bold;" >
 							${image.imageFileName}
 						</td>
 					</tr>
 					<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
 				    	<td width="100" bgcolor="#eeeeee" style="text-align: center; font-weight: bold;">본문사진</td>
 				    	<td style="padding-left:10px;"> 
-				       		<input type="file" name="upload" class="boxTF" size="53" style="height: 25px;">
+				       		<input type="file" name="upload" class="boxTF" size="53" style="height: 25px; font-weight: bold;">
 				       		${image.imageFileName}
 				      	</td>
 				 	</tr>

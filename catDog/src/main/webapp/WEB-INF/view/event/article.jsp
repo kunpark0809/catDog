@@ -6,7 +6,31 @@
 <%
 	String cp=request.getContextPath();
 %>
+<style type="text/css">
+.bts {
+width: 70px;
+background-color: #51321b;
+border: none;
+color: #ffffff;
+padding: 6px 0;
+text-align: center;
+display: inline-block;
+font-size: 15px;
+margin: 4px;
+border-radius: 5px;
+}
 
+.bts2 {
+  background-color: white;
+  border: 1px solid;
+  border-color: #a9a9a9;
+  color: #black;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  height: 70px;
+}
+</style>
 <script type="text/javascript">
 function login() {
 	location.href="<%=cp%>/member/login";
@@ -234,13 +258,13 @@ $(function(){
 
 <div class="container-board">
 	<div class="body-title">
-		<h3><i class="far fa-image"></i> 이벤트 </h3>
+		<span style="font-family: Webdings"><i class="fas fa-cookie-bite"></i></i> 이벤트</span>
 	</div>
 	
 	<div>
-		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
-			<tr height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td width="50%" align="left" style="padding-left: 5px; font-size: 20px;">
+		<table style="width: 100%; margin: 10px auto 0px; border-spacing: 0px; border-collapse: collapse;">
+			<tr height="35" style="border-top: 2px solid #D96262; padding-top:20px; padding-bottom:20px; border-bottom: 1px solid #cccccc;">
+				<td width="50%" align="left" style="padding-left: 5px; font-size: 20px; padding-top:20px; padding-bottom:20px; border-bottom: 1px solid #cccccc;">
 					${list.get(0).subject}
 				</td>
 				
@@ -250,13 +274,13 @@ $(function(){
 			</tr>
 			
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
-				<td width="50%" align="left" style="padding-left: 5px;">
+				<td width="50%" align="left" style="padding-left: 5px; font-size: 17px;">
 				${sessionScope.member.nickName}
 				</td>
 			</tr>
 			
 			<tr>
-				<td colspan="2" align="center" style="padding: 10px 5px;">
+				<td colspan="2" align="center" style="padding: 10px 5px;" valign="top" height="200">
 					<c:forEach var="dto" items="${list}">
 					<img alt="" src="<%=cp%>/uploads/event/${dto.imageFileName}" style="max-width:100%; height:auto; resize:both;">
 					</c:forEach>
@@ -264,7 +288,7 @@ $(function(){
 			</tr>
 			
 			<tr style="border-bottom: 1px solid #cccccc;">
-			  <td colspan="2" align="left" style="padding: 10px 5px;" valign="top" height="50">
+			  <td colspan="2" align="center" style="padding: 10px 5px;" valign="top" height="50">
 			      ${list.get(0).content}
 			   </td>
 			</tr>
@@ -292,15 +316,15 @@ $(function(){
 			<tr height="45">
 				<td  width="300" align="left">
 					<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">
-						<button type="button" class="btn" onclick="updateEvent('${list.get(0).eventNum}');">수정</button>
+						<button type="button" class="bts" onclick="updateEvent('${list.get(0).eventNum}');">수정</button>
 					</c:if>
 					<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">
-						<button type="button" class="btn" onclick="deleteEvent('${list.get(0).eventNum}');">삭제</button>
+						<button type="button" class="bts" onclick="deleteEvent('${list.get(0).eventNum}');">삭제</button>
 					</c:if>
 				</td>
 				
 				<td align="right">
-					<button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/event/list?${query}';">리스트</button>
+					<button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/event/list?${query}';">리스트</button>
 				</td>
 			</tr>
 		</table>
@@ -310,19 +334,18 @@ $(function(){
 		<table style='width: 100%; margin: 15px quto 0px; border-spacing:0px;' >
 			<tr height='30'>
 				<td align='left'>
-					<span style='font-weight: bold;' > 댓글쓰기 </span><span> - 타인을 비방하거나 개인정보를 유출하는 글의 게시를 삼가 주세요.</span>
+					<span style='font-weight: bold; color: #d96262' > 댓글쓰기 </span><span> - 타인을 비방하거나 개인정보를 유출하는 글의 게시를 삼가 주세요.</span>
 				</td>
 			</tr>
 			<tr>
 				<td style='padding: 5px 5px 0px;'>
-					<textarea class='boxTA' style='width:99%; height: 70px; '></textarea>
+					<textarea class='boxTA' style='width:105%; height: 70px; '></textarea>
 				</td>
-			</tr>
-			<tr>
 				<td align="right">
-					<button type='button' class='btn btnSendReply' data-eventNum='10' style='padding: 10px 20px;'> 댓글 등록 </button>
+					<button type='button' class='bts2 btnSendReply' data-eventNum='10' style='padding: 10px 20px;'> 댓글등록 </button>
 				</td>
 			</tr>
+			
 		</table>
 		<div id="listReply"></div>
 	</div>

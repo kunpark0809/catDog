@@ -263,10 +263,10 @@ function deleteOk(festivalNum) {
 </script>
 <div style="width: 900px; margin: 20px auto 10px;">
 	<div class="body-title">
-		<h3><i class="far fa-calendar-alt"></i> 일정관리 </h3>
+		<span style="font-family: Webdings"><i class="far fa-calendar-alt"></i> 일정관리</span>
 	</div>
 	
-	<div>
+	<div style="padding-top: 60px; min-height: 400px;">
 		<div style="clear:both;">
 			<ul class="tabs">
 				<li id="tab-month" data-tab="month">월별일정</li>

@@ -27,8 +27,9 @@ public class FestivalController {
 	public String month(@RequestParam(name="year", defaultValue="0") int year,
 						@RequestParam(name="month", defaultValue="0") int month,
 						Model model) {
+		
+		
 		try {
-			
 			Calendar cal=Calendar.getInstance();
 			int y=cal.get(Calendar.YEAR);
 			int m=cal.get(Calendar.MONTH)+1;
@@ -91,7 +92,7 @@ public class FestivalController {
 					}
 					
 					if((sd8==cn8 || sd8<=cn8 && ed8>=cn8)) {
-						days[0][i-1]+="<span class='festivalSubject' data-date='"+s+"' data-festivalNum='"+dto.getFestivalNum()+"' >"+dto.getSubject()+"</span>";
+						days[0][i-1]+="<span class='festivalSubject' data-date='"+s+"' data-festivalNum='"+dto.getFestivalNum()+"' style='background:"+dto.getColor()+";'>"+dto.getSubject()+"</span>";
 						cnt++;	
 					} else if (sd8>cn8 && ed8<cn8)
 						break;
@@ -130,7 +131,7 @@ public class FestivalController {
 							}
 							
 							if(sd8==cn8 || sd8<=cn8 && ed8>=cn8) {
-								days[row][i]+="<span class='festivalSubject' data-date='"+s+"' data-festivalNum='"+dto.getFestivalNum()+"' >"+dto.getSubject()+"</span>";
+								days[row][i]+="<span class='festivalSubject' data-date='"+s+"' data-festivalNum='"+dto.getFestivalNum()+"' style='background:"+dto.getColor()+";'>"+dto.getSubject()+"</span>";
 								cnt++;
 							} else if (sd8>cn8 && ed8<cn8) {
 								break;
@@ -166,7 +167,7 @@ public class FestivalController {
 						}
 						
 						if(sd8==cn8 || sd8<=cn8 && ed8>=cn8) {
-							days[row][i]+="<span class='festivalSubject' data-date='"+s+"' data-festivalNum='"+dto.getFestivalNum()+"' >"+dto.getSubject()+"</span>";
+							days[row][i]+="<span class='festivalSubject' data-date='"+s+"' data-festivalNum='"+dto.getFestivalNum()+"' style='background:"+dto.getColor()+";'>"+dto.getSubject()+"</span>";
 							cnt++;
 						} else if (sd8>cn8 && ed8<cn8) {
 							break;

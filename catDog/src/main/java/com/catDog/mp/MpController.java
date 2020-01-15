@@ -69,7 +69,7 @@ public class MpController {
 		
 		String cp = req.getContextPath();
 		
-		int rows = 5;
+		int rows = 10;
 		int total_page = 0;
 		int dataCountMpQna = 0;
 		
@@ -142,7 +142,7 @@ public class MpController {
 		
 		String cp = req.getContextPath();
 		
-		int rows = 5;
+		int rows = 10;
 		int total_page = 0;
 		int dataCountMpTip = 0;
 		
@@ -213,7 +213,7 @@ public class MpController {
 		
 		String cp = req.getContextPath();
 		
-		int rows = 5;
+		int rows = 10;
 		int total_page = 0;
 		int dataCountMpBbs = 0;
 		
@@ -283,7 +283,7 @@ public class MpController {
 		
 		String cp = req.getContextPath();
 		
-		int rows = 5;
+		int rows = 10;
 		int total_page = 0;
 		int dataCountMpMyPet = 0;
 		
@@ -354,7 +354,7 @@ public class MpController {
 
 		String cp = req.getContextPath();
 
-		int rows = 5;
+		int rows = 10;
 		int total_page = 0;
 		int dataCountMpLostPet = 0;
 
@@ -428,7 +428,7 @@ public class MpController {
 		
 		String cp = req.getContextPath();
 		
-		int rows = 5;
+		int rows = 10;
 		int total_page = 0;
 		int dataCountMpAdoption = 0;
 		

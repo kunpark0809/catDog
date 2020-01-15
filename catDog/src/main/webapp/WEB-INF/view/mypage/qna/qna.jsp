@@ -22,11 +22,11 @@
 
 </style>
 <link rel="stylesheet" href="<%=cp%>/resource/css/cs.css">
-	<div class="container-board">
+	<div class="container-board" style="padding: 0px;">
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
 			<tr height="35">
 				<td align="left" width="50%">
-					${dataCountMpQna}개(${page}/${total_page} 페이지)
+					전체 게시글 <span style="color: #D96262;">${dataCountMpQna}</span>건 / 총 <span style="color: #D96262;">${total_page}</span> 페이지
 				</td>
 				<td align="right">
 					&nbsp;
