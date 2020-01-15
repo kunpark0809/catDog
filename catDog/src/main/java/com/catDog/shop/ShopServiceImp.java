@@ -205,6 +205,7 @@ public class ShopServiceImp implements ShopService{
 	public void insertReview(Shop dto) throws Exception {
 		try {
 			dao.insertData("shop.reviewInsert",dto);
+			dao.updateData("shop.reviewStatus",dto.getRequestDetailNum());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

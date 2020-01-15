@@ -14,10 +14,16 @@
     border: none;
     border-bottom: 1px solid #e4e4e4;
     border-radius: 0px;
+    text-align: left;
 }
 .ui-dialog .ui-dialog-titlebar {
     padding-left: 0px;
 }
+.ui-dialog-title{
+	padding-left: 10px;
+	font-size: 14pt;
+}
+
 .ui-dialog{
 	padding: 5px 20px;
 	border-radius: 0px;
@@ -63,7 +69,7 @@ function changeDialog(productNum, cartNum){
 	var fn=function(data){
 		$("#proudct_name").val(data.product.productName);
 		$("#proudct_price").val(data.product.price);
-		$("input[name=productSum]").val(data.product.price+"원");
+		$("input[name=productSum]").val(new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(data.product.price)+"원");
 		$("input[name=cartNum]").val(cartNum);
 	}
 	
@@ -99,7 +105,7 @@ function changePrice(){
 		count = 1;
 	}
 	
-	$("input[name=productSum]").val(count*$("#proudct_price").val());
+	$("input[name=productSum]").val(new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(count*$("#proudct_price").val())+"원");
 }
 
 function deleteCart(){
@@ -214,12 +220,12 @@ function productPay(mode){
 		<div id="change_dialog" style="display: none; text-align: center;">
 		<form method="post" name="countForm" action="<%=cp%>/pay/changeCount">
 		<table style="margin-top: 20px;">
-			<tr style="background: #e4e4e4; border-bottom: 1px solid #bfbfbf;">
+			<tr style="background: #d96262;border-bottom: 1px solid #d96262;color: white;font-size: 10pt;">
 				<th width="400" style="padding: 5px 0px;">상품정보</th>
 				<th width="100">수&nbsp;&nbsp;량</th>
 				<th width="100">합&nbsp;&nbsp;계</th>
 			</tr>
-			<tr style="border-bottom: 1px solid #bfbfbf;">
+			<tr style="border-bottom: 1px solid #bfbfbf; font-size: 10pt;">
 				<td><input type="text" id="proudct_name" name="productName" readonly="readonly" value="" style="border: none; width: 100%; text-align: center; padding: 10px 0px;"></td>
 				<td><input type="number" value="1" name="productCount" onchange="changePrice();" class="numberInput"></td>
 				<td><input type="text" name="productSum" readonly="readonly" value="" style="border: none; text-align: center; font-weight: bold; width: 100%;"></td>

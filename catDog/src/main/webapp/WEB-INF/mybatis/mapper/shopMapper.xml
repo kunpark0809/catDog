@@ -107,10 +107,9 @@
 		INSERT INTO productReview(productReviewNum,rate,content,num,productNum) 
 		VALUES(PRODUCTREVIEW_SEQ.NEXTVAL,#{rate},#{content},#{num},#{productNum})
 	</insert>
-<!-- 	
+ 	
 	<update id="reviewStatus" parameterType="String"> 
-		UPDATE requestDetail SET status=10 WHERE productDetailNum = #{productDetailNum}
+		UPDATE requestDetail SET status=10 WHERE requestDetailNum = #{requestDetailNum}
 	</update>
-	 -->
 	
 </mapper>

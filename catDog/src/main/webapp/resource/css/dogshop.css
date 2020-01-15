@@ -320,3 +320,22 @@ a.sortName{
     text-align: right;
 }
 
+.payTable{
+	border-top: 2px solid #e4e4e4;
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
+}
+
+.payTable > tr {
+	border-bottom: 1px solid #e4e4e4;
+}
+
+.payTable > tr > th{
+	background: #51321b;
+	color : white;
+	font-weight: bold;
+}
+
+
+

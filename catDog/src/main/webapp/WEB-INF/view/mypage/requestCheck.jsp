@@ -218,6 +218,9 @@ function submitReview(){
 				<c:when test="${dto.status==5}">
 					<td style="color: #f3a34e; font-weight: bold;">취소완료</td>
 				</c:when>
+				<c:when test="${dto.status==10}">
+					<td style="color: #f3a34e; font-weight: bold;">후기작성완료</td>
+				</c:when>
 				<c:otherwise>
 					<td>-</td>
 				</c:otherwise>
