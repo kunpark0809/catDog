@@ -47,7 +47,7 @@
 	}
 </script>
 
-<div class="body-container" style="min-height: 490px; padding-top: 100px; background-image:url('<%=cp%>/resource/img/loginbg.jpg');
+<div class="body-container" style="min-height: 490px; padding-top: 100px; background-image:url('<%=cp%>/resource/img/pwdfindbg.jpg');
  background-position:center center; background-repeat: no-repeat;">
     <div style="width:420px; margin: 0px auto; background-color: rgba( 255, 255, 255, 0.5 );">
 	

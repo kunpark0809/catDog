@@ -54,7 +54,7 @@
 	}
 </script>
 
-<div class="body-container" style="background-image:url('<%=cp%>/resource/img/loginbg.jpg');
+<div class="body-container" style="background-image:url('<%=cp%>/resource/img/idfindbg.jpg');
  background-position:center center; background-repeat: no-repeat; min-height: 490px; padding-top: 100px;">
     <div style="width:420px; margin: 0px auto; padding-top:20px;  background-color: rgba( 255, 255, 255, 0.5 );">
 	
