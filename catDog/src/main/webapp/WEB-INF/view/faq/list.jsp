@@ -6,6 +6,31 @@
 <%
 	String cp=request.getContextPath();
 %>
+<style type="text/css">
+.selectField {
+width: 60px;
+background-color: white;
+border: 2px solid #51321b;
+color: black;
+padding: 3px 0;
+text-align: center;
+display: inline-block;
+font-size: 15px;
+margin: 2px;
+}
+
+.boxTF {
+width: 300px;
+background-color: white;
+border: 2px solid #51321b;
+color: black;
+padding: 3px 0;
+text-align: center;
+display: inline-block;
+font-size: 15px;
+margin: 2px;
+}
+</style>
 
 <script src="<%=cp%>/resource/vendor/jquery/jquery.min.js"></script>
 
@@ -115,8 +140,8 @@ function updateFaq(faqNum) {
                   <option value="subject" ${condition=="subject"?"selected='selected'":""}>제목</option>
                   <option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
             </select>
-            <input type="text" id="keyword" name="keyword" class="boxTF" value="${keyword}" size="30;" style="border-radius:5px;">
-            <button type="button" class="bts" onclick="searchList();" style="width: 2%"><i class="fas fa-search"></i></button>
+            <input type="text" id="keyword" name="keyword" class="boxTF" value="${keyword}" size="30;">
+            <button type="button" class="bts" onclick="searchList();"><i class="fas fa-search"></i></button>
         </form>
       </td>
       <td align="right" width="100">

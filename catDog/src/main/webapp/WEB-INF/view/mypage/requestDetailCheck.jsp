@@ -45,7 +45,7 @@ $(function(){
                 console.log(data);
                 var myInvoiceData = "";
                 if(data.status == false){
-                    myInvoiceData += ('<p>'+data.msg+'<p>');
+                    myInvoiceData += ('<p>배송 준비 중이거나 아직 운송장이 등록되지 않았습니다.<p>');
                 }else{
                 	myInvoiceData += ('<table style="width: 100%; border-spacing: 0px; border-collapse: collapse;">');
                     myInvoiceData += ('<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">');                
