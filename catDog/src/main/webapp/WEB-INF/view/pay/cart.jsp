@@ -2,6 +2,7 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	String cp=request.getContextPath();
 %>
@@ -62,7 +63,7 @@ function changeDialog(productNum, cartNum){
 	var fn=function(data){
 		$("#proudct_name").val(data.product.productName);
 		$("#proudct_price").val(data.product.price);
-		$("input[name=productSum]").val(data.product.price);
+		$("input[name=productSum]").val(data.product.price+"원");
 		$("input[name=cartNum]").val(cartNum);
 	}
 	
@@ -71,7 +72,7 @@ function changeDialog(productNum, cartNum){
 	$('#change_dialog').dialog({
 		  modal: true,
 		  height: 300,
-		  width: 750,
+		  width: 650,
 		  title: '수량 변경',
 		  close: function(event, ui) {
 			  $("input[name=productCount]").val(1);
@@ -83,7 +84,7 @@ function changeDialog(productNum, cartNum){
 }
 
 $(function(){
-	$(".btnDialogCanecl").click(function(){
+	$(".dialog_cancel").click(function(){
 		$('#change_dialog').dialog("close");
 	});
 });
@@ -138,22 +139,24 @@ function productPay(mode){
 </script>
 
 <div class="wide-container">
-	<div class="order_tit" style="width: 100%;">
-        <h2 style="display: inline; float: left;">장바구니</h2>
-        <ol style="display: inline-block; float: right;">
-            <li class="page_on"><span>01</span>장바구니 > </li>
-            <li><span>02</span> 주문서작성/결제 > </li>
-            <li><span>03</span> 주문완료</li>
-        </ol>
+	<div class="order_tit" style="width: 100%;height: 60px;margin-bottom: 10px; line-height: 60px;">
+        <div class="body-title" style="display: inline-block;"><i class="fas fa-cart-arrow-down"></i>&nbsp;장바구니</div>
+        <div class="pay-seq" style="float: right; font-size: 14pt;">
+        <ul>
+            <li class="page-on">01&nbsp;&nbsp;장바구니&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp; </li>
+            <li class="page-off">02&nbsp;&nbsp;주문서작성/결제&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;</li>
+            <li class="page-off">03&nbsp;&nbsp;주문완료</li>
+        </ul>
+        </div>
     </div>
 
 	<c:if test="${not empty cartList}">
 		<form name="cartList" method="post">
 			<div class="cartList">
-				<table class="cartTable">
-				<tr>
+				<table class="cartTable" >
+				<tr style="color:white; background-color:#51321b;">
 					<td><input type="checkbox" value="all" id="cartAllCheck" onchange="checkCart();"></td>
-					<td colspan="2">상품정보</td>
+					<td colspan="2" style="padding: 5px 0px;">상품정보</td>
 					<td>판매가</td>
 					<td>수량</td>
 					<td>배송비</td>
@@ -161,18 +164,18 @@ function productPay(mode){
 				</tr>
 	
 				<c:forEach var="product" items="${cartList}">
-					<tr>
+					<tr style="border-bottom: 1px solid #cccccc;">
 						<td>
 							<input type="checkbox" value="${product.cartNum}" name="productCheck">
 						</td> 
 						<td><img alt="" src="<%=cp%>/uploads/shop/${product.imageFileName}" width="50"></td>
 						<td><a href="<%=cp%>/shop/article?productNum=${product.productNum}&bigSortNum=${product.bigSortNum}">${product.productName}</a></td>
-						<td>${product.productSum}</td>
-						<td>${product.productCount}
-							<p><button type="button" class="btn" onclick="changeDialog('${product.productNum}','${product.cartNum}');">수량변경</button></p>						
+						<td> <fmt:formatNumber value="${product.productSum}" type="number"/></td>
+						<td style="padding: 5px 0px;">${product.productCount}개
+							<p><button type="button" class="whiteBtn" style="width: 50%;height: 35px;" onclick="changeDialog('${product.productNum}','${product.cartNum}');">수량변경</button></p>						
 						</td>
 						<td>2,500</td>
-						<td>${product.productSum}</td>
+						<td><fmt:formatNumber value="${product.productSum}" type="number"/></td>
 					</tr>
 				</c:forEach>                                                                                              
 			</table>
@@ -200,34 +203,34 @@ function productPay(mode){
 	
 	<div class="btnList">
         <span class="btn_left_box">
-            <button type="button" class="btn" onclick="deleteCart();">선택 상품 삭제</button>
+            <button type="button" class="whiteBtn" onclick="deleteCart();">선택 상품 삭제</button>
         </span>
         <span class="btn_right_box">
-            <button type="button" class="btn" onclick="productPay('select');">선택 상품 주문</button>
-            <button type="button" class="btn" onclick="productPay('all');">전체 상품 주문</button>
+            <button type="button" class="whiteBtn" onclick="productPay('select');">선택 상품 주문</button>
+            <button type="button" class="brownBtn" onclick="productPay('all');">전체 상품 주문</button>
         </span>
 	</div>
 	
-		<div id="change_dialog" style="display: none;">
+		<div id="change_dialog" style="display: none; text-align: center;">
 		<form method="post" name="countForm" action="<%=cp%>/pay/changeCount">
-			<table>
-				<tr>
-					<td>
-						<input type="text" id="proudct_name" name="productName" readonly="readonly" value="">
-					</td>
-					<td>
-						<input type="number" value="1" name="productCount" onchange="changePrice();">
-					</td>
-					<td>
-						<input type="hidden" name="cartNum" value="">
-						<input type="hidden" id="proudct_price" value="">
-						<input type="text" name="productSum" readonly="readonly" value="">
-					</td>
-				</tr>
-			</table>
-			<div class="btn_box">
-				<button type="button" class="btnDialogCanecl">취소</button>
-				<button type="submit">확인</button>
+		<table style="margin-top: 20px;">
+			<tr style="background: #e4e4e4; border-bottom: 1px solid #bfbfbf;">
+				<th width="400" style="padding: 5px 0px;">상품정보</th>
+				<th width="100">수&nbsp;&nbsp;량</th>
+				<th width="100">합&nbsp;&nbsp;계</th>
+			</tr>
+			<tr style="border-bottom: 1px solid #bfbfbf;">
+				<td><input type="text" id="proudct_name" name="productName" readonly="readonly" value="" style="border: none; width: 100%; text-align: center; padding: 10px 0px;"></td>
+				<td><input type="number" value="1" name="productCount" onchange="changePrice();" class="numberInput"></td>
+				<td><input type="text" name="productSum" readonly="readonly" value="" style="border: none; text-align: center; font-weight: bold; width: 100%;"></td>
+			</tr>
+		</table>	
+				<input type="hidden" name="cartNum" value="">
+				<input type="hidden" id="proudct_price" value="">
+				
+			<div class="dialog_btn_box">
+				<button type="button" class="dialog_cancel">취소</button>
+				<button type="submit" class="dialog_submit">확인</button>
 			</div>
 		</form>
 

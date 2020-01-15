@@ -14,6 +14,16 @@
 
 
 <div class="wide-container">
+	<div class="order_tit" style="width: 100%;height: 60px;margin-bottom: 10px; line-height: 60px;">
+        <div class="body-title" style="display: inline-block;"><i class="fas fa-clipboard-list"></i>&nbsp;주문완료</div>
+        <div class="pay-seq" style="float: right; font-size: 14pt;">
+        <ul>
+            <li class="page-off">01&nbsp;&nbsp;장바구니&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp; </li>
+            <li class="page-off">02&nbsp;&nbsp;주문서작성/결제&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;</li>
+            <li class="page-on">03&nbsp;&nbsp;주문완료</li>
+        </ul>
+        </div>
+    </div>
 	<div class="order_table_type">
 	<div class="complete">
 		<p>주문번호 : <strong>${list.get(0).requestNum}</strong></p>
