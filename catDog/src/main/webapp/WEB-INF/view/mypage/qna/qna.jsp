@@ -20,6 +20,29 @@
     border-radius:10px;
 }
 
+.selectField {
+width: 60px;
+background-color: white;
+border: 2px solid #51321b;
+color: black;
+padding: 3px 0;
+text-align: center;
+display: inline-block;
+font-size: 15px;
+margin: 2px;
+}
+
+.boxTF {
+width: 300px;
+background-color: white;
+border: 2px solid #51321b;
+color: black;
+padding: 3px 0;
+text-align: center;
+display: inline-block;
+font-size: 15px;
+margin: 2px;
+}
 </style>
 <link rel="stylesheet" href="<%=cp%>/resource/css/cs.css">
 	<div class="container-board" style="padding: 0px;">
@@ -81,7 +104,7 @@
 							<option value="created" ${condition=="created"?"selected='selected'":""}>등록일</option>
 						</select>
 					    <input type="text" id="keyword" name="keyword" class="boxTF" value="${keyword}">
-            			<button type="button" class="bts" onclick="searchList();">검색</button>
+            			<button type="button" class="bts" onclick="searchList()" style="width: 5%"><i class="fas fa-search"></i></button>
         			</form>
 				</td>
 			</tr>

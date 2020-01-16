@@ -2,6 +2,7 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	String cp = request.getContextPath();
 %>
@@ -157,13 +158,14 @@ $(function() {
 function changeDate(year, month) {
 	var url="<%=cp%>/festival/month?year="+year+"&month="+month;
 	location.href=url;
+	
 }
 
 $(function() {
 	$(".textDate").click(function(){
-		if(${empty sessionScope || "${fn:indexOf(sessionScope.member.userId,'admin') == 0}"}){
+		if(${empty sessionScope || fn:indexOf(sessionScope.member.userId,'admin') != 0 }){
 			return;
-		}
+		} 
 		
 		$("form[name=festivalForm]").each(function() {
 			this.reset();
@@ -190,7 +192,10 @@ $(function() {
 			width: 600,
 			title: '스케쥴 등록',
 			close: function(event, ui) {
-			}
+			},
+			open: function(event, ui) {
+				  $(".ui-dialog-titlebar-close", $(this).parent()).hide();
+			  }
 		});
 	});
 });
@@ -248,6 +253,7 @@ $(function() {
 			}
 		});
 	});
+	
 });
 
 $(function() {
@@ -332,7 +338,7 @@ $(function() {
 <div style="width: 900px; margin: 20px auto 10px;">
 	<div class="body-title">
 		<span style="font-family: Webdings"><i class="far fa-calendar-alt"></i> 일정관리</span>
-		<span style="width: 100px; height: 55px;"><img src="/catDog/resource/img/event.png"></span>
+		<span style="width: 100px; height: 55px; float: right;"><img src="/catDog/resource/img/event.jpg"></span>
 	</div>
 
 	<div>

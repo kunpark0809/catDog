@@ -8,19 +8,19 @@
 	<div class="swiper-container">
 		<div class="swiper-wrapper">
 			<div class="swiper-slide">
-				<img alt="" src="<%=cp%>/resource/img/logos/rundog.jpg">
+				<img alt="" src="<%=cp%>/resource/img/logos/slide1.jpg">
 			</div>
 			<div class="swiper-slide">
-				<img alt="" src="<%=cp%>/resource/img/logos/peacedog.jpg">
+				<img alt="" src="<%=cp%>/resource/img/logos/slide2.jpg">
 			</div>
 			<div class="swiper-slide">
-				<img alt="" src="<%=cp%>/resource/img/logos/sidecat.jpg">
+				<img alt="" src="<%=cp%>/resource/img/logos/slide3.jpg">
 			</div>
 			<div class="swiper-slide">
-				<img alt="" src="<%=cp%>/resource/img/logos/sidezbra.jpg">
+				<img alt="" src="<%=cp%>/resource/img/logos/slide4.jpg">
 			</div>
 			<div class="swiper-slide">
-				<img alt="" src="<%=cp%>/resource/img/logos/grassdog.jpg">
+				<img alt="" src="<%=cp%>/resource/img/logos/slide6.jpg">
 			</div>
 		</div>
 		<!-- Add Pagination -->
