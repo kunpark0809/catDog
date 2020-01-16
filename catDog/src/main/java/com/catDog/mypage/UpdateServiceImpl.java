@@ -3,6 +3,7 @@ package com.catDog.mypage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.catDog.common.FileManager;
 import com.catDog.common.dao.CommonDAO;
 import com.catDog.customer.Customer;
 
@@ -11,9 +12,11 @@ public class UpdateServiceImpl implements UpdateService {
 	@Autowired
 	private CommonDAO dao;
 	
+	@Autowired
+	private FileManager fileManager;
 	
 	@Override
-	public void updateMemberDetail(Customer dto) throws Exception {
+	public void updateMemberDetail(Customer dto, String pathname) throws Exception {
 		try {
 			if(dto.getEmail1() != null && dto.getEmail1().length()!=0 &&
 					 dto.getEmail2() != null && dto.getEmail2().length() != 0)
@@ -23,6 +26,14 @@ public class UpdateServiceImpl implements UpdateService {
 					dto.getTel2() != null && dto.getTel2().length() != 0 &&
 						dto.getTel3() != null && dto.getTel3().length() != 0)
 				dto.setTel(dto.getTel1() + "-" + dto.getTel2() + "-" + dto.getTel3());
+			
+			
+			if(!dto.getUpload().isEmpty()) {
+				String saveFilename = fileManager.doMainFileUpload(dto.getUpload(), pathname);
+				if(saveFilename != null) {
+					dto.setUserPic(saveFilename);
+				}
+			}
 			
 			dao.updateData("mypage.updateMemberDetail", dto);
 			dao.updateData("mypage.updateCustomerDetail", dto);
@@ -59,6 +70,9 @@ public class UpdateServiceImpl implements UpdateService {
 		}
 		return dto;
 	}
+
+
+
 
 
 }

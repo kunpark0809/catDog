@@ -63,20 +63,21 @@
 	display: block;
 	color: #333333;
 }
-
-.dialog_bts {
-	width: 100px;
-	background-color: #51321b;
-	border: none;
-	color: #ffffff;
-	padding: 6px 0;
-	text-align: center;
-	display: inline-block;
-	font-size: 15px;
-	margin: 4px;
-	border-radius: 5px;
+.dialog_btc{
+   background: white;
+   color:#262626;
+   border: 1px solid #d8d8d8;
+   width: 25%;
+   padding: 5px 0px;
 }
 
+.dialog_bts{
+   background: #D96262;
+   color: white;
+   border: 1px solid #D96262;
+   width: 25%;
+   padding: 5px 0px;
+}
 .preMonthDate, .nextMonthDate {
 	color: #aaaaaa;
 }
@@ -471,8 +472,8 @@ $(function() {
 			<tr height="45">
 				<td align="center" colspan="2">
 					<button type="button" class="dialog_bts" id="btnFestivalSendOk">일정등록</button>
-					<button type="reset" class="dialog_bts">다시입력</button>
-					<button type="button" class="dialog_bts" id="btnFestivalSendCancel">등록취소</button>
+					<button type="reset" class="dialog_btc">다시입력</button>
+					<button type="button" class="dialog_btc" id="btnFestivalSendCancel">등록취소</button>
 				</td>
 			</tr>
 		</table>

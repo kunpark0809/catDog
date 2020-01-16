@@ -389,7 +389,7 @@ function nickNameCheck() {
 			      </td>
 			      <td style="padding: 0 0 15px 15px;">
 			        <p style="margin-top: 1px; margin-bottom: 5px;">
-			             <input type="file" name="upload" class="boxTF" value="${dto.userPic }" size="53"
+			             <input type="file" name="upload" class="boxTF" size="53"
 			                     accept="image/*" >
 			        </p>
 			      </td>
@@ -412,6 +412,10 @@ function nickNameCheck() {
 			  </c:if>
 			  </table>
 			
+				<c:if test="${mode=='update'}">
+					<input type="hidden" name="userPic" value="${dto.userPic}">
+				</c:if>
+				
 			  <table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
 			     <tr height="45"> 
 			      <td align="center" >

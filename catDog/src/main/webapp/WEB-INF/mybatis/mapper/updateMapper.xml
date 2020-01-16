@@ -4,7 +4,7 @@
 <mapper namespace="mypage">
 
 	<select id="readCustomer" parameterType="String" resultType="com.catDog.customer.Customer">
-		SELECT md.num, userId, name, userPwd, nickName, modify_date, email, enabled,
+		SELECT md.num, userId, name, userPwd, nickName, modify_date, email, enabled, userPic,
 		TO_CHAR(md.birth, 'YYYY-MM-DD') birth, cm.tel, md.zip, md.addr1, md.addr2
 		FROM memberDetail md
         JOIN customerDetail cm ON md.num = cm.num
@@ -26,4 +26,5 @@
 		UPDATE customerDetail SET name=#{name}, email=#{email}, tel=#{tel}
 		WHERE num=#{num}
 	</update>
+
 </mapper>

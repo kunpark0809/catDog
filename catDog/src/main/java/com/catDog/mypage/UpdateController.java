@@ -1,5 +1,7 @@
 package com.catDog.mypage;
 
+import java.io.File;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,11 +67,13 @@ public class UpdateController {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		dto.setNum(info.getMemberIdx());
 		
+		String root=session.getServletContext().getRealPath("/");
+		String pathname=root+"uploads"+File.separator+"photo";
 		try {
 			String encPwd = bcryptEncoder.encode(dto.getUserPwd());
 			dto.setUserPwd(encPwd);
+			service.updateMemberDetail(dto, pathname);
 			
-			service.updateMemberDetail(dto);
 		} catch (Exception e) {
 		}
 		
@@ -82,4 +86,5 @@ public class UpdateController {
 		
 		return "redirect:/customer/complete";
 	}
+
 }

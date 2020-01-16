@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+  <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -9,6 +9,24 @@
 <link rel="stylesheet" href="<%=cp%>/resource/vendor/jquery-ui/css/smoothness/jquery-ui.min.css" type="text/css">
 
 <style type="text/css">
+.ui-dialog-titlebar {
+	background: none;
+	color: black;
+	border: none;
+	border-bottom: 1px solid #e4e4e4;
+	border-radius: 0px;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+	padding-left: 0px;
+}
+
+.ui-dialog {
+	padding: 5px 20px;
+	border-radius: 0px;
+	position: fixed;
+}
+
 .ui-widget-header {
 	background: none;
 	border: none;
@@ -42,6 +60,21 @@
 	cursor: pointer;
 	border-radius: 2px;
 }
+.dialog_btc{
+   background: white;
+   color:#262626;
+   border: 1px solid #d8d8d8;
+   width: 25%;
+   padding: 5px 0px;
+}
+
+.dialog_bts{
+   background: #D96262;
+   color: white;
+   border: 1px solid #D96262;
+   width: 25%;
+   padding: 5px 0px;
+}
 .textDate {
 	font-weight: 500; cursor: pointer; display: block; color: #333333;
 }
@@ -57,6 +90,19 @@
 .sundayDate {
 	color: #ff0000;
 }
+.bts {
+width: 70px;
+background-color: #51321b;
+border: none;
+color: #ffffff;
+padding: 6px 0;
+text-align: center;
+display: inline-block;
+font-size: 15px;
+margin: 4px;
+border-radius: 5px;
+}
+
 </style>
 
 <script type="text/javascript" src="<%=cp%>/resource/vendor/jquery-ui/jquery-ui.min.js"></script>
@@ -151,8 +197,10 @@ $(function(){
 			width: 600,
 			title: '스케쥴 수정',
 			close: function(event, ui) {
-				
-			}
+			},
+			open: function(event, ui) {
+				  $(".ui-dialog-titlebar-close", $(this).parent()).hide();
+			  }
 		});
 	});
 });
@@ -261,7 +309,7 @@ function deleteOk(festivalNum) {
 }
 </c:if>
 </script>
-<div style="width: 900px; margin: 20px auto 10px;">
+<div style="width: 1000px; margin: 20px auto 10px;">
 	<div class="body-title">
 		<span style="font-family: Webdings"><i class="far fa-calendar-alt"></i> 일정관리</span>
 	</div>
@@ -275,9 +323,9 @@ function deleteOk(festivalNum) {
 			</ul>
 		</div>
 	
-		<div id="tab-content" style="clear:both; padding: 20px 0px 0px; ">
+		<div id="tab-content" style="clear:both; padding: 60px 0px 0px; ">
 			<div style="clear: both;">
-				<div id="festivalLeft" style="float:left; padding-left: 0px; padding-right: 0px;">
+				<div id="festivalLeft" style="float:left; padding-left: 0px; padding-right: 30px;">
 					<table style="width: 280px; border-spacing: 0;">
 						<tr height="35">
 							<td align="center">
@@ -289,7 +337,7 @@ function deleteOk(festivalNum) {
 						</tr>
 					</table>
 					
-					<table id="smallCalendar" style="width: 280px; margin-top: 5px; border-spacing: 1px; background: #cccccc; ">
+					<table id="smallCalendar" style="width: 280px; margin-top: 20px; border-spacing: 1px; background: #cccccc; ">
 						<tr align="center" height="33" bgcolor="#ffffff">
 							<td width="40" style="color: #ff0000;">일</td>
 							<td width="40">월</td>
@@ -314,7 +362,7 @@ function deleteOk(festivalNum) {
 				<div id="festivalRight" style="float:left; padding-left: 30px; padding-right: 0px; width: 600px; box-sizing: border-box;">
 					<table style="width: 100%; border-spacing: 0px;">
 						<tr height="35">
-							<td align="left">
+							<td align="center">
 								<span class="titleDate">${year}년  ${month}월  ${day}일  일정</span>
 							</td>
 						</tr>
@@ -330,7 +378,7 @@ function deleteOk(festivalNum) {
 					<c:if test="${not empty dto}">
 						<table style="width: 100%; margin-top: 5px; border-spacing: 0px; border-collapse: collapse;">
 							<tr height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-								<td width="100" style="text-align: right;">
+								<td width="100" style="text-align: left;">
 									<label style="font-weight: 900">제목</label>
 								</td>
 								<td style="text-align: left; padding-left: 7px;">
@@ -340,7 +388,7 @@ function deleteOk(festivalNum) {
 								</td>
 							</tr>
 							<tr height="35" style="border-bottom: 1px solid #cccccc;">
-								<td width="100" style="text-align: right;">
+								<td width="100" style="text-align: left;">
 									<label style="font-weight: 900;">날짜</label>
 								</td>
 								<td style="text-align: left; padding-left: 7px;">
@@ -350,7 +398,7 @@ function deleteOk(festivalNum) {
 								</td>
 							</tr>
 							<tr height="35" style="border-bottom: 1px solid #cccccc;">
-								<td width="100" style="text-align: right; ">
+								<td width="100" style="text-align: left; ">
 									<label style="font-weight: 900;">일정분류</label>
 								</td>
 								<td style="text-align: left; padding-left: 7px;">
@@ -364,7 +412,7 @@ function deleteOk(festivalNum) {
 								</td>
 							</tr>
 							<tr height="35" style="border-bottom: 1px solid #cccccc;">
-								<td width="100" style="text-align: right;">
+								<td width="100" style="text-align: left;">
 									<label style="font-weight: 900;">등록일</label>
 								</td>
 								<td style="text-align: left; padding-left: 7px;">
@@ -374,7 +422,7 @@ function deleteOk(festivalNum) {
 								</td>
 							</tr>
 							<tr height="35" style="border-bottom: 1px solid #cccccc;">
-								<td width="100" style="text-align: right;">
+								<td width="100" style="text-align: left;">
 									<label style="font-weight: 900;">장소</label>
 								</td>
 								<td style="text-align: left; padding-left: 7px;">
@@ -384,7 +432,7 @@ function deleteOk(festivalNum) {
 								</td>
 							</tr>
 							<tr height="45" style="border-bottom: 1px solid #cccccc;">
-								<td width="100" valign="top" style="text-align: right; margin-top: 5px;">
+								<td width="100" valign="top" style="text-align: left; margin-top: 5px;">
 									<label style="font-weight: 900;">내용</label>
 								</td>
 								<td valign="top" style="text-align: left; margin-top: 5px; padding-left: 7px;">
@@ -395,8 +443,8 @@ function deleteOk(festivalNum) {
 							</tr>
 							<tr height="45">
 								<td colspan="2" align="right" style="padding-right: 5px;">
-									<button type="button" id="btnUpdate" class="btn">수정</button>
-									<button type="button" id="btnDelete" class="btn" onclick="deleteOk('${dto.festivalNum}');">삭제</button>
+									<button type="button" id="btnUpdate" class="bts">수정</button>
+									<button type="button" id="btnDelete" class="bts" onclick="deleteOk('${dto.festivalNum}');">삭제</button>
 								</td>
 							</tr>
 						</table>
@@ -411,10 +459,10 @@ function deleteOk(festivalNum) {
 							</tr>
 						</table>
 						<table style="width: 100%; margin: 5px 0 20px; border-spacing: 0px; border-collapse: collapse;">
-							<tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-								<th width="80" style="color: #787878;">분류</th>
-								<th style="color: #787878;">제목</th>
-								<th width="80" style="color: #787878;">등록일</th>
+							<tr align="center" bgcolor="#cccccc" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
+								<th width="100" style="color: #000000;">분류</th>
+								<th style="color: #000000;">제목</th>
+								<th width="100" style="color: #000000;">등록일</th>
 							</tr>
 						  	<c:forEach var="vo" items="${list}">
 								<c:if test="${dto.festivalNum != vo.festivalNum}">
@@ -426,9 +474,8 @@ function deleteOk(festivalNum) {
 												<c:otherwise>기타일정</c:otherwise>
 											</c:choose>
 										</td>
-										<td align="left" style="padding-left: 10px;">
-										  
-										<a href="<%=cp%>/festival/day?date=${date}&festivalNum=${vo.festivalNum}"></a>
+										<td align="center" style="padding-left: 10px;">
+										<a href="<%=cp%>/festival/day?date=${date}&festivalNum=${vo.festivalNum}">${vo.subject}</a>
 										</td>
 										<td>${vo.created}</td>
 									</tr>
@@ -450,19 +497,19 @@ function deleteOk(festivalNum) {
 		<form name="festivalForm">
 			<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
 				<tr>
-					<td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+					<td width="100" valign="top" style="text-align: left; padding-top: 5px;">
 						<label style="font-weight: 900;">제목</label>
 					</td>
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
 							<input type="text" name="subject" id="form-subject" maxlength="100" class="boxTF" value="${dto.subject}" style="width: 95%;">
 						</p>
-						<p class="help-block">* 제목은 필수입니다.</p>
+						<p class="help-block" style="color: #A66E4E;">* 제목은 필수입니다.</p>
 					</td>
 				</tr>
 				
 				<tr>
-					<td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+					<td width="100" valign="top" style="text-align: left; padding-top: 5px;">
 						<label style="font-weight: 900;">일정분류</label>
 					</td>
 					<td style="padding: 0 0 15px 15px;">
@@ -477,7 +524,7 @@ function deleteOk(festivalNum) {
 				</tr>
 				
 				<tr>
-					<td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+					<td width="100" valign="top" style="text-align: left; padding-top: 5px;">
 						<label style="font-weight: 900;">종일일정</label>
 					</td>
 					<td style="padding: 0 0 15px 15px;">
@@ -489,7 +536,7 @@ function deleteOk(festivalNum) {
 				</tr>
 				
 				<tr>
-					<td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+					<td width="100" valign="top" style="text-align: left; padding-top: 5px;">
 						<label style="font-weight: 900;">시작일자</label>
 					</td>
 					<td style="padding: 0 0 15px 15px;">
@@ -497,12 +544,12 @@ function deleteOk(festivalNum) {
 							<input type="text" name="startDate" id="form-startDate" maxlength="10" class="boxTF" value="${dto.startDate}" readonly="readonly" style="width: 25%; background: #ffffff;">
 							<input type="text" name="startTime" id="form-startTime" maxlength="5" class="boxTF" value="${dto.startTime}" style="width: 15%; display: none;" placeholder="시작시간">
 						</p>
-						<p class="help-block">* 시작날짜는 필수입니다.</p>
+						<p class="help-block" style="color: #A66E4E;">* 시작날짜는 필수입니다.</p>
 					</td>
 				</tr>
 				
 				<tr>
-					<td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+					<td width="100" valign="top" style="text-align: left; padding-top: 5px;">
 						<label style="font-weight: 900;">종료일자</label>
 					</td>
 					<td style="padding: 0 0 15px 15px;">
@@ -510,13 +557,13 @@ function deleteOk(festivalNum) {
 							<input type="text" name="endDate" id="form-endDate" maxlength="10" class="boxTF" value="${dto.endDate}" readonly="readonly" style="width: 25%; background: #ffffff;">
 							<input type="text" name="endTime" id="form-endTime" maxlength="5" class="boxTF" value="${dto.endTime}" style="width: 15%; display: none;" placeholder="종료시간">
 						</p>
-						<p class="help-block">종료일자는 선택사항이며, 시작일 이후로 해주세요.</p>
+						<p class="help-block" style="color: #A66E4E;">종료일자는 선택사항이며, 시작일 이후로 해주세요.</p>
 					</td>
 				</tr>
 
 				<tr>
 					<td width="100" valign="top"
-						style="text-align: right; padding-top: 5px;"><label
+						style="text-align: left; padding-top: 5px;"><label
 						style="font-weight: 900;">장소</label></td>
 					<td style="padding: 0 0 15px 15px;">
 						<p style="margin-top: 1px; margin-bottom: 5px;">
@@ -526,7 +573,7 @@ function deleteOk(festivalNum) {
 				</tr>
 
 				<tr>
-					<td width="100" valign="top" style="text-align: right; padding-top: 5px;">
+					<td width="100" valign="top" style="text-align: left; padding-top: 5px;">
 						<label style="font-weight: 900;">내용</label>
 					</td>
 					<td style="padding: 0 0 15px 15px;">
@@ -539,8 +586,8 @@ function deleteOk(festivalNum) {
 				<tr height="45">
 					<td align="center" colspan="2">
 						<input type="hidden" name="festivalNum" value="${dto.festivalNum}">
-						<button type="button" class="btn" id="btnFestivalSendOk">수정완료</button>
-						<button type="button" class="btn" id="btnFestivalSendCancel">수정취소</button>
+						<button type="button" class="dialog_bts" id="btnFestivalSendOk">수정완료</button>
+						<button type="button" class="dialog_btc" id="btnFestivalSendCancel">수정취소</button>
 					</td>
 				</tr>
 			</table>
