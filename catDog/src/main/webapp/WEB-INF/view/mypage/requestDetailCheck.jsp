@@ -108,7 +108,7 @@ $(function(){
 	
 	<div>
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
-			<tr height="35" style="border-top: 2px dotted #D96262; padding-top:20px; padding-bottom:20px;">
+			<tr height="35" style="padding-top:20px; padding-bottom:20px;">
 				<td align="left" width="50%">
 					<h4><i class="fas fa-cube"></i> 주문 정보</h4>
 				</td>
@@ -121,19 +121,19 @@ $(function(){
 		<br>
 		<table style="width: 100%; border-spacing: 0px; border-collapse: collapse;">
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 2px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #d96262;">&nbsp;&nbsp;주문번호</td>
+				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #black;">&nbsp;&nbsp;주문번호</td>
 				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).requestNum}</td>
 			</tr>
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #d96262;">&nbsp;&nbsp;주문일자</td>
+				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #black;">&nbsp;&nbsp;주문일자</td>
 				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).requestDate}</td>
 			</tr>
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #d96262;">&nbsp;&nbsp;주문자</td>
+				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #black;">&nbsp;&nbsp;주문자</td>
 				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).name}</td>
 			</tr>
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 2px solid #cccccc;">
-				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #d96262;">&nbsp;&nbsp;주문처리상태</td>
+				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #black;">&nbsp;&nbsp;주문처리상태</td>
 				<c:choose>
 				<c:when test="${detailList.get(0).status==0}">
 					<td style="text-align: left; color: #f3a34e; font-weight: bold;">&nbsp;&nbsp;&nbsp;입금대기</td>
@@ -171,7 +171,7 @@ $(function(){
 		<br>
 		
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
-			<tr height="35" style="border-top: 2px dotted #D96262; padding-top:20px; padding-bottom:20px;">
+			<tr height="35" style="padding-top:20px; padding-bottom:20px;">
 				<td align="left" width="50%">
 					<h4><i class="fas fa-cube"></i> 결제 정보</h4>
 				</td>
@@ -185,23 +185,23 @@ $(function(){
 		
 		<table style="width: 100%; border-spacing: 0px; border-collapse: collapse;">
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 2px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #d96262;">&nbsp;&nbsp;총 주문금액</td>
+				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #black;">&nbsp;&nbsp;총 주문금액</td>
 				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).total}</td>
 			</tr>
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #d96262;">&nbsp;&nbsp;사용 포인트</td>
+				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #black;">&nbsp;&nbsp;사용 포인트</td>
 				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).usePoint}</td>
 			</tr>
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #d96262;">&nbsp;&nbsp;총 결제금액</td>
+				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #black;">&nbsp;&nbsp;총 결제금액</td>
 				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).purchase}</td>
 			</tr>
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #d96262;">&nbsp;&nbsp;적립 포인트</td>
+				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #black;">&nbsp;&nbsp;적립 포인트</td>
 				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).point}</td>
 			</tr>
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 2px solid #cccccc;">
-				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #d96262;">&nbsp;&nbsp;결제수단</td>
+				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #black;">&nbsp;&nbsp;결제수단</td>
 				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).payMethod}</td>
 			</tr>
 		</table>
@@ -291,7 +291,7 @@ $(function(){
 		<br>
 		
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
-			<tr height="35" style="border-top: 2px dotted #D96262; padding-top:20px; padding-bottom:20px;">
+			<tr height="35" style="padding-top:20px; padding-bottom:20px;">
 				<td align="left" width="50%">
 					<h4><i class="fas fa-cube"></i> 배송 정보</h4>
 				</td>
@@ -305,19 +305,19 @@ $(function(){
 		
 		<table style="width: 100%; border-spacing: 0px; border-collapse: collapse;">
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 2px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #d96262;">&nbsp;&nbsp;배송자 정보</td>
+				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #black;">&nbsp;&nbsp;배송자 정보</td>
 				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).deliverName}</td>
 			</tr>
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #d96262;">&nbsp;&nbsp;주소</td>
+				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #black;">&nbsp;&nbsp;주소</td>
 				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;[${detailList.get(0).deliverZip}]&nbsp;${detailList.get(0).deliverAddr1}&nbsp;${detailList.get(0).deliverAddr2}&nbsp;</td>
 			</tr>
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #d96262;">&nbsp;&nbsp;휴대폰 번호</td>
+				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #black;">&nbsp;&nbsp;휴대폰 번호</td>
 				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).deliverTel}</td>
 			</tr>
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 2px solid #cccccc;">
-				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #d96262;">&nbsp;&nbsp;메모</td>
+				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #black;">&nbsp;&nbsp;메모</td>
 				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).memo}</td>
 			</tr>
 		</table>
