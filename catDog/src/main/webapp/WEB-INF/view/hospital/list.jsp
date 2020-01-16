@@ -7,17 +7,62 @@
 %>
 
 <style type="text/css">
-.btn {
-	width:70px;
-    background-color: #262626;
-    border: none;
-    color:#ffffff;
-    padding: 6px 0;
-    text-align: center;
-    display: inline-block;
-    font-size: 15px;
-    margin: 4px;
-    border-radius:10px;
+.bts {
+width: 70px;
+background-color: #51321b;
+border: none;
+color: #ffffff;
+padding: 6px 0;
+text-align: center;
+display: inline-block;
+font-size: 15px;
+margin: 4px;
+border-radius: 5px;
+}
+
+.selectField {
+width: 60px;
+background-color: white;
+border: 2px solid #51321b;
+color: black;
+padding: 3px 0;
+text-align: center;
+display: inline-block;
+font-size: 15px;
+margin: 2px;
+}
+
+.boxTF {
+width: 300px;
+background-color: white;
+border: 2px solid #51321b;
+color: black;
+padding: 3px 0;
+text-align: center;
+display: inline-block;
+font-size: 15px;
+margin: 2px;
+}
+
+.place_image {
+   width:400px;
+   height:450px;
+   border: none;
+   margin-right: 3px;
+   border-radius: 40px;
+   overflow:hidden;
+
+}
+
+.place_image  img {
+	-webkit-transform:scale(1);
+	transform:scale(1);
+	-webkit-transition:.3s;
+	transition:.3s;
+}
+.place_image:hover img {
+	-webkit-transform:scale(1.1);
+	transform:scale(1.1);
 }
 
 </style>
@@ -32,24 +77,21 @@ function searchList() {
 
 </script>
 
-	<section class="page-section" id="command" style="text-align: center;">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<p class="section-heading text-uppercase" style="font-size: 45px; font-weight: bold;">동물병원</p>
-				</div>
-			</div>
+<div class="wide-container">
+	 <div class="body-title">
+		<span><i class="far fa-hospital"></i> 동물병원 </span>
+	</div>
 			
 			<table style="width: 100%; margin: 10px auto; border-spacing: 0px;">
 		   <tr height="40">
 		      <td align="right">
-		          <form name="searchForm" action="<%=cp%>/hospital/list" method="post" style="width: 100%;  border-bottom: 3px solid; border-bottom-width: 100%; padding-bottom: 10px;">
+		          <form name="searchForm" action="<%=cp%>/hospital/list" method="post" style="width: 100%;  border-bottom: 3px solid; border-bottom-width: 100%; padding-bottom: 10px; color: #d96262;">
 		              	<select name="condition" class="selectField" style="border-radius:5px;">
 		                  <option value="placeName" ${condition=="placeName"?"selected='selected'":""}>제목</option>
 		                  <option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
 		            	</select>
 		            <input type="text" name="keyword" value="${keyword}" class="boxTF" size="30;" style="border-radius:5px;">
-		            <button type="button" class="btn" onclick="searchList()">검색</button>
+		            <button type="button" class="bts" onclick="searchList()" style="width: 5%"><i class="fas fa-search"></i></button>
 		         </form>
 		      </td>
 		      </tr>
@@ -59,36 +101,38 @@ function searchList() {
 		      <tr>
 		      <td align="left">
 		      <c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">
-		          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/hospital/list';">새로고침</button>
+		          <button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/hospital/list';">새로고침</button>
 		      </c:if>
 		      </td>
 		      <td align="left">
 		      <c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">
-		          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/hospital/created';">등록하기</button>
+		          <button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/hospital/created';">등록하기</button>
 		      </c:if>
 		      </td>	      
 		  	 </tr>
 			</table>
   
 
-	<div class="hospitallist">	
-			<c:forEach var="dto" items="${list}">
-				<a onclick="javascript:location.href='${articleUrl}&recommendNum=${dto.recommendNum}'" style="color: #262626;">
-					<input type="hidden" value="${dto.recommendNum}">
-					<img alt="" src="<%=cp%>/uploads/hospital/${dto.imageFileName}" width="400" style="padding-top: 15px;"><br>
-					<span class="placeName" onclick="javascript:article('${dto.recommendNum}');" style="font-weight: bold; font-size: 24px;">${dto.placeName}</span><br>
-				</a>
-					<p><i class="fas fa-eye"></i>&nbsp;&nbsp;${dto.hitCount}</p>
-				
+	<table style="border-spacing: 0px; border-collapse: collapse; margin: 0px auto;">
+			<c:forEach var="dto" items="${list}" varStatus="status">
+				     <c:if test="${status.index==0}">
+                    		  <tr>
+	                 </c:if>
+	                 <c:if test="${status.index!=0 && status.index%3==0}">
+	                       <c:out value="</tr><tr>" escapeXml="false"/>
+	                 </c:if>
+					
+						<td width="20%" style="text-align: center;">
+							<div class="place_image" onclick="javascript:location.href='${articleUrl}&recommendNum=${dto.recommendNum}'">
+								<input type="hidden" value="${dto.recommendNum}">
+									<img alt="" src="<%=cp%>/uploads/hospital/${dto.imageFileName}" style="padding-top: 15px; cursor:pointer; width: 380px; height: 380px; border-radius: 50px;"><br>
+								<p class="placeName" onclick="javascript:article('${dto.recommendNum}');" style="font-size: 22px; font-weight:bold; margin-top: 15px; border-bottom: 2px dashed #cccccc;"><i class="fas fa-map-marker-alt" style="color: #0b9c4c">&nbsp;</i>${dto.placeName}</p>
+							</div>
 			</c:forEach>
-		</div>
+		
+	</table>
 		
 		<div class="paging">
 			${dataCount==0?"게시판에 등록된 글이 없습니다.":paging}
 		</div>
 	</div>
-
-	
-
-	
-</section>

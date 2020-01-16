@@ -80,7 +80,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 text-center">
-					<p class="section-heading text-uppercase" style="font-size: 45px; font-weight:bold; border-bottom: 3px solid; border-bottom-width: 100%; padding-bottom: 20px;">카페/식당</p>
+					<p class="section-heading text-uppercase" style="font-size: 45px; font-weight:bold; border-bottom: 3px solid; padding-bottom: 20px;">공원/산책</p>
 				</div>
 			</div>
     	</div>
@@ -93,42 +93,42 @@
 			  <tbody id="cafeb">
 			  
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
-			      <td width="100" bgcolor="#262626" style="text-align: center; font-weight: bold;">장소이름</td>
+			      <td width="100" bgcolor="#51321b" style="text-align: center; font-weight: bold;">장소이름</td>
 			      <td style="padding-left:10px;"> 
 			        <input type="text" name="placeName" maxlength="100" class="boxTF" style="width: 100%;" value="${dto.placeName}">
 			      </td>
 			  </tr>
 			
 			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;"> 
-			      <td width="100" bgcolor="#262626" style="text-align: center; font-weight: bold;">작&nbsp;&nbsp;성&nbsp;&nbsp;자</td>
+			      <td width="100" bgcolor="#51321b" style="text-align: center; font-weight: bold;">작&nbsp;&nbsp;성&nbsp;&nbsp;자</td>
 			      <td style="padding-left:10px; color: #262626">
 			           ${sessionScope.member.nickName}
 			      </td>
 			  </tr>
 			  
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
-			      <td width="100" bgcolor="#262626" style="text-align: center; font-weight: bold;">주&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소</td>
+			      <td width="100" bgcolor="#51321b" style="text-align: center; font-weight: bold;">주&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소</td>
 			      <td style="padding-left:10px;"> 
 			        <input type="text" name="addr" maxlength="100" class="boxTF" style="width: 100%;" value="${dto.addr}">
 			      </td>
 			  </tr>
 			  
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
-			      <td width="100" bgcolor="#262626" style="text-align: center; font-weight: bold;">전화번호</td>
+			      <td width="100" bgcolor="#51321b" style="text-align: center; font-weight: bold;">전화번호</td>
 			      <td style="padding-left:10px;"> 
 			        <input type="text" name="tel" maxlength="100" class="boxTF" style="width: 40%;" value="${dto.tel}">
 			      </td>
 			  </tr>
 			
 			  <tr align="left" style="border-bottom: 1px solid #cccccc;"> 
-			      <td width="100" bgcolor="#262626" style="text-align: center; padding-top:5px; font-weight: bold;" valign="top">상세정보</td>
+			      <td width="100" bgcolor="#51321b" style="text-align: center; padding-top:5px; font-weight: bold;" valign="top">상세정보</td>
 			      <td valign="top" style="padding:5px 0px 5px 10px;"> 
 			        <textarea name="content" id="content" class="boxTA" style="width: 100%;">${dto.content}</textarea>
 			      </td>
 			  </tr>
 			  
 			<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-		    	<td width="100" bgcolor="#262626" style="text-align: center; font-weight: bold;">본문사진</td>
+		    	<td width="100" bgcolor="#51321b" style="text-align: center; font-weight: bold;">본문사진</td>
 		    	<td style="padding-left:10px;"> 
 		       		<input type="file" name="upload" class="boxTF" size="53" style="height: 25px; color: black;">
 		       		${dto.imageFileName}
@@ -139,9 +139,9 @@
 			<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
 			     <tr height="45"> 
 			      <td align="center">
-			        <button type="submit" class="btn">${mode=='update'?'수정완료':'등록하기'}</button>
-			        <button type="reset" class="btn">다시입력</button>
-			        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/cafe/list';">${mode=='update'?'수정취소':'등록취소'}</button>
+			        <button type="submit" class="bts">${mode=='update'?'수정완료':'등록하기'}</button>
+			        <button type="reset" class="bts">다시입력</button>
+			        <button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/cafe/list';">${mode=='update'?'수정취소':'등록취소'}</button>
 			        	<c:if test="${mode=='update'}">
 								<input type="hidden" name="recommendNum" value="${dto.recommendNum}">
 								<input type="hidden" name="imageFilename" value="${dto.imageFileName}">

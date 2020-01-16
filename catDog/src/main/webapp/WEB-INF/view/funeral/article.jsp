@@ -267,15 +267,12 @@ $(function(){
 });
 </script>
 
-<div class="page-section" id="command" style="text-align: center;">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<p class="section-heading text-uppercase" style="font-size: 45px; font-weight: bold;">장례식장</p>
-				</div>
+<div class="wide-container">
+	 <div class="body-title">
+		&nbsp;<span><i class="fas fa-feather-alt"></i> 장례식장 </span>
+	</div>
 				
-				
-		<table style="width: 98%; margin: 10px auto 0px; border-spacing: 0px; border-collapse: collapse; border-top: 3px solid;">
+		<table style="width: 98%; margin: 10px auto 0px; border-spacing: 0px; border-collapse: collapse; border-top: 3px solid; border-color: #d96262;">
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
 			    <td width="50%" align="left" style="padding-bottom: 20px; padding-top:20px; padding-left: 20px; font-size: 20px;">
 			        ${dto.placeName}
@@ -339,7 +336,7 @@ $(function(){
 			<tr height="45">
 			    <td align="center">
 			    <br>
-			        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/funeral/list?${query}';">목록</button>
+			        <button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/funeral/list?${query}';">목록</button>
 			    </td>
 			 </table>  
 			 
@@ -348,10 +345,10 @@ $(function(){
 			 <tr>
 			    <td align="right">
 			       <c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">				    
-			         <button type="button" class="btn" onclick="updateFuneral('${dto.recommendNum}');">수정</button>
+			         <button type="button" class="bts" onclick="updateFuneral('${dto.recommendNum}');">수정</button>
 			       </c:if>
 			       <c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">				    
-			         <button type="button" class="btn" onclick="deleteFuneral('${dto.recommendNum}');">삭제</button>
+			         <button type="button" class="bts" onclick="deleteFuneral('${dto.recommendNum}');">삭제</button>
 			       </c:if>
 			    </td>
 			</tr>
@@ -387,7 +384,7 @@ $(function(){
 			</tr>
 			<tr>
 			   <td align='right'>
-			        <button type='button' class='btn btnSendRate' data-num='10' style="padding:10px 10px; font-size: 12px;">등록하기</button>
+			        <button type='button' class='bts btnSendRate' data-num='10' style="padding:10px 10px; font-size: 12px;">등록하기</button>
 			    </td>
 			 </tr>
 		</table>
@@ -396,7 +393,4 @@ $(function(){
 
    	 </div>
 	  
-			
-    	</div>
-    </div>
 
