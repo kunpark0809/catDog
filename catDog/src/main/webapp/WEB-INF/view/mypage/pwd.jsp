@@ -16,11 +16,23 @@
   width: 340px; height: 35px;
   padding: 5px;
   padding-left: 15px;
-  border:1px solid #999999;
+  border:2px solid #51321b;
   color:#333333;
   margin-top:5px; margin-bottom:5px;
   font-size:14px;
   border-radius:4px;
+}
+.btnConfirm {
+width: 70px;
+background-color: #51321b;
+border: none;
+color: #ffffff;
+padding: 6px 0;
+text-align: center;
+display: inline-block;
+font-size: 15px;
+margin: 4px;
+border-radius: 5px;
 }
 </style>
 <script type="text/javascript">
@@ -47,17 +59,18 @@
 	}
 </script>
 
-<div class="body-container">
-    <div style="width:420px; margin: 0px auto; padding-top:90px;">
-	
+<div class="body-container" style="background-image:url('<%=cp%>/resource/img/reloginbg.jpg');
+			background-position:center center; background-repeat: no-repeat; min-height: 600px;">
+    <div style="width:360px; min-height:490px; margin: 0px auto; padding-top:105px;">
+		<div style=" background-color: rgba( 255, 255, 255, 0.5 ); padding-top: 40px;">
     	<div style="text-align: center;">
-        	<span style="font-weight: bold; font-size:27px; color: #424951;">패스워드 재확인</span>
+        	<span style="font-weight: bold; font-size:27px; color: #000000;">패스워드 재확인</span>
         </div>
 	
 		<form name="pwdForm" method="post" action="">
 		  <table style="width:100%; margin: 20px auto; padding:30px;  border-collapse: collapse; border: 1px solid #DAD9FF;">
 		  <tr style="height:50px;"> 
-		      <td style="padding-left: 30px; text-align: left;">
+		      <td style="padding-left: 30px; text-align: left; color: #000000; padding-bottom: 30px;">
 		          정보보호를 위해 패스워드를 다시 한 번 입력해주세요.
 		      </td>
 		  </tr>
@@ -68,7 +81,7 @@
 		        <input type="text" name="userId" class="loginTF" maxlength="15"
 		                   tabindex="1"
 		                   value="${sessionScope.member.userId}"
-                           readonly="readonly">
+                           readonly="readonly" style="width: 278px;">
 		           &nbsp;
 		      </td>
 		  </tr>
@@ -79,7 +92,7 @@
 		        <input type="password" name="userPwd" id="userPwd" class="loginTF" maxlength="20" 
 		                   tabindex="2"
                            onfocus="document.getElementById('lblUserPwd').style.display='none';"
-                           onblur="bgLabel(this, 'lblUserPwd');">
+                           onblur="bgLabel(this, 'lblUserPwd');" style="width: 278px;">
 		        &nbsp;
 		      </td>
 		  </tr>
@@ -91,9 +104,6 @@
 		        &nbsp;
 		      </td>
 		  </tr>
-		  <tr align="center" height="10" > 
-		      <td>&nbsp;</td>
-		  </tr>
 	    </table>
 		</form>
 		           
@@ -102,5 +112,6 @@
 		    	<td><span style="color: blue;">${message}</span></td>
 		  </tr>
 		</table>
+	</div>
 	</div>
 </div>

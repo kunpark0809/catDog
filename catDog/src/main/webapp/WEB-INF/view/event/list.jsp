@@ -203,7 +203,7 @@ $(function(){
 
 <div class="container-board">
 	<div class="body-title">
-		<span style="font-family: Webdings"><i class="fas fa-cookie-bite"></i></i> 이벤트</span>
+		<span style="font-family: Webdings"><i class="fas fa-cookie-bite"></i> 이벤트</span>
 	</div>
 	
 	<div>
