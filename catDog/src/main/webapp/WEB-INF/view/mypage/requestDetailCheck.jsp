@@ -319,7 +319,7 @@ $(function(){
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 2px solid #cccccc;">
 				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #black;">&nbsp;&nbsp;메모</td>
 				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).memo}</td>
-			</tr> 
+			</tr>  
 		</table>
 		<br>
 		
