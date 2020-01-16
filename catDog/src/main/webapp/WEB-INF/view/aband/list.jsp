@@ -25,18 +25,18 @@
 <div class="wide-container">
 	<div style="line-height: 40px;">
 	<div class="body-title" style="float:left;">
-        <i class="fas fa-chalkboard"></i>유기동물 게시판    
+        <i class="far fa-sad-tear"></i>&nbsp;유기동물 게시판    
      </div>
-        <button style="float:left;" type="button" class="bts" onclick="javascript:location.href='<%=cp%>/aband/created'">글올리기</button>
+       
          <form name="searchForm" action="/catDog/aband/list?sort=${sort}" method="post" style="float:right;">
   
 
-				<select name="species">
+				<select name="species" class="shin_select" style="width: 120px;">
 					<option value="all">애견동물전체</option>
 					<option value="1" ${species=='1'?"selected='selected'":""}>강아지</option>
 					<option value="0" ${species=='0'?"selected='selected'":""}>고양이</option>
 				</select>
-				<select name="area">
+				<select name="area" class="shin_select" style="width: 100px;">
 					<option value="all">지역전체</option>
 					<option value="서울" ${area=='서울'?"selected='selected'":""}>서울시</option>
 					<option value="인천" ${area=='인천'?"selected='selected'":""}>인천시</option>
@@ -58,13 +58,13 @@
 				</select>
 
 
-           <button type="button" class="btn" onclick="searchList();">검색</button>
+           <button type="button" class="bts" onclick="searchList();" style="padding: 0px; margin: 0px;"><i class="fas fa-search"></i></button>
        </form>
     
 	</div>
 
 	            <div style="clear: both;">
-		           <ul class="tabs">
+		           <ul class="tabs" style="margin-top: 30px">
 				       <li id="tab-0" value="0">잃어버렸어요</li>
 				       <li id="tab-1" value="1"> 보호하고있어요 </li>
 				   </ul>
@@ -80,15 +80,24 @@
 	                 </c:if>
 					
 						<td width="20%" style="text-align: center;">
-							<div class="link" onclick="javascript:location.href='${articleUrl}&lostPetNum=${dto.lostPetNum}'">
-									<img alt="" src="<%=cp%>/uploads/aband/${dto.imageFileName}" width="200" height="200">
-								<p>
-								<c:if test="${dto.status=='0'}">
+						<div class="photoDiv" onclick="javascript:location.href='${articleUrl}&lostPetNum=${dto.lostPetNum}'">
+									<img alt="" src="<%=cp%>/uploads/adopt/${dto.imageFileName}" width="100%" height="350px">
+									
+								
+							</div>
+							<div class="photoDiv" onclick="javascript:location.href='${articleUrl}&lostPetNum=${dto.lostPetNum}'">
+									<img alt="" src="<%=cp%>/uploads/aband/${dto.imageFileName}" width="100%" height="350px">
+								<div class="photoText">
+									<c:if test="${dto.status=='0'}">
 										<span style="display: inline-block;padding: 2px 8px;background: #f3a34e;border-radius: 3px; color: #FFFFFF;">해결</span>
 									</c:if>
-									<b>${dto.subject}</b>
-									</p>
-								<p>지역: ${dto.addr}</p>
+									<c:if test="${dto.status=='1'}">
+									<span style="display: inline-block;padding: 2px 8px;background: #d96262;border-radius: 3px; color: #FFFFFF;">미해결</span>
+										
+									</c:if>
+									<b class="cutText" style="width: 250px;font-weight: bold; color: white;">${dto.subject}</b>
+									<p class="cutText" style="width: 250px;color: white;">지역: ${dto.addr}</p>
+								</div>
 							</div>
 						</td>
 			</c:forEach>
@@ -99,6 +108,30 @@
 			<td align="center">
 			       ${dataCount==0?"등록된 게시물이 없습니다.":paging}
 			 </td>
+		   </tr>
+		</table>
+		
+		<table style=" border-spacing: 0px;  margin: 0px auto;">
+		   <tr height="40">
+		      <td align="left" width="100">
+		          <button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/aband/list';">새로고침</button>
+		      </td>
+		      <td align="center">
+		          <form name="searchForm" action="<%=cp%>/aband/list" method="post">
+		              <select name="condition" class="shin_select">
+		                  <option value="all" ${condition=="all"?"selected='selected'":""}>모두</option>
+		                  <option value="subject" ${condition=="subject"?"selected='selected'":""}>제목</option>
+		                  <option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
+		                  <option value="nickName" ${condition=="nickName"?"selected='selected'":""}>닉네임</option>
+		                  <option value="created" ${condition=="created"?"selected='selected'":""}>등록일</option>
+		            </select>
+		            <input type="text" name="keyword" value="${keyword}" class="shin_boxTF">
+		            <button type="button" class="bts" onclick="searchList();"><i class="fas fa-search"></i></button>
+		        </form>
+		      </td>
+		      <td align="right" width="100">
+		          <button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/aband/created'">글올리기</button>
+		      </td>
 		   </tr>
 		</table>
     </div>

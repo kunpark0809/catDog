@@ -54,6 +54,7 @@ a.sortName{
 	width: 100%;
 	margin: 20px auto 0px;
 	text-align: center;
+	padding-top: 30px;
 }
 .sortActive {
 	color: #A66E4E;
@@ -236,6 +237,14 @@ a.sortName{
     height: 50px;
 }
 
+.smallPinkBtn{
+	background: #d96363;
+    color: white;
+    border: 1px solid #d96363;
+    width: 150px;
+    height: 50px;
+}
+
 .brownBtn{
 	background: #51321b;
     color: white;
@@ -364,3 +373,54 @@ a.sortName{
 
 }
 	
+.photoDiv{
+	width:95%;
+	cursor:pointer;
+	border: 1px solid #e4e4e4;
+	position: relative;
+}	
+
+.photoText{
+	    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 96%;
+    font-weight: bold;
+    background-color: rgba(81, 50, 27, 0.35);
+    text-align: left;
+    padding: 10px 0px 5px 10px;
+    min-height: 60px;
+	}
+.cutText{
+	display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.lineText{
+	word-wrap:break-word;
+}
+
+.shin_select {
+	width: 60px;
+	background-color: white;
+	border: 2px solid #51321b;
+	padding: 3px 0;
+	text-align: center;
+	display: inline-block;
+	font-size: 15px;
+	margin: 2px;
+}
+
+.shin_boxTF {
+	width: 300px;
+	background-color: white;
+	border: 2px solid #51321b;
+	color: black;
+	padding: 3px 0;
+	text-align: center;
+	display: inline-block;
+	font-size: 15px;
+	margin: 2px;
+}

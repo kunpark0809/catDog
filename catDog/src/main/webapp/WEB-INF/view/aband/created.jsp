@@ -90,7 +90,7 @@
 	<link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
 	<div class="wide-container">
 	<div class="body-title">
-		<h3><i class="fas fa-chalkboard-teacher"></i> 입양 등록 </h3>
+		<i class="far fa-sad-tear"></i>&nbsp;유기동물 등록
 	</div>
 
 	<div>

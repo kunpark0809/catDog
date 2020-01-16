@@ -26,12 +26,13 @@ $(function(){
 });
 </script>
 	<div class="wide-container">
-			<div class="body-title"><i class="fas fa-gifts"></i>&nbsp;${bigSortNum=="1"?"강아지":"고양이"}&nbsp;용품
+		<div>
+			<span class="body-title" style="float: left;"><i class="fas fa-gifts"></i>&nbsp;${bigSortNum=="1"?"강아지":"고양이"}&nbsp;용품</span>
 			<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
-				<span style="float: right;"><button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/shop/created'" >상품등록</button></span>
+				<span style="float: right;"><button type="button" class="smallPinkBtn" onclick="javascript:location.href='<%=cp%>/shop/created'" >상품등록</button></span>
 			</c:if>
-</div>
-		<div class="sortList">
+		</div> 
+		<div class="sortList" style="clear: both;">
 		
 			<a class="sortName" data-num="0" id="sort-0">전체</a>
 			<c:forEach var="sort" items="${smallSortList}">

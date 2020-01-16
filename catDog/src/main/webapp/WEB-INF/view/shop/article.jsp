@@ -243,7 +243,7 @@ function listReview(page){
 		<div id="menu-review">
 			<p class="product-menu">상품 후기</p>
 			
-				<div id="review"  class="review" style="float: left;">
+				<div id="review"  class="review" style="float: left; width: 100%;">
 				</div>
 		</div>
 		

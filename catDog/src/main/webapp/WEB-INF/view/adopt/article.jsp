@@ -251,7 +251,7 @@ $(function(){
 
 <div class="wide-container" >
     <div class="body-title">
-        <h3><i class="fas fa-chalkboard"></i> 게시판 </h3>
+        <i class="fas fa-hand-holding-heart"></i>&nbsp;입양 게시판
     </div>
     
     <div>

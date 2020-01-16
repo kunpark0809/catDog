@@ -301,7 +301,7 @@ $(function(){
 
 <div class="wide-container" >
     <div class="body-title">
-        <h3><i class="fas fa-chalkboard"></i> 게시판 </h3>
+        <i class="far fa-sad-tear"></i>&nbsp;유기동물 게시판 
     </div>
     
     <div>
