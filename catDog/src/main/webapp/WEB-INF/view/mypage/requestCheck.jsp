@@ -160,7 +160,7 @@ function submitReview(){
 
 <div class="wide-container">
 	<div class="body-title">
-		<span style="font-family: Webdings">주문 상품 정보</span>  
+		<span style="font-family: Webdings"><i class="far fa-credit-card"></i> 주문 상품 정보</span>  
 	</div>
 	
 	<div>
@@ -176,19 +176,19 @@ function submitReview(){
 		</table>
 	
 		<table style="width: 100%; border-spacing: 0px; border-collapse: collapse;">
-			<tr align="center" bgcolor="#db6a6a" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
-				<th width="130" style="color: white;">주문일자<br>[주문번호]</th>
-				<th style="color: white; width: 80px;">이미지</th>
-				<th width="300" style="color: white;">상품정보</th>
-				<th width="70" style="color: white;">수량</th>
-				<th width="70" style="color: white;">상품구매금액</th>
-				<th width="60" style="color: white;">주문처리상태</th>
-				<th width="70" style="color: white;">취소/교환/반품</th>
+			<tr align="center" bgcolor="#eaeaea" height="35" style="border-top: 1px solid #d4d4d4; border-bottom: 1px solid #d4d4d4;"> 
+				<th width="130" style="color: black;">주문일자<br>[주문번호]</th>
+				<th style="color: black; width: 80px;">이미지</th>
+				<th width="300" style="color: black;">상품정보</th>
+				<th width="70" style="color: black;">수량</th>
+				<th width="70" style="color: black;">상품구매금액</th>
+				<th width="60" style="color: black;">주문처리상태</th>
+				<th width="70" style="color: black;">취소/교환/반품</th>
 			</tr>
 			
 			<c:forEach var="dto" items="${list}">
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
-				<td>${dto.requestDate}<br><a href="<%=cp%>/mypage/requestDetailCheck?&requestNum=${dto.requestNum}" style="color: #f3a34e;">${dto.requestNum}</a></td>
+				<td>${dto.requestDate}<br><a href="<%=cp%>/mypage/requestDetailCheck?&requestNum=${dto.requestNum}" style="color: #f3a34e; font-weight: bold;">${dto.requestNum}</a></td>
 				<td align="left" style="padding-left: 10px;">
 					<a href="<%=cp%>/shop/article?productNum=${dto.productNum}"><img style="width: 80px; height: 80px;" src="<%=cp%>/uploads/shop/${dto.imageFileName}"></a>
 				</td>
