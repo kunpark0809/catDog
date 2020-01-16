@@ -104,7 +104,7 @@ public class MyUtil {
         int page;
         StringBuffer sb=new StringBuffer();
         
-        // 표시할 첫 페이지
+        // 첫번째 페이지
         currentPageSetUp = (current_page / numPerBlock) * numPerBlock;
         if (current_page % numPerBlock == 0)
             currentPageSetUp = currentPageSetUp - numPerBlock;
