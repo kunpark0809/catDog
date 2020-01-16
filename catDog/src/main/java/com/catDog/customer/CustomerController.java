@@ -165,6 +165,29 @@ public class CustomerController {
 		return ".customer.idFind";
 	}
 
+	@RequestMapping(value = "/customer/idFind", method = RequestMethod.POST)
+	public String idFindSubmit(@RequestParam String userName, @RequestParam String email, Model model) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("userName", userName);
+		map.put("email", email);
+		
+		String id = null;
+		String message = null;
+		
+		id = service.findId(map);
+		
+		if(id==null) {
+			message = "일치하는 아이디가 없습니다.";
+		} else {
+			message = "회원님의 아이디는 "+id.substring(0, 4)+"****입니다.";
+		}
+		
+		model.addAttribute("message", message);
+		model.addAttribute("userName", userName);
+		model.addAttribute("email", email);
+		return ".customer.idFind";
+	}
+
 	@RequestMapping(value = "/customer/pwdFind", method = RequestMethod.GET)
 	public String pwdFindForm(HttpSession session) throws Exception {
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
