@@ -12,12 +12,11 @@
 	</div>
 	
 	<div>
-		<div style="width: 100%;" align="center">
-			<img width="300px" height="100px" src="<%=cp%>/resource/img/logos/dogcatdogcat.png">
-		</div>
 		<br><br>
 		
-		<div style="height: 200px; padding">
+		
+		<div style="width: 100%;">
+			<img width="100%" src="<%=cp%>/resource/img/donation.jpg">
 		</div>
 		<div>
 		</div>

@@ -60,17 +60,17 @@ border-radius: 5px;
 </script>
 
 <div class="body-container" style="background-image:url('<%=cp%>/resource/img/reloginbg.jpg');
-			background-position:center center; background-repeat: no-repeat; min-height: 600px;">
-    <div style="width:360px; min-height:490px; margin: 0px auto; padding-top:105px;">
-		<div style=" background-color: rgba( 255, 255, 255, 0.5 ); padding-top: 40px;">
-    	<div style="text-align: center;">
-        	<span style="font-weight: bold; font-size:27px; color: #000000;">패스워드 재확인</span>
+			background-position:center center; background-repeat: no-repeat; min-height: 490px; padding-top: 100px;">
+    	<div style=" width:420px; margin:0px auto; background-color: rgba( 255, 255, 255, 0.5 );">
+    	
+    	<div style="text-align: center; padding-top: 30px;">
+        	<span style="font-weight: bold; font-size:27px; color: #424951;">패스워드 재확인</span>
         </div>
 	
 		<form name="pwdForm" method="post" action="">
-		  <table style="width:100%; margin: 20px auto; padding:30px;  border-collapse: collapse; border: 1px solid #DAD9FF;">
+		  <table style="width:100%; margin: 20px auto; padding:30px;">
 		  <tr style="height:50px;"> 
-		      <td style="padding-left: 30px; text-align: left; color: #000000; padding-bottom: 30px;">
+		      <td style="text-align: center; color: #000000; padding-bottom: 40px;">
 		          정보보호를 위해 패스워드를 다시 한 번 입력해주세요.
 		      </td>
 		  </tr>
@@ -85,7 +85,7 @@ border-radius: 5px;
 		           &nbsp;
 		      </td>
 		  </tr>
-		  <tr align="center" height="60"> 
+		  <tr align="center" height="65"> 
 		      <td>
 		        &nbsp;
 		        <label for="userPwd" id="lblUserPwd" class="lbl" >패스워드</label>
@@ -99,7 +99,7 @@ border-radius: 5px;
 		  <tr align="center" height="65" > 
 		      <td>
 		        &nbsp;
-		        <button type="button" onclick="sendOk();" class="btnConfirm">확인</button>
+		        <button type="button" onclick="sendOk();" class="btnConfirm" style="width: 302px;">확인</button>
 				<input type="hidden" name="mode" value="${mode}">
 		        &nbsp;
 		      </td>
