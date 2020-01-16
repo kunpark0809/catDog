@@ -82,6 +82,19 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
+	public String findId(Map<String, Object> map) throws Exception {
+		String userId = null;
+
+		try {
+			userId = dao.selectOne("customer.findId", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return userId;
+	}
+
+	@Override
 	public Customer readCustomer(String userId) throws Exception {
 		Customer dto = null;
 

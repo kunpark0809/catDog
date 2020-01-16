@@ -24,6 +24,16 @@
 }
 </style>
 <script type="text/javascript">
+	$(function(){
+		if($("#userName").val()) {
+			$("#lblUserName").hide();
+		}
+		if($("#email").val()) {
+			$("#lblEmail").hide();
+		}
+		
+	});
+	
 	function bgLabel(ob, id) {
 	    if(!ob.value) {
 		    document.getElementById(id).style.display="";
@@ -75,7 +85,7 @@
 		        &nbsp;
 		        <label for="userId" id="lblUserName" class="lbl" >이름</label>
 		        <input type="text" name="userName" id="userName" class="loginTF" maxlength="20" 
-		                   tabindex="2"
+		                   tabindex="2" value="${userName}"
                            onfocus="document.getElementById('lblUserName').style.display='none';"
                            onblur="bgLabel(this, 'lblUserName');">
 		        &nbsp;
@@ -86,7 +96,7 @@
 		        &nbsp;
 		        <label for="userId" id="lblEmail" class="lbl" >이메일</label>
 		        <input type="text" name="email" id="email" class="loginTF" maxlength="20" 
-		                   tabindex="2"
+		                   tabindex="2" value="${email}"
                            onfocus="document.getElementById('lblEmail').style.display='none';"
                            onblur="bgLabel(this, 'lblEmail');">
 		        &nbsp;
@@ -100,16 +110,15 @@
 		        &nbsp;
 		      </td>
 		  </tr>
-		  <tr align="center" height="10" > 
+		   <tr align="center" height="30" >
+		    	<td><span style="color: blue;">${message}</span></td>
+		  </tr>
+		  <tr align="center" height="30" > 
 		      <td>&nbsp;</td>
 		  </tr>
 	    </table>
 		</form>
 		           
-	    <table style="width:100%; margin: 10px auto 0; border-collapse: collapse;">
-		  <tr align="center" height="30" >
-		    	<td><span style="color: blue;">${message}</span></td>
-		  </tr>
-		</table>
+	   
 	</div>
 </div>

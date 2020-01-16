@@ -10,32 +10,34 @@ public interface CustomerService {
 
 	public Customer nickNameCheck(String nickName) throws Exception;
 
-	void insertMember(Customer dto, String pathname) throws Exception;
+	public void insertMember(Customer dto, String pathname) throws Exception;
 
-	void updateEnabled(Map<String, Object> map) throws Exception;
+	public void updateEnabled(Map<String, Object> map) throws Exception;
 
-	int failureCount(String userId);
+	public int failureCount(String userId);
 
-	void failureReset(String userId) throws Exception;
+	public void failureReset(String userId) throws Exception;
 
-	void updateFailure(String userId) throws Exception;
+	public void updateFailure(String userId) throws Exception;
 
-	List<Customer> listMemberState(String userId);
+	public List<Customer> listMemberState(String userId);
 
-	Customer readMemberState(String userId);
+	public Customer readMemberState(String userId);
 
-	void deleteCustomerDetail(int num) throws Exception;
+	public void deleteCustomerDetail(int num) throws Exception;
 
-	void deleteMemberDetail(int num) throws Exception;
+	public void deleteMemberDetail(int num) throws Exception;
 
-	void insertMemberState(Customer customer) throws Exception;
+	public void insertMemberState(Customer customer) throws Exception;
 
-	void updateFailureReset(String userId) throws Exception;
+	public void updateFailureReset(String userId) throws Exception;
 
-	void updateLastLogin(String userId) throws Exception;
+	public void updateLastLogin(String userId) throws Exception;
 
-	void updatePwd(Customer dto) throws Exception;
+	public void updatePwd(Customer dto) throws Exception;
 
-	void generatePwd(Customer dto) throws Exception;
+	public void generatePwd(Customer dto) throws Exception;
+
+	public String findId(Map<String, Object> map) throws Exception;
 
 }
