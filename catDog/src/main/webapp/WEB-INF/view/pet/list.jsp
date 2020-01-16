@@ -115,7 +115,9 @@ function article(myPetNum) {
 		        </form>
 		      </td>
 		      <td align="right" width="100">
+		       <c:if test="${not empty sessionScope}">
 		          <button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/pet/created'">글올리기</button>
+		       </c:if>
 		      </td>
 		   </tr>
 		</table>
