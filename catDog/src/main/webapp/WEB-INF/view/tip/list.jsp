@@ -137,7 +137,7 @@ function searchList() {
 		      </td>
 				
 				<td align="right" width="100">
-			<c:if test="${empty sessionScope}">	
+			<c:if test="${not empty sessionScope}">	
 					<button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/tip/created';">글올리기</button>
 			</c:if>
 				</td>
