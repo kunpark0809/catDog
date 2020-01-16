@@ -406,7 +406,7 @@ $(function(){
 				<td colspan="2" align="left" style="padding-left: 5px;">
 				이전글 :
 					<c:if test="${not empty preReadTip}">
-						<a href="<%=cp%>/tip/article?${query}&tipNum=${preReadTip.tipNum}" style="color: black;">${preReadTip.subject}</a>
+						<a href="<%=cp%>/tip/article?${query}&tipNum=${preReadTip.tipNum}" style="color: #a66242;">${preReadTip.subject}</a>
 					</c:if>
 				</td>
 			</tr>
@@ -415,7 +415,7 @@ $(function(){
 				<td colspan="2" align="left" style="padding-left: 5px;">
 				다음글 :
 					<c:if test="${not empty nextReadTip}">
-						<a href="<%=cp%>/tip/article?${query}&tipNum=${nextReadTip.tipNum}" style="color: black;">${nextReadTip.subject}</a>
+						<a href="<%=cp%>/tip/article?${query}&tipNum=${nextReadTip.tipNum}" style="color: #a66242;">${nextReadTip.subject}</a>
 					</c:if>
 				</td>
 			</tr>

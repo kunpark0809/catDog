@@ -375,7 +375,7 @@ $(function(){
 				<td colspan="2" align="left" style="padding-left: 5px;">
 				이전글 :
 					<c:if test="${not empty preReadFreeBoard}">
-						<a href="<%=cp%>/freeBoard/article?${query}&bbsNum=${preReadFreeBoard.bbsNum}" style="color: black;">${preReadFreeBoard.subject}</a>
+						<a href="<%=cp%>/freeBoard/article?${query}&bbsNum=${preReadFreeBoard.bbsNum}" style="color: #a66242;">${preReadFreeBoard.subject}</a>
 					</c:if>
 				</td>
 			</tr>
@@ -384,7 +384,7 @@ $(function(){
 				<td colspan="2" align="left" style="padding-left: 5px;">
 				다음글 :
 					<c:if test="${not empty nextReadFreeBoard}">
-						<a href="<%=cp%>/freeBoard/article?${query}&bbsNum=${nextReadFreeBoard.bbsNum}" style="color: black;">${nextReadFreeBoard.subject}</a>
+						<a href="<%=cp%>/freeBoard/article?${query}&bbsNum=${nextReadFreeBoard.bbsNum}" style="color: #a66242;">${nextReadFreeBoard.subject}</a>
 					</c:if>
 				</td>
 			</tr>

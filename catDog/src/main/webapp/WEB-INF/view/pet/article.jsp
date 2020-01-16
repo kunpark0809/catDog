@@ -71,7 +71,7 @@ function login() {
 
 function deletePet(myPetNum) {
 	<c:if test="${sessionScope.member.userId=='userId' || sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">
-	var q = "myPetNum="+myPetNum+"&${query}";
+	var q = "myPetNum="+${dto.myPetNum}+"&${query}";
     var url = "<%=cp%>/pet/delete?" + q;
 
     if(confirm("위 게시물을 삭제 하시겠습니까 ? "))
@@ -259,7 +259,7 @@ $(function(){
 				<td colspan="2" align="left" style="padding-left: 5px;">
 				이전글 :
 					<c:if test="${not empty preReadPet}">
-						<a href="<%=cp%>/pet/article?${query}&myPetNum=${preReadPet.myPetNum}" style="color: black;">${preReadPet.subject}</a>
+						<a href="<%=cp%>/pet/article?${query}&myPetNum=${preReadPet.myPetNum}" style="color: #a66242;">${preReadPet.subject}</a>
 					</c:if>
 				</td>
 			</tr>
@@ -268,7 +268,7 @@ $(function(){
 				<td colspan="2" align="left" style="padding-left: 5px;">
 				다음글 :
 					<c:if test="${not empty nextReadPet}">
-						<a href="<%=cp%>/pet/article?${query}&myPetNum=${nextReadPet.myPetNum}" style="color: black;">${nextReadPet.subject}</a>
+						<a href="<%=cp%>/pet/article?${query}&myPetNum=${nextReadPet.myPetNum}" style="color: #a66242;">${nextReadPet.subject}</a>
 					</c:if>
 				</td>
 			</tr>
