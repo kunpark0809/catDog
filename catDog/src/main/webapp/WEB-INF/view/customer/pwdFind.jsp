@@ -82,16 +82,15 @@
 		        &nbsp;
 		      </td>
 		  </tr>
+		  <tr align="center" height="30" >
+		    	<td><span style="color: blue;">${message}</span></td>
+		  </tr>
+		 
 		  <tr align="center" height="10" > 
 		      <td>&nbsp;</td>
 		  </tr>
 	    </table>
 		</form>
-		           
-	    <table style="width:100%; margin: 10px auto 0; border-collapse: collapse;">
-		  <tr align="center" height="30" >
-		    	<td><span style="color: blue;">${message}</span></td>
-		  </tr>
-		</table>
+		
 	</div>
 </div>
