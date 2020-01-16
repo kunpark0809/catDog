@@ -29,6 +29,32 @@
 .star-input>output{display:inline-block;width:60px; font-size:18px;text-align:right; vertical-align:middle;}
 
 </style>
+
+<style>
+.ui-dialog-titlebar{
+	background: none;
+    color: black;
+    border: none;
+    border-bottom: 1px solid #e4e4e4;
+    border-radius: 0px;
+    text-align: left;
+}
+.ui-dialog .ui-dialog-titlebar {
+    padding-left: 0px;
+}
+.ui-dialog-title{
+	padding-left: 10px;
+	font-size: 14pt;
+}
+
+.ui-dialog{
+	padding: 5px 20px;
+	border-radius: 0px;
+	position: fixed;
+	
+}
+</style>
+
 <script type="text/javascript">
 function ajaxJSON(url, type, query, fn) {
 	$.ajax({
@@ -78,11 +104,15 @@ function requestSwap(requestNum) {
 
 function reviewDialog(productNum,requestDetailNum){
 	var url ="<%=cp%>/mypage/readProduct";
-	var query = "productNum="+productNum
+	var query = "productNum="+productNum;
+	
+	$("input[name=productNum]").val("");
+	$("input[name=requestDetailNum]").val("");
+	
 	var fn = function(data){
 		var product = data.product;
 		$("img[name=productImg]").attr("src","<%=cp%>/uploads/shop/"+product.imageFileName);
-		$(".productInfo_right").append("<p>"+product.productName+"</p>");
+		$(".productInfo_right").text(product.productName);
 		$("input[name=productNum]").val(productNum);
 		$("input[name=requestDetailNum]").val(requestDetailNum);
 	};
@@ -91,11 +121,14 @@ function reviewDialog(productNum,requestDetailNum){
 	
 	$('#review_dialog').dialog({
 		  modal: true,
-		  height: 750,
+		  height: 550,
 		  width: 500,
 		  title: '리뷰 쓰기',
 		  close: function(event, ui) {
-		  }
+		  },
+		  open: function(event, ui) {
+				$(".ui-dialog-titlebar-close", $(this).parent()).hide();
+			}
 	});
 }
 
@@ -269,20 +302,22 @@ function submitReview(){
 		</table>
 	
 	</div>
-	<div id="review_dialog" style="display: none;">
+	<div id="review_dialog" style="display: none; text-align: center;">
 		<form name="reviewForm" method="post" onsubmit="return submitReview(this);">
 			<div id="productInfo">
 				<div class="productInfo_left" style="float: left;">
 					<input type="hidden" name="productNum" value="">
 					<input type="hidden" name="requestDetailNum" value="">
-					<img alt="" name="productImg" src="" width="50" height="50">
+					<img alt="" name="productImg" src="" width="75" height="75">
 				</div>
-				<div class="productInfo_right" style="float: left;">
+				<span class="productInfo_right" style="float: left;margin-left: 15px;line-height: 75px;">
 					
-				</div>
+				</span>
 			</div>
-			<div style="clear: both;">
+			<div style="clear: both; padding-top: 5px;" >
+			<hr>
 				<h5>상품은 만족하셨나요?</h5>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<span class="star-input">
 						<span class="input">
 					    	<input type="radio" name="star_input" value="1" id="p1">
@@ -299,13 +334,13 @@ function submitReview(){
 					  	<output for="star-input" ><input type="hidden" name="rate" value="0"></output>						
 					</span>	
 				<hr>
-				<h5>어떤 점이 좋았나요?</h5>
-					<textarea rows="" cols="40" name="content"></textarea>
+				<h5>해당 상품에 관한 고객님의 생각은?</h5>
+					<textarea class="payTA" name="content"></textarea>
 				<hr>
 			</div>
 			<div class="btn_box">
-				<button type="button" class="btnDialogCanecl">취소</button>
-				<button type="submit">확인</button>
+				<button type="button" class="btnDialogCanecl dialog_cancel">취소</button>
+				<button type="submit" class="dialog_submit">확인</button>
 			</div>
 		</form>
 	</div>

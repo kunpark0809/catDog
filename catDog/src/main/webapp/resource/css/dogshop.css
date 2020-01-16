@@ -10,6 +10,10 @@ input:focus {
   outline: none;
 }
 
+select:focus{
+	outline: none;
+}
+
 a, a:hover{
 	color: black;
 	text-decoration: none;
@@ -169,6 +173,7 @@ a.sortName{
 	border-spacing: 0;
 	margin: 0px auto;
 	text-align: center;
+	border-top: 1.5px solid #b7b7b7;
 }
 
 .cartTable > tr{
@@ -309,6 +314,7 @@ a.sortName{
 	margin: 0px auto;
 	border-collapse: collapse;
 	border-spacing: 0;
+	border-top: 1.5px solid #b7b7b7;
 }
 
 .payProduct > table > tr > td{

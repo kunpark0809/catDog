@@ -95,6 +95,36 @@ $(function(){
 	});
 });
 
+
+$(function(){
+	$("input[type=checkbox]").on("change",function(){
+		var check =  $("input[name=productCheck]:checked");
+		var total = 0;
+		
+		if(check.length == 0){
+			$("#cart_total").text(0);
+			$("#cart_purchase").text(0 + " 원");
+			$("#cart_deliver").text(0);
+			return;
+		}
+		
+		var length=${fn:length(cartList)};
+		
+
+		$.each(check,function(idx,item){
+			<c:forEach var="product" items="${cartList}">
+				if(${product.cartNum} == check[idx].value){
+					total += ${product.productSum};
+				}
+			</c:forEach>
+		});
+		
+		$("#cart_total").text(total.toLocaleString());
+		$("#cart_deliver").text("2,500");
+		$("#cart_purchase").text((total+2500).toLocaleString()+" 원");
+	});
+});
+
 function changePrice(){
 	var count = $("input[name=productCount]").val();
 	console.log(count);
@@ -160,9 +190,10 @@ function productPay(mode){
 		<form name="cartList" method="post">
 			<div class="cartList">
 				<table class="cartTable" >
-				<tr style="color:white; background-color:#51321b;">
+				<tr style="color: black;background-color: #eaeaea;">
 					<td><input type="checkbox" value="all" id="cartAllCheck" onchange="checkCart();"></td>
-					<td colspan="2" style="padding: 5px 0px;">상품정보</td>
+					<td>이미지</td>
+					<td style="padding: 5px 0px;">상품정보</td>
 					<td>판매가</td>
 					<td>수량</td>
 					<td>배송비</td>
@@ -170,11 +201,11 @@ function productPay(mode){
 				</tr>
 	
 				<c:forEach var="product" items="${cartList}">
-					<tr style="border-bottom: 1px solid #cccccc;">
+					<tr style="border-bottom: 1px solid #d4d4d4;">
 						<td>
 							<input type="checkbox" value="${product.cartNum}" name="productCheck">
 						</td> 
-						<td><img alt="" src="<%=cp%>/uploads/shop/${product.imageFileName}" width="50"></td>
+						<td><img alt="" src="<%=cp%>/uploads/shop/${product.imageFileName}" width="75" height="75"></td>
 						<td><a href="<%=cp%>/shop/article?productNum=${product.productNum}&bigSortNum=${product.bigSortNum}">${product.productName}</a></td>
 						<td> <fmt:formatNumber value="${product.productSum}" type="number"/></td>
 						<td style="padding: 5px 0px;">${product.productCount}개
@@ -202,24 +233,27 @@ function productPay(mode){
 		</div>
 
 	</c:if>
-	<div class="totalPay">
-		총 결제 금액 : 
-		
+	<div class="totalPay" style="text-align: right;border-bottom: 1.5px solid #d4d4d4;padding: 15px 15px 15px 0px;">
+		상품구매금액 
+		<span id="cart_total" style="font-weight: bold;">0</span> 
+		+ 배송비 <span id="cart_deliver">0</span> 
+		= 합계 : <span id="cart_purchase" style="font-weight: bold; color: #d96363; font-size: 15pt;">0 원</span>
 	</div>
 	
-	<div class="btnList">
+	<div class="btnList" style="margin-top: 20px;">
         <span class="btn_left_box">
             <button type="button" class="whiteBtn" onclick="deleteCart();">선택 상품 삭제</button>
         </span>
         <span class="btn_right_box">
             <button type="button" class="whiteBtn" onclick="productPay('select');">선택 상품 주문</button>
-            <button type="button" class="brownBtn" onclick="productPay('all');">전체 상품 주문</button>
+            <button type="button" class="pinkBtn" onclick="productPay('all');">전체 상품 주문</button>
         </span>
 	</div>
 	
 		<div id="change_dialog" style="display: none; text-align: center;">
 		<form method="post" name="countForm" action="<%=cp%>/pay/changeCount">
 		<table style="margin-top: 20px;">
+		
 			<tr style="background: #d96262;border-bottom: 1px solid #d96262;color: white;font-size: 10pt;">
 				<th width="400" style="padding: 5px 0px;">상품정보</th>
 				<th width="100">수&nbsp;&nbsp;량</th>

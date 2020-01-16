@@ -329,7 +329,7 @@ $(function(){
 			
 			<tr>
 				<td colspan="2" align="left" style="padding: 10px 5px;" valign="top" height="200">
-					<div id="abandMap"></div>
+					<div id="abandMap" style="width: 100%; height: 500px;"></div>
 				</td>
 			</tr>
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">

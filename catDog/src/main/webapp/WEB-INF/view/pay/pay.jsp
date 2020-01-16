@@ -204,7 +204,8 @@
 			<div class="payProduct" style="margin-bottom: 50px;">
 				<table style="text-align: center;">
 					<tr style="color: black;background-color: #eaeaea;">
-						<td colspan="2" style="padding: 5px 0px;">상품정보</td>
+						<td>이미지</td>
+						<td style="padding: 5px 0px;">상품정보</td>
 						<td>판매가</td>
 						<td>수량</td>
 						<td>배송비</td>
@@ -212,12 +213,14 @@
 					</tr>
 					<c:if test="${mode=='direct'}">
 						<tr style="border-bottom: 1px solid #cccccc;">
-							<td>
-							<input type="hidden" name="productNum" value="${product.productNum}">
-							<img alt=""
-								src="<%=cp%>/uploads/shop/${product.imageFileName}"
-								width="50"></td>
-							<td  style="padding: 5px 0px;">${product.productName}</td>
+							<td><img alt=""
+									src="<%=cp%>/uploads/shop/${product.imageFileName}"
+									width="75" height="75"></td>
+							<td  style="padding: 5px 0px;">
+								<input type="hidden" name="productNum" value="${product.productNum}">
+								
+								${product.productName}
+							</td>
 							<td><fmt:formatNumber value="${product.productSum}" type="number"/></td>
 							<td><input type="hidden" name="productCount" value="${product.productCount}">${product.productCount}</td>
 							<td>기본배송</td>
@@ -404,7 +407,7 @@
 							<tr style="	border-bottom: 1px solid #d4d4d4;">
 								<td class="payTdTit">최종 결제 금액</td>
 								<td class="payTdCon">
-									<input name="purchase" class="readInput" type="hidden" value="">
+									<input name="purchase" class="readInput" type="hidden" value="${mode=='cart'? (cartList.get(0).total+2500):(product.total+2500)}">
 									<strong>
 									<span id="purchase"><fmt:formatNumber value="${mode=='cart'? (cartList.get(0).total+2500):(product.total+2500)}" type="number"/>원</span>
 									</strong>
@@ -419,7 +422,7 @@
 								<div class="title" style="border-bottom: 2px solid #d4d4d4;">
 									<h3>결제수단</h3>
 								</div>
-							<div style="border-bottom: 1px solid #d4d4d4; padding: 10px 0px;">
+							<div style="padding: 10px 0px;">
 								<span class="">
 									<input name="payMethod" value="0" type="radio">
 									무통장 입금
@@ -437,18 +440,17 @@
 									휴대폰결제
 								</span>
 							<div id="bankBox" class="pay_bankbook_box" style="display: none;">
-								<em class="pay_bankbook_txt">( 무통장 입금 의 경우 입금확인 후부터 배송단계가
-									진행됩니다. )</em>
-								<table>
-									<tr style="padding: 10px 0px;">
+						<p style="color: #949494; border-bottom: 1px solid #d4d4d4; padding-bottom: 10px;">※ 무통장 입금 의 경우 입금확인 후부터 배송단계가 진행됩니다.</p>
+						<table style="width: 100%">
+									<tr style="padding: 10px 0px; 	border-bottom: 1px solid #d4d4d4;" >
 	
-										<td><strong>입금자명</strong></td>
-										<td><input type="text" name="bankSender" class="payInput"
+										<td class="payTdTit">입금자명</td>
+										<td class="payTdCon"><input type="text" name="bankSender" class="payInput"
 											readonly="readonly" value="${sessionScope.member.name}"></td>
 									</tr>
-									<tr style="padding: 10px 0px;">
-										<td><strong>입금은행</strong></td>
-										<td><select name="bankAccount" class="payInput">
+									<tr style="padding: 10px 0px; 	border-bottom: 1px solid #d4d4d4;">
+										<td class="payTdTit">입금은행</td>
+										<td class="payTdCon"><select name="bankAccount" class="payInput" style="width:350px;">
 												<option value="">선택하세요</option>
 												<option value="1">국민은행 000000-00-000000 주식회사 멍냥개냥</option>
 										</select></td>
