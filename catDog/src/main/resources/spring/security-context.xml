@@ -1,118 +1,139 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>  
-<beans:beans xmlns="http://www.springframework.org/schema/security"
-   xmlns:beans="http://www.springframework.org/schema/beans"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xmlns:context="http://www.springframework.org/schema/context"
-   xsi:schemaLocation="
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+	xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
       http://www.springframework.org/schema/beans
       http://www.springframework.org/schema/beans/spring-beans.xsd
       http://www.springframework.org/schema/context
       http://www.springframework.org/schema/context/spring-context.xsd
       http://www.springframework.org/schema/security
       http://www.springframework.org/schema/security/spring-security.xsd">
- 
-   <context:component-scan base-package="com.catDog"/>
-   
-    <!-- 권한이 없는 페이지를 접근할 경우 접근 불가 메시지 출력  -->
-   <http auto-config="true">
-      <!-- spring 4.x때 추가된 옵션으로 ssl을 사용하지 않을 경우 csrf는 disalbed=true로 설정. -->
-      <csrf disabled="true"/>
-      
-      <!-- 스마트에디터 -->
-      <headers>
-         <frame-options policy="SAMEORIGIN"/>
-         <hsts disabled="true"/>
-      </headers>
-      
-      <!-- 모든 사용자 접근 -->
-      <intercept-url pattern="/index.jsp" access="permitAll"/>
-      <intercept-url pattern="/main" access="permitAll"/>
-      <intercept-url pattern="/customer/login" access="permitAll"/>
-      <intercept-url pattern="/customer/register" access="permitAll"/>
-      <intercept-url pattern="/customer/userIdCheck" access="permitAll"/>
-      <intercept-url pattern="/customer/nickNameCheck" access="permitAll"/>
-      <intercept-url pattern="/customer/complete" access="permitAll"/>
-      <intercept-url pattern="/customer/idFind" access="permitAll"/>
-      <intercept-url pattern="/customer/pwdFind" access="permitAll"/>
-      <intercept-url pattern="/resource/**" access="permitAll"/>
-      <intercept-url pattern="/uploads/**" access="permitAll"/>
-    
-      <intercept-url pattern="/company/**" access="permitAll"/>
-      
-      <intercept-url pattern="/shop/list" access="permitAll"/>
-      <intercept-url pattern="/shop/article" access="permitAll"/>
-      
-      <intercept-url pattern="/park/**" access="permitAll"/>
-      <intercept-url pattern="/cafe/**" access="permitAll"/>
-      <intercept-url pattern="/hospital/**" access="permitAll"/>
-      <intercept-url pattern="/training/**" access="permitAll"/>
-      <intercept-url pattern="/funeral/**" access="permitAll"/>
-      
-      <intercept-url pattern="/event/**" access="permitAll"/>
-      <intercept-url pattern="/festival/**" access="permitAll"/>
-      
-      <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
-      <intercept-url pattern="/**" access="hasAnyRole('ROLE_USER')"/>
-            
-      <form-login
-         login-page="/customer/login"
-         login-processing-url="/customer/login"
-         username-parameter="userId"
-         password-parameter="userPwd"
-         authentication-failure-url="/customer/login?login_error"
-         default-target-url="/"
-         always-use-default-target="true"
-         authentication-success-handler-ref="myAuthenticationSuccessHandler"
- 		 authentication-failure-handler-ref="myAuthenticationFailureHandler"
-      />
-      
-      <logout
-         logout-url="/customer/logout"
-         invalidate-session="true"
-         logout-success-url="/"
-      />
-      
-      <access-denied-handler error-page="/customer/noAuthorized"/>
-      
-      <session-management>
-         <concurrency-control max-sessions="1"
-               expired-url="/customer/expired"/>
-      </session-management>
-      
-      <!-- AJAX를 위한 필터 등록 -->
-      <custom-filter ref="ajaxFilter" after="EXCEPTION_TRANSLATION_FILTER"/>
-      
-   </http>
-    
-    <beans:bean id="myAuthenticationSuccessHandler" class="com.catDog.security.LoginSuccessHandler"> 
-    	<beans:property name="defaultUrl" value="/"/>
-    </beans:bean>
-    
-    <beans:bean id="myAuthenticationFailureHandler" class="com.catDog.security.LoginFailureHandler">
-    	<beans:property name="defaultFailureUrl" value="/customer/login?login_error"/>
-    </beans:bean>
-    
-    
-    
-    <jdbc-user-service data-source-ref="dataSource"
-          id="userService"
-          users-by-username-query="SELECT userId username, userPwd password, enabled FROM MEMBERDETAIL WHERE userId=?"
-          authorities-by-username-query="SELECT userId username, authority FROM memberAuthority WHERE userId=?"/>
-    
-   <authentication-manager>
-      <authentication-provider user-service-ref="userService">
-         <password-encoder ref="bcryptEncoder"/>
-      </authentication-provider>
-   </authentication-manager>
-   
-   <!-- bcrypt : 패스워드 암호화에 특화된 password hashing function -->
-   <beans:bean id="bcryptEncoder"
-         class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
-   <!-- AJAX 작업을 위한 필터 객체 -->
-   <beans:bean id="ajaxFilter" class="com.catDog.security.AjaxSessionTimeoutFilter">
-      <beans:property name="ajaxHeader" value="AJAX"/>
-   </beans:bean>
+	<context:component-scan
+		base-package="com.catDog" />
+
+	<!-- 권한이 없는 페이지를 접근할 경우 접근 불가 메시지 출력 -->
+	<http auto-config="true">
+		<!-- spring 4.x때 추가된 옵션으로 ssl을 사용하지 않을 경우 csrf는 disalbed=true로 설정. -->
+		<csrf disabled="true" />
+
+		<!-- 스마트에디터 -->
+		<headers>
+			<frame-options policy="SAMEORIGIN" />
+			<hsts disabled="true" />
+		</headers>
+
+		<!-- 모든 사용자 접근 -->
+		<intercept-url pattern="/index.jsp" access="permitAll" />
+		<intercept-url pattern="/main" access="permitAll" />
+		<intercept-url pattern="/customer/login"
+			access="permitAll" />
+		<intercept-url pattern="/customer/register"
+			access="permitAll" />
+		<intercept-url pattern="/customer/userIdCheck"
+			access="permitAll" />
+		<intercept-url pattern="/customer/nickNameCheck"
+			access="permitAll" />
+		<intercept-url pattern="/customer/complete"
+			access="permitAll" />
+		<intercept-url pattern="/customer/idFind"
+			access="permitAll" />
+		<intercept-url pattern="/customer/pwdFind"
+			access="permitAll" />
+		<intercept-url pattern="/resource/**" access="permitAll" />
+		<intercept-url pattern="/uploads/**" access="permitAll" />
+
+		<intercept-url pattern="/company/**" access="permitAll" />
+
+		<intercept-url pattern="/shop/list" access="permitAll" />
+		<intercept-url pattern="/shop/article"
+			access="permitAll" />
+
+		<intercept-url pattern="/park/**" access="permitAll" />
+		<intercept-url pattern="/cafe/**" access="permitAll" />
+		<intercept-url pattern="/hospital/**" access="permitAll" />
+		<intercept-url pattern="/training/**" access="permitAll" />
+		<intercept-url pattern="/funeral/**" access="permitAll" />
+
+		<intercept-url pattern="/event/**" access="permitAll" />
+		<intercept-url pattern="/festival/**" access="permitAll" />
+
+		<intercept-url pattern="/tip/**" access="permitAll" />
+		<intercept-url pattern="/pet/**" access="permitAll" />
+		<intercept-url pattern="/freeBoard/**" access="permitAll" />
+
+		<intercept-url pattern="/notice/**" access="permitAll" />
+		<intercept-url pattern="/qna/**" access="permitAll" />
+		<intercept-url pattern="/faq/**" access="permitAll" />
+
+
+		<intercept-url pattern="/admin/**"
+			access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/**"
+			access="hasAnyRole('ROLE_USER')" />
+
+		<form-login login-page="/customer/login"
+			login-processing-url="/customer/login" username-parameter="userId"
+			password-parameter="userPwd"
+			authentication-failure-url="/customer/login?login_error"
+			default-target-url="/" always-use-default-target="true"
+			authentication-success-handler-ref="myAuthenticationSuccessHandler"
+			authentication-failure-handler-ref="myAuthenticationFailureHandler" />
+
+		<logout logout-url="/customer/logout" invalidate-session="true"
+			logout-success-url="/" />
+
+		<access-denied-handler
+			error-page="/customer/noAuthorized" />
+
+		<session-management>
+			<concurrency-control max-sessions="1"
+				expired-url="/customer/expired" />
+		</session-management>
+
+		<!-- AJAX를 위한 필터 등록 -->
+		<custom-filter ref="ajaxFilter"
+			after="EXCEPTION_TRANSLATION_FILTER" />
+
+	</http>
+
+	<beans:bean id="myAuthenticationSuccessHandler"
+		class="com.catDog.security.LoginSuccessHandler">
+		<beans:property name="defaultUrl" value="/" />
+	</beans:bean>
+
+	<beans:bean id="myAuthenticationFailureHandler"
+		class="com.catDog.security.LoginFailureHandler">
+		<beans:property name="defaultFailureUrl"
+			value="/customer/login?login_error" />
+	</beans:bean>
+
+
+
+	<jdbc-user-service data-source-ref="dataSource"
+		id="userService"
+		users-by-username-query="SELECT userId username, userPwd password, enabled FROM MEMBERDETAIL WHERE userId=?"
+		authorities-by-username-query="SELECT userId username, authority FROM memberAuthority WHERE userId=?" />
+
+	<authentication-manager>
+		<authentication-provider
+			user-service-ref="userService">
+			<password-encoder ref="bcryptEncoder" />
+		</authentication-provider>
+	</authentication-manager>
+
+	<!-- bcrypt : 패스워드 암호화에 특화된 password hashing function -->
+	<beans:bean id="bcryptEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
+	<!-- AJAX 작업을 위한 필터 객체 -->
+	<beans:bean id="ajaxFilter"
+		class="com.catDog.security.AjaxSessionTimeoutFilter">
+		<beans:property name="ajaxHeader" value="AJAX" />
+	</beans:bean>
 
 
 </beans:beans>
