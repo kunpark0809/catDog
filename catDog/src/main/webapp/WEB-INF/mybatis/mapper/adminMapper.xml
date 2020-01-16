@@ -420,7 +420,7 @@
  		JOIN memberDetail md ON r.reportedNum = md.num
         JOIN reasonSort rs ON r.reasonSortNum = rs.reasonSortNum
  		WHERE judgement = 2 AND userId = #{userId}
- 		ORDER BY reportDate
+ 		ORDER BY reportDate DESC
  		FETCH FIRST 1 ROWS ONLY
  	</select>
 

@@ -31,6 +31,19 @@
 	
 }
 
+.ui-dialog-content{
+	color: black;
+}
+
+/*
+.ui-dialog .ui-dialog-content {
+	background-image:url('<%=cp%>/resource/img/beast.jpg');
+	background-position:center center;
+	background-repeat: no-repeat;
+}
+*/
+
+
 
 </style>
 
@@ -92,7 +105,7 @@ $(function(){
 			var reasonName = data.reasonName;
 			var reportCount = data.reportCount;
 			
-			var warning = "<a href = '"+url2+"' style='color:blue;'>회원님이 작성한 글</a>이 "+reportDate+"에 '"+reasonName;
+			var warning = "<a href = '"+url2+"' style='color:blue; font-weight:bold;'>회원님이 작성한 글</a>이 "+reportDate+"에 '"+reasonName;
 			warning+="'의 사유로 신고되었고,<br>운영진의 심의 결과 경고 1회를 부여하였습니다.<br>현재 경고횟수는 ";
 			warning+=reportCount+"회이며 경고 3회 누적시 회원 자격이 영구적으로 정지됩니다.";
 			
@@ -259,8 +272,8 @@ $(function(){
 
 	</div>
 <!-- 모달 창 -->
-		<div id="warningModal" style="display: none; text-align: center;">
-	 		<div class="warningModal-content" st></div>
+		<div id="warningModal" style="display: none; text-align: center; ">
+	 		<div class="warningModal-content"></div>
 	      	<div style="text-align: center;">
 	 			<button type="button" id="confirm" class="bts">확인</button>
 	 		</div>
