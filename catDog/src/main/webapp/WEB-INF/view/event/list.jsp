@@ -60,6 +60,42 @@
    padding: 5px 0px;
 }
 
+.bts {
+width: 70px;
+background-color: #51321b;
+border: none;
+color: #ffffff;
+padding: 6px 0;
+text-align: center;
+display: inline-block;
+font-size: 15px;
+margin: 4px;
+border-radius: 5px;
+}
+
+.selectField {
+width: 60px;
+background-color: white;
+border: 2px solid #51321b;
+color: black;
+padding: 3px 0;
+text-align: center;
+display: inline-block;
+font-size: 15px;
+margin: 2px;
+}
+
+.boxTF {
+width: 300px;
+background-color: white;
+border: 2px solid #51321b;
+color: black;
+padding: 3px 0;
+text-align: center;
+display: inline-block;
+font-size: 15px;
+margin: 2px;
+}
 </style>
 
 <script type="text/javascript">
@@ -233,7 +269,7 @@ $(function(){
 		<table style="width: 100%; margin: 10px auto; border-spacing: 0px;">
 			<tr height="40">
 				<td align="left" width="100">
-					<button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/event/list';">새로고침</button>
+					<button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/event/list';">새로고침</button>
 				</td>
 				<td align="center">
 					<form name="searchForm" action="<%=cp%>/event/list" method="post">
@@ -245,12 +281,12 @@ $(function(){
 							<option value="created" ${condition=="created"?"selected='selected'":""}>등록일</option>
 						</select>
 						<input type="text" name="keyword" value="${keyword}" class="boxTF">
-						<button type="button" class="btn" onclick="searchList()">검색</button>
+						<button type="button" class="bts" onclick="searchList()" style="width: 5%"><i class="fas fa-search"></i></button>
 					</form>
 				</td>
 				<td align="right" width="100">
 				<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
-					<button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/event/created';">등록하기</button>
+					<button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/event/created';">등록하기</button>
 				</c:if>
 				</td>
 			</tr>

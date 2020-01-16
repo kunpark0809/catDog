@@ -242,7 +242,10 @@ function report(){
 		  width: 500,
 		  title: '서비스 점검중',
 		  close: function(event, ui) {
-		  }
+		  },
+		  open: function(event, ui) {
+              $(".ui-dialog-titlebar-close", $(this).parent()).hide();
+           }
 	});
 	
 }
@@ -267,7 +270,7 @@ $(function(){
 </div>
 
 <div id="report_dialog" style="display: none; text-align: center;">
-			<strong><br><br>서비스 진행 준비중 입니다.<br> 이용에 불편을 드려 죄송합니당.</strong>
+			<strong><br><br>서비스 진행 준비중 입니다.<br> 이용에 불편을 드려 죄송합니다.</strong>
 			<br><br>
 	<div class="btn_box" align="center" style="padding-top: 20px;">
 				<button type="button" class="btnDialogCancel dialog_cancel">확인</button>
