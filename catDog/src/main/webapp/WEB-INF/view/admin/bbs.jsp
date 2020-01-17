@@ -108,7 +108,7 @@ $(function(){
 			<ul class="tabs">
 				<li id="tab-0" data-tab="0">전체</li>
 				<li id="tab-1" data-tab="1">꿀팁</li>
-				<li id="tab-2" data-tab="2">내새끼자랑</li>
+				<li id="tab-2" data-tab="2">멍냥 자랑</li>
 				<li id="tab-3" data-tab="3">자유게시판</li>
 
 
@@ -134,7 +134,7 @@ $(function(){
 				<tr align="center" bgcolor="#ffffff" height="35"
 					style="border-bottom: 1px solid #cccccc;">
 					<td>${dto.reportNum }</td>
-					<td>${dto.boardSort==1?'꿀팁':dto.boardSort==2?'내새끼자랑':'자유게시판' }</td>
+					<td>${dto.boardSort==1?'꿀팁':dto.boardSort==2?'멍냥 자랑':'자유게시판' }</td>
 					<td>${dto.reasonName }</td>
 					<td>${dto.reporterNickName}(${dto.reporterId})</td>
 					<td>${dto.reportedNickName}(${dto.reportedId})</td>
@@ -147,7 +147,7 @@ $(function(){
 							</c:when>
 							<c:when test="${dto.boardSort==2}">
 								<button class="yellowBts" style="width: 130px; padding: 0px;"
-									onclick="window.open('<%=cp%>/pet/article?myPetNum=${dto.reportedPostNum}')">내새끼자랑(${dto.reportedPostNum})</button>
+									onclick="window.open('<%=cp%>/pet/article?myPetNum=${dto.reportedPostNum}')">멍냥 자랑(${dto.reportedPostNum})</button>
 							</c:when>
 							<c:when test="${dto.boardSort==3}">
 								<button class="yellowBts" style="width: 130px; padding: 0px;"
