@@ -100,7 +100,7 @@
 	width: 110px;
 	margin: 1.5px 0;
 	font-size: 13px;
-	color: #555555;
+	color: white;
 	cursor: pointer;
 	white-space: nowrap;
 	overflow: hidden;
@@ -394,7 +394,7 @@ $(function() {
 				<td width="100" valign="top" style="text-align: left; padding-top: 5px;">
 				<label style="font-weight: 900;">제목</label></td>
 				<td style="padding: 0 0 15px 15px;">
-					<p style="margin-top: 1px; margin-bottom: 5px;">
+					<p style="margin-top: 1px; margin-bottom: 5px; ">
 						<input type="text" name="subject" id="form-subject" maxlength="100" class="boxTF" style="width: 95%;">
 					</p>
 					<p class="help-block" style="color: #A66E4E;">* 제목은 필수 입니다.</p>
