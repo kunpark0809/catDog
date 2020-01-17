@@ -51,6 +51,7 @@
 			<if test="keyword!=null and keyword!=''">
 				<include refid="where-list"/>
 			</if>
+			AND sortNum=5
 		</where>
 	</select>
 	
