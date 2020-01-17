@@ -38,14 +38,19 @@
 		</where>
 	</select>
 	
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE lostPet SET hitCount = hitCount+1
+		WHERE  lostPetNum=#{lostPetNum}
+	</update>
+	
 	<select id="readAband" parameterType="Integer" resultType="com.catDog.aband.Aband">
-		SELECT lostPetNum, sort, subject, content, created, hitCount, lostDate, addr, num, nickName, imageFileName, speciesSort, status
+		SELECT lostPetNum, sort, subject, content, TO_CHAR(created,'YYYY-MM-DD') created, hitCount, lostDate, addr, num, nickName, imageFileName, speciesSort, status
 		FROM lostPet
 		WHERE lostPetNum = #{lostPetNum}
 	</select>
 	
 	<select id="preReadAband" parameterType="map" resultType="com.catDog.aband.Aband">
-		SELECT lostPetNum, sort, subject, content, created, hitCount, lostDate, addr, num, nickName, imageFileName, speciesSort
+		SELECT lostPetNum, sort, subject
 		FROM lostPet
 		<where>
 			<include refid="where-list"/>
@@ -56,7 +61,7 @@
 	</select>
 	
 	<select id="nextReadAband" parameterType="map" resultType="com.catDog.aband.Aband">
-		SELECT lostPetNum, sort, subject, content, created, hitCount, lostDate, addr, num, nickName, imageFileName, speciesSort
+		SELECT lostPetNum, sort, subject
 		FROM lostPet
 		
 		<where>

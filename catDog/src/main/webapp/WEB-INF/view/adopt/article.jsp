@@ -256,19 +256,20 @@ $(function(){
     
     <div>
 			<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
-			<tr height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-			    <td colspan="2" align="center">
+			<tr height="35" style="border-top: 2px solid #d96262; border-bottom: 1px solid #cccccc; ">
+			    <td width="50%" align="left" style="padding: 20px 0px; font-size: 20px">
 				   ${dto.subject}
+			    </td>
+			    <td width="50%" align="right" style="padding-right: 5px; font-size: 15px; font-weight: bold;">
+			   		 ${dto.created}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;조회&nbsp;&nbsp; ${dto.hitCount}
 			    </td>
 			</tr>
 			
-			<tr height="35" style="border-bottom: 1px solid #cccccc;">
-			    <td width="50%" align="left" style="padding-left: 5px;">
+			<tr height="35" >
+			    <td colspan="2" align="left" style="padding-left: 5px;">
 			      닉네임 : ${dto.nickName}
 			    </td>
-			    <td width="50%" align="right" style="padding-right: 5px;">
-			        ${dto.created} | 조회 ${dto.hitCount}
-			    </td>
+
 			</tr>
 			
 			<tr>
@@ -301,17 +302,17 @@ $(function(){
 			<tr height="45">
 			    <td width="300" align="left">
 			       <c:if test="${sessionScope.member.nickName==dto.nickName}">				    
-			          <button type="button" class="btn" onclick="updateBoard();">수정</button>
-			          <button type="button" class="btn" onclick="updateStatus();">${dto.status=="1"?"입양완료":"재입양"}</button>
+			          <button type="button" class="bts" onclick="updateBoard();">수정</button>
+			          <button type="button" class="bts" onclick="updateStatus();">${dto.status=="1"?"입양완료":"재입양"}</button>
 			       </c:if>
 			       
 			       <c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">				    
-			          <button type="button" class="btn" onclick="deleteBoard();">삭제</button>
+			          <button type="button" class="bts" onclick="deleteBoard();">삭제</button>
 			       </c:if>
 			    </td>
 			
 			    <td align="right">
-			        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/adopt/list?${query}';">리스트</button>
+			        <button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/adopt/list?${query}';">리스트</button>
 			    </td>
 			</tr>
 			</table>
@@ -325,15 +326,13 @@ $(function(){
 				 </td>
 			</tr>
 			<tr>
-			   	<td style='padding:5px 5px 0px;'>
+			   	<td style='padding:5px 5px 0px; width:93%;'>
 					<textarea class='boxTA' style='width:99%; height: 70px;'></textarea>
 			    </td>
-			</tr>
-			<tr>
-			   <td align='right'>
-			        <button type='button' class='btn btnSendReply' data-num='10' style='padding:10px 20px;'>댓글 등록</button>
+			    <td align='right'>
+			        <button type='button' class='btnSendReply' data-num='10' style='padding:10px 20px; '>댓글 등록</button>
 			    </td>
-			 </tr>
+			</tr>
 		</table>
 		     
 		<div id="listReply"></div>

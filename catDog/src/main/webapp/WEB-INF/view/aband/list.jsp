@@ -64,7 +64,7 @@
 	</div>
 
 	            <div style="clear: both;">
-		           <ul class="tabs" style="margin-top: 30px">
+		           <ul class="tabs" style="margin-top: 30px;  margin-bottom: 30px; ">
 				       <li id="tab-0" value="0">잃어버렸어요</li>
 				       <li id="tab-1" value="1"> 보호하고있어요 </li>
 				   </ul>
@@ -80,11 +80,6 @@
 	                 </c:if>
 					
 						<td width="20%" style="text-align: center;">
-						<div class="photoDiv" onclick="javascript:location.href='${articleUrl}&lostPetNum=${dto.lostPetNum}'">
-									<img alt="" src="<%=cp%>/uploads/adopt/${dto.imageFileName}" width="100%" height="350px">
-									
-								
-							</div>
 							<div class="photoDiv" onclick="javascript:location.href='${articleUrl}&lostPetNum=${dto.lostPetNum}'">
 									<img alt="" src="<%=cp%>/uploads/aband/${dto.imageFileName}" width="100%" height="350px">
 								<div class="photoText">

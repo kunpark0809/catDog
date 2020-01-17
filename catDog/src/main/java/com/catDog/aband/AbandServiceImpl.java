@@ -206,4 +206,13 @@ public class AbandServiceImpl implements AbandService{
 		}
 	}
 
+	@Override
+	public void updateHitCount(int lostPetNum) throws Exception {
+		try {
+			dao.updateData("aband.updateHitCount",lostPetNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }

@@ -100,7 +100,6 @@ public class PayServiceImpl implements PayService{
 			
 			dao.insertData("pay.insertRequest",pay);
 			dao.insertData("pay.insertpayment",pay);
-			
 			if(pay.getUsePoint() != 0) {
 				Map<String, Object> map = new HashMap<>();
 				map.put("num", pay.getNum());
@@ -108,6 +107,7 @@ public class PayServiceImpl implements PayService{
 				map.put("content", "구매 사용 포인트");
 				map.put("checked", 0);
 				dao.insertData("pay.insertPointDetail",map);
+				dao.updateData("pay.usePoint",map);
 			}
 			
 			if(pay.getRefundAccount() != null && !pay.getRefundAccount().equals("")) {

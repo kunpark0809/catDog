@@ -97,8 +97,8 @@
 		VALUES(#{requestNum}, #{refundAccount}, #{bank})
 	</insert>
 	
-	<update id="updatePoint" parameterType="com.catDog.pay.Pay">
-		UPDATE memberdetail SET mileage=#{mileage}+#{point} WHERE userid=#{userId}
+	<update id="usePoint" parameterType="map">
+		UPDATE memberdetail SET mileage=mileage-#{point} WHERE num=#{num}
 	</update>
 	
 	<insert id="insertPointDetail" parameterType="map">

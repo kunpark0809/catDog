@@ -1,5 +1,6 @@
 package com.catDog.pay;
 
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,12 +15,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.catDog.common.XMLSerializer;
 import com.catDog.customer.SessionInfo;
 
 @Controller("pay.payController")
 public class PayController {
 	@Autowired
 	private PayService service;
+	
+	@Autowired
+	private XMLSerializer xmlSerializer;
 	
 	@RequestMapping(value="/pay/cart")
 	public String cart(
@@ -203,5 +208,23 @@ public class PayController {
 		}
 		
 		return "redirect:/pay/cart";
+	}
+	
+	@RequestMapping(value="/pay/zipCode", produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String zipJson(
+			@RequestParam String searchKeyword,
+			@RequestParam(value="page", defaultValue="1") String currentPage  
+			) throws Exception {
+		String result;
+		
+		StringBuilder urlBuilder = new StringBuilder("http://openapi.epost.go.kr/postal/retrieveNewAdressAreaCdSearchAllService/retrieveNewAdressAreaCdSearchAllService/getNewAddressListAreaCdSearchAll"); /*URL*/
+        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=U4DSQooBi3rQnU3HF9Z6tXH%2FH5nEaR2EjMxq6XjqAkVO1hW3LP%2BvtFJNinrBiXcqCE%2BO%2FMmxDqWizrN3%2BuSZgA%3D%3D"); /*Service Key*/
+        urlBuilder.append("&" + URLEncoder.encode("srchwrd","UTF-8") + "=" + URLEncoder.encode(searchKeyword, "UTF-8")); /*검색어*/
+        urlBuilder.append("&" + URLEncoder.encode("countPerPage","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*페이지당 출력될 개수를 지정(최대50)*/
+        urlBuilder.append("&" + URLEncoder.encode("currentPage","UTF-8") + "=" + URLEncoder.encode(currentPage, "UTF-8")); /*출력될 페이지 번호*/
+        String url = urlBuilder.toString();
+        result = xmlSerializer.xmlToString(url);
+		return result;
 	}
 }

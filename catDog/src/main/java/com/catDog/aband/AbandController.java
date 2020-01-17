@@ -131,7 +131,8 @@ public class AbandController {
 		map.put("lostPetNum", lostPetNum);
 		map.put("species", species);
 		map.put("area", area);
-
+		
+		service.updateHitCount(lostPetNum);
 		Aband dto = service.readAband(lostPetNum);
 		if(dto == null) {
 			return "redirect:/aband/list?"+query;

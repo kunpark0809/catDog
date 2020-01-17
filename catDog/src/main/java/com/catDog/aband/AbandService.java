@@ -10,6 +10,7 @@ public interface AbandService {
 	public int dataCount(Map<String, Object> map);
 	public List<Aband> listAband(Map<String, Object> map);
 	
+	public void updateHitCount(int lostPetNum) throws Exception;
 	public Aband readAband(int lostPetNum);
 	public Aband preReadAband(Map<String, Object> map);
 	public Aband nextReadAband(Map<String, Object> map);

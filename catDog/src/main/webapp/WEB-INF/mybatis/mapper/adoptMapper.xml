@@ -54,7 +54,7 @@
 	</update>
 	
 	<select id="readAdopt" parameterType="Integer" resultType="com.catDog.adopt.Adopt">
-		SELECT adoptionNum,speciesSort,status,created,subject,hitCount,num,nickName,imageFileName,content
+		SELECT adoptionNum,speciesSort,status,TO_CHAR(created,'YYYY-MM-DD') created,subject,hitCount,num,nickName,imageFileName,content
 		FROM adoption
 		WHERE  adoptionNum=#{adoptionNum}
 	</select>

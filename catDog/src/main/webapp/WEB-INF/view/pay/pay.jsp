@@ -163,8 +163,8 @@
 		$("#btnZip").click(function(){
 			$('#zip_dialog').dialog({
 				  modal: true,
-				  height: 300,
-				  width: 300,
+				  height: 500,
+				  width: 550,
 				  title: '우편번호 검색',
 				  close: function(event, ui) {
 				  },
@@ -185,6 +185,56 @@
 			}
 		})
 	});
+	
+	// 우편번호 조회
+$(function(){
+	$("#btnXmlOk").click(function(){
+		var url = "<%=cp%>/pay/zipCode";
+		var query = "searchKeyword="+$("input[name=search-keyword]").val();
+		$.ajax({
+			type:"get"
+			,url:url
+			,data:query
+			,dataType:"xml"
+			,success:function(data){
+				console.log(data);
+				printXML(data);
+			}
+		});
+	});
+	
+ 	function printXML(data) {
+		var out="";
+		$(".post-search-tip").hide();
+		$(".search-over").hide();
+		$(".search-empty").hide();
+		
+		var header=$(data).find("cmmMsgHeader");
+		var totalCount = header.find("totalCount").text();
+		
+		if(totalCount == ""){
+			$(".search-empty").show();
+			return;
+		}
+		
+		if(Number(totalCount) > 100){
+			$(".search-over").show();
+		}
+		
+		var totalPage = header.find("totalPage").text();
+
+		
+		$(data).find("newAddressListAreaCdSearchAll").each(function(){
+			var record = $(this);
+			var zipNo = record.find("zipNo").text();
+			var lnmAdres = record.find("lnmAdres").text();
+			var rnAdres = record.find("rnAdres").text();
+			out += zipNo+lnmAdres+rnAdres;
+		});
+		
+		$("#search-result").html(out);
+	} 
+});
 </script>
 
 
@@ -478,14 +528,49 @@
 			</div>
 		</form>
 
-		<div id="zip_dialog" style="display: none;">
-			<div class="">
-				안녕
-			</div>
-			
+	<div id="zip_dialog" style="display: none;">
+		<div class="">
+			<input type="text" name="search-keyword" placeholder="검색어(도로명,지번,건물명)를 입력해주세요">
+			<button type="button" id="btnXmlOk" onclick="">검색</button>
 		</div>
+
+		<div class="post-search-tip" style="display: black;">
+			<span class="post-search-tip-title">tip</span><br> 아래와같이 검색하면 더욱
+			정확한 결과가 검색됩니다.<br>
+			<br>
+			<div>도로명 + 건물번호</div>
+			<div class="post-search-tip-ex">예) 영동대로 513, 제주 첨단로 242</div>
+			<div>지역명(동/리) + 번지</div>
+			<div class="post-search-tip-ex">예) 삼성동 25, 제주 영평동 2181</div>
+			<div>지역명(동/리) + 건물명(아파트명)</div>
+			<div class="post-search-tip-ex">예) 분당 주공, 삼성동 코엑스</div>
+		</div>
+
+		<div class="search-over" style="display: none;">
+			<span><b>검색결과가 많습니다.</b> 검색어에 아래와 같은 조합을 입력하면 더욱 정확한 결과가
+				검색됩니다.</span><br> <span style="color: #117ef9">'도로명+건물번호',
+				'지역명+지번', '지역명+건물명(아파트명)'</span>
+		</div>
+
+		<div class="search-empty" style="display: none;">
+			<span><b>검색결과가 없습니다.</b></span><br>
+			<br> <span>검색어에 잘못된 철자가 없는지, 정확한 주소인지 다시 한번 확인해 주세요.</span>
+			<div>
+				<hr>
+			</div>
+			<span class="post-search-tip-title">Tip</span><br>
+			<br> <span>지번주소(동/읍/면), 도로명, 건물명(아파트)을 확인해주세요.</span><br> <span>일부
+				신축건물, 신도시의 경우 일시적으로 검색이 되지 않을 수 있습니다.</span><br> <span>도로명 주소를
+				모르실 경우 www.juso.go.kr 에서 확인 가능합니다.</span><br> <span>동명으로 검색시
+				법정동명으로 검색하셔야 합니다.</span><br> <span>(행정동명으로는 검색이 되지 않습니다.)</span><br>
+		</div>
+
+		<div id="search-result" style="width: 95%;"></div>
+	</div>
+
+
+
+
+</div>
 		
 
-
-	
-</div>

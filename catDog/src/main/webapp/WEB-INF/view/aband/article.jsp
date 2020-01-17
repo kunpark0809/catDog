@@ -306,19 +306,20 @@ $(function(){
     
     <div>
 			<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
-			<tr height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-			    <td colspan="2" align="center">
+			<tr height="35" style="border-top: 2px solid #d96262; border-bottom: 1px solid #cccccc; ">
+			    <td width="50%" align="left" style="padding: 20px 0px; font-size: 20px">
 				   ${dto.subject}
+			    </td>
+			    <td width="50%" align="right" style="padding-right: 5px; font-size: 15px; font-weight: bold;">
+			   		 ${dto.created}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;조회&nbsp;&nbsp; ${dto.hitCount}
 			    </td>
 			</tr>
 			
-			<tr height="35" style="border-bottom: 1px solid #cccccc;">
-			    <td width="50%" align="left" style="padding-left: 5px;">
+			<tr height="35" >
+			    <td colspan="2" align="left" style="padding-left: 5px;">
 			      닉네임 : ${dto.nickName}
 			    </td>
-			    <td width="50%" align="right" style="padding-right: 5px;">
-			        ${dto.created} | 조회 ${dto.hitCount}
-			    </td>
+
 			</tr>
 			
 			<tr>
@@ -326,6 +327,7 @@ $(function(){
 			      ${dto.content}
 			   </td>
 			</tr>
+			
 			
 			<tr>
 				<td colspan="2" align="left" style="padding: 10px 5px;" valign="top" height="200">
@@ -379,15 +381,13 @@ $(function(){
 				 </td>
 			</tr>
 			<tr>
-			   	<td style='padding:5px 5px 0px;'>
-					<textarea class='boxTA' style='width:99%; height: 70px;'></textarea>
+			   	<td style='padding:5px 5px 0px; width: 93%;'>
+					<textarea class='boxTA' style='width:100%; height: 70px;'></textarea>
+			    </td>
+			    <td align='right'>
+			        <button type='button' class='btnSendReply' data-num='10' style='padding:10px 20px;'>댓글 등록</button>
 			    </td>
 			</tr>
-			<tr>
-			   <td align='right'>
-			        <button type='button' class='btn btnSendReply' data-num='10' style='padding:10px 20px;'>댓글 등록</button>
-			    </td>
-			 </tr>
 		</table>
 		     
 		<div id="listReply"></div>
