@@ -40,7 +40,7 @@ public class PointController {
 		map.put("num", info.getMemberIdx());
 		int dataCount = service.dataCount(map);
 		
-		int rows = 6;
+		int rows = 10;
 		int offset = (current_page-1)*rows;
 		if(offset < 0) offset = 0;
 		

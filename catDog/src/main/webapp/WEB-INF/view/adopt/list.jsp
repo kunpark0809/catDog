@@ -18,7 +18,7 @@
         
     </div>
     
-    <div style="width: 100%;margin: 0px auto;">
+    <div style="width: 100%;margin: 30px auto 0px;">
 
 		
 		<table style="border-spacing: 0px; border-collapse: collapse; ">
