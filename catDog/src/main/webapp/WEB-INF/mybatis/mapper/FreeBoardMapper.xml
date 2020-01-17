@@ -157,7 +157,7 @@
 		FROM bbsReply br
 		JOIN memberDetail md ON md.num = br.num
 		WHERE parent = #{parent}
-		ORDER BY bbsReplyNum DESC
+		ORDER BY bbsReplyNum ASC
 	</select>
 	
 	<select id="replyParentCount" parameterType="Integer" resultType="Integer">
