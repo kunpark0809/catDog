@@ -5,6 +5,7 @@
 <%
 	String cp=request.getContextPath();
 %>
+<link href="https://fonts.googleapis.com/css?family=Jua&display=swap" rel="stylesheet">
 
 <style type="text/css">
 .bts {

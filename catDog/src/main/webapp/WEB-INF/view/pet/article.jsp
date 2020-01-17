@@ -70,14 +70,14 @@ function login() {
 }
 
 function deletePet(myPetNum) {
-	<c:if test="${sessionScope.member.userId=='userId' || sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">
+	<c:if test="${sessionScope.member.userId==dto.userId || sessionScope.member.userId=='admin' || sessionScope.member.userId=='admin2' || sessionScope.member.userId=='admin3'}">
 	var q = "myPetNum="+${dto.myPetNum}+"&${query}";
     var url = "<%=cp%>/pet/delete?" + q;
 
     if(confirm("위 게시물을 삭제 하시겠습니까 ? "))
   	  location.href=url;
 </c:if>    
-<c:if test="${sessionScope.member.userId!='userId' && sessionScope.member.userId!='admin' && sessionScope.member.userId!='admin2' && sessionScope.member.userId!='admin3'}">
+<c:if test="${sessionScope.member.userId!=dto.userId && sessionScope.member.userId!='admin' && sessionScope.member.userId!='admin2' && sessionScope.member.userId!='admin3'}">
   alert("게시물을 삭제할 수 없습니다.");
 </c:if>
 }
