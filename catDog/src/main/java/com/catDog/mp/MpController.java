@@ -60,7 +60,7 @@ public class MpController {
 	}
 	
 	@RequestMapping("/mypage/qna")
-	public String qnaList(@RequestParam(value="page", defaultValue="1") int current_page,
+	public String qnaList(@RequestParam(value="pageNo", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
 			HttpServletRequest req, Model model, HttpSession session) throws Exception {
@@ -88,7 +88,7 @@ public class MpController {
 		
 		if(total_page < current_page)
 			current_page = total_page;
-
+		
 		int offset = (current_page-1) * rows;
 		if(offset < 0) offset = 0;
 		map.put("offset", offset);
@@ -133,7 +133,7 @@ public class MpController {
 		
 	}
 	@RequestMapping("/mypage/tip")
-	public String tipList(@RequestParam(value="page", defaultValue="1") int current_page,
+	public String tipList(@RequestParam(value="pageNo", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
 			HttpServletRequest req, Model model, HttpSession session) throws Exception {
@@ -204,7 +204,7 @@ public class MpController {
 		
 	}
 	@RequestMapping("/mypage/bbs")
-	public String bbsList(@RequestParam(value="page", defaultValue="1") int current_page,
+	public String bbsList(@RequestParam(value="pageNo", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
 			HttpServletRequest req, Model model, HttpSession session) throws Exception {
@@ -274,7 +274,7 @@ public class MpController {
 	}
 	
 	@RequestMapping("/mypage/mypet")
-	public String mypetList(@RequestParam(value="page", defaultValue="1") int current_page,
+	public String mypetList(@RequestParam(value="pageNo", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
 			HttpServletRequest req, Model model, HttpSession session) throws Exception {
@@ -346,7 +346,7 @@ public class MpController {
 	}
 
 	@RequestMapping("/mypage/lostpet")
-	public String lostpetList(@RequestParam(value = "page", defaultValue = "1") int current_page,
+	public String lostpetList(@RequestParam(value = "pageNo", defaultValue = "1") int current_page,
 			@RequestParam(defaultValue = "all") String condition, @RequestParam(defaultValue = "") String keyword,
 			HttpServletRequest req, Model model, HttpSession session) throws Exception {
 
@@ -419,7 +419,7 @@ public class MpController {
 	}
 	
 	@RequestMapping("/mypage/adoption")
-	public String adoptionList(@RequestParam(value="page", defaultValue="1") int current_page,
+	public String adoptionList(@RequestParam(value="pageNo", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue="") String keyword,
 			HttpServletRequest req, Model model, HttpSession session) throws Exception {

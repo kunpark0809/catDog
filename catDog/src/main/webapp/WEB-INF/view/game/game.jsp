@@ -258,16 +258,18 @@ $(function(){
 });
 
 </script>
-
-<p class="title"> 오늘의 주인공은 누구냥!? </p>
-
-<div class="box-roulette">
-   <div class="markers"></div>
-   <button type="button" id="btn-start" onclick="report()">
-      돌려 돌려<br>돌림판
-   </button>
-   <div class="roulette" id="roulette"></div>
-</div>
+<div class="container-board">
+	<div class="body-title">
+		<span style="font-family: Webdings"><i class="fas fa-gamepad"></i> 게임</span><br>
+		<h4><span style="width: 100%; text-align: center; display: inline-block;"> 오늘의 주인공은 누구냥 <i class="far fa-thumbs-up"></i> </span></h4>
+	</div>
+	<div class="box-roulette">
+   		<div class="markers"></div>
+   			<button type="button" id="btn-start" onclick="report()">
+      			돌려 돌려<br>돌림판
+   			</button>
+   		<div class="roulette" id="roulette"></div>
+	</div>
 
 <div id="report_dialog" style="display: none; text-align: center;">
 			<strong><br><br>서비스 진행 준비중 입니다.<br> 이용에 불편을 드려 죄송합니다.</strong>
@@ -275,4 +277,5 @@ $(function(){
 	<div class="btn_box" align="center" style="padding-top: 20px;">
 				<button type="button" class="btnDialogCancel dialog_cancel">확인</button>
 	</div>
+</div>
 </div>

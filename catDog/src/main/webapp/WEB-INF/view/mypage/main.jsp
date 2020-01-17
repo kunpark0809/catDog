@@ -104,7 +104,6 @@ function reloadBoard() {
 function listPage(page) {
 	var $tab = $(".tabs .active");
 	var tab = $tab.attr("data-tab");
-	
 	var url="<%=cp%>/mypage/"+tab;
 	var query="pageNo="+page;
 	var search=$('form[name=mypageSearchForm]').serialize();
