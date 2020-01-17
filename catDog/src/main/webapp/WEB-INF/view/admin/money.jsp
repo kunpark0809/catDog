@@ -323,9 +323,9 @@ function selectCategorySales(){
 	
 </script>
 
-<div class="body-container" style="width: 1100px; margin: 0px auto;">
-	<div class="body-title">
-		<h3>
+<div class="body-container" style="width: 1200px; min-height:490px; margin: 0px auto; padding-top: 45px;">
+	<div class="body-title" >
+		<h3 style="padding: 20px 0;">
 			<i class="fas fa-search-dollar"></i> 매출 관리
 		</h3>
 	</div>
