@@ -10,7 +10,7 @@
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=60c1097ba8f6f767297a53630f9853eb&libraries=services"></script>
 <script>
-$(function(){
+$(function(){ 
 	
 	var title="${sort==0?'실종장소':'발견장소'}";
 	var addr="${dto.addr}";
