@@ -5,11 +5,11 @@
 <%
 	String cp=request.getContextPath();
 %>
-<div class="body-container" style="width: 1200px; margin: 20px auto 0px; border-spacing: 0px;">
+<div class="wide-container" style="width: 1250px;">
 	<div class="body-title">
-		<h3><span style="font-family: Webdings"></span> 이용약관 ^오^7  </h3>
+		<h3><i class="far fa-address-book"></i><span>&nbsp;이용약관</span></h3>
 	</div>
-	<div style="background-color: #D4F4FA;">
+	<div style="width: 1200px; padding: 10px 10px 10px 10px; border: 2px solid;">
 			<P><SPAN style="FONT-SIZE: 9pt"><FONT face=굴림>제<SPAN lang=EN-US>1</SPAN>조<SPAN lang=EN-US>(</SPAN>목적</FONT><FONT face=굴림><SPAN lang=EN-US>)<BR></SPAN>이 약관은 <SPAN lang=EN-US>“</SPAN>멍냥개냥<SPAN lang=EN-US>” </SPAN>회사<SPAN lang=EN-US>(</SPAN>전자상거래 사업자<SPAN lang=EN-US>)</SPAN>가 운영하는 <SPAN lang=EN-US>“</SPAN>멍냥개냥<SPAN lang=EN-US>” </SPAN>사이버 멍냥개냥<SPAN lang=EN-US>(</SPAN>이하 <SPAN lang=EN-US>“</SPAN>멍냥개냥<SPAN lang=EN-US>”</SPAN>이라 한다<SPAN lang=EN-US>)</SPAN>에서 제공하는 인터넷 관련 서비스<SPAN lang=EN-US>(</SPAN>이하<SPAN lang=EN-US> “</SPAN>서비스<SPAN lang=EN-US>”</SPAN>라 한다<SPAN lang=EN-US>)</SPAN>를 이용함에 있어 사이버 멍냥개냥와 이용자의 권리<SPAN lang=EN-US>?</SPAN>의무 및 책임사항을 규정함을 목적으로 합니다<SPAN lang=EN-US>.</SPAN></FONT></SPAN></P>
 <P><FONT face=굴림><SPAN style="FONT-SIZE: 9pt" lang=EN-US>※</SPAN><SPAN style="FONT-SIZE: 9pt">「<SPAN lang=EN-US>PC</SPAN>통신<SPAN lang=EN-US>, </SPAN>무선 등을 이용하는 전자상거래에 대해서도 그 성질에 반하지 않는 한 이 약관을 준용합니다」<SPAN lang=EN-US></SPAN></SPAN></FONT></P>
 <P><SPAN style="FONT-SIZE: 9pt"><FONT face=굴림>제<SPAN lang=EN-US>2</SPAN>조<SPAN lang=EN-US>(</SPAN>정의</FONT><FONT face=굴림><SPAN lang=EN-US>)<BR>①”</SPAN>멍냥개냥<SPAN lang=EN-US>” </SPAN>이란 <SPAN lang=EN-US>“</SPAN>멍냥개냥<SPAN lang=EN-US>” </SPAN>회사가 재화 또는 용역<SPAN lang=EN-US>(</SPAN>이하<SPAN lang=EN-US> “</SPAN>재화등<SPAN lang=EN-US>”</SPAN>이라 함<SPAN lang=EN-US>)</SPAN>을 이용자에게 제공하기 위하여 컴퓨터등 정보통신설비를 이용하여 재화등을 거래할 수 있도록 설정한 가상의 영업장을 말하며<SPAN lang=EN-US>, </SPAN>아울러 사이버멍냥개냥를 운영하는 사업자의 의미로도 사용합니다<SPAN lang=EN-US>.</SPAN></FONT></SPAN></P>

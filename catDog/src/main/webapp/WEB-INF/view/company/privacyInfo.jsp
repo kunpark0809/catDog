@@ -5,12 +5,12 @@
 <%
 	String cp=request.getContextPath();
 %>
-<div class="body-container" style="width: 1200px; margin: 20px auto 0px; border-spacing: 0px;">
+<div class="wide-container" style="width: 1250px;">
 <div class="body-title">
-		<h3><span style="font-family: Webdings"></span> 개인정보처리방침   </h3>
+		<h3><i class="fas fa-low-vision"></i><span>&nbsp;개인정보처리방침</span></h3>
 	</div>
 	
-	<div style="width: 1200px; background-color: #D4F4FA;">
+	<div style="width: 1200px; padding: 10px 10px 10px 10px; border: 2px solid;">
 			<strong class="date displaynone"></strong>
 			
 				
@@ -82,7 +82,7 @@
 <P style="MARGIN: 0cm 0cm 10pt" ><FONT face=굴림><FONT size=2><SPAN lang=EN-US>“</SPAN>멍냥개냥<SPAN lang=EN-US>”</SPAN>는 개인정보에 대한 의견수렴 및 불만처리를 담당하는 개인정보 관리책임자를 지정하고 있습니다<SPAN lang=EN-US>. </SPAN></FONT></FONT></P>
 <P style="MARGIN: 0cm 0cm 10pt" ><FONT face=굴림><FONT size=2>개인정보 관리책임자는 다음과 같습니다<SPAN lang=EN-US>.</SPAN></FONT></FONT></P>
 <P style="MARGIN: 0cm 0cm 10pt" ><FONT face=굴림><FONT size=2>관리 책임자<SPAN lang=EN-US></SPAN></FONT></FONT></P>
-<P style="MARGIN: 0cm 0cm 10pt" ><FONT face=굴림><FONT size=2><SPAN lang=EN-US>* </SPAN>성 명<SPAN lang=EN-US>: </SPAN>이유송<SPAN lang=EN-US></SPAN></FONT></FONT></P>
+<P style="MARGIN: 0cm 0cm 10pt" ><FONT face=굴림><FONT size=2><SPAN lang=EN-US>* </SPAN>성 명<SPAN lang=EN-US>: </SPAN>박서현<SPAN lang=EN-US></SPAN></FONT></FONT></P>
 <P style="MARGIN: 0cm 0cm 10pt" ><FONT face=굴림><FONT size=2><SPAN lang=EN-US>* </SPAN>전화번호<SPAN lang=EN-US>: 010-1111-1111</SPAN></FONT></FONT></P>
 <P style="MARGIN: 0cm 0cm 10pt" ><SPAN lang=EN-US><FONT face=굴림><FONT size=2>* E-mail: catdog1230@naver.com</FONT></FONT></SPAN></P>
 <P style="MARGIN: 0cm 0cm 10pt" ><SPAN lang=EN-US><FONT size=2 face=굴림>&nbsp;</FONT></SPAN></P>

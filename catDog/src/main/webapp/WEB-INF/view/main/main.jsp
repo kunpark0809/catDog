@@ -137,7 +137,7 @@
 						<a href="${dogUrl}"> <img class="mx-auto rounded-circle"
 							src="<%=cp%>/uploads/pet/${dog.imageFileName}" alt="">
 						</a>
-						<h4>${dog.subject}</h4>
+						<h4>${dog.nickName}님의<br>${dog.subject}</h4>
 					</div>
 				</div>
 				<div class="col-md-6" style="max-width: 46%;">
@@ -145,7 +145,7 @@
 						<a href="${catUrl}"> <img class="mx-auto rounded-circle"
 							src="<%=cp%>/uploads/pet/${cat.imageFileName}" alt="">
 						</a>
-						<h4>${cat.subject}</h4>
+						<h4>${cat.nickName}님의<br>${cat.subject}</h4>
 					</div>
 				</div>
 			</div>
