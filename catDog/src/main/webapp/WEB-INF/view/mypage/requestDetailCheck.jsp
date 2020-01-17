@@ -186,19 +186,19 @@ $(function(){
 		<table style="width: 100%; border-spacing: 0px; border-collapse: collapse;">
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 2px solid #cccccc; border-bottom: 1px solid #cccccc;">
 				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #black;">&nbsp;&nbsp;총 주문금액</td>
-				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).total}</td>
+				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;<fmt:formatNumber value="${detailList.get(0).total}" type="number"/></td>
 			</tr>
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #black;">&nbsp;&nbsp;사용 포인트</td>
-				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).usePoint}</td>
+				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;<fmt:formatNumber value="${detailList.get(0).usePoint}" type="number"/></td>
 			</tr>
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #black;">&nbsp;&nbsp;총 결제금액</td>
-				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).purchase}</td>
+				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;<fmt:formatNumber value="${detailList.get(0).purchase}" type="number"/></td>
 			</tr>
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #black;">&nbsp;&nbsp;적립 포인트</td>
-				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).point}</td>
+				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;<fmt:formatNumber value="${detailList.get(0).point}" type="number"/></td>
 			</tr>
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 2px solid #cccccc;">
 				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #black;">&nbsp;&nbsp;결제수단</td>
@@ -242,7 +242,7 @@ $(function(){
 					<a href="<%=cp%>/dogshop/article?productNum=${dto.productNum}" style="color: black;">${dto.productName}</a>
 				</td>
 				<td>${dto.productCount}</td>
-				<td>${dto.productSum}</td>
+				<td><fmt:formatNumber value="${dto.productSum}" type="number"/></td>
 				<c:choose>
 				<c:when test="${dto.status==0}">
 					<td style="color: #f3a34e; font-weight: bold;">입금대기</td>

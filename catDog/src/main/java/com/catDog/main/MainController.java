@@ -16,6 +16,8 @@ import com.catDog.cs.CsService;
 import com.catDog.cs.Notice;
 import com.catDog.park.Park;
 import com.catDog.park.ParkService;
+import com.catDog.pet.Pet;
+import com.catDog.pet.PetService;
 import com.catDog.shop.Shop;
 import com.catDog.shop.ShopService;
 
@@ -30,6 +32,9 @@ public class MainController {
 	
 	@Autowired
 	private ShopService shopService;
+	
+	@Autowired
+	private PetService petService;
 	 
 	@RequestMapping(value="/main", method=RequestMethod.GET)
 	public String method(HttpServletRequest req,
@@ -96,7 +101,16 @@ public class MainController {
 		model.addAttribute("catProductList", catProductList);
 		model.addAttribute("catProductListUrl", catProductListUrl);
 		
+		Pet cat = petService.readPet(7);
+		Pet dog = petService.readPet(33);
 		
+		String catUrl = cp+"/pet/article?myPetNum=7";
+		String dogUrl = cp+"/pet/article?myPetNum=33";
+		
+		model.addAttribute("cat", cat);
+		model.addAttribute("catUrl", catUrl);
+		model.addAttribute("dog", dog);
+		model.addAttribute("dogUrl", dogUrl);
 		
 		return ".mainLayout";
 	}
