@@ -28,7 +28,10 @@ $(function(){
 $(function(){
 	$("#tab-0").addClass("active");
 	$("#subtotal").show();
-	
+	$("#yearSalesSelect").hide();
+	$("#yearSales").hide();
+	$("#categorySalesSelect").hide();
+	$("#categorySales").hide();
 	var url = "<%=cp%>/admin/money/subtotalChart";
 	
 	subtotalChart(url);
