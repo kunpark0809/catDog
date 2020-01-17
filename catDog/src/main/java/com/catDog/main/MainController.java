@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.catDog.cafe.Cafe;
+import com.catDog.cafe.CafeService;
 import com.catDog.cs.CsService;
 import com.catDog.cs.Notice;
 import com.catDog.park.Park;
@@ -20,6 +22,8 @@ import com.catDog.pet.Pet;
 import com.catDog.pet.PetService;
 import com.catDog.shop.Shop;
 import com.catDog.shop.ShopService;
+import com.catDog.training.Training;
+import com.catDog.training.TrainingService;
 
 @Controller("mainController")
 public class MainController {
@@ -35,6 +39,12 @@ public class MainController {
 	
 	@Autowired
 	private PetService petService;
+	
+	@Autowired
+	private CafeService cafeService;
+	
+	@Autowired
+	private TrainingService trainingService;
 	 
 	@RequestMapping(value="/main", method=RequestMethod.GET)
 	public String method(HttpServletRequest req,
@@ -55,7 +65,7 @@ public class MainController {
 		
 		Map<String, Object> parkMap = new HashMap<String, Object>();
 		parkMap.put("offset", 0);
-		parkMap.put("rows", 3);
+		parkMap.put("rows", 1);
 		
 		List<Park> parkList = parkService.listPark(parkMap);
 		
@@ -111,6 +121,18 @@ public class MainController {
 		model.addAttribute("catUrl", catUrl);
 		model.addAttribute("dog", dog);
 		model.addAttribute("dogUrl", dogUrl);
+		
+		Cafe cafe = cafeService.readCafe(71);
+		String cafeUrl = cp+"/cafe/article?recommendNum=71";
+		
+		model.addAttribute("cafe", cafe);
+		model.addAttribute("cafeUrl", cafeUrl);
+		
+		Training training = trainingService.readTraining(80);
+		String trainingUrl = cp+"/training/article?recommendNum=80";
+		
+		model.addAttribute("training", training);
+		model.addAttribute("trainingUrl", trainingUrl);
 		
 		return ".mainLayout";
 	}

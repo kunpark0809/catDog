@@ -55,6 +55,18 @@
 				</a>
 				</div>
 				</c:forEach>
+				<div class="col-md-4" style="max-width: 30%;">
+					<a href="${cafeUrl}" style="color: #262626;">
+					<img alt="" src="<%=cp%>/uploads/cafe/${cafe.imageFileName}" width="351px" height="263.250px" style="padding-top: 15px;"><br>
+					<span class="placeName" onclick="${cafeUrl}" style="font-weight: bold; font-size: 24px;">${cafe.placeName}</span><br>
+				</a>
+				</div>
+				<div class="col-md-4" style="max-width: 30%;">
+					<a href="${trainingUrl}" style="color: #262626;">
+					<img alt="" src="<%=cp%>/uploads/training/${training.imageFileName}" width="351px" height="263.250px" style="padding-top: 15px;"><br>
+					<span class="placeName" onclick="${trainingUrl}" style="font-weight: bold; font-size: 24px;">${training.placeName}</span><br>
+				</a>
+				</div>
 			</div>
 		</div>
 	</section>
