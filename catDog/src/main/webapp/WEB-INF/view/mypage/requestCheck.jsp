@@ -229,7 +229,7 @@ function submitReview(){
 					<a href="<%=cp%>/shop/article?productNum=${dto.productNum}" style="color: black;">${dto.productName}</a>
 				</td>
 				<td>${dto.productCount}</td>
-				<td>${dto.productSum}</td>
+				<td><fmt:formatNumber value="${dto.productSum}" type="number"/></td>
 				<c:choose>
 				<c:when test="${dto.status==0}">
 					<td style="color: #f3a34e; font-weight: bold;">입금대기</td>

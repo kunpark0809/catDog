@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
    String cp = request.getContextPath();
 %>
@@ -81,7 +82,7 @@
 					</a>
 					<div class="portfolio-caption" style="height: 70px;">
 						<h5>${dto.name}</h5>
-						<p class="text-muted">가격 : ${dto.price}원</p>
+						<p class="text-muted">가격 : <fmt:formatNumber value="${dto.price}" type="number"/> 원</p>
 					</div>
 				</div>
 				</c:forEach>
@@ -112,7 +113,7 @@
 					</a>
 					<div class="portfolio-caption"  style="height: 70px;">
 						<h5>${dto.name}</h5>
-						<p class="text-muted">가격 : ${dto.price}원</p>
+						<p class="text-muted">가격 : <fmt:formatNumber value="${dto.price}" type="number"/> 원</p>
 					</div>
 				</div>
 				</c:forEach>
@@ -130,20 +131,21 @@
 				</div>
 			</div>
 			<div class="row">
+			
 				<div class="col-md-6" style="max-width: 46%;">
 					<div class="team-member">
-						<a href="#"> <img class="mx-auto rounded-circle"
-							src="<%=cp%>/resource/img/dog1.jpg" alt="">
+						<a href="${dogUrl}"> <img class="mx-auto rounded-circle"
+							src="<%=cp%>/uploads/pet/${dog.imageFileName}" alt="">
 						</a>
-						<h4>댕댕이</h4>
+						<h4>${dog.subject}</h4>
 					</div>
 				</div>
 				<div class="col-md-6" style="max-width: 46%;">
 					<div class="team-member">
-						<a href="#"> <img class="mx-auto rounded-circle"
-							src="<%=cp%>/resource/img/소금후추맘.jpg" alt="">
+						<a href="${catUrl}"> <img class="mx-auto rounded-circle"
+							src="<%=cp%>/uploads/pet/${cat.imageFileName}" alt="">
 						</a>
-						<h4>소금후추맘</h4>
+						<h4>${cat.subject}</h4>
 					</div>
 				</div>
 			</div>

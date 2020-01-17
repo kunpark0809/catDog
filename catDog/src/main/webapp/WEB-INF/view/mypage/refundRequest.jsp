@@ -84,7 +84,7 @@ function checkRequest(){
 					<a href="<%=cp%>/dogshop/article?productNum=${dto.productNum}" style="color: black;">${dto.productName}</a>
 				</td>
 				<td>${dto.productCount}</td>
-				<td>${dto.productSum}</td>
+				<td><fmt:formatNumber value="${dto.productSum}" type="number"/></td>
 			</tr>
 			</c:if>
 			</c:forEach>
