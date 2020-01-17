@@ -221,7 +221,7 @@ $(function(){
 
 <div class="wide-container">
 	<div class="body-title">
-		<span style="font-family: Webdings"><i class="fas fa-paw"></i> 내새끼 자랑</span>
+		<span style="font-family: Webdings"><i class="fas fa-paw"></i> 멍냥 자랑</span>
 	</div>
 	
 	<div>
