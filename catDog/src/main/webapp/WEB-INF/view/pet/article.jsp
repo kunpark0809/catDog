@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
-	String cp=request.getContextPath();
+	String cp=request.getContextPath(); 
 %>
 <style type="text/css">
 .bts {
