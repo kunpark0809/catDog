@@ -149,24 +149,26 @@
 	<link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
 	<div class="wide-container">
 	<div class="body-title">
-		<h3><i class="fas fa-chalkboard-teacher"></i> 용품등록 </h3>
+		<i class="fas fa-cash-register"></i> 용품등록 
 	</div>
 
 	<div>
 
 		<form name="shopForm" method="post" enctype="multipart/form-data" onsubmit="return submitContents(this);">
-			<table style="width: 100%; border-collapse: collapse; border-spacing: 0">
+			<table style="width: 100%; border-collapse: collapse; border-spacing: 0; border-top: 2px solid #cccccc; margin-top: 30px;">
+
+					
 			<tbody id="shopb">
-					<tr>
-						<td>분&nbsp;&nbsp;류</td>
-						<td>
-							<select name="bigSortNum" onchange="changeBigSort();">
+					<tr style="border-bottom: 1px solid #cccccc;">
+						<td class="titleTd">분&nbsp;&nbsp;류</td>
+						<td style="padding-left: 10px;">
+							<select name="bigSortNum" onchange="changeBigSort();" class="createdInput">
 								<option value="all">::애견동물 선택::</option>
 								<c:forEach var="sort" items="${bigSortList}">
 									<option value="${sort.bigSortNum}" ${dto.bigSortNum==sort.bigSortNum?"selected='selected'":""}>${sort.sortName}</option>
 								</c:forEach>
 							</select>
-							<select name="smallSortNum">
+							<select name="smallSortNum" class="createdInput">
 								<option value="0">::용품 선택::</option>
 								<c:forEach var="sort" items="${smallSortList}">
 									<option value="${sort.smallSortNum}" ${dto.smallSortNum==sort.smallSortNum?"selected='selected'":""}>${sort.sortName}</option>
@@ -174,49 +176,49 @@
 							</select>
 						</td>
 					</tr>
-					<tr>
-						<td>용품명</td>
-						<td>
-							<input type="text" name="name" value="${dto.name}">
+					<tr style="border-bottom: 1px solid #cccccc;">
+						<td class="titleTd">용품명</td>
+						<td style="padding-left: 10px;">
+							<input type="text" name="name" value="${dto.name}" class="createdInput" width="98%">
 						</td>
 					</tr>
-					<tr>
-						<td>가&nbsp;&nbsp;격</td>
-						<td>
-							<input type="text" name="price" value="${dto.price}">
+					<tr style="border-bottom: 1px solid #cccccc;">
+						<td class="titleTd">가&nbsp;&nbsp;격</td>
+						<td style="padding-left: 10px;">
+							<input type="text" name="price" value="${dto.price}" class="createdInput">
 						</td>
 					</tr>
 					<tr align="left" style="border-bottom: 1px solid #cccccc;"> 
-				      <td width="120" bgcolor="#eeeeee" style="text-align: center; padding-top:5px;" valign="top">본문내용</td>
+				      <td width="120" bgcolor="#eeeeee" style="text-align: center; padding-top:5px;" valign="top" class="titleTd">본문내용</td>
 				      <td valign="top" style="padding:5px 0px 5px 10px;"> 
 				        <textarea name="content" id="content" class="boxTA" style="width:98%; height: 270px;">${dto.content}</textarea>
 				      </td>
 			  		</tr>
 			  		
 			  		<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-					<td width="120">메인사진</td>
+					<td width="120" class="titleTd">메인사진</td>
 					<td style="padding-left:10px;"> 
-						<input type="file" name="main" class="boxTF" size="53" style="height: 25px; width: 95%;">
+						<input class="createdInput" type="file" name="main" class="boxTF" size="53" style="height: 25px; width: 95%; border: none;">
 					</td>
 					</tr> 
 					<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-					<td width="120">본문사진</td>
+					<td width="120" class="titleTd">본문사진</td>
 					<td style="padding-left:10px;"> 
-						<input type="file" name="upload" class="boxTF" size="53" style="height: 25px; width: 95%;">
+						<input  class="createdInput" type="file" name="upload" class="boxTF" size="53" style="height: 25px; width: 95%; border: none;">
 					</td>
 					</tr> 
 				</tbody>
 				<c:if test="${mode=='update'}">
 					<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-					<td width="120">첨부된 메인사진</td>
-					<td style="padding-left:10px;"> 
+					<td width="120" class="titleTd">첨부된 메인사진</td>
+					<td style="padding-left:10px;" > 
 						<input type="hidden" name="imageFileName" value="${dto.imageFileName}">
 						${dto.imageFileName} <strong>&nbsp;&nbsp;(새로운 메인사진을 첨부할 시 해당사진은 삭제됩니다.)</strong> 
 					</td>
 					</tr> 
 				<c:forEach var="pic" items="${picList}">
 					<tr align="left" id="fileTr${pic.productPicNum}" height="40" style="border-bottom: 1px solid #cccccc;">
-					<td width="120">첨부된 본문사진</td>
+					<td width="120" class="titleTd">첨부된 본문사진</td>
 					<td style="padding-left:10px;"> 
 						<a href="javascript:deleteFile('${pic.productPicNum}')"><i class="far fa-trash-alt"></i></a>&nbsp;${pic.imageFileName}
 					</td>
@@ -224,13 +226,13 @@
 				</c:forEach>
 				</c:if>
 			</table>
-			<table>
+			<table style="text-align: center; width: 100%; margin-top: 10px;">
 				<tr>
 
 					<td>
-						<button type="submit">${mode=="update"?"수정하기":"등록하기"}</button>
-						<button type="reset">다시입력</button>
-						<button type="button" onclick="javascript:location.href='<%=cp%>/shop/list?bigSortNum=${bigSortNum}&smallSortNum=${smallSortNum}&page=${page}';">${mode=="update"?"수정취소":"등록취소"}</button>
+						<button type="submit" class="bts">${mode=="update"?"수정하기":"등록하기"}</button>
+						<button type="reset" class="bts">다시입력</button>
+						<button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/shop/list?bigSortNum=${bigSortNum}&smallSortNum=${smallSortNum}&page=${page}';">${mode=="update"?"수정취소":"등록취소"}</button>
 					</td>
 				</tr>
 			</table>

@@ -22,7 +22,7 @@
 	padding: 5px 20px;
 	border-radius: 0px;
 	position: fixed;
-	
+	font-size: 10pt;
 }
 </style>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
@@ -173,6 +173,13 @@
 					}
 			
 			});
+		});
+	});
+	
+	$(function(){
+		
+		$(".btnDialogCanecl").click(function(){
+			$('#zip_dialog').dialog("close");
 		});
 	});
 	
@@ -530,8 +537,8 @@ $(function(){
 
 	<div id="zip_dialog" style="display: none;">
 		<div class="">
-			<input type="text" name="search-keyword" placeholder="검색어(도로명,지번,건물명)를 입력해주세요">
-			<button type="button" id="btnXmlOk" onclick="">검색</button>
+			<input type="text" class="payInput" name="search-keyword" placeholder="검색어(도로명,지번,건물명)를 입력해주세요" style=" width: 80%;">
+			<button type="button" id="btnXmlOk" class="smallPinkBtn" style="width: 15%; height:36px;">검색</button>
 		</div>
 
 		<div class="post-search-tip" style="display: black;">
@@ -565,7 +572,26 @@ $(function(){
 				법정동명으로 검색하셔야 합니다.</span><br> <span>(행정동명으로는 검색이 되지 않습니다.)</span><br>
 		</div>
 
-		<div id="search-result" style="width: 95%;"></div>
+		<div id="search-result" style="width: 95%;">
+			<table>
+				<tr>
+					<td>
+						<span  style="display: inline-block;padding: 2px 8px;background: #f3a34e;color: #FFFFFF;width: 40px;text-align: center;">도로명</span>
+					</td>
+					<td>서울특별시 양천구 신정로 7길 70 (신정동)</td>
+					<td colspan="2">08048</td>
+				</tr>
+				<tr>
+					<td>
+						<span  style="display: inline-block;padding: 2px 8px;background: #f3a34e;color: #FFFFFF;width: 40px;text-align: center;">지번</span>
+					</td>
+					<td> 서울특별시 양천구 신정동 1282</td>
+				</tr>
+			</table>
+		</div>
+		<div class="dialog_btn_box" >
+			<button type="button" class="btnDialogCanecl dialog_cancel">닫기</button>
+		</div>
 	</div>
 
 

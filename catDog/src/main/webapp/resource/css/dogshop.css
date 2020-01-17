@@ -356,6 +356,12 @@ a.sortName{
 	padding: 5px 0px 5px 5px;
 }
 
+.createdInput{
+	border: 1px solid #d1d1d1;
+	width: 220px;
+	padding: 5px 0px 5px 5px;
+}
+
 .payTA{
 	border: 1px solid #e4e4e4;
 	width: 95%;
@@ -380,7 +386,16 @@ a.sortName{
 	width: max-content;	
 
 }
-	
+
+.titleTd{
+	width:100px;
+	height:45px;
+	background:#51321b;
+	text-align: center; 
+	font-weight: bold ;
+	color: white;
+}
+
 .photoDiv{
 	width:95%;
 	cursor:pointer;

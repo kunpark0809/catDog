@@ -88,7 +88,7 @@
 
 	</script>
 	<link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
-	<div class="wide-container">
+	<div class="container-board">
 	<div class="body-title">
 		<i class="far fa-sad-tear"></i>&nbsp;유기동물 등록
 	</div>
@@ -96,17 +96,17 @@
 	<div>
 
 		<form name="abandForm" method="post" enctype="multipart/form-data" onsubmit="return submitContents(this);">
-			<table style="width: 100%; border-collapse: collapse; border-spacing: 0">
+			<table style="width: 100%; border-collapse: collapse; border-spacing: 0; border-top: 2px solid #cccccc; margin-top: 30px;">
 
-					<tr>
-						<td>분&nbsp;&nbsp;류</td>
-						<td>
-							<select name="sort">
+					<tr style="border-bottom: 1px solid #cccccc;">
+					 	<td class="titleTd">분&nbsp;&nbsp;류</td>
+						<td style="padding-left: 10px;">
+							<select name="sort" class="createdInput">
 								<option value="">::카테고리 선택::</option>
 								<option value="0" ${dto.sort==0?"selected='selected'":""}>잃어버렸어요</option>
 								<option value="1" ${dto.sort==1?"selected='selected'":""}>보호하고있어요</option>
 							</select>
-							<select name="speciesSort">
+							<select name="speciesSort" class="createdInput">
 								<option value="">::애견동물 선택::</option>
 								<option value="1" ${dto.speciesSort==1?"selected='selected'":""}>강아지</option>
 								<option value="0" ${dto.speciesSort==0?"selected='selected'":""}>고양이</option>
@@ -114,26 +114,26 @@
 
 						</td>
 					</tr>
-					<tr>
-						<td>제&nbsp;&nbsp;목</td>
-						<td>
-							<input type="text" name="subject" value="${dto.subject}">
+					<tr style="border-bottom: 1px solid #cccccc;">
+						<td class="titleTd">제&nbsp;&nbsp;목</td>
+						<td style="padding-left: 10px;">
+							<input type="text" name="subject" value="${dto.subject}" class="createdInput" width="98%">
 						</td>
 					</tr>
-					<tr>
-						<td>장&nbsp;&nbsp;소</td>
-						<td>
-							<input type="text" name="addr" value="${dto.addr}">
+					<tr style="border-bottom: 1px solid #cccccc;">
+						<td class="titleTd">장&nbsp;&nbsp;소</td>
+						<td style="padding-left: 10px;">
+							<input type="text" name="addr" value="${dto.addr}" class="createdInput" width="98%">
 						</td>
 					</tr>
-					<tr>
-						<td>사건발생날짜</td>
-						<td>
-							<input type="text" name="lostDate" value="${dto.lostDate}">
+					<tr style="border-bottom: 1px solid #cccccc;">
+						<td class="titleTd">사건발생날짜</td>
+						<td style="padding-left: 10px;">
+							<input type="text" name="lostDate" value="${dto.lostDate}" class="createdInput">
 						</td>
 					</tr>
 					<tr align="left" style="border-bottom: 1px solid #cccccc;"> 
-				      <td width="120" bgcolor="#eeeeee" style="text-align: center; padding-top:5px;" valign="top">내&nbsp;&nbsp;용</td>
+				      <td width="120" class="titleTd" valign="top">내&nbsp;&nbsp;용</td>
 				      <td valign="top" style="padding:5px 0px 5px 10px;"> 
 				        <textarea name="content" id="content" class="boxTA" style="width:98%; height: 270px;">
 				        <c:if test="${mode=='update'}">
@@ -153,14 +153,14 @@
 				      </td>
 			  		</tr>
 					<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-						<td width="120">메인사진</td>
+						<td class="titleTd">메인사진</td>
 						<td style="padding-left:10px;"> 
-							<input type="file" name="upload" class="boxTF" size="53" style="height: 25px; width: 95%;">
+							<input type="file" name="upload" class="createdInput" size="53" style="height: 25px; width: 95%; border: none;">
 						</td>
 					</tr> 
 					<c:if test="${mode=='update'}">
 					<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-					<td width="120">첨부된 메인사진</td>
+					<td class="titleTd">첨부된 메인사진</td>
 					<td style="padding-left:10px;"> 
 						<input type="hidden" name="imageFileName" value="${dto.imageFileName}">
 						${dto.imageFileName} <strong>&nbsp;&nbsp;(새로운 메인사진을 첨부할 시 해당사진은 삭제됩니다.)</strong> 
@@ -168,16 +168,17 @@
 					</tr> 
 				</c:if>
 			</table>
-			<table>
+			<table style="text-align: center; width: 100%; margin-top: 10px;">
 				<tr>
 					<td>
-						<button type="submit">${mode=="update"?"수정하기":"등록하기"}</button>
-						<button type="reset">다시입력</button>
-						<button type="button" onclick="javascript:location.href='<%=cp%>/aband/list?page=${page}';">${mode=="update"?"수정취소":"등록취소"}</button>
+						<button type="submit" class="bts">${mode=="update"?"수정하기":"등록하기"}</button>
+						<button type="reset" class="bts">다시입력</button>
+						<button type="button" class="bts"
+							onclick="javascript:location.href='<%=cp%>/aband/list?page=${page}';">${mode=="update"?"수정취소":"등록취소"}</button>
 					</td>
 				</tr>
 			</table>
-			
+
 			<c:if test="${mode=='update'}">
 				<input type="hidden" name=lostPetNum value="${dto.lostPetNum}">
 			</c:if>
