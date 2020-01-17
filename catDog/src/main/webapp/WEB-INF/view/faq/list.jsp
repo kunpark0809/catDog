@@ -89,34 +89,43 @@ function updateFaq(faqNum) {
 <div class="container-board">
 
 <div class="body-title">
-		<span style="font-family: Webdings">자주 묻는 질문</span>
+		<span><i class="fas fa-check-double"></i>&nbsp; FAQ</span>
 	</div>
+	<br>
+	<div class="alert-info" align="center" style="background-color: #e5f2f9;">
+  <i style="font-size: 20px;" class="fas fa-info-circle"></i>
+  <strong style="font-size: 20px;">"FAQ를 통해서 원하시는 답변을 쉽고 빠르게 찾아보세요"</strong><br>
+    다양한 질문 중 가장 빈도수가 높은 질문들을 모아, 친절한 답변과 함께 제공해드리고 있습니다.
+</div><br>
 
 <table style="width: 100%; border-spacing: 0px; border-collapse: collapse;">
   <tr align="center" bgcolor="#51321b" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
-      <th width="60" style="color: white;">번호</th>
+      <th width="40" style="color: white;" colspan="2"></th>
       <th style="color: white;">제목</th>
       <th width="100" style="color: white;">작성자</th>
   </tr>
  
 <c:forEach var="dto" items="${list}">
-  <tr class="faqSub" align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;" data-subjectNum="${dto.faqNum}"> 
-      <td>${dto.listNum}</td>
-      <td align="left" style="padding-left: 10px;">
+  <tr class="faqSub" align="center" bgcolor="#ffffff" height="40" style="border-bottom: 1px solid #cccccc;" data-subjectNum="${dto.faqNum}"> 
+      <td style="color: #8DC3F2; font-weight: 700; font-size: 20px;">Q.</td>
+      <td style="color: #8DC3F2; font-weight: 700; font-size: 20px;"></td>
+      <td align="center" style="padding-left: 10px;">
       	${dto.subject}     	
       </td>
       <td>멍냥개냥</td>
   </tr>
   <tr class="faqCon" align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc; display: none;" id="contentNum${dto.faqNum}" >  	
-      <td colspan="3" align="center" style="padding-left: 10px;">
+      <td style="font-weight: 700; font-size: 20px;"></td>
+      <td style="font-weight: 700; font-size: 20px;">A.</td>
+      <td align="center" style="padding-left: 10px;">
       	${dto.content}  
       	<br>
       	<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
       	<button type="button" class="bts" onclick="updateFaq(${dto.faqNum});" ${fn:indexOf(sessionScope.member.userId,'admin') != 0 ? "style='pointer-events:none;'":""}>수정</button>
 		<button type="button" class="bts" onclick="deleteFaq(${dto.faqNum});" ${fn:indexOf(sessionScope.member.userId,'admin') != 0 ? "style='pointer-events:none;'":""}>삭제</button>
 		</c:if> 
-		
-      </td>     
+      </td>  
+      <td></td>   
   </tr>
   </c:forEach>
 </table>
