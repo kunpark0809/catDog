@@ -158,7 +158,7 @@ $(document).on("click",".tabs li",function(){
 			       <li id="tab-qna"  data-tab="qna">qna</li>
 			       <li id="tab-tip" data-tab="tip"> 꿀팁 </li>
 			       <li id="tab-bbs" data-tab="bbs"> 자유게시판 </li>
-			       <li id="tab-mypet" data-tab="mypet"> 내 새끼 자랑 </li>
+			       <li id="tab-mypet" data-tab="mypet"> 멍냥 자랑 </li>
 			       <li id="tab-lostpet" data-tab="lostpet"> 유기동물 </li>
 			       <li id="tab-adoption" data-tab="adoption"> 입양 </li>
 			   </ul>

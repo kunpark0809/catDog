@@ -80,13 +80,13 @@ function updateAnswer(qnaNum) {
 
 <div class="container-board">
 <div class="body-title">
-		<span style="font-family: Webdings">질문과 답변</span>
+		<span><i class="fas fa-question-circle"></i>&nbsp;질문과 답변</span>
 	</div>
 
 <table style="width: 100%; margin: 10px auto 0px; border-spacing: 0px; border-collapse: collapse;">
 <tr height="35" style="border-top: 2px solid #D96262; padding-top:20px; padding-bottom:20px; border-bottom: 1px solid #cccccc;">
     <td width="75%" align="left" style="padding-left: 5px; font-size: 20px; padding-top:20px; padding-bottom:20px; border-bottom: 1px solid #cccccc;">
-    	<span class="questionQ">질문이다냥!</span><span class="questionSubject">&nbsp;♣ ${questionDto.qnaCategory} ♣ ${questionDto.subject}</span>
+    	<span class="questionQ" style="color: #d96363; font-weight: 600; font-size: 20px;">Q.</span><span class="questionSubject">&nbsp;<i class="fas fa-paw" style="color: #d96363;"></i>${questionDto.qnaCategory}<i class="fas fa-paw" style="color: #d96363;"></i> ${questionDto.subject}</span>
     </td>
     <td width="25%" align="right" style="font-size: 15px; font-weight: bold;">
 		문의일자 &nbsp;&nbsp;${questionDto.created}
@@ -110,7 +110,7 @@ function updateAnswer(qnaNum) {
 	<table style="width: 100%; margin: 10px auto 0px; border-spacing: 0px; border-collapse: collapse;">
 	<tr height="35" style="border-top: 2px solid #D96262; padding-top:20px; padding-bottom:20px; border-bottom: 1px solid #cccccc;">
 		<td width="75%" align="left" style="padding-left: 5px; font-size: 20px; padding-top:20px; padding-bottom:20px; border-bottom: 1px solid #cccccc;">
-    		<span class="answerSubject">${answerDto.subject} 에 대한 답변이다냥!</span>
+    		<span class="answerA" style="color: #d96363; font-weight: 600; font-size: 20px;">A.</span><span class="answerSubject">&nbsp;&nbsp;${answerDto.subject} 에 대한 답변입니다.</span>
     	</td>
     	<td width="25%" align="right" style="font-size: 15px; font-weight: bold;">
 			답변일자 &nbsp;&nbsp;${answerDto.created}

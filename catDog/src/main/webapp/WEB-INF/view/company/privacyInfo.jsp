@@ -7,7 +7,7 @@
 %>
 <div class="body-container" style="width: 1200px; margin: 20px auto 0px; border-spacing: 0px;">
 <div class="body-title">
-		<h3><span style="font-family: Webdings"></span> 개인정보처리방침 ^오^7  </h3>
+		<h3><span style="font-family: Webdings"></span> 개인정보처리방침   </h3>
 	</div>
 	
 	<div style="width: 1200px; background-color: #D4F4FA;">

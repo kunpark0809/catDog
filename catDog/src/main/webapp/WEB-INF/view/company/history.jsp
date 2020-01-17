@@ -31,10 +31,9 @@
 						<p style="font-size: 20px; display: inline-block; float: left; opacity: 0;">2017.&nbsp;</p>
 					</td>
 					<td style="width: 350px;">
-						<p style="font-size: 18px;">멍멍쓰</p>
-						<p style="font-size: 18px;">&nbsp; - 왈왈쓰</p>
-						<p style="font-size: 18px;">멍멍멍멍머엄어멍멍멍</p>
-						<p style="font-size: 18px;">왈왈왈와뢍롸오라오라</p>
+						<p style="font-size: 18px;">네티즌 선정 TOP5 반려동물 사이트</p>
+						<p style="font-size: 18px;">연 매출 2억원 달성</p>
+						<p style="font-size: 18px;">종합유기견보호센터 1000만원 후원</p>
 					</td>
 				</tr>
 				<tr style="height: 50px;"></tr>
@@ -53,10 +52,10 @@
 						<p style="font-size: 20px; display: inline-block; float: left; opacity: 0;">2017.&nbsp;</p>
 					</td>
 					<td style="width: 350px;">
-						<p style="font-size: 18px;">냥냥쓰</p>
-						<p style="font-size: 18px;">&nbsp; - 야오옹</p>
-						<p style="font-size: 18px;">이얏호응</p>
-						<p style="font-size: 18px;">먕먕먕</p>
+						<p style="font-size: 18px;">월 판매액 1000만원 달성</p>
+						<p style="font-size: 18px;">&nbsp; - 택배사와 계약하여 더 나은 배송환경 구축</p>
+						<p style="font-size: 18px;">반려동물 인식 개선 운동 이벤트 개최</p>
+						<p style="font-size: 18px;">종합유기견보호센터 500만원 후원</p>
 					</td>
 				</tr>
 				<tr style="height: 50px;"></tr>
@@ -75,10 +74,10 @@
 						<p style="font-size: 20px; display: inline-block; float: left; opacity: 0;">2017.&nbsp;</p>
 					</td>
 					<td style="width: 350px;">
-						<p style="font-size: 18px;">멍냥멍냥</p>
-						<p style="font-size: 18px;">&nbsp; - 왈냥왈냥</p>
-						<p style="font-size: 18px;">미야오오오옹</p>
-						<p style="font-size: 18px;">으르르르르렁</p>
+						<p style="font-size: 18px;">멍냥개냥 회사 설립</p>
+						<p style="font-size: 18px;">&nbsp; - 인터넷 서버 개설</p>
+						<p style="font-size: 18px;">월 판매량 500건 달성</p>
+						<p style="font-size: 18px;">종합유기견보호센터에 100만원 후원</p>
 					</td>
 					<tr style="height: 200px;"></tr>
 				

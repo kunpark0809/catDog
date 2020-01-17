@@ -43,7 +43,7 @@ function searchList() {
 <div class="container-board">
 
 	<div class="body-title">
-		<span style="font-family: Webdings">공지사항</span>
+		<span><i class="fas fa-exclamation-triangle"></i>&nbsp;공지사항</span>
 	</div>
 	
 	<div>

@@ -36,7 +36,7 @@
 
 <div class="container-board">
 <div class="body-title">
-		<span style="font-family: Webdings">자주 묻는 질문</span>
+		<span><i class="fas fa-check-double"></i>&nbsp; FAQ</span>
 	</div>
 
 <form name="boardForm" method="post" enctype="multipart/form-data" onsubmit="return submitContents(this);">

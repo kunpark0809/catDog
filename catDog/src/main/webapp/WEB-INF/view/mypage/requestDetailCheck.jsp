@@ -49,19 +49,19 @@ $(function(){
                 }else{
                 	myInvoiceData += ('<table style="width: 100%; border-spacing: 0px; border-collapse: collapse;">');
                     myInvoiceData += ('<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">');                
-                    myInvoiceData += ('<td style="width: 200px; text-align: left; background-color: #db6a6a; color: white;">&nbsp;&nbsp;보내는 사람</td>');                     
+                    myInvoiceData += ('<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #black;">&nbsp;&nbsp;보내는 사람</td>');                     
                     myInvoiceData += ('<td style="text-align: left;">&nbsp;&nbsp;&nbsp;'+data.senderName+'</td>');                     
                     myInvoiceData += ('</tr>'); 
                     myInvoiceData += ('<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">');                
-                    myInvoiceData += ('<td style="width: 200px; text-align: left; background-color: #db6a6a; color: white;">&nbsp;&nbsp;받는 사람</td>');                     
+                    myInvoiceData += ('<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #black;">&nbsp;&nbsp;받는 사람</td>');                     
                     myInvoiceData += ('<td style="text-align: left;">&nbsp;&nbsp;&nbsp;'+data.receiverName+'</td>');                     
                     myInvoiceData += ('</tr>'); 
                     myInvoiceData += ('<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">');                
-                    myInvoiceData += ('<td style="width: 200px; text-align: left; background-color: #db6a6a; color: white;">&nbsp;&nbsp;제품 정보</td>');                     
+                    myInvoiceData += ('<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #black;">&nbsp;&nbsp;제품 정보</td>');                     
                     myInvoiceData += ('<td style="text-align: left;">&nbsp;&nbsp;&nbsp;'+data.itemName+'</td>');                     
                     myInvoiceData += ('</tr>');     
                     myInvoiceData += ('<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">');                
-                    myInvoiceData += ('<td style="width: 200px; text-align: left; background-color: #db6a6a; color: white;">&nbsp;&nbsp;송장 정보</td>');                     
+                    myInvoiceData += ('<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #black;">&nbsp;&nbsp;송장 정보</td>');                     
                     myInvoiceData += ('<td style="text-align: left;">&nbsp;&nbsp;&nbsp;우체국 택배&nbsp;&nbsp;&nbsp;'+data.invoiceNo+'</td>');                     
                     myInvoiceData += ('</tr>');         
                     myInvoiceData += ('</table>');
@@ -77,10 +77,10 @@ $(function(){
                 var header ="";
                 header += ('<table style="width: 800px; border-spacing: 0px; border-collapse: collapse;">');
                 header += ('<tr>');                
-                header += ('<th style="width: 200px; text-align: center; background-color: #db6a6a; color: white;">시간</th>');
-                header += ('<th style="width: 200px; text-align: center; background-color: #db6a6a; color: white;">장소</th>');
-                header += ('<th style="width: 100px; text-align: center; background-color: #db6a6a; color: white;">유형</th>');
-                header += ('<th style="width: 200px; text-align: center; background-color: #db6a6a; color: white;">전화번호</th>');                     
+                header += ('<th style="width: 200px; text-align: center; background-color: #eaeaea; color: #black;">시간</th>');
+                header += ('<th style="width: 200px; text-align: center; background-color: #eaeaea; color: #black;">장소</th>');
+                header += ('<th style="width: 100px; text-align: center; background-color: #eaeaea; color: #black;">유형</th>');
+                header += ('<th style="width: 200px; text-align: center; background-color: #eaeaea; color: #black;">전화번호</th>');                     
                 header += ('</tr>');  
                 
                 $.each(trackingDetails,function(key,value) {
@@ -202,7 +202,20 @@ $(function(){
 			</tr>
 			<tr align="center" bgcolor="#ffffff" height="35" style="border-top: 1px solid #cccccc; border-bottom: 2px solid #cccccc;">
 				<td style="width: 200px; text-align: left; background-color: #eaeaea; color: #black;">&nbsp;&nbsp;결제수단</td>
-				<td style="text-align: left;">&nbsp;&nbsp;&nbsp;${detailList.get(0).payMethod}</td>
+				<c:choose>
+					<c:when test="${detailList.get(0).payMethod==0}">
+						<td style="text-align: left;">&nbsp;&nbsp;&nbsp;무통장 입금</td>
+					</c:when>
+					<c:when test="${detailList.get(0).payMethod==1}">
+						<td style="text-align: left;">&nbsp;&nbsp;&nbsp;신용카드</td>
+					</c:when>
+					<c:when test="${detailList.get(0).payMethod==2}">
+						<td style="text-align: left;">&nbsp;&nbsp;&nbsp;계좌 이체</td>
+					</c:when>
+					<c:when test="${detailList.get(0).payMethod==3}">
+						<td style="text-align: left;">&nbsp;&nbsp;&nbsp;휴대폰 결제</td>
+					</c:when>
+				</c:choose>
 			</tr>
 		</table>
 		
