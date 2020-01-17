@@ -120,7 +120,7 @@ $(function(){
 			style="width: 100%; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
 			<tr align="center" bgcolor="#eeeeee" height="35"
 				style="color:white; background-color:#51321b;">
-				<th width="70">신고번호</th>
+				<th width="130" style="padding-left: 5px;">신고번호</th>
 				<th width="100">게시판</th>
 				<th width="150">신고분류</th>
 				<th width="190">신고자</th>
