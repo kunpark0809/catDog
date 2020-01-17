@@ -139,7 +139,7 @@ $(function(){
 			if(state=="true") {
 				listPage(1);
 			} else if(state=="false") {
-				alert("댓글을 추가 하지 못했습니다.");
+				alert("로그인 후 댓글등록이 가능합니다.");
 			}
 		};
 			
