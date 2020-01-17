@@ -10,7 +10,7 @@
 <c:forEach var="vo" items="${listReplyAnswer}">
     <div class='answer' style='padding: 0px 10px;'>
         <div style='clear:both; padding: 10px 0px;'>
-            <div style='float: left; width: 5%;'>└</div>
+            <div style='float: left; width: 5%; color: #d96262'>└</div>
             <div style='float: left; width:95%;'>
                 <div style='float: left;'><b>${vo.nickName}</b></div>
                 <div style='float: right;'>
@@ -24,7 +24,7 @@
                 </div>
             </div>
         </div>
-        <div style='clear:both; padding: 5px 5px 5px 5%; border-bottom: 1px solid #ccc;'>
+        <div style="clear:both; padding: 5px 5px 5px 5%; border-bottom: 1px dashed #ccc;">
             ${vo.content}
         </div>
     </div>			            

@@ -229,6 +229,14 @@ a.sortName{
 	height: 50px;
 }
 
+.smallWhiteBtn{
+	background: white;
+	color:#262626;
+	border: 1px solid #d8d8d8;
+	width: 70px;
+	height: 32px;
+}
+
 .pinkBtn{
 	background: #d96363;
     color: white;

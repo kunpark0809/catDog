@@ -33,9 +33,6 @@
 </style>
 <script type="text/javascript" src="<%=cp%>/resource/vendor/jquery-ui/jquery-ui.min.js"></script>
 <script type="text/javascript">
-function login() {
-	location.href="<%=cp%>/customer/login";
-}
 
 function ajaxJSON(url, type, query, fn) {
 	$.ajax({
@@ -50,10 +47,6 @@ function ajaxJSON(url, type, query, fn) {
 	        jqXHR.setRequestHeader("AJAX", true);
 	    }
 	    ,error:function(jqXHR) {
-	    	if(jqXHR.status==403) {
-	    		login();
-	    		return false;
-	    	}
 	    	console.log(jqXHR.responseText);
 	    }
 	});
@@ -71,10 +64,6 @@ function ajaxHTML(url, type, query, selector) {
 	        jqXHR.setRequestHeader("AJAX", true);
 	    }
 	    ,error:function(jqXHR) {
-	    	if(jqXHR.status==403) {
-	    		login();
-	    		return false;
-	    	}
 	    	console.log(jqXHR.responseText);
 	    }
 	});

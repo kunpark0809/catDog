@@ -254,8 +254,8 @@ $(function(){
         <i class="fas fa-hand-holding-heart"></i>&nbsp;입양 게시판
     </div>
     
-    <div>
-			<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
+    <div >
+			<table style="width: 100%; margin: 30px auto 0px; border-spacing: 0px; border-collapse: collapse;">
 			<tr height="35" style="border-top: 2px solid #d96262; border-bottom: 1px solid #cccccc; ">
 			    <td width="50%" align="left" style="padding: 20px 0px; font-size: 20px">
 				   ${dto.subject}
@@ -321,16 +321,16 @@ $(function(){
  <div>
 		<table style='width: 100%; margin: 15px auto 0px; border-spacing: 0px;'>
 			<tr height='30'> 
-				 <td align='left' >
-				 	<span style='font-weight: bold;' >댓글쓰기</span><span> - 타인을 비방하거나 개인정보를 유출하는 글의 게시를 삼가 주세요.</span>
+				 <td align='left' style='font-weight: bold;'  >
+				 	${sessionScope.member.nickName}
 				 </td>
 			</tr>
 			<tr>
 			   	<td style='padding:5px 5px 0px; width:93%;'>
-					<textarea class='boxTA' style='width:99%; height: 70px;'></textarea>
+					<textarea class='boxTA' style='width:100%; height: 70px;'></textarea>
 			    </td>
 			    <td align='right'>
-			        <button type='button' class='btnSendReply' data-num='10' style='padding:10px 20px; '>댓글 등록</button>
+			        <button type='button' class='btnSendReply' data-num='10' style='padding:10px 20px; margin-left: 5px;'>댓글 등록</button>
 			    </td>
 			</tr>
 		</table>

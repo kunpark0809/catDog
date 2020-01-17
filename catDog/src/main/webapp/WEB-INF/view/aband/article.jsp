@@ -305,7 +305,7 @@ $(function(){
     </div>
     
     <div>
-			<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
+			<table style="width: 100%; margin: 30px auto 0px; border-spacing: 0px; border-collapse: collapse;">
 			<tr height="35" style="border-top: 2px solid #d96262; border-bottom: 1px solid #cccccc; ">
 			    <td width="50%" align="left" style="padding: 20px 0px; font-size: 20px">
 				   ${dto.subject}
@@ -357,17 +357,17 @@ $(function(){
 			<tr height="45">
 			    <td width="300" align="left">
 			       <c:if test="${sessionScope.member.nickName==dto.nickName}">				    
-			          <button type="button" class="btn" onclick="updateBoard();">수정</button>
-			          <button type="button" class="btn" onclick="updateStatus();">${dto.status=="1"?"해결":"미해결"}</button>
+			          <button type="button" class="bts" onclick="updateBoard();">수정</button>
+			          <button type="button" class="bts" onclick="updateStatus();">${dto.status=="1"?"해결":"미해결"}</button>
 			       </c:if>
 			       
 			       <c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">				    
-			          <button type="button" class="btn" onclick="deleteBoard();">삭제</button>
+			          <button type="button" class="bts" onclick="deleteBoard();">삭제</button>
 			       </c:if>
 			    </td>
 			
 			    <td align="right">
-			        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/aband/list?${query}';">리스트</button>
+			        <button type="button" class="bts" onclick="javascript:location.href='<%=cp%>/aband/list?${query}';">리스트</button>
 			    </td>
 			</tr>
 			</table>
@@ -376,8 +376,8 @@ $(function(){
  <div>
 		<table style='width: 100%; margin: 15px auto 0px; border-spacing: 0px;'>
 			<tr height='30'> 
-				 <td align='left' >
-				 	<span style='font-weight: bold;' >댓글쓰기</span><span> - 타인을 비방하거나 개인정보를 유출하는 글의 게시를 삼가 주세요.</span>
+				 <td align='left' style='font-weight: bold;'  >
+				 	${sessionScope.member.nickName}
 				 </td>
 			</tr>
 			<tr>
@@ -385,7 +385,7 @@ $(function(){
 					<textarea class='boxTA' style='width:100%; height: 70px;'></textarea>
 			    </td>
 			    <td align='right'>
-			        <button type='button' class='btnSendReply' data-num='10' style='padding:10px 20px;'>댓글 등록</button>
+			        <button type='button' class='btnSendReply' data-num='10' style='padding:10px 20px; margin-left: 5px;'>댓글 등록</button>
 			    </td>
 			</tr>
 		</table>
