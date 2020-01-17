@@ -20,7 +20,7 @@
 				 or to_char(created, 'yyyymmdd') = #{keyword})
 		</if>
 	</sql>
-	 
+	  
 	<select id="listFreeBoard" parameterType="map" resultType="com.catDog.freeBoard.FreeBoard">
 		SELECT b.bbsNum, b.subject, b.content, created, b.hitCount, md.nickName, b.notice
 		FROM bbs b
