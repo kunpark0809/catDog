@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
    String cp = request.getContextPath();
-%>  
+%>   
 <link rel="stylesheet" href="<%=cp%>/resource/css/dogshop.css">
 <style>
 .ui-dialog-titlebar{
