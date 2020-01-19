@@ -225,10 +225,9 @@ function productPay(mode){
 		<div class="cartList">
 			<table class="cartTable">
 				 <tr>
-				 	<td>
-				 		장바구니에 담겨있는 상품이 없습니다.
-				 	</td>
-				 </tr>                                                                                             
+					<td style="height: 200px; border-bottom: 2px solid #d4d4d4;font-size: 15pt;">
+						장바구니에 담겨있는 상품이 없습니다.</td>
+				</tr>                                                                                             
 			</table>
 		</div>
 

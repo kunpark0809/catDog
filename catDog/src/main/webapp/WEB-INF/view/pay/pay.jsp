@@ -14,9 +14,15 @@
     border: none;
     border-bottom: 1px solid #e4e4e4;
     border-radius: 0px;
+    text-align: left;
 }
 .ui-dialog .ui-dialog-titlebar {
     padding-left: 0px;
+}
+
+.ui-dialog-title {
+    padding-left: 10px;
+    font-size: 14pt;
 }
 .ui-dialog{
 	padding: 5px 20px;
@@ -163,8 +169,8 @@
 		$("#btnZip").click(function(){
 			$('#zip_dialog').dialog({
 				  modal: true,
-				  height: 500,
-				  width: 550,
+				  height: 530,
+				  width: 700,
 				  title: '우편번호 검색',
 				  close: function(event, ui) {
 				  },
@@ -179,6 +185,11 @@
 	$(function(){
 		
 		$(".btnDialogCanecl").click(function(){
+ 			$("#zip_dialog").find("input").val("");
+ 			$(".post-search-tip").show();
+ 			$(".search-empty").hide();	
+ 			$("#search-result").hide();	
+ 			$("#paging").hide();
 			$('#zip_dialog').dialog("close");
 		});
 	});
@@ -193,55 +204,100 @@
 		})
 	});
 	
-	// 우편번호 조회
-$(function(){
-	$("#btnXmlOk").click(function(){
+	function zipCode(page){
 		var url = "<%=cp%>/pay/zipCode";
-		var query = "searchKeyword="+$("input[name=search-keyword]").val();
+		var query = "page="+page+"&searchKeyword="+$("input[name=search-keyword]").val();
+
 		$.ajax({
 			type:"get"
 			,url:url
 			,data:query
 			,dataType:"xml"
 			,success:function(data){
-				console.log(data);
 				printXML(data);
 			}
 		});
-	});
-	
+	}
+	$(function(){
+ 		$(document).on("click","#zipCodeTable tr",function(){
+ 			
+ 			var $td = $(this).children();
+ 			var addr = $td.eq(1).text();
+ 			var zipCode = $td.eq(2).text();
+ 			
+ 			
+ 			$("input[name=deliverAddr1]").val(addr);
+ 			$("input[name=deliverZip]").val(zipCode);
+ 			
+ 			$("#zip_dialog").find("input").val("");
+ 			$(".post-search-tip").show();
+ 			$(".search-empty").hide();		
+ 			$("#search-result").hide();	
+ 			$("#paging").hide();
+ 			
+ 			$('#zip_dialog').dialog("close");
+ 		});
+ 	});
  	function printXML(data) {
 		var out="";
 		$(".post-search-tip").hide();
-		$(".search-over").hide();
 		$(".search-empty").hide();
+		$("#search-result").hide();	
 		
 		var header=$(data).find("cmmMsgHeader");
 		var totalCount = header.find("totalCount").text();
 		
 		if(totalCount == ""){
 			$(".search-empty").show();
+ 			$("#search-result").hide();	
+ 			$("#paging").hide();
 			return;
 		}
 		
-		if(Number(totalCount) > 100){
-			$(".search-over").show();
-		}
-		
-		var totalPage = header.find("totalPage").text();
 
+ 		var url = "<%=cp%>/pay/zipCodePaging";
+		var query = "total="+header.find("totalPage").text()+"&page="+header.find("currentPage").text();;
+
+		$.ajax({
+			type:"get"
+			,url:url
+			,data:query
+			,success:function(data) {
+				$("#paging").html(data);
+			}
+			,beforeSend:function(jqXHR) {
+		        jqXHR.setRequestHeader("AJAX", true);
+		    }
+		    ,error:function(jqXHR) {
+		    	console.log(jqXHR.responseText);
+		    }
+		}); 
 		
+		out += "<table id='zipCodeTable' style='width: 100%;'>";
 		$(data).find("newAddressListAreaCdSearchAll").each(function(){
 			var record = $(this);
-			var zipNo = record.find("zipNo").text();
-			var lnmAdres = record.find("lnmAdres").text();
-			var rnAdres = record.find("rnAdres").text();
-			out += zipNo+lnmAdres+rnAdres;
+			out +="<tr style='border-top: 1px solid #e4e4e4;'><td style='padding: 5px 0px;'>";
+			out += "<span  style='display: inline-block;padding: 2px 8px;background: #f3a34e;color: #FFFFFF;width: 40px;text-align: center;''>도로명</span>";
+			out +="</td><td style='padding-left: 10px;' class='zipCode_addr'>"
+			out += record.find("lnmAdres").text();
+			out += "</td><td style='width: 60px;'>";
+			out += record.find("zipNo").text();
+			out += "</td></tr>";
+			out += "<tr><td style='padding: 5px 0px;'>";
+			out += "<span  style='display: inline-block;padding: 2px 8px;background: #f3a34e;color: #FFFFFF;width: 40px;text-align: center;'>지번</span>";
+			out += "</td><td style='padding-left: 10px;' class='zipCode_addr'>"+record.find("rnAdres").text();
+			out += "</td><td  style='display:none;'>";
+			out += record.find("zipNo").text();
+			out +="</td></tr>";
 		});
 		
+		out+="</table>";
 		$("#search-result").html(out);
+		$("#search-result").show();	
+		$("#paging").show();
 	} 
-});
+ 	
+ 	
 </script>
 
 
@@ -266,7 +322,7 @@ $(function(){
 						<td>판매가</td>
 						<td>수량</td>
 						<td>배송비</td>
-						<td>합계</td>
+						<td >합계</td>
 					</tr>
 					<c:if test="${mode=='direct'}">
 						<tr style="border-bottom: 1px solid #cccccc;">
@@ -365,20 +421,7 @@ $(function(){
 				<div class="payTable" style="margin-bottom: 50px;">
 					<table>
 						<!-- 국내 쇼핑몰 -->
-							<tr style="	border-bottom: 1px solid #d4d4d4;">
-								<td class="payTdTit">배송지 선택</td>
-								<td class="payTdCon">
-									<div class="address">
-										<input name="addressType" value="same" type="radio" ${not empty sessionScope.member?"checked='checked'":""}>
-										${not empty sessionScope.member?"기본 배송지":"주문자 정보와 동일"}
-										
-										<input name="addressType" value="direct" type="radio">
-										직접 입력
-										<a href="#none" id="btn_shipp_addr" class="">
-										<span class="">주소록 보기</span></a>
-									</div>
-								</td>
-							</tr>
+							
 							<tr style="	border-bottom: 1px solid #d4d4d4;">
 								<td class="payTdTit">받으시는 분 </td>
 								<td class="payTdCon">
@@ -388,10 +431,10 @@ $(function(){
 							<tr style="	border-bottom: 1px solid #d4d4d4;">
 								<td class="payTdTit">주소</td>
 								<td class="payTdCon">
-									<input class="payInput" name="deliverZip" type="text" value="${customer.zip}"> 
+									<input class="payInput" name="deliverZip" type="text" value="${customer.zip}" readonly="readonly"> 
 										<button type="button" id="btnZip" data-toggle="modal" style="background:white; color:black; width: 100px;height: 35px; font-size: 11pt; border: 1px solid #d4d4d4; ">우편번호검색</button>
 									<br> 
-									<input name="deliverAddr1" class="payInput" style="width:500px; margin-top: 5px;" placeholder="" size="40" value="${customer.addr1}" type="text"> 
+									<input name="deliverAddr1" class="payInput" style="width:500px; margin-top: 5px;" placeholder="" size="40" value="${customer.addr1}" type="text" readonly="readonly"> 
 									<input name="deliverAddr2" class="payInput" size="40" value="${customer.addr2}" type="text"> 
 								</td>
 							</tr>
@@ -535,13 +578,13 @@ $(function(){
 			</div>
 		</form>
 
-	<div id="zip_dialog" style="display: none;">
+	<div id="zip_dialog" style="display: none; text-align: center;">
 		<div class="">
 			<input type="text" class="payInput" name="search-keyword" placeholder="검색어(도로명,지번,건물명)를 입력해주세요" style=" width: 80%;">
-			<button type="button" id="btnXmlOk" class="smallPinkBtn" style="width: 15%; height:36px;">검색</button>
+			<button type="button" onclick="zipCode(1);" class="smallPinkBtn" style="width: 15%; height:36px;">검색</button>
 		</div>
 
-		<div class="post-search-tip" style="display: black;">
+		<div class="post-search-tip" style="display: black; text-align: left; margin: 10px 0px 0px 15px;">
 			<span class="post-search-tip-title">tip</span><br> 아래와같이 검색하면 더욱
 			정확한 결과가 검색됩니다.<br>
 			<br>
@@ -553,43 +596,24 @@ $(function(){
 			<div class="post-search-tip-ex">예) 분당 주공, 삼성동 코엑스</div>
 		</div>
 
-		<div class="search-over" style="display: none;">
-			<span><b>검색결과가 많습니다.</b> 검색어에 아래와 같은 조합을 입력하면 더욱 정확한 결과가
-				검색됩니다.</span><br> <span style="color: #117ef9">'도로명+건물번호',
-				'지역명+지번', '지역명+건물명(아파트명)'</span>
-		</div>
 
-		<div class="search-empty" style="display: none;">
+		<div class="search-empty" style="display: none; text-align: left; margin: 10px 0px 0px 15px;">
 			<span><b>검색결과가 없습니다.</b></span><br>
 			<br> <span>검색어에 잘못된 철자가 없는지, 정확한 주소인지 다시 한번 확인해 주세요.</span>
-			<div>
-				<hr>
-			</div>
 			<span class="post-search-tip-title">Tip</span><br>
-			<br> <span>지번주소(동/읍/면), 도로명, 건물명(아파트)을 확인해주세요.</span><br> <span>일부
+			 <span>지번주소(동/읍/면), 도로명, 건물명(아파트)을 확인해주세요.</span><br> <span>일부
 				신축건물, 신도시의 경우 일시적으로 검색이 되지 않을 수 있습니다.</span><br> <span>도로명 주소를
 				모르실 경우 www.juso.go.kr 에서 확인 가능합니다.</span><br> <span>동명으로 검색시
 				법정동명으로 검색하셔야 합니다.</span><br> <span>(행정동명으로는 검색이 되지 않습니다.)</span><br>
 		</div>
 
-		<div id="search-result" style="width: 95%;">
-			<table>
-				<tr>
-					<td>
-						<span  style="display: inline-block;padding: 2px 8px;background: #f3a34e;color: #FFFFFF;width: 40px;text-align: center;">도로명</span>
-					</td>
-					<td>서울특별시 양천구 신정로 7길 70 (신정동)</td>
-					<td colspan="2">08048</td>
-				</tr>
-				<tr>
-					<td>
-						<span  style="display: inline-block;padding: 2px 8px;background: #f3a34e;color: #FFFFFF;width: 40px;text-align: center;">지번</span>
-					</td>
-					<td> 서울특별시 양천구 신정동 1282</td>
-				</tr>
-			</table>
+		<div id="search-result" style="display: none; width: 95%; overflow-y:auto; overflow-x:hidden;height:300px; margin: 10px auto;" >
+		
+
 		</div>
-		<div class="dialog_btn_box" >
+			<div id="paging">
+			</div>
+		<div class="dialog_btn_box" style="text-align: center;" >
 			<button type="button" class="btnDialogCanecl dialog_cancel">닫기</button>
 		</div>
 	</div>

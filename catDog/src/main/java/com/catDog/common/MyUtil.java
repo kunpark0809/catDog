@@ -183,8 +183,8 @@ public class MyUtil {
         // 처음페이지, 이전(10페이지 전)
         n = current_page - numPerBlock;
         if ((total_page > numPerBlock) && (currentPageSetUp > 0)) {
-			sb.append("<a onclick='"+methodName+"(1);'>처음</a>");
-			sb.append("<a onclick='"+methodName+"("+n+");'>이전</a>");
+			sb.append("<a onclick='"+methodName+"(1);'>&lt;&lt;</a>");
+			sb.append("<a onclick='"+methodName+"("+n+");'>&lt;</a>");
         }
 
         // 바로가기 페이지 구현
@@ -202,8 +202,8 @@ public class MyUtil {
         n = current_page + numPerBlock;
 		if(n>total_page) n=total_page;
         if (total_page - currentPageSetUp > numPerBlock) {
-			sb.append("<a onclick='"+methodName+"("+n+");'>다음</a>");
-			sb.append("<a onclick='"+methodName+"("+total_page+");'>끝</a>");
+			sb.append("<a onclick='"+methodName+"("+n+");'>&gt;</a>");
+			sb.append("<a onclick='"+methodName+"("+total_page+");'>&gt;&gt;</a>");
         }
 		sb.append("</div>");
 

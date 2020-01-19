@@ -117,13 +117,13 @@
 					<tr style="border-bottom: 1px solid #cccccc;">
 						<td class="titleTd">제&nbsp;&nbsp;목</td>
 						<td style="padding-left: 10px;">
-							<input type="text" name="subject" value="${dto.subject}" class="createdInput" width="98%">
+							<input type="text" name="subject" value="${dto.subject}" class="createdInput" style="width: 98%">
 						</td>
 					</tr>
 					<tr style="border-bottom: 1px solid #cccccc;">
 						<td class="titleTd">장&nbsp;&nbsp;소</td>
 						<td style="padding-left: 10px;">
-							<input type="text" name="addr" value="${dto.addr}" class="createdInput" width="98%">
+							<input type="text" name="addr" value="${dto.addr}" class="createdInput" style="width: 98%">
 						</td>
 					</tr>
 					<tr style="border-bottom: 1px solid #cccccc;">
