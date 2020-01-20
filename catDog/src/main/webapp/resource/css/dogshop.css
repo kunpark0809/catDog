@@ -19,6 +19,7 @@ select:focus {
 a, a:hover {
 	color: black;
 	text-decoration: none;
+	cursor: pointer;
 }
 
 .sortName:hover, .sortName:active {
@@ -205,6 +206,7 @@ a.sortName {
 	border: 1px solid #d96363;
 	width: 49.6%;
 	height: 50px;
+	cursor: pointer;
 }
 
 .product_btn>.cartBtn {
@@ -213,6 +215,7 @@ a.sortName {
 	border: 1px solid #d8d8d8;
 	width: 49.6%;
 	height: 50px;
+	cursor: pointer;
 }
 
 .pay-seq>ul>li {
@@ -233,6 +236,7 @@ a.sortName {
 	border: 1px solid #d8d8d8;
 	width: 150px;
 	height: 50px;
+	cursor: pointer;
 }
 
 .smallWhiteBtn {
@@ -241,6 +245,7 @@ a.sortName {
 	border: 1px solid #d8d8d8;
 	width: 70px;
 	height: 32px;
+	cursor: pointer;
 }
 
 .pinkBtn {
@@ -249,6 +254,7 @@ a.sortName {
 	border: 1px solid #d96363;
 	width: 150px;
 	height: 50px;
+	cursor: pointer;
 }
 
 .smallPinkBtn {
@@ -257,6 +263,7 @@ a.sortName {
 	border: 1px solid #d96363;
 	width: 150px;
 	height: 50px;
+	cursor: pointer;
 }
 
 .brownBtn {
@@ -265,6 +272,7 @@ a.sortName {
 	border: 1px solid #51321b;
 	width: 150px;
 	height: 50px;
+	cursor: pointer;
 }
 
 #top-menu {
@@ -303,6 +311,7 @@ a.sortName {
 	float: right;
 	text-align: right;
 	width: 50%;
+	cursor: pointer;
 }
 
 .admin_btn>button {
@@ -310,6 +319,7 @@ a.sortName {
 	color: #262626;
 	border: 1px solid #d8d8d8;
 	width: 49%;
+	cursor: pointer;
 }
 
 .dialog_cancel {
@@ -318,6 +328,7 @@ a.sortName {
 	border: 1px solid #d8d8d8;
 	width: 25%;
 	padding: 5px 0px;
+	cursor: pointer;
 }
 
 .dialog_submit {
@@ -326,6 +337,7 @@ a.sortName {
 	border: 1px solid #D96262;
 	width: 25%;
 	padding: 5px 0px;
+	cursor: pointer;
 }
 
 .dialog_btn_box {
@@ -459,6 +471,7 @@ a.sortName {
 	background: white;
 	color: black;
 	border: 1px solid #a9a9a9;
+	cursor: pointer;
 }
 
 .zipCode_addr:hover {

@@ -225,7 +225,9 @@ function listReview(page){
 		<div class="wide-container">
 		<div class="product-main" style="clear: both;" id="menu-detail">
 			<p class="product-menu">상세설명</p>
+			<div style="padding-top: 50px; text-align: center;">
 			${dto.content}
+			</div>
 		</div>
 		
 
