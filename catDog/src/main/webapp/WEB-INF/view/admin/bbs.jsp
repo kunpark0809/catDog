@@ -87,7 +87,7 @@ $(function(){
 </script>
 
 
-<div class="body-container" style="width: 1200px; min-height:490px; padding-top:60px; margin: 0px auto;">
+<div class="body-container" style="width: 1250px; min-height:490px; padding-top:60px; margin: 0px auto;">
 	<div class="body-title">
 		<h3>
 			<i class="fas fa-comments"></i> 신고 관리
