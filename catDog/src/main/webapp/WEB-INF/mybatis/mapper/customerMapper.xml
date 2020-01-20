@@ -44,12 +44,12 @@
     	SELECT * FROM DUAL
     </update>
  
- <!-- 아디찾기(원래는 이메일 중복가입을 막아야 하나만 뜰건데 시간이 없어서 동일이메일 동일이름으로 가입한 여러 아이디 중 하나만 뜨게 했습니다)ㄴ -->
+ <!-- 아디찾기(원래는 이메일 중복가입을 막아야 하나만 뜰건데 시간이 없어서 동일이메일 동일이름으로 가입한 여러 아이디 중 하나만 뜨게 했습니다) -->
 <select id="findId" parameterType="map" resultType="String">
 	SELECT userId FROM memberDetail md
 	JOIN customerDetail cd ON cd.num = md.num
 	WHERE name = #{userName} AND email = #{email}
-	OFFSET 1 ROWS ONLY 
+	FETCH FIRST 1 ROWS ONLY
 </select> 
  
  
