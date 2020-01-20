@@ -98,7 +98,7 @@ td {
 				<th width="200">최종접속시간</th>
 				<th width="120">로그인실패횟수</th>
 				<th width="100">활성화</th>
-				<th width="90">강퇴</th>
+				<th width="110">강퇴</th>
 			</tr>
 
 
