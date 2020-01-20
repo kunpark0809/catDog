@@ -95,7 +95,7 @@
 		      <td>
 		        &nbsp;
 		        <label for="userId" id="lblEmail" class="lbl" >이메일</label>
-		        <input type="text" name="email" id="email" class="loginTF" maxlength="20" 
+		        <input type="text" name="email" id="email" class="loginTF" maxlength="50" 
 		                   tabindex="2" value="${email}"
                            onfocus="document.getElementById('lblEmail').style.display='none';"
                            onblur="bgLabel(this, 'lblEmail');">
