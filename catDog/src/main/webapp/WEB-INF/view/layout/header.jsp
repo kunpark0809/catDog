@@ -182,13 +182,13 @@ $(function(){
 						<li><a class="nav-sub-link" href="<%=cp%>/shop/list?bigSortNum=1">강아지</a></li>
 						<li><a class="nav-sub-link" href="<%=cp%>/shop/list?bigSortNum=0">고양이</a></li>
 					</ul></li>
-				<li class="nav-item"><a class="nav-link js-scroll-trigger">놀이터</a>
+				<li class="nav-item"><a class="nav-link js-scroll-trigger">멍냥알림</a>
 					<ul class="nav-sub-menu">
 						<li><a class="nav-sub-link" href="<%=cp%>/game/game">게임</a></li>
 						<li><a class="nav-sub-link" href="<%=cp%>/event/list">이벤트</a></li>
 						<li><a class="nav-sub-link" href="<%=cp%>/festival/month">행사일정</a></li>
 					</ul></li>
-				<li class="nav-item"><a class="nav-link js-scroll-trigger">수다방</a>
+				<li class="nav-item"><a class="nav-link js-scroll-trigger">놀이터</a>
 					<ul class="nav-sub-menu">
 						<li><a class="nav-sub-link" href="<%=cp%>/tip/list">꿀팁</a></li>
 						<li><a class="nav-sub-link" href="<%=cp%>/pet/list">멍냥
