@@ -231,13 +231,15 @@ function subtotalChart(url){
 		            style: {
 		                color: Highcharts.getOptions().colors[1]
 		            }
+		           
 		        },
 		        title: {
 		            text: '매출 변화율',
 		            style: {
 		                color: Highcharts.getOptions().colors[1]
 		            }
-		        }
+		        },
+		        min: -100
 		    }, { // Secondary yAxis
 		        title: {
 		            text: '분기별 매출',
@@ -251,8 +253,10 @@ function subtotalChart(url){
 		                color: Highcharts.getOptions().colors[0]
 		            }
 		        },
-		        opposite: true
+		        opposite: true,
+		        min:0
 		    }],
+		   
 		    tooltip: {
 		        shared: true
 		    },

@@ -707,11 +707,13 @@ public class AdminController {
 
 			if (sales[i - 1] != 0) {
 				rate = (sales[i] - sales[i - 1]) * 100 / sales[i - 1];
+				if(rate > 200)
+					rate = 200; // 200% 이상 증가면 그래프 모양을 위해서 200%로 고정
 			} else {
 				if (sales[i] == 0)
 					rate = 0;
 				else if (sales[i] > 0)
-					rate = Double.MAX_VALUE;
+					rate = 100; // 무한%만큼 증가인데 그래프 모양을 위해서 100%로 고정
 			}
 
 			rates[i] = rate;
