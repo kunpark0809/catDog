@@ -36,10 +36,16 @@
 	</select>
 
 	<select id="dataCount" parameterType="map" resultType="Integer">
-		SELECT NVL(COUNT(*),0) FROM product
-		<if test="smallSortNum!=0">
-			WHERE smallSortNum=#{smallSortNum}
-		</if>
+		SELECT NVL(COUNT(*),0) FROM product p
+		JOIN smallSort s ON p.smallSortNum = s.smallSortNum
+        JOIN bigSort b ON s.bigSortNum = b.bigSortNum
+		<where>
+			<if test="smallSortNum!=0">
+				p.smallSortNum=#{smallSortNum}
+			</if>
+			AND b.bigSortNum=#{bigSortNum}
+			AND p.enabled=1
+		</where>
 	</select>
 
 	<insert id="insertProduct" parameterType="com.catDog.shop.Shop">
