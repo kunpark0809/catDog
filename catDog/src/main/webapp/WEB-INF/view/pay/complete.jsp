@@ -2,6 +2,7 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	String cp = request.getContextPath();
 %>
@@ -58,10 +59,10 @@
 							
 							${dto.productName}
 						</td>
-						<td>${dto.productSum}</td>
+						<td><fmt:formatNumber value="${dto.productSum}" type="number"/></td>
 						<td>${dto.productCount}</td>
 						<td>기본배송</td>
-						<td>${dto.productSum}</td>
+						<td><fmt:formatNumber value="${dto.productSum}" type="number"/></td>
 					</tr>
 				</c:forEach>
 				</table>
@@ -84,7 +85,7 @@
 	                                  	<p>입금은행 : 국민은행</p>
 	                                   	<p>입금계좌 : 000000-00-000000</p>
 	                                   	<p>예금주명 : 주식회사 멍냥개냥</p>
-	                                   	<p>입금금액 : <strong class="deposit_money">${list.get(0).purchase}원</strong></p>
+	                                   	<p>입금금액 : <strong class="deposit_money"><fmt:formatNumber value="${list.get(0).purchase}" type="number"/>원</strong></p>
 	                                 	<p>입금자명 : ${list.get(0).name}</p>
                                 </c:if>
                             </div>
@@ -125,7 +126,7 @@
                         	</tr>
                         <tr style="	border-bottom: 1px solid #d4d4d4;">
                             <td class="payTdTit">상품 금액</td>
-                            <td class="payTdCon"><strong class="order_payment_sum">${list.get(0).total}</strong>
+                            <td class="payTdCon"><strong class="order_payment_sum"><fmt:formatNumber value="${list.get(0).total}" type="number"/></strong>
                                 <span class="add_currency"></span>
                             </td>
                         </tr>
@@ -138,12 +139,12 @@
                         <tr style="	border-bottom: 1px solid #d4d4d4;">
                             <td class="payTdTit">적립 예정 포인트</td>
                             <td class="payTdCon">
-                            	${list.get(0).point}원
+                            	${list.get(0).point} 포인트
                             </td>
                         </tr>
                         <tr style="	border-bottom: 1px solid #d4d4d4;">
                             <td class="payTdTit">총 결제금액</td>
-                            <td class="payTdCon"><strong class="order_payment_sum">${list.get(0).purchase}</strong>
+                            <td class="payTdCon"><strong class="order_payment_sum"><fmt:formatNumber value="${list.get(0).purchase}" type="number"/></strong>
                                 <span class="add_currency"></span>
                             </td>
                         </tr>

@@ -489,7 +489,7 @@
 									<td class="payTdCon">
 										<input name="point" type="hidden" class="readInput" value="${mode=='cart'? cartList.get(0).point:product.point}">
 										<span id="point">
-										<fmt:formatNumber value="${mode=='cart'? cartList.get(0).point:product.point}" type="number"/>원
+											${mode=='cart'? cartList.get(0).point:product.point}&nbsp;포인트
 										</span> 
 								
 									</td>
@@ -499,7 +499,7 @@
 									<td class="payTdCon">
 								
 										<span><input id="usePoint" class="payInput" type="text" value="0" name="usePoint" onchange="changePoint();"> </span>
-										<span>(보유 포인트 : <fmt:formatNumber value="${customer.mileage}" type="number"/>원)</span>
+										<span>(보유 포인트 : ${customer.mileage}&nbsp;포인트)</span>
 								
 									</td>
 								</tr>

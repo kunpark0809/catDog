@@ -85,7 +85,7 @@ public class PayController {
 		product.setProductCount(productCount);
 		product.setProductSum(product.getPrice()*productCount);
 		product.setPoint((int)(product.getProductSum() * 0.01));
-		product.setTotal(product.getProductSum()+2500);
+		product.setTotal(product.getProductSum());
 		
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		Pay customer = null;
