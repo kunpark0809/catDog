@@ -134,7 +134,7 @@ $(function(){
 						<span class="btnDate" onclick="changeDate(${todayYear});">오늘</span>
 						<span class="btnDate" onclick="changeDate(${year-1});">＜</span>
 						<span class="titleDate">${year}년도</span>
-						<span class="btnDate" onclick="changeDate(${year-1});">＞</span>
+						<span class="btnDate" onclick="changeDate(${year+1});">＞</span>
 					</td>
 				</tr>
 			</table>
