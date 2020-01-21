@@ -2,6 +2,7 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	String cp=request.getContextPath();
 %>
@@ -442,10 +443,12 @@ function deleteOk(festivalNum) {
 								</td>
 							</tr>
 							<tr height="45">
+								<c:if test="${fn:indexOf(sessionScope.member.userId,'admin') == 0}">
 								<td colspan="2" align="right" style="padding-right: 5px;">
 									<button type="button" id="btnUpdate" class="bts">수정</button>
 									<button type="button" id="btnDelete" class="bts" onclick="deleteOk('${dto.festivalNum}');">삭제</button>
 								</td>
+								</c:if>
 							</tr>
 						</table>
 					</c:if>
