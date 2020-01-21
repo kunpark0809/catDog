@@ -71,7 +71,6 @@
 		<intercept-url pattern="/adopt/**" access="permitAll" />
 		<intercept-url pattern="/aband/**" access="permitAll" />
 		
-		<intercept-url pattern="/game/**" access="permitAll" />
 		<intercept-url pattern="/event/**" access="permitAll" />
 		<intercept-url pattern="/festival/**" access="permitAll" />		
 

@@ -64,7 +64,7 @@ function judgement(reportNum, reportedId){
 	location.href = "<%=cp%>/admin/bbs/judgement?reportNum="+reportNum+"&judgement="+judgement+"&reportedId="+reportedId;
 
 }
-
+	
 
 $(function(){
 	
