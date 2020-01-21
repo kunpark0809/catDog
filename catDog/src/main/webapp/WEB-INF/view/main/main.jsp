@@ -51,6 +51,7 @@
 					<a onclick="javascript:location.href='${parkListUrl}&recommendNum=${dto.recommendNum}'" style="color: #262626;">
 					<input type="hidden" value="${dto.recommendNum}">
 					<img alt="" src="<%=cp%>/uploads/park/${dto.imageFileName}" style="padding-top: 15px; height: 351px; width: 351px;"><br>
+					<span style="color: #d96262; font-weight: bold;">공원/산책</span>
 					<span class="placeName" onclick="javascript:article('${dto.recommendNum}');" style="font-weight: bold; font-size: 24px;"><br>${dto.placeName}</span><br>
 				</a>
 				</div>
@@ -58,12 +59,14 @@
 				<div class="col-md-4" style="max-width: 30%;">
 					<a href="${cafeUrl}" style="color: #262626;">
 					<img alt="" src="<%=cp%>/uploads/cafe/${cafe.imageFileName}" style="padding-top: 15px; height: 351px; width: 351px;"><br>
+					<span style="color: #d96262; font-weight: bold;">카페/식당</span>
 					<span class="placeName" onclick="${cafeUrl}" style="font-weight: bold; font-size: 24px;"><br>${cafe.placeName}</span><br>
 				</a>
 				</div>
 				<div class="col-md-4" style="max-width: 30%;">
 					<a href="${trainingUrl}" style="color: #262626;">
 					<img alt="" src="<%=cp%>/uploads/training/${training.imageFileName}" style="padding-top: 15px; height: 351px; width: 351px;"><br>
+					<span style="color: #d96262; font-weight: bold;">훈련/유치원</span>
 					<span class="placeName" onclick="${trainingUrl}" style="font-weight: bold; font-size: 24px;"><br>${training.placeName}</span><br>
 				</a>
 				</div>
@@ -163,7 +166,7 @@
 			</div>
 			<div class="row">
 				<div class="col-lg-8 mx-auto text-center">
-					<p class="large text-muted">금주 최고의 멍냥 어워드</p>
+					<p class="large text-muted">이번달 금주 최고의 멍냥 어워드</p>
 				</div>
 			</div>
 		</div>

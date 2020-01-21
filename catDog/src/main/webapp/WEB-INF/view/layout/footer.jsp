@@ -18,12 +18,10 @@
 						<li><a href="<%=cp%>/notice/list">고객센터&nbsp;&nbsp;&nbsp;</a></li>
 						<li><a href="#">이용안내</a></li>
 
-						<li style="float: right"><a
-							href="https://www.facebook.com/gang2yang2/" class="facebook"
-							target="_blank"><span>facebook</span></a> <a
-							href="https://www.instagram.com/gang2yang2/" class="instagram"
-							target="_blank"><span>instagram</span></a> <a href="#"
-							class="blog" target="_blank"><span>blog</span></a>
+						<li style="float: right">
+						<i class="fab fa-facebook"></i>
+						<i class="fab fa-instagram"></i>
+						<i class="fab fa-twitter-square"></i>
 					</ul>
 				</div>
 			</div>
