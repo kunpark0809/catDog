@@ -100,7 +100,7 @@
 		  		  var $tr, $td, $input;
 		  		
 		  	      $tr=$("<tr align='left' height='40' style='border-bottom: 1px solid #cccccc;'>");
-		  	      $td=$("<td>", {width:"100", bgcolor:"#eeeeee", style:"text-align: center;", html:"추가사진"});
+		  	      $td=$("<td>", {width:"100", style:"text-align: center;", html:"추가사진", class:"titleTd"});
 		  	      $tr.append($td);
 		  	      $td=$("<td style='padding-left:10px;'>");
 		  	      $input=$("<input>", {type:"file", name:"upload", class:"boxTF", style:"width: 95%; height: 25px;"});

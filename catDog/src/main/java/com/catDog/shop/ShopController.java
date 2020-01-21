@@ -45,7 +45,7 @@ public class ShopController {
 		int dataCount = service.dataCount(map);
 		
 		
-		int rows = 15;
+		int rows = 12;
 		int offset = (current_page-1)*rows;
 		if(offset  < 0) offset = 0;
 		
