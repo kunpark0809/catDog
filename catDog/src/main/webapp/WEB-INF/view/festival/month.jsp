@@ -178,14 +178,32 @@ $(function() {
 		var date=$(this).attr("data-date");
 		date=date.substr(0, 4)+"-"+date.substr(4, 2)+"-"+date.substr(6, 2);
 		
-		$("form[name=festivalForm] input[name=startDate]").val(date);
+		/* $("form[name=festivalForm] input[name=startDate]").val(date);
 		$("form[name=festivalForm] input[name=endDate]").val(date);
 		
 		$("#form-startDate").datepicker({showMonthAfterYear:true});
 		$("#form-endDate").datepicker({showMonthAfterYear:true});
 		
 		$("#form-startDate").datepicker("option", "defaultDate", date);
-		$("#form-endDate").datepicker("option", "defaultDate", date);
+		$("#form-endDate").datepicker("option", "defaultDate", date); */
+		
+		$("input[name='startDate']").datepicker( {
+	        onClose : function( selectedDate ) {  // 날짜를 설정 후 달력이 닫힐 때 실행
+	                      if( selectedDate != "" ) {
+	                          // yyy의 minDate를 xxx의 날짜로 설정
+	                          $("input[name='endDate']").datepicker("option", "minDate", selectedDate);
+	                      }
+	                  }
+	    } );
+
+	    $("input[name='endDate']").datepicker( {
+	        onClose : function( selectedDate ) {  // 날짜를 설정 후 달력이 닫힐 때 실행
+	                      if( selectedDate != "" ) {
+	                          // xxx의 maxDate를 yyy의 날짜로 설정
+	                          $("input[name='startDate']").datepicker("option", "maxDate", selectedDate);
+	                      }
+	                  }
+	    } );
 		
 		$('#festival-dialog').dialog({
 			modal: true,

@@ -155,6 +155,7 @@
 
            $btnStart.on("click", function() {
              rotation();
+        	  
            });
 
            function rotation() {
