@@ -48,7 +48,7 @@
 
 		<intercept-url pattern="/company/**" access="permitAll" />
 
-		<intercept-url pattern="/shop/list" access="permitAll" />
+		<intercept-url pattern="/shop/list*" access="permitAll" />
 		<intercept-url pattern="/shop/article" access="permitAll" />
 
 		<intercept-url pattern="/park/**" access="permitAll" />
@@ -68,15 +68,19 @@
 		<intercept-url pattern="/qna/**" access="permitAll" />
 		<intercept-url pattern="/faq/**" access="permitAll" />
 
-		<intercept-url pattern="/adopt/**" access="permitAll" />
-		<intercept-url pattern="/aband/**" access="permitAll" />
+		<intercept-url pattern="/adopt/list*" access="permitAll" />
+		<intercept-url pattern="/aband/list*" access="permitAll" />
+		<intercept-url pattern="/adopt/article" access="permitAll" />
+		<intercept-url pattern="/aband/article" access="permitAll" />
 		
 		<intercept-url pattern="/event/**" access="permitAll" />
 		<intercept-url pattern="/festival/**" access="permitAll" />		
 
 
-
-
+		<intercept-url pattern="/adopt/delete"
+			access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/aband/delete"
+			access="hasRole('ROLE_ADMIN')" />
 
 
 
