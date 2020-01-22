@@ -60,7 +60,7 @@
     
     
     <!-- 예외처리 : 마지막에 주석 해제 -->
-<!--  
+
     <bean id="exceptionResolver"
                class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="order" value="1" />
@@ -73,6 +73,6 @@
         </property>
         <property name="defaultErrorView" value=".error.error"/>
     </bean>
- -->
+
  
 </beans>
