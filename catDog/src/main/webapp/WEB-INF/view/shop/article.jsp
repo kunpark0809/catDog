@@ -167,7 +167,7 @@ function listReview(page){
 		<div class="product-info">
 			<div class="product-img">
 				<div class="main-img">
-					<img alt="" src="<%=cp%>/uploads/shop/${dto.imageFileName}">
+					<img alt="" src="<%=cp%>/uploads/shop/${dto.imageFileName}" width="600" height="600">
 				</div>
 				<div class="imgList">
 					<c:forEach var="dto" items="${picList}">

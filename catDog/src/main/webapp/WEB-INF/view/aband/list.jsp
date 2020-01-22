@@ -7,10 +7,6 @@
 %> 
 <link rel="stylesheet" href="<%=cp%>/resource/css/tabs.css" type="text/css">
 <script type="text/javascript">
-	function searchList() {
-		var f=document.searchForm;
-		f.submit();
-	}
 	
 	$(function(){
 		$("#tab-"+${sort}).addClass("active");
@@ -58,7 +54,7 @@
 				</select>
 
 
-           <button type="button" class="bts" onclick="searchList();" style="padding: 0px; margin: 0px;"><i class="fas fa-search"></i></button>
+           <button type="submit" class="bts" style="padding: 0px; margin: 0px;"><i class="fas fa-search"></i></button>
        </form>
     
 	</div>

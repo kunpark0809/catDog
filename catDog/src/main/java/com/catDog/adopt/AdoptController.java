@@ -42,17 +42,17 @@ public class AdoptController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		area = URLDecoder.decode(area, "utf-8");
-		String query="page="+current_page;
+		String query="";
 		
 		if(area.length()!=0) {
-			query+="&species="+species+"&area="+URLEncoder.encode(area, "UTF-8");
+			query+="species="+species+"&area="+URLEncoder.encode(area, "UTF-8");
 		}
 		map.put("area", area);
 		map.put("species", species);
 		int dataCount = service.dataCount(map);
 		
 		
-		int rows = 12;
+		int rows = 8;
 		int offset = (current_page-1)*rows;
 		if(offset  < 0) offset = 0;
 		
@@ -64,7 +64,7 @@ public class AdoptController {
 		List<Adopt> list = service.listAdopt(map);
 		
 		String listUrl = cp+"/adopt/list?"+query;
-		String articleUrl = cp+"/adopt/article?"+query;
+		String articleUrl = cp+"/adopt/article?"+query+"&page="+current_page;
 		
 		String paging = myUtil.paging(current_page, total_page, listUrl);
 		

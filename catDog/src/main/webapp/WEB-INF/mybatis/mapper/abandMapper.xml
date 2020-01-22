@@ -25,7 +25,7 @@
 			<include refid="where-list"/>
 			AND (sort=#{sort})
 		</where>
-		
+		ORDER BY lostPetNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 
 	</select>
